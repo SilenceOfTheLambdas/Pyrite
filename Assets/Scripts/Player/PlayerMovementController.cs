@@ -1,9 +1,67 @@
+using System;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Assertions;
+using UnityEngine.InputSystem;
 
 namespace Player
 {
     public class PlayerMovementController : MonoBehaviour
     {
+        private void Start()
+        {
+            _camera = Camera.main;
+            _navMeshAgent = GetComponent<NavMeshAgent>();
+            _animator = GetComponent<Animator>();
+            Assert.IsNotNull(_navMeshAgent, "Could not find NavMeshAgent attached to player game object.");
+        }
+
+        private void Update()
+        {
+            // Check if the player is activating the movement button and the destination is not too close.
+            if (Mouse.current.leftButton.isPressed && Vector3.Distance(transform.position, GetMouseWorldPosition()) >= 1f)
+            {
+                _navMeshAgent.isStopped = false;
+                MovePlayer();
+            }
+
+            if (Vector3.Distance(transform.position, _navMeshAgent.destination) <= 0.1f)
+            {
+                _navMeshAgent.isStopped = true;
+            }
+            
+            // Update Animation
+            _animator.SetFloat(MovementSpeed, _navMeshAgent.desiredVelocity.magnitude);
+        }
+
+        private void MovePlayer()
+        {
+            var targetPosition = GetMouseWorldPosition();
+            _navMeshAgent.SetDestination(targetPosition);
+        }
+
+        private Vector3 GetMouseWorldPosition()
+        {
+            if (Camera.main != null)
+            {
+                var ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+                if (Physics.Raycast(ray, out var hit))
+                {
+                    if (hit.collider.gameObject.CompareTag("Walkable"))
+                    {
+                        return hit.point;
+                    }
+                }
+            }
+            // Return a player's current position if we do not find a valid world point.
+            return transform.position;
+        }
+
         [SerializeField] private float movementSpeed;
+        private NavMeshAgent _navMeshAgent;
+        private Camera _camera;
+        private Animator _animator;
+        
+        private static readonly int MovementSpeed = Animator.StringToHash("MovementSpeed");
     }
 }
