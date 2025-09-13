@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
@@ -14,24 +13,24 @@ namespace Player
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
             Assert.IsNotNull(_navMeshAgent, "Could not find NavMeshAgent attached to player game object.");
+            Assert.IsNotNull(_animator, "Player needs to have an Animator component attached.");
         }
 
         private void Update()
         {
-            // Check if the player is activating the movement button and the destination is not too close.
-            if (Mouse.current.leftButton.isPressed && Vector3.Distance(transform.position, GetMouseWorldPosition()) >= 1f)
-            {
-                _navMeshAgent.isStopped = false;
-                MovePlayer();
-            }
+            #region Player Movement
 
-            if (Vector3.Distance(transform.position, _navMeshAgent.destination) <= 0.1f)
+            // Check if the player is activating the movement button and the destination is not too close.
+            if (Mouse.current.leftButton.isPressed 
+                && Vector3.Distance(transform.position, GetMouseWorldPosition()) >= 1f)
             {
-                _navMeshAgent.isStopped = true;
+                MovePlayer();
             }
             
             // Update Animation
             _animator.SetFloat(MovementSpeed, _navMeshAgent.desiredVelocity.magnitude);
+
+            #endregion
         }
 
         private void MovePlayer()
@@ -57,7 +56,6 @@ namespace Player
             return transform.position;
         }
 
-        [SerializeField] private float movementSpeed;
         private NavMeshAgent _navMeshAgent;
         private Camera _camera;
         private Animator _animator;

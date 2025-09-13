@@ -1946,7 +1946,7 @@ GameObject:
   - component: {fileID: 961739752}
   - component: {fileID: 961739751}
   - component: {fileID: 961739750}
-  - component: {fileID: 961739754}
+  - component: {fileID: 961739755}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2065,38 +2065,66 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4695712, y: 0.114957914, z: -0.061820157, w: 0.87319297}
-  m_LocalPosition: {x: 0.8146105, y: 7.43, z: -4.4239416}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
+  m_LocalPosition: {x: 2, y: 6, z: -2.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 45, y: -90, z: 0}
---- !u!895512359 &961739754
-AimConstraint:
+  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
+--- !u!114 &961739755
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
   m_Enabled: 1
-  serializedVersion: 2
-  m_Weight: 1
-  m_RotationAtRest: {x: -0, y: -104.99999, z: -0}
-  m_RotationOffset: {x: 0, y: 0, z: 0}
-  m_AimVector: {x: 0, y: 0, z: 1}
-  m_UpVector: {x: 0, y: 1, z: 0}
-  m_WorldUpVector: {x: 0, y: 1, z: 0}
-  m_WorldUpObject: {fileID: 0}
-  m_UpType: 0
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_Active: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 543450653043952692}
-    weight: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 953874ae39bc2ea4fb1134b70811ddce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraController
+  cameraTarget: {fileID: 1043920361}
+  zoomInputAction:
+    m_Name: Zoom Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: c4a77d93-f079-4cce-8373-c632163be8de
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 1D Axis
+      m_Id: dda6267a-27ce-4eb8-b5db-a97d210f9709
+      m_Path: 1DAxis
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Zoom Input
+      m_Flags: 4
+    - m_Name: negative
+      m_Id: 7c9d08d9-cd97-46ec-8148-dcfcee4e9c3c
+      m_Path: <Mouse>/scroll/up
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Zoom Input
+      m_Flags: 8
+    - m_Name: positive
+      m_Id: e6860d38-0d66-4d37-af15-bce794844d48
+      m_Path: <Mouse>/scroll/down
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Zoom Input
+      m_Flags: 8
+    m_Flags: 0
+  offsetX: 0
+  offsetY: 1.32
+  offsetZ: -0.5
+  maxCameraDistance: 8
+  minCameraDistance: 1
+  cameraFollowSpeed: 8
+  cameraZoomSpeed: 5
 --- !u!1001 &1008680792
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2240,6 +2268,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ccf9aaf202c761b40a8113ddd8d1734f, type: 3}
   m_PrefabInstance: {fileID: 1031705910}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1043920361 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6260506840004600384, guid: 8864f518fbbb9154fb3ac238a35bba3c, type: 3}
+  m_PrefabInstance: {fileID: 7905789982615217649}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1137403757
 PrefabInstance:
@@ -3616,11 +3649,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ccf9aaf202c761b40a8113ddd8d1734f, type: 3}
   m_PrefabInstance: {fileID: 2120532196}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &543450653043952692 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7552969010386995466, guid: 8864f518fbbb9154fb3ac238a35bba3c, type: 3}
-  m_PrefabInstance: {fileID: 7905789982615217649}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &919132148770002574 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9050038953941658400, guid: 8864f518fbbb9154fb3ac238a35bba3c, type: 3}
@@ -3638,7 +3666,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 103afe822b9817d4fb5f3ccd85fc5256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerMovementController
-  movementSpeed: 2
 --- !u!195 &5866666021223290448
 NavMeshAgent:
   m_ObjectHideFlags: 0
