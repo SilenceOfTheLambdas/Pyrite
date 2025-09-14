@@ -41,7 +41,7 @@ namespace Player
 
         private Vector3 GetMouseWorldPosition()
         {
-            if (Camera.main != null)
+            if (_camera != null)
             {
                 var ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
                 if (Physics.Raycast(ray, out var hit))

@@ -22,6 +22,109 @@ MonoBehaviour:
   gain:
     m_OverrideState: 1
     m_Value: {x: 1, y: 1, z: 1, w: 0}
+--- !u!114 &-9150424911405218073
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc1e9fd9895d7347918d8bd868342c4, type: 3}
+  m_Name: SobelNeonSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.SobelNeonSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  saturationFloor:
+    m_OverrideState: 1
+    m_Value: 0.75
+  lightnessFloor:
+    m_OverrideState: 1
+    m_Value: 0.75
+  backgroundColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+--- !u!114 &-8918329688816143402
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 006ce891136d906459fe975eaf6787f0, type: 3}
+  m_Name: HalftoneSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.HalftoneSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  halftoneTexture:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  softness:
+    m_OverrideState: 1
+    m_Value: 0.5
+  textureSize:
+    m_OverrideState: 1
+    m_Value: 4
+  minMaxLuminance:
+    m_OverrideState: 1
+    m_Value: {x: 0, y: 1}
+  darkColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  lightColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  useSceneColor:
+    m_OverrideState: 1
+    m_Value: 0
+--- !u!114 &-8527739717822515218
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6c796a3d3c33ef4391f17ede5f45534, type: 3}
+  m_Name: GameBoySettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.GameBoySettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  darkestColor:
+    m_OverrideState: 1
+    m_Value: {r: 0.11, g: 0.21, b: 0.08, a: 1}
+  darkColor:
+    m_OverrideState: 1
+    m_Value: {r: 0.24, g: 0.38, b: 0.21, a: 1}
+  lightColor:
+    m_OverrideState: 1
+    m_Value: {r: 0.57, g: 0.67, b: 0.21, a: 1}
+  lightestColor:
+    m_OverrideState: 1
+    m_Value: {r: 0.75, g: 0.82, b: 0.46, a: 1}
+  powerRamp:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &-8270506406425502121
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -66,6 +169,111 @@ MonoBehaviour:
   p21:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &-8032145830013805568
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c11d79c0bf1b054799b9c8ee6d5ee96, type: 3}
+  m_Name: HeightFogSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.HeightFogSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 300
+  strength:
+    m_OverrideState: 1
+    m_Value: 0
+  startDistance:
+    m_OverrideState: 1
+    m_Value: 20
+  distanceStartColor:
+    m_OverrideState: 1
+    m_Value: {r: 0.514151, g: 0.6437106, b: 1, a: 1}
+  endDistance:
+    m_OverrideState: 1
+    m_Value: 50
+  distanceEndColor:
+    m_OverrideState: 1
+    m_Value: {r: 0.1745283, g: 0.3942103, b: 1, a: 1}
+  distanceFalloff:
+    m_OverrideState: 1
+    m_Value: 1
+  startHeight:
+    m_OverrideState: 1
+    m_Value: 5
+  heightStartColor:
+    m_OverrideState: 1
+    m_Value: {r: 0.8313726, g: 0.3137255, b: 0.2235294, a: 1}
+  endHeight:
+    m_OverrideState: 1
+    m_Value: -5
+  heightEndColor:
+    m_OverrideState: 1
+    m_Value: {r: 0.3294118, g: 0.1254902, b: 0.1254902, a: 1}
+  heightFalloff:
+    m_OverrideState: 1
+    m_Value: 1
+--- !u!114 &-7872609717481241083
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccb1e90a869b2344b93275d70f5ce63, type: 3}
+  m_Name: PosterizeSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.PosterizeSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  redLevels:
+    m_OverrideState: 1
+    m_Value: 2
+  greenLevels:
+    m_OverrideState: 1
+    m_Value: 2
+  blueLevels:
+    m_OverrideState: 1
+    m_Value: 2
+  powerRamp:
+    m_OverrideState: 1
+    m_Value: 1
+--- !u!114 &-7854389510106206409
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 693a2db7bfb07904b81fcc3c73a50679, type: 3}
+  m_Name: SNESSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.SNESSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  bandingValues:
+    m_OverrideState: 1
+    m_Value: 6
+  powerRamp:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &-7750755424749557576
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -107,6 +315,50 @@ MonoBehaviour:
   clamp:
     m_OverrideState: 1
     m_Value: 0.05
+--- !u!114 &-7389229088036642111
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5033eee5ec9e3f04c80b4a8a550d9332, type: 3}
+  m_Name: VortexSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.VortexSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  strength:
+    m_OverrideState: 1
+    m_Value: 0
+  center:
+    m_OverrideState: 1
+    m_Value: {x: 0.5, y: 0.5}
+  offset:
+    m_OverrideState: 1
+    m_Value: {x: 0, y: 0}
+--- !u!114 &-7370776876066844313
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0dc4a1dfd0abe5489b31eb4b16fa471, type: 3}
+  m_Name: GreyscaleSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.GreyscaleSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  strength:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &-7274224791359825572
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -146,6 +398,31 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+--- !u!114 &-6729726857714156976
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 586c063f0d599334c9b91fb9af9b1ab7, type: 3}
+  m_Name: BlurSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.BlurSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  strength:
+    m_OverrideState: 1
+    m_Value: 1
+  blurStepSize:
+    m_OverrideState: 1
+    m_Value: 1
+  blurType:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &-6335409530604852063
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -280,6 +557,38 @@ MonoBehaviour:
   SunScatteringIntensity:
     m_OverrideState: 1
     m_Value: 2
+--- !u!114 &-4953166695715456374
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5799470d8b86f364e8a277b64dc1ceeb, type: 3}
+  m_Name: WorldScanSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.WorldScanSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  scanOrigin:
+    m_OverrideState: 1
+    m_Value: {x: 0, y: 0, z: 0}
+  scanDistance:
+    m_OverrideState: 1
+    m_Value: 0
+  scanWidth:
+    m_OverrideState: 1
+    m_Value: 1
+  overlayRampTex:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  overlayColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &-4463884970436517307
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -299,6 +608,98 @@ MonoBehaviour:
   cropToFit:
     m_OverrideState: 1
     m_Value: 1
+--- !u!114 &-3631241709319051646
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9213afadcd80d6449bd6f18a04a2923, type: 3}
+  m_Name: InvertSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.InvertSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  strength:
+    m_OverrideState: 1
+    m_Value: 0
+--- !u!114 &-3508965706809187405
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a653b632c2dbbe948b34f6fc7e08ad13, type: 3}
+  m_Name: SharpenSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.SharpenSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0
+--- !u!114 &-2341454541874272200
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e6d113b8f8ecc4e9a43c8762887a89, type: 3}
+  m_Name: GlitchSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.GlitchSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  offsetTexture:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  offsetStrength:
+    m_OverrideState: 1
+    m_Value: 0.1
+  verticalTiling:
+    m_OverrideState: 1
+    m_Value: 5
+--- !u!114 &-2116650841129199593
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a0114f62751bfc48909b495249b5ca4, type: 3}
+  m_Name: LightStreaksSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.LightStreaksSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  strength:
+    m_OverrideState: 1
+    m_Value: 1
+  luminanceThreshold:
+    m_OverrideState: 1
+    m_Value: 1.2
+  downsampleAmount:
+    m_OverrideState: 1
+    m_Value: 24
 --- !u!114 &-1410297666881709256
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -465,6 +866,80 @@ MonoBehaviour:
   - {fileID: -6288072647309666549}
   - {fileID: 7518938298396184218}
   - {fileID: -1410297666881709256}
+  - {fileID: -2116650841129199593}
+  - {fileID: 1628207660250609899}
+  - {fileID: -3508965706809187405}
+  - {fileID: 5093394975199834209}
+  - {fileID: 2414588794563380035}
+  - {fileID: 2656908694104679888}
+  - {fileID: -9150424911405218073}
+  - {fileID: 6343742965556025487}
+  - {fileID: -4953166695715456374}
+  - {fileID: -7389229088036642111}
+  - {fileID: -3631241709319051646}
+  - {fileID: 8777144609666238454}
+  - {fileID: 5802079737987794718}
+  - {fileID: 4293281624400418665}
+  - {fileID: 8155622224896934479}
+  - {fileID: -7872609717481241083}
+  - {fileID: -8918329688816143402}
+  - {fileID: -6729726857714156976}
+  - {fileID: 9091106593734100070}
+  - {fileID: -7854389510106206409}
+  - {fileID: 2145745351167475407}
+  - {fileID: 2657373908071829352}
+  - {fileID: 3429072369326909673}
+  - {fileID: 5293312560780807963}
+  - {fileID: 7282094984903124134}
+  - {fileID: 2765566167407591859}
+  - {fileID: 2569437826006684697}
+  - {fileID: -7370776876066844313}
+  - {fileID: 7239643128962252649}
+  - {fileID: 7623380868099061994}
+  - {fileID: -2341454541874272200}
+  - {fileID: 227310106164484515}
+  - {fileID: 819538979629739406}
+  - {fileID: -8032145830013805568}
+  - {fileID: 8753521858263551081}
+  - {fileID: -8527739717822515218}
+--- !u!114 &227310106164484515
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a26195ad11ab2854badb76fa911a79c8, type: 3}
+  m_Name: ColorizeSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.ColorizeSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  tintColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 0}
+--- !u!114 &819538979629739406
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6a7afeb08df51a488f148975d5162f4, type: 3}
+  m_Name: KaleidoscopeSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.KaleidoscopeSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  segmentCount:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &853819529557874667
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -564,6 +1039,34 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 0.55
   highlightsEnd:
+    m_OverrideState: 1
+    m_Value: 1
+--- !u!114 &1628207660250609899
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3c34f6925a10ee4785d343a21b55802, type: 3}
+  m_Name: NoiseGrainSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.NoiseGrainSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  strength:
+    m_OverrideState: 1
+    m_Value: 0
+  speed:
+    m_OverrideState: 1
+    m_Value: 1
+  noiseSize:
+    m_OverrideState: 1
+    m_Value: 1
+  noiseInterpolation:
     m_OverrideState: 1
     m_Value: 1
 --- !u!114 &1666464333004379222
@@ -775,6 +1278,200 @@ MonoBehaviour:
   contribution:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &2145745351167475407
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e14b6436a87aa1428a8847e69a7eeec, type: 3}
+  m_Name: TextAdventureSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.TextAdventureSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  characterSize:
+    m_OverrideState: 1
+    m_Value: 8
+  characterAtlas:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  characterCount:
+    m_OverrideState: 1
+    m_Value: 16
+  backgroundColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  characterColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &2414588794563380035
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2016444ba6c8d3e4f98d2e10ef0946e1, type: 3}
+  m_Name: BarrelDistortionSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.BarrelDistortionSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  strength:
+    m_OverrideState: 1
+    m_Value: 0
+  backgroundColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+--- !u!114 &2569437826006684697
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 198f564c29551fb45b39bbb7dc02b0de, type: 3}
+  m_Name: ScanlinesSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.ScanlinesSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  scanlineTex:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  strength:
+    m_OverrideState: 1
+    m_Value: 0
+  size:
+    m_OverrideState: 1
+    m_Value: 8
+  scrollSpeed:
+    m_OverrideState: 1
+    m_Value: 0
+--- !u!114 &2656908694104679888
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afbe98899d1ca7745b7116f3b3a0fa55, type: 3}
+  m_Name: DrawingSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.DrawingSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  drawingTex:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  animCycleTime:
+    m_OverrideState: 1
+    m_Value: 0.75
+  strength:
+    m_OverrideState: 1
+    m_Value: 0
+  tiling:
+    m_OverrideState: 1
+    m_Value: 25
+  smudge:
+    m_OverrideState: 1
+    m_Value: 0.001
+  depthThreshold:
+    m_OverrideState: 1
+    m_Value: 0.99
+--- !u!114 &2657373908071829352
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 602ad96208c480144986086bbdd06054, type: 3}
+  m_Name: RadialBlurSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.RadialBlurSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  strength:
+    m_OverrideState: 1
+    m_Value: 1
+  stepSize:
+    m_OverrideState: 1
+    m_Value: 5
+--- !u!114 &2765566167407591859
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc21f2b6116669c4f9bd87971305b83c, type: 3}
+  m_Name: FilmBarsSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.FilmBarsSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  aspect:
+    m_OverrideState: 1
+    m_Value: 1.777
+--- !u!114 &3429072369326909673
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c63d03a0d0289964bbb6ee8040b67dd1, type: 3}
+  m_Name: MosaicSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.MosaicSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  overlayTexture:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  overlayColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  xTileCount:
+    m_OverrideState: 1
+    m_Value: 100
+  usePointFiltering:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &3959858460715838825
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -837,6 +1534,61 @@ MonoBehaviour:
   param:
     m_OverrideState: 1
     m_Value: 123
+--- !u!114 &4293281624400418665
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aa93400644208f4ab8d1d749a42c8d4, type: 3}
+  m_Name: FancyNeonSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.FancyNeonSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  colorSensitivity:
+    m_OverrideState: 1
+    m_Value: 0.1
+  colorStrength:
+    m_OverrideState: 1
+    m_Value: 0.5
+  depthSensitivity:
+    m_OverrideState: 1
+    m_Value: 0.01
+  depthStrength:
+    m_OverrideState: 1
+    m_Value: 0.75
+  normalSensitivity:
+    m_OverrideState: 1
+    m_Value: 0.1
+  normalStrength:
+    m_OverrideState: 1
+    m_Value: 0.75
+  depthThreshold:
+    m_OverrideState: 1
+    m_Value: 0.99
+  saturationFloor:
+    m_OverrideState: 1
+    m_Value: 0.75
+  lightnessFloor:
+    m_OverrideState: 1
+    m_Value: 0.75
+  backgroundColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  emissiveEdgeColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  useSceneColor:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &4644742534064026673
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -853,6 +1605,150 @@ MonoBehaviour:
   intensity:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &5093394975199834209
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 323151a4de35a244d98245070ffaee1e, type: 3}
+  m_Name: SepiaToneSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.SepiaToneSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  strength:
+    m_OverrideState: 1
+    m_Value: 0
+--- !u!114 &5293312560780807963
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3e290bf031d9dd468f6d661fd2033de, type: 3}
+  m_Name: UnderwaterSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.UnderwaterSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  bumpMap:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  strength:
+    m_OverrideState: 1
+    m_Value: 0
+  waterFogColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  fogStrength:
+    m_OverrideState: 1
+    m_Value: 0
+  useCaustics:
+    m_OverrideState: 1
+    m_Value: 0
+  causticsTexture:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  causticsNoiseSpeed:
+    m_OverrideState: 1
+    m_Value: 1
+  causticsNoiseScale:
+    m_OverrideState: 1
+    m_Value: 1
+  causticsNoiseStrength:
+    m_OverrideState: 1
+    m_Value: 1
+  causticsScrollVelocity1:
+    m_OverrideState: 1
+    m_Value: {x: 0.75, y: 0.25, z: 0}
+  causticsScrollVelocity2:
+    m_OverrideState: 1
+    m_Value: {x: 0.75, y: 0.25, z: 0}
+  causticsTiling:
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 1}
+  causticsTint:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &5802079737987794718
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bf9cb4c6d2bfb6418967442f16c5b43, type: 3}
+  m_Name: FancyOutlineSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.FancyOutlineSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  outlineColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  colorSensitivity:
+    m_OverrideState: 1
+    m_Value: 0.1
+  colorStrength:
+    m_OverrideState: 1
+    m_Value: 0.5
+  depthSensitivity:
+    m_OverrideState: 1
+    m_Value: 0.01
+  depthStrength:
+    m_OverrideState: 1
+    m_Value: 0.75
+  normalSensitivity:
+    m_OverrideState: 1
+    m_Value: 0.1
+  normalStrength:
+    m_OverrideState: 1
+    m_Value: 0.75
+  depthThreshold:
+    m_OverrideState: 1
+    m_Value: 0.99
+  backgroundColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  useSceneColor:
+    m_OverrideState: 1
+    m_Value: 0
+--- !u!114 &6343742965556025487
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb01e6e400f82d040a6551cc965b4f93, type: 3}
+  m_Name: PaintingSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.PaintingSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  kernelSize:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &6940869943325143175
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -894,6 +1790,90 @@ MonoBehaviour:
   rounded:
     m_OverrideState: 1
     m_Value: 1
+--- !u!114 &7239643128962252649
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c3991c19c4754145b9e37e0c956bdd2, type: 3}
+  m_Name: CutoutSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.CutoutSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  cutoutTexture:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  borderColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  stretch:
+    m_OverrideState: 1
+    m_Value: 0
+  zoom:
+    m_OverrideState: 1
+    m_Value: 1
+  offset:
+    m_OverrideState: 1
+    m_Value: {x: 0, y: 0}
+  rotation:
+    m_OverrideState: 1
+    m_Value: 0
+--- !u!114 &7282094984903124134
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecad3534997d76f468965e4e95a8ed1f, type: 3}
+  m_Name: SynthwaveSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.SynthwaveSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  backgroundColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  lineColor1:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  lineColor2:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  lineColorMix:
+    m_OverrideState: 1
+    m_Value: 1
+  lineWidth:
+    m_OverrideState: 1
+    m_Value: 0
+  lineFalloff:
+    m_OverrideState: 1
+    m_Value: 0.05
+  gapWidth:
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 1, z: 1}
+  offset:
+    m_OverrideState: 1
+    m_Value: {x: 0, y: 0, z: 0}
+  axisMask:
+    m_OverrideState: 1
+    m_Value: 1
+  useSceneColor:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &7518938298396184218
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -920,6 +1900,122 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: {x: 0.5, y: 0.5}
   scale:
+    m_OverrideState: 1
+    m_Value: 1
+--- !u!114 &7623380868099061994
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52e5c16327dbe943b312dcaf1208cc3, type: 3}
+  m_Name: PixelateSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.PixelateSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  pixelSize:
+    m_OverrideState: 1
+    m_Value: 1
+--- !u!114 &8155622224896934479
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcbc9374d8da13c418b74e172749b775, type: 3}
+  m_Name: FancyDitherSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.FancyDitherSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  noiseTex:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  noiseSize:
+    m_OverrideState: 1
+    m_Value: 1
+  thresholdOffset:
+    m_OverrideState: 1
+    m_Value: 0
+  blendAmount:
+    m_OverrideState: 1
+    m_Value: 1
+  darkColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  lightColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &8753521858263551081
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e354a3492955ad744815dbd507c58d64, type: 3}
+  m_Name: SobelOutlineSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.SobelOutlineSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  threshold:
+    m_OverrideState: 1
+    m_Value: 0.5
+  outlineColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  backgroundColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  useSceneColor:
+    m_OverrideState: 1
+    m_Value: 0
+--- !u!114 &8777144609666238454
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6e5cd28d2c7734409543cd8fc4eddb7, type: 3}
+  m_Name: SilhouetteSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.SilhouetteSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  nearColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  farColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  powerRamp:
     m_OverrideState: 1
     m_Value: 1
 --- !u!114 &9001657382290151224
@@ -962,6 +2058,44 @@ MonoBehaviour:
   blueOutBlueIn:
     m_OverrideState: 1
     m_Value: 100
+--- !u!114 &9091106593734100070
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eabbbb92f7e0af448b7f830e73be1edc, type: 3}
+  m_Name: BasicDitherSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.BasicDitherSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 550
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  noiseTex:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  noiseSize:
+    m_OverrideState: 1
+    m_Value: 1
+  thresholdOffset:
+    m_OverrideState: 1
+    m_Value: 0
+  darkColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  lightColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  useSceneColor:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &9122958982931076880
 MonoBehaviour:
   m_ObjectHideFlags: 3
