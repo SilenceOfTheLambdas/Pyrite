@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24f3abcacb174e869d4cb9671848c5ba, type: 3}
+  m_Name: One-handed Sword
+  m_EditorClassIdentifier: Assembly-CSharp::Inventory_System.Item_Definitions.Weapon
+  mainItemPrefab: {fileID: 2300871832176508303, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
+  itemPickupPrefab: {fileID: 919132149155446097, guid: dc71e1d9cf8aa154a800619053b5f6d3, type: 3}
+  itemName: Simple Sword
+  itemSlotSize: {x: 2, y: 4}
+  baseStat:
+    physicalDamage:
+      min: 4
+      max: 6
+    elementalDamage:
+      min:
+        fire: 0
+        ice: 0
+        lightning: 0
+        poison: 0
+      max:
+        fire: 0
+        ice: 0
+        lightning: 0
+        poison: 0
+    attackSpeed: 0.8
+    criticalDamageMultiplier: 1.4
+    criticalDamageChance:
+      min: 0.9
+      max: 1.1
+  possibleAffixes:
+  - <Type>k__BackingField: 0
+  - <Type>k__BackingField: 3
+  - <Type>k__BackingField: 6
+  - <Type>k__BackingField: 6
