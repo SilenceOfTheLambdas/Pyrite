@@ -80,7 +80,9 @@ MonoBehaviour:
   equipmentRarity: 0
   equipmentLevel: 0
   isEquipped: 0
+  itemType: 0
   equipmentSlot: 0
+  weaponTemplate: {fileID: 11400000, guid: f2471bbb7dad87d46ad7b3543292940c, type: 2}
   physicalDamage: 0
   attackSpeed: 0
   attackRange: 0

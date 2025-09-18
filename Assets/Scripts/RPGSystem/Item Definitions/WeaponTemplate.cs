@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using RPGSystem.Backend;
@@ -7,12 +6,14 @@ using UnityEngine;
 
 namespace RPGSystem.Item_Definitions
 {
-    [CreateAssetMenu(fileName = "WeaponTemplate", menuName = "Inventory/Items/New WeaponTemplate")]
+    [CreateAssetMenu(fileName = "BaseWeaponTemplate", menuName = "Inventory/Items/New BaseWeaponTemplate")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class WeaponTemplate : ItemTemplate
     {
-        [Header("WeaponTemplate Baseline at level 1")]
-        public RPGSystem.WeaponTemplate template;
+        [Header("Weapon Type")]
+        public WeaponType weaponType;
+        [Header("BaseWeaponTemplate Baseline at level 1")]
+        public BaseWeaponTemplate baseWeaponStats;
         
         public enum WeaponType
         {

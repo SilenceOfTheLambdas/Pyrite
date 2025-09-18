@@ -26,6 +26,18 @@ namespace RPGSystem.Backend
         /// </summary>
         public Vector2Int itemSlotSize;
 
+        public ItemType itemType;
+        
+        /// <summary>
+        /// The base type of this item.
+        /// </summary>
+        public enum ItemType {
+            Weapon,
+            Armour,
+            Accessory,
+            Potion
+        }
+
         [Serializable]
         public struct Affix
         {
