@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 
 public class RpgManager : MonoBehaviour
 {
@@ -17,11 +20,24 @@ public class RpgManager : MonoBehaviour
 
     #endregion
 
+    private void Start()
+    {
+        Assert.IsNotNull(PlayerRpgController, "PlayerRpgController is not set.");
+    }
+    
+    [Header("Current Item Tier of the Player")]
+    public int currentItemTier;
+    
     [Header("ItemTemplate Tier Settings")]
     public List<ItemTier> itemTiers;
 
+    [Range(0f, 1f)]
+    public float itemLevelFactor;
+
     [Header("Rarity Settings")]
-    public ItemRaritySettings[] raritySettings = new ItemRaritySettings[5];
+    public List<ItemRaritySettings> raritySettings;
+    
+    [field: SerializeField] public PlayerRpgController PlayerRpgController { get; private set; }
 
     #region Structs and Enums
 
@@ -29,6 +45,7 @@ public class RpgManager : MonoBehaviour
     public struct ItemRaritySettings
     {
         public ItemRarity rarity;
+        public float rarityMultiplier;
         public StatRange<int> rarityAffixBonusRange;
     }
     
@@ -36,7 +53,8 @@ public class RpgManager : MonoBehaviour
     public struct ItemTier
     {
         [Header("Tier Settings")]
-        [Tooltip("Assign a given tier to a range of levels.")] public int itemTier;
+        [Tooltip("Assign a given tier to a range of levels.")] 
+        public int itemTier;
         public StatRange<int> tierLevelRange;
         
         /// <summary>
@@ -55,10 +73,16 @@ public class RpgManager : MonoBehaviour
     [Serializable]
     public struct ElementalDamage
     {
-        public int fire;
-        public int ice;
-        public int lightning;
-        public int poison;
+        public ElementalDamageType type;
+        public float amount;
+    }
+
+    public enum ElementalDamageType
+    {
+        Fire,
+        Ice,
+        Lightning,
+        Poison
     }
     
     public enum ItemRarity

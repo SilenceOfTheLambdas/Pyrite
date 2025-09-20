@@ -369,30 +369,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
---- !u!1 &58941265 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9050038953941658400, guid: 8864f518fbbb9154fb3ac238a35bba3c, type: 3}
-  m_PrefabInstance: {fileID: 7905789982615217649}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &58941270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 58941265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfe6d64751e541ea87f74f2e4f82b736, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerRpgController
-  <CurrentPlayerAttributes>k__BackingField:
-    strength: 0
-    intelligence: 0
-    dexterity: 0
-    vitality: 0
-    magic: 0
-    luck: 0
 --- !u!1 &59538757
 GameObject:
   m_ObjectHideFlags: 0
@@ -3256,7 +3232,6 @@ MonoBehaviour:
     rarityAffixBonusRange:
       min: 6
       max: 7
-  <PlayerRpgController>k__BackingField: {fileID: 58941270}
 --- !u!114 &1551504832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4285,10 +4260,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9050038953941658400, guid: 8864f518fbbb9154fb3ac238a35bba3c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 58941270}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8864f518fbbb9154fb3ac238a35bba3c, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

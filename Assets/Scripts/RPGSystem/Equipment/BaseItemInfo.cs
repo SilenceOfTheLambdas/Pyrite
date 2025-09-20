@@ -56,11 +56,12 @@ namespace RPGSystem.Equipment
         {
             equipmentName = itemTemplate.itemName;
             itemType = itemTemplate.itemType;
-            // Select a random rarity
+            
+            // TODO: Make rarities weighted!
             equipmentRarity = (RpgManager.ItemRarity) Random.Range(0, Enum.GetNames(typeof(RpgManager.ItemRarity)).Length);
             
-            // TODO: Generate level based on player's current level 
-            
+            var maxLevel = RpgManager.Instance.PlayerRpgController.CurrentPlayerLevel + (int)equipmentRarity;
+            equipmentLevel = Random.Range(RpgManager.Instance.PlayerRpgController.CurrentPlayerLevel, maxLevel);
         }
 
         public virtual void GenerateStats(ItemTemplate itemTemplate)

@@ -24,15 +24,11 @@ MonoBehaviour:
       max: 5
     elementalDamage:
       min:
-        fire: 0
-        ice: 0
-        lightning: 0
-        poison: 0
+        type: 0
+        amount: 1
       max:
-        fire: 0
-        ice: 0
-        lightning: 0
-        poison: 0
+        type: 0
+        amount: 1
     attackSpeed: 0.8
     attackRange: 1
     criticalDamageMultiplier: 1.3
