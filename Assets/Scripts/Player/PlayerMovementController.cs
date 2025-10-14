@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace Player
@@ -43,8 +44,12 @@ namespace Player
         {
             if (_camera != null)
             {
+                // Ignore clicks that start over UI
+                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                    return transform.position;
+                
                 var ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-                if (Physics.Raycast(ray, out var hit))
+                if (Physics.Raycast(ray, out var hit, Mathf.Infinity, LayerMask.GetMask("Walkable")))
                 {
                     if (hit.collider.gameObject.CompareTag("Walkable"))
                     {

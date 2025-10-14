@@ -42,7 +42,7 @@ namespace RPGSystem.Backend
         public struct Affix
         {
             [field: SerializeField] public AffixType Type { get; set; }
-        
+            [field: SerializeField] public int Value { get; set; }
             public enum AffixType
             {
                 /// e.g +0-10 Strength
@@ -62,13 +62,7 @@ namespace RPGSystem.Backend
                 /// e.g +0-10% extra crit chance
                 CritChancePercentage,
                 /// e.g +0-10 Fire Damage
-                FireDamage,
-                /// e.g +0-10 Ice Damage
-                IceDamage,
-                /// e.g +0-10 Lightning Damage
-                LightningDamage,
-                /// e.g +0-10 Poison Damage
-                PoisonDamage,
+                WeaponElementalDamage,
                 /// e.g +0-10 Armour
                 Armour,
                 /// e.g +0-10% Fire Resistance

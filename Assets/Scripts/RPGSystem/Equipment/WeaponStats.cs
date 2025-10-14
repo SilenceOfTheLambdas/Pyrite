@@ -33,9 +33,15 @@ namespace RPGSystem.Equipment
         /// </summary>
         public float attackRange;
         
+        [Header("Crit Stats")]
+        public float critMultiplier;
+        
+        public float criticalDamageChance;
+        
         /// <summary>
         /// A generated list of affixes that apply to this weapon, this may be empty.
         /// </summary>
+        [Header("Affixes")]
         public List<ItemTemplate.Affix> generatedAffixes;
 
         /// <summary>
@@ -52,6 +58,9 @@ namespace RPGSystem.Equipment
             GenerateAndAssignElementalDamage(weaponTemplate);
             attackSpeed = weaponTemplate.baseWeaponStats.attackSpeed;
             attackRange = weaponTemplate.baseWeaponStats.attackRange;
+            critMultiplier = weaponTemplate.baseWeaponStats.criticalDamageMultiplier;
+            criticalDamageChance = Random.Range(weaponTemplate.baseWeaponStats.criticalDamageChance.min,
+                weaponTemplate.baseWeaponStats.criticalDamageChance.max);
             
             // Generate affixes
             generatedAffixes = new List<ItemTemplate.Affix>();
@@ -60,32 +69,36 @@ namespace RPGSystem.Equipment
                 case RpgManager.ItemRarity.Common:
                     break;
                 case RpgManager.ItemRarity.Uncommon:
-                    GenerateAffixes(RpgManager.Instance.raritySettings[0].rarityAffixBonusRange.min,
-                        RpgManager.Instance.raritySettings[0].rarityAffixBonusRange.max, weaponTemplate);
-                    break;
-                case RpgManager.ItemRarity.Rare:
                     GenerateAffixes(RpgManager.Instance.raritySettings[1].rarityAffixBonusRange.min,
                         RpgManager.Instance.raritySettings[1].rarityAffixBonusRange.max, weaponTemplate);
                     break;
-                case RpgManager.ItemRarity.Epic:
+                case RpgManager.ItemRarity.Rare:
                     GenerateAffixes(RpgManager.Instance.raritySettings[2].rarityAffixBonusRange.min,
                         RpgManager.Instance.raritySettings[2].rarityAffixBonusRange.max, weaponTemplate);
                     break;
-                case RpgManager.ItemRarity.Unique:
+                case RpgManager.ItemRarity.Epic:
                     GenerateAffixes(RpgManager.Instance.raritySettings[3].rarityAffixBonusRange.min,
                         RpgManager.Instance.raritySettings[3].rarityAffixBonusRange.max, weaponTemplate);
                     break;
+                case RpgManager.ItemRarity.Unique:
+                    GenerateAffixes(RpgManager.Instance.raritySettings[4].rarityAffixBonusRange.min,
+                        RpgManager.Instance.raritySettings[4].rarityAffixBonusRange.max, weaponTemplate);
+                    break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    Debug.LogError("Invalid Rarity");
+                    break;
             }
             
             // Scale the damage based on stats of the item, player and any affixes.
             ScalePhysicalDamage();
             ScaleElementalDamage();
-            
-            // Additional scaling is done after these, based on the player's attributes.
         }
-
+        
+        /// <summary>
+        /// Here we generate any elemental damage based on the weapon template. This is done
+        /// before any affixes are applied and only if the minimum amount of elemental damage is greater than 0.
+        /// </summary>
+        /// <param name="weaponTemplate">The weapon template scriptable object.</param>
         private void GenerateAndAssignElementalDamage(WeaponTemplate weaponTemplate)
         {
             var weaponTemplateElementalDamage = weaponTemplate.baseWeaponStats.elementalDamage;
@@ -112,10 +125,11 @@ namespace RPGSystem.Equipment
             physicalDamage = (int) finalBase;
         }
 
+        /// <summary>
+        /// Applies extra elemental damage to a weapon based on the stats of the item, player tier and any affixes.
+        /// </summary>
         private void ScaleElementalDamage()
         {
-            if (!(elementalDamage.amount > 0)) return;
-            
             // Setting the baseline
             var scaledStat = elementalDamage.amount * (1 + equipmentLevel * RpgManager.Instance.itemLevelFactor);
             var finalBase = scaledStat * RpgManager.Instance.raritySettings
@@ -125,19 +139,11 @@ namespace RPGSystem.Equipment
             // Now adjusting for any affixes that deal elemental damage.
             foreach (var affix in generatedAffixes)
             {
-                if (affix.Type == ItemTemplate.Affix.AffixType.FireDamage)
+                if (affix.Type == ItemTemplate.Affix.AffixType.WeaponElementalDamage)
                 {
-                    if (elementalDamage.type == RpgManager.ElementalDamageType.Fire)
-                    {
-                        Debug.Log("Trying to increase fire damage further.");
-                        var tierStatIncrease = Random.Range(
-                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange
-                                .min.magic,
-                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange
-                                .max.magic);
-                        elementalDamage.amount += (RpgManager.Instance.currentItemTier * tierStatIncrease) *
-                                                  RpgManager.Instance.itemLevelFactor;
-                    }
+                    var tierStatIncrease = affix.Value;
+                    elementalDamage.amount += (RpgManager.Instance.currentItemTier * tierStatIncrease) *
+                                              RpgManager.Instance.itemLevelFactor;
                 }
             }
         }
@@ -152,31 +158,82 @@ namespace RPGSystem.Equipment
         {
             // Choose a random number of affixes at the start
             var randomNumberOfAffixes = Random.Range(rarityAffixBonusRangeMin, rarityAffixBonusRangeMax);
-            var tempListOfPossibleAffixes = new List<ItemTemplate.Affix>(weaponTemplate.possibleAffixes);
+            var tempListOfPossibleAffixes = new List<ItemTemplate.Affix>();
+
+            #region Generating Affix Values based on Level Tier
+
+            var hasGeneratedElementalDamage = false;
+            foreach (var possibleAffix in weaponTemplate.possibleAffixes)
+            {
+                if (possibleAffix.Type == ItemTemplate.Affix.AffixType.PhysicalDamagePercentage)
+                {
+                    var generatedPossibleAffix = possibleAffix;
+                    generatedPossibleAffix.Type = possibleAffix.Type;
+                    generatedPossibleAffix.Value = Random.Range(RpgManager.Instance
+                        .itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange
+                        .min.strength, RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1]
+                        .tierStatsRange
+                        .max.strength);
+                    tempListOfPossibleAffixes.Add(generatedPossibleAffix);
+                }
+
+                if (possibleAffix.Type is ItemTemplate.Affix.AffixType.CritChancePercentage 
+                    or ItemTemplate.Affix.AffixType.Dexterity)
+                {
+                    var generatedPossibleAffix = possibleAffix;
+                    generatedPossibleAffix.Type = possibleAffix.Type;
+                    generatedPossibleAffix.Value = Random.Range(RpgManager.Instance
+                        .itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange
+                        .min.dexterity, RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1]
+                        .tierStatsRange
+                        .max.dexterity);
+                    tempListOfPossibleAffixes.Add(generatedPossibleAffix);
+                }
+                
+                // We only want to generate one elemental damage affix.
+                if (possibleAffix.Type is ItemTemplate.Affix.AffixType.WeaponElementalDamage
+                    && !hasGeneratedElementalDamage)
+                {
+                    var generatedPossibleAffix = possibleAffix;
+                    generatedPossibleAffix.Type = possibleAffix.Type;
+                    generatedPossibleAffix.Value = Random.Range(RpgManager.Instance
+                            .itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange
+                            .min.magic, RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1]
+                            .tierStatsRange.max.magic);
+                    tempListOfPossibleAffixes.Add(generatedPossibleAffix);
+                    hasGeneratedElementalDamage = true;
+                }
+            }
+            #endregion
+            
+            #region Actually assigning affixes to this generated weapon randomly
             for (var i = 0; i < randomNumberOfAffixes; i++)
             {
                 var randomAffixIndex = Random.Range(0, tempListOfPossibleAffixes.Count);
-                
-                // Here we are checking to see of we have any elemental damage that applies to this weapon.
-                // If we do NOT have any elemental damage, then we can't apply any affixes that deal elemental damage.
-                switch (elementalDamage.amount)
+                // Check if we have an elemental damage affix.
+                if (tempListOfPossibleAffixes[randomAffixIndex].Type ==
+                    ItemTemplate.Affix.AffixType.WeaponElementalDamage)
                 {
-                    case 0 when tempListOfPossibleAffixes[i].Type 
-                                == ItemTemplate.Affix.AffixType.FireDamage:
-                    case 0 when tempListOfPossibleAffixes[i].Type 
-                                == ItemTemplate.Affix.AffixType.IceDamage:
-                    case 0 when tempListOfPossibleAffixes[i].Type 
-                                == ItemTemplate.Affix.AffixType.PoisonDamage:
-                    case 0 when tempListOfPossibleAffixes[i].Type 
-                                == ItemTemplate.Affix.AffixType.LightningDamage:
-                        continue;
-                    default:
-                        generatedAffixes.Add(tempListOfPossibleAffixes[randomAffixIndex]);
-                        tempListOfPossibleAffixes.RemoveAt(randomAffixIndex);
-                        break;
+                    // If so, we choose a random element type to apply to the weapon
+                    elementalDamage.type = SelectRandomElementalDamageType();
                 }
+                generatedAffixes.Add(tempListOfPossibleAffixes[randomAffixIndex]);
+                tempListOfPossibleAffixes.RemoveAt(randomAffixIndex);
             }
             tempListOfPossibleAffixes.Clear();
+
+            #endregion
+        }
+        
+        /// <summary>
+        /// Selects a random elemental damage type.
+        /// </summary>
+        /// <returns>A randomly chosen ElementalDamageType.</returns>
+        private RpgManager.ElementalDamageType SelectRandomElementalDamageType()
+        {
+            var randomElementIndex = Random.Range(0, Enum.GetValues(typeof(RpgManager.ElementalDamageType))
+                .Length);
+            return (RpgManager.ElementalDamageType) randomElementIndex;
         }
     }
 }

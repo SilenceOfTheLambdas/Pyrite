@@ -5,7 +5,7 @@ namespace Player
 {
     public class PlayerRpgController : MonoBehaviour
     {
-        private void Start()
+        private void Awake()
         {
             // Setting player starting stats.
             CurrentPlayerLevel = 1;

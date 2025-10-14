@@ -3,7 +3,7 @@ using RPGSystem.Backend;
 using RPGSystem.Item_Definitions;
 using UnityEngine;
 
-namespace RPG_System
+namespace RPGSystem
 {
     public class ItemDatabase : MonoBehaviour
     {

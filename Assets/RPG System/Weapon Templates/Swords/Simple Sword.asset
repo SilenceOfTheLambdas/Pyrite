@@ -28,7 +28,7 @@ MonoBehaviour:
         amount: 1
       max:
         type: 0
-        amount: 1
+        amount: 4
     attackSpeed: 0.8
     attackRange: 1
     criticalDamageMultiplier: 1.3
@@ -37,9 +37,16 @@ MonoBehaviour:
       max: 0.5
   possibleAffixes:
   - <Type>k__BackingField: 0
+    <Value>k__BackingField: 0
   - <Type>k__BackingField: 1
+    <Value>k__BackingField: 0
   - <Type>k__BackingField: 2
+    <Value>k__BackingField: 0
   - <Type>k__BackingField: 3
+    <Value>k__BackingField: 0
   - <Type>k__BackingField: 4
+    <Value>k__BackingField: 0
   - <Type>k__BackingField: 6
+    <Value>k__BackingField: 0
   - <Type>k__BackingField: 8
+    <Value>k__BackingField: 0

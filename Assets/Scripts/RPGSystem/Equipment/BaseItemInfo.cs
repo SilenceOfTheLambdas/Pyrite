@@ -57,15 +57,21 @@ namespace RPGSystem.Equipment
             equipmentName = itemTemplate.itemName;
             itemType = itemTemplate.itemType;
             
-            // TODO: Make rarities weighted!
-            equipmentRarity = (RpgManager.ItemRarity) Random.Range(0, Enum.GetNames(typeof(RpgManager.ItemRarity)).Length);
+            // generate a random number between 0 and 100 and then check if it is less than the rarity drop chance
+            var randomWeight = Random.Range(0, 100);
+            if (randomWeight >= 100f - RpgManager.Instance.raritySettings[0].rarityDropChance)
+                equipmentRarity = RpgManager.ItemRarity.Common;
+            if (randomWeight >= 100f - RpgManager.Instance.raritySettings[1].rarityDropChance)
+                equipmentRarity = RpgManager.ItemRarity.Uncommon;
+            if (randomWeight >= 100f - RpgManager.Instance.raritySettings[2].rarityDropChance)
+                equipmentRarity = RpgManager.ItemRarity.Rare;
+            if (randomWeight >= 100f - RpgManager.Instance.raritySettings[3].rarityDropChance)
+                equipmentRarity = RpgManager.ItemRarity.Epic;
+            if (randomWeight >= 100f - RpgManager.Instance.raritySettings[4].rarityDropChance)
+                equipmentRarity = RpgManager.ItemRarity.Unique;
             
             var maxLevel = RpgManager.Instance.PlayerRpgController.CurrentPlayerLevel + (int)equipmentRarity;
             equipmentLevel = Random.Range(RpgManager.Instance.PlayerRpgController.CurrentPlayerLevel, maxLevel);
-        }
-
-        public virtual void GenerateStats(ItemTemplate itemTemplate)
-        {
         }
     }
 }
