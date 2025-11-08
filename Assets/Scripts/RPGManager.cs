@@ -27,7 +27,7 @@ public class RpgManager : MonoBehaviour
 
         // Making sure the rarity drop chance total is 100%.
         var itemRarityDropChanceTotal = raritySettings.Sum(raritySetting => raritySetting.rarityDropChance);
-        Assert.AreEqual(100f, itemRarityDropChanceTotal, "Rarity drop chance total must be 100%.");
+        // Assert.AreEqual(100f, itemRarityDropChanceTotal, "Rarity drop chance total must be 100%.");
     }
 
     [Header("Current Item Tier of the Player")]

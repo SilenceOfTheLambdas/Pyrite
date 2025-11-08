@@ -20,11 +20,8 @@ namespace RPGSystem.Backend
         /// The name of the item
         /// </summary>
         public string itemName;
-        
-        /// <summary>
-        /// The size in width and height of the item slot.
-        /// </summary>
-        public Vector2Int itemSlotSize;
+
+        public GameObject inventorySlotPrefab;
 
         public ItemType itemType;
         

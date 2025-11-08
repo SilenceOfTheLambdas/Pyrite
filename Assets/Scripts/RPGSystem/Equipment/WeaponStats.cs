@@ -11,7 +11,7 @@ namespace RPGSystem.Equipment
     /// The generated stats of a weapon equipment type.
     /// </summary>
     [Serializable]
-    public abstract class WeaponStats : BaseItemInfo
+    public abstract class WeaponStats : ItemBaseStats
     {
         /// <summary>
         /// The generated physical damage.
@@ -207,21 +207,27 @@ namespace RPGSystem.Equipment
             #endregion
             
             #region Actually assigning affixes to this generated weapon randomly
+
+            
             for (var i = 0; i < randomNumberOfAffixes; i++)
             {
                 var randomAffixIndex = Random.Range(0, tempListOfPossibleAffixes.Count);
-                // Check if we have an elemental damage affix.
-                if (tempListOfPossibleAffixes[randomAffixIndex].Type ==
-                    ItemTemplate.Affix.AffixType.WeaponElementalDamage)
+                if (tempListOfPossibleAffixes.Count > 0)
                 {
-                    // If so, we choose a random element type to apply to the weapon
-                    elementalDamage.type = SelectRandomElementalDamageType();
+                    // Check if we have an elemental damage affix.
+                    if (tempListOfPossibleAffixes[randomAffixIndex].Type ==
+                        ItemTemplate.Affix.AffixType.WeaponElementalDamage)
+                    {
+                        // If so, we choose a random element type to apply to the weapon
+                        elementalDamage.type = SelectRandomElementalDamageType();
+                    }
+
+                    generatedAffixes.Add(tempListOfPossibleAffixes[randomAffixIndex]);
+                    tempListOfPossibleAffixes.RemoveAt(randomAffixIndex);
                 }
-                generatedAffixes.Add(tempListOfPossibleAffixes[randomAffixIndex]);
-                tempListOfPossibleAffixes.RemoveAt(randomAffixIndex);
             }
             tempListOfPossibleAffixes.Clear();
-
+            
             #endregion
         }
         

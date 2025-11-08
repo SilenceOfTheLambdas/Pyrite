@@ -1,14 +1,14 @@
 ﻿using RPGSystem.Item_Definitions;
-using UnityEngine;
 
 namespace RPGSystem.Equipment.Swords
 {
     public class OneHandedSwordStats :  WeaponStats
     {
-        [SerializeField] private WeaponTemplate weaponTemplate;
+        public WeaponTemplate weaponTemplate;
         
         private void Start()
         {
+            itemTemplate = weaponTemplate;
             GenerateBaseWeaponStats(weaponTemplate);
         }
     }

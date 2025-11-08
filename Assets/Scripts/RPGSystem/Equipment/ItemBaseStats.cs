@@ -9,7 +9,7 @@ namespace RPGSystem.Equipment
     /// This class is used to store the base stats of an item.
     /// </summary>
     [Serializable]
-    public abstract class BaseItemInfo : MonoBehaviour
+    public abstract class ItemBaseStats : MonoBehaviour
     {
         /// <summary>
         /// The name of this equipment.
@@ -37,6 +37,12 @@ namespace RPGSystem.Equipment
         /// If the player has this equipped, this is the slot it is equipped in.
         /// </summary>
         public EquipmentSlot equipmentSlot;
+        
+        /// <summary>
+        /// The template for this type of item.
+        /// </summary>
+        [HideInInspector]
+        public ItemTemplate itemTemplate;
         
         public enum EquipmentSlot
         {

@@ -15,7 +15,7 @@ MonoBehaviour:
   mainItemPrefab: {fileID: 2300871832176508303, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
   itemPickupPrefab: {fileID: 919132149155446097, guid: dc71e1d9cf8aa154a800619053b5f6d3, type: 3}
   itemName: Simple Sword
-  itemSlotSize: {x: 2, y: 4}
+  inventorySlotPrefab: {fileID: 3950442174690773874, guid: 58d37a2a7807cec4491a56867d71817b, type: 3}
   itemType: 0
   weaponType: 0
   baseWeaponStats:
