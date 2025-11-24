@@ -43,33 +43,29 @@ namespace RPGSystem.Backend
             public enum AffixType
             {
                 /// e.g +0-10 Strength
-                Strength,
+                AddedStrength,
                 /// e.g +0-10 Intelligence
-                Intelligence,
+                AddedIntelligence,
                 /// e.g +0-10 Dexterity
-                Dexterity,
+                AddedDexterity,
                 /// e.g +0-10 Vitality
-                Vitality,
-                /// e.g +0-10 Magic
-                Magic,
-                /// e.g +0-10 Strength
-                Luck,
+                AddedHealth,
                 /// e.g +0-10% extra physical damage
-                PhysicalDamagePercentage,
+                IncreasedPhysicalDamage,
                 /// e.g +0-10% extra crit chance
-                CritChancePercentage,
+                IncreasedCritChance,
                 /// e.g +0-10 Fire Damage
-                WeaponElementalDamage,
+                AddedElementalDamage,
                 /// e.g +0-10 Armour
-                Armour,
+                AddedArmour,
                 /// e.g +0-10% Fire Resistance
-                FireResistancePercentage,
+                IncreasedFireResistance,
                 /// e.g +0-10% Ice Resistance
-                IceResistancePercentage,
+                IncreasedIceResistance,
                 /// e.g +0-10% Lightning Resistance
-                LightningResistancePercentage,
+                IncreasedLightningResistance,
                 /// e.g +0-10% Poison Resistance
-                PoisonResistancePercentage,
+                IncreasedPoisonResistance,
             }
         }
     }

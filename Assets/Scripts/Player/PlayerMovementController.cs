@@ -8,62 +8,90 @@ namespace Player
 {
     public class PlayerMovementController : MonoBehaviour
     {
-        private void Start()
+        private void Awake()
         {
             _camera = Camera.main;
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
+        }
+        private void Start()
+        {
             Assert.IsNotNull(_navMeshAgent, "Could not find NavMeshAgent attached to player game object.");
             Assert.IsNotNull(_animator, "Player needs to have an Animator component attached.");
+
+            // Use manual rotation so we can face the move direction smoothly
+            _navMeshAgent.updateRotation = false;
+
+            // Cache the action from the reference if provided via inspector
+            if (moveInputAction != null)
+            {
+                _moveAction = moveInputAction.action != null
+                    ? moveInputAction.action
+                    : moveInputAction.asset.FindActionMap("Player").FindAction("Move");
+            }
+        }
+
+        private void OnEnable()
+        {
+            _moveAction?.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _moveAction?.Disable();
         }
 
         private void Update()
         {
             #region Player Movement
-
-            // Check if the player is activating the movement button and the destination is not too close.
-            if (Mouse.current.leftButton.isPressed 
-                && Vector3.Distance(transform.position, GetMouseWorldPosition()) >= 1f)
-            {
-                MovePlayer();
-            }
             
-            // Update Animation
-            _animator.SetFloat(MovementSpeed, _navMeshAgent.desiredVelocity.magnitude);
+            if (_moveAction != null)
+            {
+                var input = _moveAction.ReadValue<Vector2>();
+                MovePlayer(input);
+            }
 
+            // Update Animation based on current movement velocity
+            float speed = (transform.position - _lastPosition).magnitude / Time.deltaTime;
+            _animator.SetFloat(MovementSpeed, speed, 0.1f, Time.deltaTime);
+            _lastPosition = transform.position;
+            
             #endregion
         }
 
-        private void MovePlayer()
+        private void MovePlayer(Vector2 input)
         {
-            var targetPosition = GetMouseWorldPosition();
-            _navMeshAgent.SetDestination(targetPosition);
-        }
-
-        private Vector3 GetMouseWorldPosition()
-        {
+            // Convert input (WASD) to a world-space direction relative to the camera
+            Vector3 camForward = Vector3.forward;
+            Vector3 camRight = Vector3.right;
             if (_camera != null)
             {
-                // Ignore clicks that start over UI
-                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-                    return transform.position;
-                
-                var ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-                if (Physics.Raycast(ray, out var hit, Mathf.Infinity, LayerMask.GetMask("Walkable")))
-                {
-                    if (hit.collider.gameObject.CompareTag("Walkable"))
-                    {
-                        return hit.point;
-                    }
-                }
+                camForward = _camera.transform.forward; camForward.y = 0f; camForward.Normalize();
+                camRight = _camera.transform.right;   camRight.y = 0f;   camRight.Normalize();
             }
-            // Return a player's current position if we do not find a valid world point.
-            return transform.position;
+
+            Vector3 moveDir = (camForward * input.y + camRight * input.x);
+
+            // Apply movement
+            if (moveDir.sqrMagnitude > 0.0001f)
+            {
+                Vector3 displacement = moveDir.normalized * moveSpeed * Time.deltaTime;
+                _navMeshAgent.Move(displacement);
+
+                // Smoothly rotate to face movement direction
+                var targetRot = Quaternion.LookRotation(moveDir, Vector3.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationLerpSpeed * Time.deltaTime);
+            }
         }
 
         private NavMeshAgent _navMeshAgent;
         private Camera _camera;
         private Animator _animator;
+        private InputAction _moveAction;
+        private Vector3 _lastPosition;
+        [SerializeField] private InputActionReference moveInputAction;
+        [SerializeField] private float moveSpeed = 5f;
+        [SerializeField] private float rotationLerpSpeed = 12f;
         
         private static readonly int MovementSpeed = Animator.StringToHash("MovementSpeed");
     }
