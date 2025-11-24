@@ -35,6 +35,18 @@ namespace RPGSystem
             return weaponTemplates;
         }
 
+        private List<ArmourTemplate> GetAllArmourTemplates()
+        {
+            var armourTemplates = new List<ArmourTemplate>();
+            foreach (var itemTemplate in itemTemplates)
+            {
+                if (itemTemplate.itemType == ItemTemplate.ItemType.Armour)
+                    armourTemplates.Add(itemTemplate as ArmourTemplate);
+            }
+            
+            return armourTemplates;
+        }
+
         /// <summary>
         /// Attempts to get a random item baseWeaponStats of a given type.
         /// </summary>
@@ -46,6 +58,12 @@ namespace RPGSystem
             {
                 var weaponsList = GetAllWeaponTemplates();
                 return weaponsList[Random.Range(0, weaponsList.Count)];
+            }
+
+            if (itemType == ItemTemplate.ItemType.Armour)
+            {
+                var armourList = GetAllArmourTemplates();
+                return armourList[Random.Range(0, armourList.Count)];
             }
 
             return null;

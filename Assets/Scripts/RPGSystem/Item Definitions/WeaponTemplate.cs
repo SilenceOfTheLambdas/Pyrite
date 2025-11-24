@@ -21,7 +21,6 @@ namespace RPGSystem.Item_Definitions
             Axe, // One-handed axe
             Dagger, // One-handed dagger
             Bow, // Two-handed bow
-            Lance, // Two-handed lance
             Staff, // Two-handed staff
             Crossbow // Two-handed crossbow
         }

@@ -18,14 +18,14 @@ namespace User_Interface
         /// <summary>
         /// Displayed when hovering over an item in the inventory.
         /// </summary>
-        [SerializeField] private GameObject itemTooltipPanel;
+        private GameObject _currentItemTooltipPanel;
         [SerializeField] private GameObject commonItemTooltipPanel;
         [SerializeField] private GameObject uncommonItemTooltipPanel;
         [SerializeField] private GameObject rareItemTooltipPanel;
         [SerializeField] private GameObject epicItemTooltipPanel;
 
-        [SerializeField] private TextMeshProUGUI itemStatsName;
-        [SerializeField] private TextMeshProUGUI itemStatsDescription;
+        private TextMeshProUGUI _itemStatsName;
+        private TextMeshProUGUI _itemStatsDescription;
 
         private PlayerInventoryManager _playerInventoryManager;
         
@@ -48,7 +48,8 @@ namespace User_Interface
             if (toggleInventoryAction.action.triggered)
             {
                 inventoryPanel.SetActive(!inventoryPanel.activeSelf);
-                itemTooltipPanel.SetActive(false);
+                if (_currentItemTooltipPanel != null)
+                    _currentItemTooltipPanel.SetActive(false);
             }
             
         }
@@ -61,33 +62,38 @@ namespace User_Interface
             switch (item.stats.equipmentRarity)
             {
                 case RpgManager.ItemRarity.Common:
-                    itemTooltipPanel = commonItemTooltipPanel;
+                    _currentItemTooltipPanel = commonItemTooltipPanel;
                     break;
                 case RpgManager.ItemRarity.Uncommon:
-                    itemTooltipPanel = uncommonItemTooltipPanel;
+                    _currentItemTooltipPanel = uncommonItemTooltipPanel;
                     break;
                 case RpgManager.ItemRarity.Rare:
-                    itemTooltipPanel = rareItemTooltipPanel;
+                    _currentItemTooltipPanel = rareItemTooltipPanel;
                     break;
                 case RpgManager.ItemRarity.Epic:
-                    itemTooltipPanel = epicItemTooltipPanel;
+                    _currentItemTooltipPanel = epicItemTooltipPanel;
                     break;
                 case RpgManager.ItemRarity.Unique:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            itemStatsDescription = itemTooltipPanel.transform.Find("Item Stats").GetComponent<TextMeshProUGUI>();
-            if (!itemTooltipPanel.activeSelf)
-                itemTooltipPanel.SetActive(true);
+            _itemStatsDescription = _currentItemTooltipPanel.transform.Find("Item Stats").GetComponent<TextMeshProUGUI>();
+            _itemStatsName = _currentItemTooltipPanel.transform.Find("Item Name").GetComponent<TextMeshProUGUI>();
+            if (!_currentItemTooltipPanel.activeSelf)
+                _currentItemTooltipPanel.SetActive(true);
 
             switch (item.stats.itemType)
             {
                 case ItemTemplate.ItemType.Weapon:
                     var itemStats = item.stats as WeaponStats;
-                    itemStatsDescription.text = itemStats?.GenerateWeaponStatsDescription();
+                    _itemStatsName.SetText(itemStats?.itemTemplate.itemName);
+                    _itemStatsDescription.text = itemStats?.GenerateWeaponStatsDescription();
                     break;
                 case ItemTemplate.ItemType.Armour:
+                    var armourStats = item.stats as ArmourStats;
+                    _itemStatsName.SetText(armourStats?.itemTemplate.itemName);
+                    _itemStatsDescription.text = armourStats?.GenerateArmourStatsDescription();
                     break;
                 case ItemTemplate.ItemType.Accessory:
                     break;
@@ -100,7 +106,7 @@ namespace User_Interface
         
         public void HideItemTooltip()
         {
-            itemTooltipPanel.SetActive(false);
+            _currentItemTooltipPanel.SetActive(false);
         }
     }
 }

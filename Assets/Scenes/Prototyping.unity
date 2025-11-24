@@ -1458,6 +1458,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -3937537288732496050, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
+      propertyPath: equipmentName
+      value: Common Sword 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -3937537288732496050, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
       propertyPath: equipmentRarity
       value: 2
       objectReference: {fileID: 0}
@@ -2648,6 +2652,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474697268}
   m_CullTransparentMesh: 1
+--- !u!1001 &492631993
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: itemType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: equipmentName
+      value: Basic Chest armour
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: equipmentSlot
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: armourTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: e36557948d4078742830a3ac9e2e4fe2, type: 2}
+    - target: {fileID: 2300871832176508303, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_Name
+      value: ChestArmour Pickup (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071071
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7071065
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
 --- !u!1 &505702789
 GameObject:
   m_ObjectHideFlags: 0
@@ -2689,6 +2766,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3937537288732496050, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
+      propertyPath: equipmentName
+      value: Common Sword 2
+      objectReference: {fileID: 0}
     - target: {fileID: -3937537288732496050, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
       propertyPath: equipmentRarity
       value: 1
@@ -3935,6 +4016,79 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ccf9aaf202c761b40a8113ddd8d1734f, type: 3}
   m_PrefabInstance: {fileID: 807487880}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &821965000
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: itemType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: equipmentName
+      value: Basic Chest armour
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: equipmentSlot
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: armourTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: e36557948d4078742830a3ac9e2e4fe2, type: 2}
+    - target: {fileID: 2300871832176508303, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_Name
+      value: ChestArmour Pickup (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071071
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7071065
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
 --- !u!1 &825211120
 GameObject:
   m_ObjectHideFlags: 0
@@ -4010,37 +4164,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825211120}
   m_CullTransparentMesh: 1
---- !u!1 &827313545
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 827313546}
-  m_Layer: 0
-  m_Name: SwordPickup
-  m_TagString: ItemPickup
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!4 &827313546
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827313545}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.174, y: 0.51, z: -1.411}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &838159042
 GameObject:
   m_ObjectHideFlags: 0
@@ -5705,6 +5828,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1028659297}
   m_CullTransparentMesh: 1
+--- !u!1001 &1031246878
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: itemType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: equipmentName
+      value: Basic Chest armour
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: equipmentSlot
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: armourTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: e36557948d4078742830a3ac9e2e4fe2, type: 2}
+    - target: {fileID: 2300871832176508303, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_Name
+      value: ChestArmour Pickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.5680637
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.50000525
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1530075
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071071
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7071065
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
 --- !u!1001 &1031705910
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7519,6 +7715,80 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RPG_System.ItemDatabase
   itemTemplates:
   - {fileID: 11400000, guid: f2471bbb7dad87d46ad7b3543292940c, type: 2}
+  - {fileID: 11400000, guid: e36557948d4078742830a3ac9e2e4fe2, type: 2}
+--- !u!1001 &1569215817
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: itemType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: equipmentName
+      value: Basic Chest armour
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: equipmentSlot
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: armourTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: e36557948d4078742830a3ac9e2e4fe2, type: 2}
+    - target: {fileID: 2300871832176508303, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_Name
+      value: ChestArmour Pickup (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071071
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7071065
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071536044754205445, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
 --- !u!1001 &1571568955
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10146,14 +10416,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   toggleInventoryAction: {fileID: 1949900416646384441, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   inventoryPanel: {fileID: 1885597904}
-  itemTooltipPanel: {fileID: 1700506664}
   commonItemTooltipPanel: {fileID: 1700506664}
   uncommonItemTooltipPanel: {fileID: 2007866257}
   rareItemTooltipPanel: {fileID: 390297236}
   epicItemTooltipPanel: {fileID: 1688039468}
-  tooltipOffset: {x: 100, y: -100}
-  itemStatsName: {fileID: 0}
-  itemStatsDescription: {fileID: 0}
 --- !u!1001 &1977097413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11118,6 +11384,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3937537288732496050, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
+      propertyPath: equipmentName
+      value: Common Sword
+      objectReference: {fileID: 0}
     - target: {fileID: 2300871832176508303, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
       propertyPath: m_Name
       value: Pickup Object
@@ -11605,4 +11875,7 @@ SceneRoots:
   - {fileID: 2113614477}
   - {fileID: 506838817}
   - {fileID: 259494886}
-  - {fileID: 827313546}
+  - {fileID: 1031246878}
+  - {fileID: 1569215817}
+  - {fileID: 821965000}
+  - {fileID: 492631993}

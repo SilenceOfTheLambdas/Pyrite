@@ -1,5 +1,6 @@
 using System;
 using RPGSystem.Backend;
+using RPGSystem.Equipment;
 using RPGSystem.Equipment.Swords;
 using RPGSystem.Inventory_System;
 using UnityEngine;
@@ -10,12 +11,12 @@ namespace Player
     public class PickupObject : MonoBehaviour
     {
         public ItemTemplate.ItemType itemType;
-        private PlayerInventoryManager playerInventoryManager;
+        private PlayerInventoryManager _playerInventoryManager;
 
         private void Start()
         {
-            playerInventoryManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventoryManager>();
-            Assert.IsNotNull(playerInventoryManager, "Player needs to have a PlayerInventoryManager component attached.");
+            _playerInventoryManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventoryManager>();
+            Assert.IsNotNull(_playerInventoryManager, "Player needs to have a PlayerInventoryManager component attached.");
         }
 
         private void OnTriggerEnter(Collider other)
@@ -25,10 +26,18 @@ namespace Player
                 switch (itemType)
                 {
                     case ItemTemplate.ItemType.Weapon:
-                        playerInventoryManager.AddItem(new InventoryItem(GetComponent<OneHandedSwordStats>(), 1));
+                        _playerInventoryManager.AddItem(new InventoryItem(GetComponent<OneHandedSwordStats>(), 1));
                         Destroy(gameObject);
                         break;
                     case ItemTemplate.ItemType.Armour:
+                        var armourStats = GetComponent<ArmourStats>();
+                        armourStats.GenerateBaseArmourStats(armourStats.armourType);
+                        var inventoryItem = new InventoryItem(armourStats, 1)
+                        {
+                            stats = GetComponent<ArmourStats>()
+                        };
+                        _playerInventoryManager.AddItem(inventoryItem);
+                        Destroy(gameObject);
                         break;
                     case ItemTemplate.ItemType.Accessory:
                         break;
