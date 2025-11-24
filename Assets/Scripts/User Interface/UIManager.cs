@@ -23,7 +23,6 @@ namespace User_Interface
         [SerializeField] private GameObject uncommonItemTooltipPanel;
         [SerializeField] private GameObject rareItemTooltipPanel;
         [SerializeField] private GameObject epicItemTooltipPanel;
-        [SerializeField] private Vector2 tooltipOffset;
 
         [SerializeField] private TextMeshProUGUI itemStatsName;
         [SerializeField] private TextMeshProUGUI itemStatsDescription;
@@ -52,9 +51,6 @@ namespace User_Interface
                 itemTooltipPanel.SetActive(false);
             }
             
-            if (itemTooltipPanel.activeSelf)
-                itemTooltipPanel.transform.position = Mouse.current.position.ReadValue() + tooltipOffset;
-            
         }
 
         public void ShowItemTooltip(InventorySlotInfo slotInfo)
@@ -81,7 +77,6 @@ namespace User_Interface
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            itemTooltipPanel.transform.position = Mouse.current.position.ReadValue() + tooltipOffset;
             itemStatsDescription = itemTooltipPanel.transform.Find("Item Stats").GetComponent<TextMeshProUGUI>();
             if (!itemTooltipPanel.activeSelf)
                 itemTooltipPanel.SetActive(true);
