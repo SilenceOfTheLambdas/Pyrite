@@ -1,7 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using RPGSystem.Backend;
 using RPGSystem.Equipment;
+using RPGSystem.Equipment.Swords;
 using UnityEngine;
+using User_Interface;
 
 namespace RPGSystem.Inventory_System
 {
@@ -15,31 +19,41 @@ namespace RPGSystem.Inventory_System
         private Dictionary<Vector2, InventoryItem> inventoryItems = new();
         [SerializeField] private int maximumInventorySize = 42;
         [SerializeField] private GameObject gridItemsParent;
-        
+
         public int CurrentPlayerGold { private set; get; }
 
         public void AddItem(InventoryItem item)
         {
+            // TODO: Handle full inventory better.
             if (inventoryItems.Count >= maximumInventorySize)
                 return;
-            
-            inventoryItems.Add(FindNextEmptySlot(), item);
-            Instantiate(item.stats.itemTemplate.inventorySlotPrefab, gridItemsParent.transform);
+            var itemPosition = FindNextEmptySlot();
+            inventoryItems.Add(itemPosition, item);
+            var itemSlot = Instantiate(item.stats.itemTemplate.inventorySlotPrefab, gridItemsParent.transform);
+            itemSlot.GetComponent<InventorySlotInfo>().itemPosition = itemPosition;
         }
-        
+
         private Vector2 FindNextEmptySlot()
         {
             if (inventoryItems.Count == 0)
                 return Vector2.zero;
 
-            return inventoryItems.Last().Key + Vector2.one;
+            if (inventoryItems.Last().Key.x > 5)
+                return new Vector2(inventoryItems.Last().Key.x + 1, 0);
+
+            return new Vector2(inventoryItems.Last().Key.x, inventoryItems.Last().Key.y + 1);
         }
-        
+
+        public InventoryItem GetItemBySlotPosition(Vector2 position)
+        {
+            return inventoryItems[position];
+        }
+
         public void AddPlayerGold(int amount)
         {
             CurrentPlayerGold += amount;
         }
-        
+
         public void RemovePlayerGold(int amount)
         {
             if (CurrentPlayerGold <= 0)

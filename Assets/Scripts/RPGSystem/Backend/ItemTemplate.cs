@@ -6,17 +6,6 @@ namespace RPGSystem.Backend
     public class ItemTemplate : ScriptableObject
     {
         /// <summary>
-        /// The main prefab for this item, this is the prefab that will be instantiated upon pickup.
-        /// </summary>
-        [Header("ItemTemplate Info")]
-        public GameObject mainItemPrefab;
-
-        /// <summary>
-        /// This is the prefab model shown on the floor when spawned in to the world.
-        /// </summary>
-        public GameObject itemPickupPrefab;
-        
-        /// <summary>
         /// The name of the item
         /// </summary>
         public string itemName;
@@ -24,11 +13,12 @@ namespace RPGSystem.Backend
         public GameObject inventorySlotPrefab;
 
         public ItemType itemType;
-        
+
         /// <summary>
         /// The base type of this item.
         /// </summary>
-        public enum ItemType {
+        public enum ItemType
+        {
             Weapon,
             Armour,
             Accessory,
@@ -43,33 +33,29 @@ namespace RPGSystem.Backend
             public enum AffixType
             {
                 /// e.g +0-10 Strength
-                Strength,
+                AddedStrength,
                 /// e.g +0-10 Intelligence
-                Intelligence,
+                AddedIntelligence,
                 /// e.g +0-10 Dexterity
-                Dexterity,
+                AddedDexterity,
                 /// e.g +0-10 Vitality
-                Vitality,
-                /// e.g +0-10 Magic
-                Magic,
-                /// e.g +0-10 Strength
-                Luck,
+                AddedHealth,
                 /// e.g +0-10% extra physical damage
-                PhysicalDamagePercentage,
+                IncreasedPhysicalDamage,
                 /// e.g +0-10% extra crit chance
-                CritChancePercentage,
+                IncreasedCritChance,
                 /// e.g +0-10 Fire Damage
-                WeaponElementalDamage,
+                AddedElementalDamage,
                 /// e.g +0-10 Armour
-                Armour,
+                AddedArmour,
                 /// e.g +0-10% Fire Resistance
-                FireResistancePercentage,
+                IncreasedFireResistance,
                 /// e.g +0-10% Ice Resistance
-                IceResistancePercentage,
+                IncreasedIceResistance,
                 /// e.g +0-10% Lightning Resistance
-                LightningResistancePercentage,
+                IncreasedLightningResistance,
                 /// e.g +0-10% Poison Resistance
-                PoisonResistancePercentage,
+                IncreasedPoisonResistance,
             }
         }
     }

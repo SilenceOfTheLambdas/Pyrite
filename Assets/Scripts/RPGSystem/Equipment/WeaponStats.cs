@@ -22,22 +22,22 @@ namespace RPGSystem.Equipment
         /// The type of elemental damage this weapon deals. A weapon can only ever do ONE type of elemental damage.
         /// </summary>
         public RpgManager.ElementalDamage elementalDamage;
-        
+
         /// <summary>
         /// The generated attack speed.
         /// </summary>
         public float attackSpeed;
-        
+
         /// <summary>
         /// The generated attack range.
         /// </summary>
         public float attackRange;
-        
+
         [Header("Crit Stats")]
         public float critMultiplier;
-        
+
         public float criticalDamageChance;
-        
+
         /// <summary>
         /// A generated list of affixes that apply to this weapon, this may be empty.
         /// </summary>
@@ -50,8 +50,9 @@ namespace RPGSystem.Equipment
         /// <param name="weaponTemplate">The weapon baseWeaponStats to use.</param>
         public void GenerateBaseWeaponStats(WeaponTemplate weaponTemplate)
         {
+            itemTemplate = weaponTemplate;
             GenerateBaseItemInfo(weaponTemplate);
-            
+
             // Get the base values at level 1
             physicalDamage = Random.Range(weaponTemplate.baseWeaponStats.physicalDamage.min,
                 weaponTemplate.baseWeaponStats.physicalDamage.max);
@@ -61,7 +62,7 @@ namespace RPGSystem.Equipment
             critMultiplier = weaponTemplate.baseWeaponStats.criticalDamageMultiplier;
             criticalDamageChance = Random.Range(weaponTemplate.baseWeaponStats.criticalDamageChance.min,
                 weaponTemplate.baseWeaponStats.criticalDamageChance.max);
-            
+
             // Generate affixes
             generatedAffixes = new List<ItemTemplate.Affix>();
             switch (equipmentRarity)
@@ -88,12 +89,12 @@ namespace RPGSystem.Equipment
                     Debug.LogError("Invalid Rarity");
                     break;
             }
-            
+
             // Scale the damage based on stats of the item, player and any affixes.
             ScalePhysicalDamage();
             ScaleElementalDamage();
         }
-        
+
         /// <summary>
         /// Here we generate any elemental damage based on the weapon template. This is done
         /// before any affixes are applied and only if the minimum amount of elemental damage is greater than 0.
@@ -108,7 +109,7 @@ namespace RPGSystem.Equipment
                 // If it does, then generate a random amount of damage based on the weapon template
                 var damageAmount = Random.Range(weaponTemplateElementalDamage.min.amount,
                     weaponTemplateElementalDamage.max.amount);
-                
+
                 // Then assign the generated ElementalDamage of this weapon
                 RpgManager.ElementalDamage generatedElementalDamage;
                 generatedElementalDamage.type = weaponTemplateElementalDamage.min.type;
@@ -116,13 +117,13 @@ namespace RPGSystem.Equipment
                 elementalDamage = generatedElementalDamage;
             }
         }
-        
+
         private void ScalePhysicalDamage()
         {
             var scaledStat = physicalDamage * (1 + equipmentLevel * RpgManager.Instance.itemLevelFactor);
             var finalBase = scaledStat * RpgManager.Instance.raritySettings
                 .Find(e => e.rarity == equipmentRarity).rarityMultiplier;
-            physicalDamage = (int) finalBase;
+            physicalDamage = (int)finalBase;
         }
 
         /// <summary>
@@ -134,12 +135,12 @@ namespace RPGSystem.Equipment
             var scaledStat = elementalDamage.amount * (1 + equipmentLevel * RpgManager.Instance.itemLevelFactor);
             var finalBase = scaledStat * RpgManager.Instance.raritySettings
                 .Find(e => e.rarity == equipmentRarity).rarityMultiplier;
-            elementalDamage.amount = (int) finalBase;
-                
+            elementalDamage.amount = (int)finalBase;
+
             // Now adjusting for any affixes that deal elemental damage.
             foreach (var affix in generatedAffixes)
             {
-                if (affix.Type == ItemTemplate.Affix.AffixType.WeaponElementalDamage)
+                if (affix.Type == ItemTemplate.Affix.AffixType.AddedElementalDamage)
                 {
                     var tierStatIncrease = affix.Value;
                     elementalDamage.amount += (RpgManager.Instance.currentItemTier * tierStatIncrease) *
@@ -165,7 +166,7 @@ namespace RPGSystem.Equipment
             var hasGeneratedElementalDamage = false;
             foreach (var possibleAffix in weaponTemplate.possibleAffixes)
             {
-                if (possibleAffix.Type == ItemTemplate.Affix.AffixType.PhysicalDamagePercentage)
+                if (possibleAffix.Type == ItemTemplate.Affix.AffixType.IncreasedPhysicalDamage)
                 {
                     var generatedPossibleAffix = possibleAffix;
                     generatedPossibleAffix.Type = possibleAffix.Type;
@@ -177,8 +178,8 @@ namespace RPGSystem.Equipment
                     tempListOfPossibleAffixes.Add(generatedPossibleAffix);
                 }
 
-                if (possibleAffix.Type is ItemTemplate.Affix.AffixType.CritChancePercentage 
-                    or ItemTemplate.Affix.AffixType.Dexterity)
+                if (possibleAffix.Type is ItemTemplate.Affix.AffixType.IncreasedCritChance
+                    or ItemTemplate.Affix.AffixType.AddedDexterity)
                 {
                     var generatedPossibleAffix = possibleAffix;
                     generatedPossibleAffix.Type = possibleAffix.Type;
@@ -189,9 +190,9 @@ namespace RPGSystem.Equipment
                         .max.dexterity);
                     tempListOfPossibleAffixes.Add(generatedPossibleAffix);
                 }
-                
+
                 // We only want to generate one elemental damage affix.
-                if (possibleAffix.Type is ItemTemplate.Affix.AffixType.WeaponElementalDamage
+                if (possibleAffix.Type is ItemTemplate.Affix.AffixType.AddedElementalDamage
                     && !hasGeneratedElementalDamage)
                 {
                     var generatedPossibleAffix = possibleAffix;
@@ -205,10 +206,10 @@ namespace RPGSystem.Equipment
                 }
             }
             #endregion
-            
+
             #region Actually assigning affixes to this generated weapon randomly
 
-            
+
             for (var i = 0; i < randomNumberOfAffixes; i++)
             {
                 var randomAffixIndex = Random.Range(0, tempListOfPossibleAffixes.Count);
@@ -216,7 +217,7 @@ namespace RPGSystem.Equipment
                 {
                     // Check if we have an elemental damage affix.
                     if (tempListOfPossibleAffixes[randomAffixIndex].Type ==
-                        ItemTemplate.Affix.AffixType.WeaponElementalDamage)
+                        ItemTemplate.Affix.AffixType.AddedElementalDamage)
                     {
                         // If so, we choose a random element type to apply to the weapon
                         elementalDamage.type = SelectRandomElementalDamageType();
@@ -227,10 +228,10 @@ namespace RPGSystem.Equipment
                 }
             }
             tempListOfPossibleAffixes.Clear();
-            
+
             #endregion
         }
-        
+
         /// <summary>
         /// Selects a random elemental damage type.
         /// </summary>
@@ -239,7 +240,61 @@ namespace RPGSystem.Equipment
         {
             var randomElementIndex = Random.Range(0, Enum.GetValues(typeof(RpgManager.ElementalDamageType))
                 .Length);
-            return (RpgManager.ElementalDamageType) randomElementIndex;
+            return (RpgManager.ElementalDamageType)randomElementIndex;
+        }
+
+        public string GenerateWeaponStatsDescription()
+        {
+            string itemDescription = "";
+
+            var physicalDamageText = "Physical Dmg: " + physicalDamage;
+            var attackSpeedText = $"Attack Speed: {attackSpeed:F1}";
+            var attackRangeText = "Range: " + attackRange;
+            var criticalDamageChanceText = $"Crit Chance: {criticalDamageChance:F1}%";
+            var critMultiplierText = "Crit Multi: x" + critMultiplier;
+
+            itemDescription += physicalDamageText + "\n"
+                + attackSpeedText + "\n"
+                + attackRangeText + "\n"
+                + criticalDamageChanceText + "\n"
+                + critMultiplierText + "\n";
+
+            // Elemental Damage
+            if (elementalDamage.amount > 0)
+            {
+                itemDescription += $"<color=#F1F06F>{elementalDamage.type} damage: ";
+                itemDescription += $"<color=white>{elementalDamage.amount:F1}\n";
+            }
+
+            // Affixes
+            if (generatedAffixes.Count <= 0) return itemDescription;
+            itemDescription += "<color=grey><align=\"center\">___________________\n";
+            foreach (var generatedAffix in generatedAffixes)
+            {
+                switch (generatedAffix.Type)
+                {
+                    case ItemTemplate.Affix.AffixType.AddedStrength:
+                    case ItemTemplate.Affix.AffixType.AddedIntelligence:
+                    case ItemTemplate.Affix.AffixType.AddedDexterity:
+                    case ItemTemplate.Affix.AffixType.AddedHealth:
+                    case ItemTemplate.Affix.AffixType.AddedElementalDamage:
+                    case ItemTemplate.Affix.AffixType.AddedArmour:
+                        itemDescription += $"Adds {generatedAffix.Value} to {generatedAffix.Type.ToString().Remove(0, 5)}\n";
+                        break;
+                    case ItemTemplate.Affix.AffixType.IncreasedPhysicalDamage:
+                    case ItemTemplate.Affix.AffixType.IncreasedCritChance:
+                    case ItemTemplate.Affix.AffixType.IncreasedFireResistance:
+                    case ItemTemplate.Affix.AffixType.IncreasedIceResistance:
+                    case ItemTemplate.Affix.AffixType.IncreasedLightningResistance:
+                    case ItemTemplate.Affix.AffixType.IncreasedPoisonResistance:
+                        itemDescription += $"Increased {generatedAffix.Type.ToString().Remove(0, 9)} by {generatedAffix.Value}%\n";
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            return itemDescription;
         }
     }
 }

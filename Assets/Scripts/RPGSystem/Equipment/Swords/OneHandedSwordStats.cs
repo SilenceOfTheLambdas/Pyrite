@@ -2,14 +2,11 @@
 
 namespace RPGSystem.Equipment.Swords
 {
-    public class OneHandedSwordStats :  WeaponStats
+    public class OneHandedSwordStats : WeaponStats
     {
-        public WeaponTemplate weaponTemplate;
-        
         private void Start()
         {
-            itemTemplate = weaponTemplate;
-            GenerateBaseWeaponStats(weaponTemplate);
+            GenerateBaseWeaponStats(itemTemplate as WeaponTemplate);
         }
     }
 }
