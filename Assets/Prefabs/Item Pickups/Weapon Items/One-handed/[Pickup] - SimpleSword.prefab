@@ -40,12 +40,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6071536044754205445}
-  - component: {fileID: -3937537288732496050}
   - component: {fileID: 4489510526951903656}
   - component: {fileID: 5137572842667841152}
-  - component: {fileID: 1685870110668799931}
+  - component: {fileID: 4410223681904394520}
   m_Layer: 0
-  m_Name: SimpleSword
+  m_Name: '[Pickup] - SimpleSword'
   m_TagString: ItemPickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,35 +66,6 @@ Transform:
   - {fileID: 7036455414897575945}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
---- !u!114 &-3937537288732496050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2300871832176508303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc64df208b964bb99392617b72ea0573, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RPGSystem.Equipment.Swords.OneHandedSwordStats
-  equipmentName: 
-  equipmentRarity: 0
-  equipmentLevel: 0
-  isEquipped: 0
-  itemType: 0
-  equipmentSlot: 0
-  itemTemplate: {fileID: 0}
-  physicalDamage: 0
-  elementalDamage:
-    type: 0
-    amount: 0
-  attackSpeed: 0
-  attackRange: 0
-  critMultiplier: 0
-  criticalDamageChance: 0
-  generatedAffixes: []
-  weaponTemplate: {fileID: 11400000, guid: f2471bbb7dad87d46ad7b3543292940c, type: 2}
 --- !u!65 &4489510526951903656
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -144,7 +114,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1685870110668799931
+--- !u!114 &4410223681904394520
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,7 +125,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe24c430a274ac4499b2e5bec0562e87, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerItemPickup
+  m_EditorClassIdentifier: Assembly-CSharp::Player.PickupObject
   itemType: 0
 --- !u!1 &3007022014646792042
 GameObject:
@@ -278,4 +248,5 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}

@@ -17,7 +17,8 @@ namespace RPGSystem.Item_Definitions
         
         public enum WeaponType
         {
-            Sword, // One-handed sword
+            Two_Handed_Sword, // Two-handed sword
+            One_Handed_Sword,
             Axe, // One-handed axe
             Dagger, // One-handed dagger
             Bow, // Two-handed bow

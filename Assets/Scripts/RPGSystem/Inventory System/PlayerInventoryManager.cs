@@ -19,11 +19,12 @@ namespace RPGSystem.Inventory_System
         private Dictionary<Vector2, InventoryItem> inventoryItems = new();
         [SerializeField] private int maximumInventorySize = 42;
         [SerializeField] private GameObject gridItemsParent;
-        
+
         public int CurrentPlayerGold { private set; get; }
 
         public void AddItem(InventoryItem item)
         {
+            // TODO: Handle full inventory better.
             if (inventoryItems.Count >= maximumInventorySize)
                 return;
             var itemPosition = FindNextEmptySlot();
@@ -31,7 +32,7 @@ namespace RPGSystem.Inventory_System
             var itemSlot = Instantiate(item.stats.itemTemplate.inventorySlotPrefab, gridItemsParent.transform);
             itemSlot.GetComponent<InventorySlotInfo>().itemPosition = itemPosition;
         }
-        
+
         private Vector2 FindNextEmptySlot()
         {
             if (inventoryItems.Count == 0)
@@ -39,7 +40,7 @@ namespace RPGSystem.Inventory_System
 
             if (inventoryItems.Last().Key.x > 5)
                 return new Vector2(inventoryItems.Last().Key.x + 1, 0);
-            
+
             return new Vector2(inventoryItems.Last().Key.x, inventoryItems.Last().Key.y + 1);
         }
 
@@ -47,12 +48,12 @@ namespace RPGSystem.Inventory_System
         {
             return inventoryItems[position];
         }
-        
+
         public void AddPlayerGold(int amount)
         {
             CurrentPlayerGold += amount;
         }
-        
+
         public void RemovePlayerGold(int amount)
         {
             if (CurrentPlayerGold <= 0)

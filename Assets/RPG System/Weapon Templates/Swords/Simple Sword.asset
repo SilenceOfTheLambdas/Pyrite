@@ -12,12 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f3abcacb174e869d4cb9671848c5ba, type: 3}
   m_Name: Simple Sword
   m_EditorClassIdentifier: Assembly-CSharp::Inventory_System.Item_Definitions.Weapon
-  mainItemPrefab: {fileID: 2300871832176508303, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
-  itemPickupPrefab: {fileID: 919132149155446097, guid: dc71e1d9cf8aa154a800619053b5f6d3, type: 3}
   itemName: Simple Sword
   inventorySlotPrefab: {fileID: 3950442174690773874, guid: 58d37a2a7807cec4491a56867d71817b, type: 3}
   itemType: 0
-  weaponType: 0
+  weaponType: 1
   baseWeaponStats:
     physicalDamage:
       min: 3

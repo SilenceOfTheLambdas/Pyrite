@@ -419,14 +419,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36609781}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
   m_Range: 5.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
@@ -845,14 +845,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 127510354}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
   m_Range: 5.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
@@ -1047,14 +1047,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 157219693}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
   m_Range: 5.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
@@ -1457,14 +1457,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -3937537288732496050, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
-      propertyPath: equipmentName
-      value: Common Sword 3
-      objectReference: {fileID: 0}
-    - target: {fileID: -3937537288732496050, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
-      propertyPath: equipmentRarity
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 2300871832176508303, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
       propertyPath: m_Name
       value: Pickup Object (2)
@@ -1780,14 +1772,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 311570765}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
   m_Range: 5.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
@@ -1907,14 +1899,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 319384859}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
   m_Range: 5.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
@@ -2361,6 +2353,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2665,6 +2658,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: armourType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
       propertyPath: equipmentName
       value: Basic Chest armour
       objectReference: {fileID: 0}
@@ -2766,14 +2763,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -3937537288732496050, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
-      propertyPath: equipmentName
-      value: Common Sword 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -3937537288732496050, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
-      propertyPath: equipmentRarity
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2300871832176508303, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
       propertyPath: m_Name
       value: Pickup Object (1)
@@ -3298,6 +3287,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4029,6 +4019,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: armourType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
       propertyPath: equipmentName
       value: Basic Chest armour
       objectReference: {fileID: 0}
@@ -4387,14 +4381,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 864657095}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
   m_Range: 5.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
@@ -5127,14 +5121,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 927364133}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
   m_Range: 5.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
@@ -5279,6 +5273,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -5838,6 +5833,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
       propertyPath: itemType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: armourType
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
@@ -6552,14 +6551,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192418486}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
   m_Range: 5.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
@@ -7729,6 +7728,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+      propertyPath: armourType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2930977107068377665, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
       propertyPath: equipmentName
       value: Basic Chest armour
       objectReference: {fileID: 0}
@@ -7958,6 +7961,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -8319,6 +8323,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -8989,6 +8994,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -10190,6 +10196,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -10589,6 +10596,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -11077,6 +11085,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -11335,6 +11344,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -11384,13 +11394,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -3937537288732496050, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
-      propertyPath: equipmentName
-      value: Common Sword
-      objectReference: {fileID: 0}
     - target: {fileID: 2300871832176508303, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
       propertyPath: m_Name
-      value: Pickup Object
+      value: Simple Sword Pickup
       objectReference: {fileID: 0}
     - target: {fileID: 6071536044754205445, guid: cd457ceb71beace4fa515400aa6e1fdf, type: 3}
       propertyPath: m_LocalScale.x

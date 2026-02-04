@@ -6,17 +6,6 @@ namespace RPGSystem.Backend
     public class ItemTemplate : ScriptableObject
     {
         /// <summary>
-        /// The main prefab for this item, this is the prefab that will be instantiated upon pickup.
-        /// </summary>
-        [Header("ItemTemplate Info")]
-        public GameObject mainItemPrefab;
-
-        /// <summary>
-        /// This is the prefab model shown on the floor when spawned in to the world.
-        /// </summary>
-        public GameObject itemPickupPrefab;
-        
-        /// <summary>
         /// The name of the item
         /// </summary>
         public string itemName;
@@ -24,11 +13,12 @@ namespace RPGSystem.Backend
         public GameObject inventorySlotPrefab;
 
         public ItemType itemType;
-        
+
         /// <summary>
         /// The base type of this item.
         /// </summary>
-        public enum ItemType {
+        public enum ItemType
+        {
             Weapon,
             Armour,
             Accessory,
