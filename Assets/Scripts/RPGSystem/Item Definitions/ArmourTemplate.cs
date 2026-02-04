@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using RPGSystem.Backend;
-using RPGSystem.Equipment;
 using UnityEngine;
 
 namespace RPGSystem.Item_Definitions
@@ -11,7 +10,11 @@ namespace RPGSystem.Item_Definitions
     public class ArmourTemplate : ItemTemplate
     {
         public ArmourType armourType;
-        // public ArmourStats baseArmourStats;
+        
+        /// <summary>
+        /// Baseline stats for this armour type.
+        /// </summary>
+        public BaselineArmourStats baselineArmourStats;
         
         [Serializable]
         public enum ArmourType
@@ -23,6 +26,6 @@ namespace RPGSystem.Item_Definitions
         }
         
         [Header("Affixes")] [Description("Provide a list of possible affixes that could apply to this item.")]
-        public List<Affix> possibleAffixes;
+        public List<Postfix> possibleAffixes;
     }
 }

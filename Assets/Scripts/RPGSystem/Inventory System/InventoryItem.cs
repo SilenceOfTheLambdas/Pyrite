@@ -1,16 +1,15 @@
-﻿using RPGSystem.Backend;
-using RPGSystem.Equipment;
+﻿using RPGSystem.Equipment;
 
 namespace RPGSystem.Inventory_System
 {
     public class InventoryItem
     {
-        public ItemBaseStats stats;
+        public ItemBaseStats Stats;
         public int itemCount;
 
         public InventoryItem(ItemBaseStats itemBaseStats, int itemCount)
         {
-            stats = itemBaseStats;
+            Stats = itemBaseStats;
             this.itemCount = itemCount;
         }
 

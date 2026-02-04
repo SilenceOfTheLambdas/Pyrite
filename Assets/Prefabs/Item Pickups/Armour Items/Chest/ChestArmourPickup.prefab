@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 4489510526951903656}
   - component: {fileID: 5137572842667841152}
   - component: {fileID: 1685870110668799931}
-  - component: {fileID: -2930977107068377665}
   m_Layer: 0
   m_Name: ChestArmourPickup
   m_TagString: ItemPickup
@@ -128,37 +127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerItemPickup
   itemType: 1
---- !u!114 &-2930977107068377665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2300871832176508303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0674554bb634a798181cddf68befec4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RPGSystem.Equipment.ArmourStats
-  equipmentName: 
-  equipmentRarity: 0
-  equipmentLevel: 0
-  isEquipped: 0
-  itemType: 0
-  equipmentSlot: 0
-  itemTemplate: {fileID: 0}
-  physicalArmour: 0
-  magicalArmour: 0
-  elementalResistances: []
-  statBonuses:
-    strength: 0
-    dexterity: 0
-    intelligence: 0
-    vitality: 0
-    magic: 0
-    luck: 0
-  weight: 0
-  armourType: 0
 --- !u!1 &3007022014646792042
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,4 +248,5 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}

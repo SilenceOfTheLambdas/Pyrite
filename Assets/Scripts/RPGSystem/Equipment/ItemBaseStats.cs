@@ -16,6 +16,8 @@ namespace RPGSystem.Equipment
         /// </summary>
         public string equipmentName;
         
+        public GameObject inventorySlotPrefab;
+        
         /// <summary>
         /// The generated rarity of this equipment.
         /// </summary>
@@ -37,12 +39,6 @@ namespace RPGSystem.Equipment
         /// If the player has this equipped, this is the slot it is equipped in.
         /// </summary>
         public EquipmentSlot equipmentSlot;
-        
-        /// <summary>
-        /// The template for this type of item.
-        /// </summary>
-        [HideInInspector]
-        public ItemTemplate itemTemplate;
         
         public enum EquipmentSlot
         {

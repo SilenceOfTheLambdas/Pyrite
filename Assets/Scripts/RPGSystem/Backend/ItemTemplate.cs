@@ -26,11 +26,11 @@ namespace RPGSystem.Backend
         }
 
         [Serializable]
-        public struct Affix
+        public struct Postfix
         {
-            [field: SerializeField] public AffixType Type { get; set; }
+            [field: SerializeField] public PostfixType Type { get; set; }
             [field: SerializeField] public int Value { get; set; }
-            public enum AffixType
+            public enum PostfixType
             {
                 /// e.g +0-10 Strength
                 AddedStrength,

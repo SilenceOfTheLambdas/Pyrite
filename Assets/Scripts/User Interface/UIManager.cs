@@ -59,7 +59,7 @@ namespace User_Interface
             var itemPosition = slotInfo.itemPosition;
             var item = _playerInventoryManager.GetItemBySlotPosition(itemPosition);
             
-            switch (item.stats.equipmentRarity)
+            switch (item.Stats.equipmentRarity)
             {
                 case RpgManager.ItemRarity.Common:
                     _currentItemTooltipPanel = commonItemTooltipPanel;
@@ -83,16 +83,16 @@ namespace User_Interface
             if (!_currentItemTooltipPanel.activeSelf)
                 _currentItemTooltipPanel.SetActive(true);
 
-            switch (item.stats.itemType)
+            switch (item.Stats.itemType)
             {
                 case ItemTemplate.ItemType.Weapon:
-                    var itemStats = item.stats as WeaponStats;
-                    _itemStatsName.SetText(itemStats?.itemTemplate.itemName);
+                    var itemStats = item.Stats as WeaponStats;
+                    _itemStatsName.SetText(itemStats?.equipmentName);
                     _itemStatsDescription.text = itemStats?.GenerateWeaponStatsDescription();
                     break;
                 case ItemTemplate.ItemType.Armour:
-                    var armourStats = item.stats as ArmourStats;
-                    _itemStatsName.SetText(armourStats?.itemTemplate.itemName);
+                    var armourStats = item.Stats as ArmourStats;
+                    _itemStatsName.SetText(armourStats?.equipmentName);
                     _itemStatsDescription.text = armourStats?.GenerateArmourStatsDescription();
                     break;
                 case ItemTemplate.ItemType.Accessory:

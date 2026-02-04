@@ -29,7 +29,7 @@ namespace RPGSystem.Inventory_System
                 return;
             var itemPosition = FindNextEmptySlot();
             inventoryItems.Add(itemPosition, item);
-            var itemSlot = Instantiate(item.stats.itemTemplate.inventorySlotPrefab, gridItemsParent.transform);
+            var itemSlot = Instantiate(item.Stats.inventorySlotPrefab, gridItemsParent.transform);
             itemSlot.GetComponent<InventorySlotInfo>().itemPosition = itemPosition;
         }
 

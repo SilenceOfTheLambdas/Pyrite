@@ -28,11 +28,17 @@ namespace Player
             {
                 case ItemTemplate.ItemType.Weapon:
                     // Randomly assign a base weapon type
-                    var randomWeaponBaseType =
+                    var randomWeaponTemplate =
                         ItemDatabase.Instance.GetRandomItemTemplateByType(ItemTemplate.ItemType.Weapon) as
                             WeaponTemplate;
-                    var weaponStats = GenerateWeaponStatsType(randomWeaponBaseType);
-                    weaponStats.GenerateBaseWeaponStats(randomWeaponBaseType);
+                    if (randomWeaponTemplate == null)
+                    {
+                        Debug.LogError("Unable to get random weapon template!");
+                        return;
+                    }
+                    var weaponStats = GenerateWeaponStatsType(randomWeaponTemplate);
+                    weaponStats.inventorySlotPrefab = randomWeaponTemplate.inventorySlotPrefab;
+                    weaponStats.GenerateBaseWeaponStats(randomWeaponTemplate);
 
                     _playerInventoryManager.AddItem(new InventoryItem(weaponStats, 1));
                     Destroy(gameObject);
@@ -41,8 +47,14 @@ namespace Player
                     var armourTemplate =
                         ItemDatabase.Instance.GetRandomItemTemplateByType(ItemTemplate.ItemType.Armour) as
                             ArmourTemplate;
+                    if (armourTemplate == null)
+                    {
+                        Debug.LogError("Unable to get an armour template!");
+                        return;
+                    }
                     var armourStats = GenerateArmourStatsType(armourTemplate);
-                    armourStats.GenerateBaseArmourStats(armourStats.armourType);
+                    armourStats.inventorySlotPrefab = armourTemplate.inventorySlotPrefab;
+                    armourStats.GenerateBaseArmourStats(armourTemplate!.armourType, armourTemplate);
                     
                     _playerInventoryManager.AddItem(new InventoryItem(armourStats, 1));
                     Destroy(gameObject);
@@ -87,6 +99,7 @@ namespace Player
                 case ArmourTemplate.ArmourType.Legs:
                 case ArmourTemplate.ArmourType.Boots:
                     var armourStats = gameObject.AddComponent<ArmourStats>();
+                    armourStats.GeneratedArmourStats = armourTemplate.baselineArmourStats;
                     return armourStats;
                 default:
                     throw new ArgumentOutOfRangeException();

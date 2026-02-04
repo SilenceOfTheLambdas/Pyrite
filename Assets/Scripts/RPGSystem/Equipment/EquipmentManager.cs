@@ -39,7 +39,7 @@ namespace RPGSystem.Equipment
 
         private void EquipArmour(ArmourStats armourToEquip)
         {
-            switch (armourToEquip.armourType)
+            switch (armourToEquip.ArmourType)
             {
                 case ArmourTemplate.ArmourType.Head:
                     if (equippedHeadArmour != null)
