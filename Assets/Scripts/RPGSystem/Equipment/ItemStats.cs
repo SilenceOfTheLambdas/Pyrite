@@ -9,7 +9,7 @@ namespace RPGSystem.Equipment
     /// This class is used to store the base stats of an item.
     /// </summary>
     [Serializable]
-    public abstract class ItemBaseStats : MonoBehaviour
+    public abstract class ItemStats : MonoBehaviour
     {
         /// <summary>
         /// The name of this equipment.
@@ -54,7 +54,7 @@ namespace RPGSystem.Equipment
         /// Generates and sets this item base stat. Such as; name, rarity, level, etc.
         /// </summary>
         /// <param name="itemTemplate">The baseWeaponStats to use</param>
-        public void GenerateBaseItemInfo(ItemTemplate itemTemplate)
+        public void GenerateItemNameTypeAndLevel(ItemTemplate itemTemplate)
         {
             equipmentName = itemTemplate.itemName;
             itemType = itemTemplate.itemType;

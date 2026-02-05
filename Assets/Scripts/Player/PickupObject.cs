@@ -54,7 +54,7 @@ namespace Player
                     }
                     var armourStats = GenerateArmourStatsType(armourTemplate);
                     armourStats.inventorySlotPrefab = armourTemplate.inventorySlotPrefab;
-                    armourStats.GenerateBaseArmourStats(armourTemplate!.armourType, armourTemplate);
+                    armourStats.GenerateArmourStats(armourTemplate!.armourType, armourTemplate);
                     
                     _playerInventoryManager.AddItem(new InventoryItem(armourStats, 1));
                     Destroy(gameObject);

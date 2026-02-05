@@ -17,7 +17,7 @@ namespace RPGSystem.Equipment
         public ArmourStats equippedLegArmour;
         public ArmourStats equippedBootArmour;
 
-        public void EquipItem(ItemBaseStats itemToEquip, ItemTemplate.ItemType itemType)
+        public void EquipItem(ItemStats itemToEquip, ItemTemplate.ItemType itemType)
         {
             if (itemType == ItemTemplate.ItemType.Weapon)
             {

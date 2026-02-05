@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace RPGSystem.Equipment
 {
-    public class ArmourStats : ItemBaseStats
+    public class ArmourStats : ItemStats
     {
         /// <summary>
         /// The generated armour stats based on the baseline stats given in the item template.
@@ -25,11 +25,11 @@ namespace RPGSystem.Equipment
         /// 1) Roll a baseline by armour slot, 2) scale by level and rarity, 3) generate affixes by rarity/tier,
         /// 4) apply affix effects to armour/resistances/stats.
         /// </summary>
-        public void GenerateBaseArmourStats(ArmourTemplate.ArmourType typeOfArmourToGenerate, ArmourTemplate armourTemplate)
+        public void GenerateArmourStats(ArmourTemplate.ArmourType typeOfArmourToGenerate, ArmourTemplate armourTemplate)
         {
             ArmourType = typeOfArmourToGenerate;
             // Generate base item info
-            GenerateBaseItemInfo(armourTemplate);
+            GenerateItemNameTypeAndLevel(armourTemplate);
             
             // Map equipment slot from armour type
             switch (typeOfArmourToGenerate)
@@ -103,7 +103,7 @@ namespace RPGSystem.Equipment
             var tempListOfPossibleAffixes = new List<ItemTemplate.Postfix>();
 
             // Prepare affix values scaled to current item tier, similar to WeaponStats
-            foreach (var possibleAffix in armourTemplate.possibleAffixes)
+            foreach (var possibleAffix in armourTemplate.possiblePostfixes)
             {
                 var affix = possibleAffix;
                 switch (affix.Type)

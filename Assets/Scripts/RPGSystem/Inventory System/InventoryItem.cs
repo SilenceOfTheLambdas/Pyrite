@@ -4,12 +4,12 @@ namespace RPGSystem.Inventory_System
 {
     public class InventoryItem
     {
-        public ItemBaseStats Stats;
+        public ItemStats Stats;
         public int itemCount;
 
-        public InventoryItem(ItemBaseStats itemBaseStats, int itemCount)
+        public InventoryItem(ItemStats itemStats, int itemCount)
         {
-            Stats = itemBaseStats;
+            Stats = itemStats;
             this.itemCount = itemCount;
         }
 
