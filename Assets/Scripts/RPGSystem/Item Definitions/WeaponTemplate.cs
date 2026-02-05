@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace RPGSystem.Item_Definitions
 {
-    [CreateAssetMenu(fileName = "BaseWeaponTemplate", menuName = "Inventory/Items/New BaseWeaponTemplate")]
+    [CreateAssetMenu(fileName = "BaseWeaponTemplate", menuName = "Inventory/Items/New WeaponTemplate")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class WeaponTemplate : ItemTemplate
     {

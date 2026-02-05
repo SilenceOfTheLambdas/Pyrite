@@ -10,24 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f861b7fdecf64f53bd88066207c3c74f, type: 3}
-  m_Name: Scrap Leather Chest
+  m_Name: Leather Armour
   m_EditorClassIdentifier: Assembly-CSharp::RPGSystem.Item_Definitions.ArmourTemplate
-  itemName: Scrap Leather Chest
+  itemName: Leather Armour
   inventorySlotPrefab: {fileID: 3950442174690773874, guid: 58d37a2a7807cec4491a56867d71817b, type: 3}
   itemType: 1
   armourType: 1
   baselineArmourStats:
-    physicalArmour: 2
+    physicalArmour: 0
     magicalArmour: 0
-    elementalResistances:
-    - damageType: 0
-      resistancePercentage: 0
-    - damageType: 1
-      resistancePercentage: 0
-    - damageType: 2
-      resistancePercentage: 0
-    - damageType: 3
-      resistancePercentage: 0
+    elementalResistances: []
     statBonuses:
       strength: 0
       dexterity: 0
@@ -36,4 +28,14 @@ MonoBehaviour:
       magic: 0
       luck: 0
     generatedPostfixes: []
-  possibleAffixes: []
+  possibleAffixes:
+  - <Type>k__BackingField: 2
+    <Value>k__BackingField: 0
+  - <Type>k__BackingField: 8
+    <Value>k__BackingField: 0
+  - <Type>k__BackingField: 9
+    <Value>k__BackingField: 0
+  - <Type>k__BackingField: 10
+    <Value>k__BackingField: 0
+  - <Type>k__BackingField: 11
+    <Value>k__BackingField: 0

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace RPGSystem.Item_Definitions
 {
-    [CreateAssetMenu(fileName = "BaseWeaponTemplate", menuName = "Inventory/Items/new BaseArmourTemplate")]
+    [CreateAssetMenu(fileName = "BaseWeaponTemplate", menuName = "Inventory/Items/New ArmourTemplate")]
     public class ArmourTemplate : ItemTemplate
     {
         public ArmourType armourType;

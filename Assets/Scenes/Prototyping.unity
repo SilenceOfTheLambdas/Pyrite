@@ -7427,6 +7427,7 @@ MonoBehaviour:
   itemTemplates:
   - {fileID: 11400000, guid: f2471bbb7dad87d46ad7b3543292940c, type: 2}
   - {fileID: 11400000, guid: e36557948d4078742830a3ac9e2e4fe2, type: 2}
+  - {fileID: 11400000, guid: 6d29851af76e6af4c824a19e3f0baaac, type: 2}
 --- !u!1001 &1571568955
 PrefabInstance:
   m_ObjectHideFlags: 0
