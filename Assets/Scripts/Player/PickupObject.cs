@@ -18,7 +18,8 @@ namespace Player
         private void Start()
         {
             _playerInventoryManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventoryManager>();
-            Assert.IsNotNull(_playerInventoryManager, "Player needs to have a PlayerInventoryManager component attached.");
+            Assert.IsNotNull(_playerInventoryManager,
+                "Player needs to have a PlayerInventoryManager component attached.");
         }
 
         private void OnTriggerEnter(Collider other)

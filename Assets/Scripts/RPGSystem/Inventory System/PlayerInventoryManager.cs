@@ -1,11 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using RPGSystem.Backend;
-using RPGSystem.Equipment;
-using RPGSystem.Equipment.Swords;
 using UnityEngine;
-using User_Interface;
 
 namespace RPGSystem.Inventory_System
 {

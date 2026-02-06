@@ -58,14 +58,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2300871832176508303}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.7071065, w: 0.7071071}
+  m_LocalRotation: {x: -0, y: -0, z: -0.00000004470348, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7036455414897575945}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4489510526951903656
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -81,12 +81,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.8818121, y: 2.2472456, z: 3.8770986}
-  m_Center: {x: -0.44090605, y: 1.0615679, z: -0.46822578}
+  m_Size: {x: 1.4818524, y: 0.16502357, z: 0.29262543}
+  m_Center: {x: -0.64088607, y: 0.020456286, z: -0.01708094}
 --- !u!54 &5137572842667841152
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -109,8 +109,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0

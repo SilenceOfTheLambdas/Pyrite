@@ -12,6 +12,8 @@ namespace RPGSystem.Backend
 
         public GameObject inventorySlotPrefab;
 
+        public GameObject itemPickupPrefab;
+
         public ItemType itemType;
 
         /// <summary>
@@ -23,6 +25,13 @@ namespace RPGSystem.Backend
             Armour,
             Accessory,
             Potion
+        }
+
+        private void Awake()
+        {
+            // Check to make sure required properties are set
+            if (itemName == null || inventorySlotPrefab == null || itemPickupPrefab == null)
+                Debug.LogError("Item template missing required properties!");
         }
 
         [Serializable]
