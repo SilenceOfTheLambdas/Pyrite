@@ -55,7 +55,8 @@ namespace Player
                         Debug.LogError("Unable to get an armour template!");
                         return;
                     }
-                    var armourStats = GenerateArmourStatsType(armourTemplate);
+                    var armourStats = gameObject.AddComponent<ArmourStats>();
+                    armourStats.GeneratedArmourStats = armourTemplate.baselineArmourStats;
                     armourStats.inventorySlotPrefab = armourTemplate.inventorySlotPrefab;
                     armourStats.GenerateItemNameTypeAndLevel(armourTemplate, itemRarity);
                     armourStats.GenerateArmourStats(armourTemplate!.armourType, armourTemplate);
@@ -91,25 +92,6 @@ namespace Player
             }
 
             Debug.LogError("Unable to find the weapon type from the weapon template!");
-            return null;
-        }
-
-        private ArmourStats GenerateArmourStatsType(ArmourTemplate armourTemplate)
-        {
-            switch (armourTemplate.armourType)
-            {
-                case ArmourTemplate.ArmourType.Head:
-                case ArmourTemplate.ArmourType.Chest:
-                case ArmourTemplate.ArmourType.Legs:
-                case ArmourTemplate.ArmourType.Boots:
-                    var armourStats = gameObject.AddComponent<ArmourStats>();
-                    armourStats.GeneratedArmourStats = armourTemplate.baselineArmourStats;
-                    return armourStats;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            
-            Debug.LogError("Unable to find the armour type from the armour template!");
             return null;
         }
     }
