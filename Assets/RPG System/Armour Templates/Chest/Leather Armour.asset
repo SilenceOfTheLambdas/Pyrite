@@ -18,9 +18,17 @@ MonoBehaviour:
   itemType: 1
   armourType: 1
   baselineArmourStats:
-    physicalArmour: 0
+    physicalArmour: 12
     magicalArmour: 0
-    elementalResistances: []
+    elementalResistances:
+    - damageType: 0
+      resistancePercentage: 0
+    - damageType: 1
+      resistancePercentage: 0
+    - damageType: 2
+      resistancePercentage: 0
+    - damageType: 3
+      resistancePercentage: 0
     statBonuses:
       strength: 0
       dexterity: 0
@@ -29,4 +37,16 @@ MonoBehaviour:
       magic: 0
       luck: 0
     generatedPostfixes: []
-  possiblePostfixes: []
+  possiblePostfixes:
+  - <Type>k__BackingField: 2
+    <Value>k__BackingField: 1
+  - <Type>k__BackingField: 3
+    <Value>k__BackingField: 10
+  - <Type>k__BackingField: 11
+    <Value>k__BackingField: 2
+  - <Type>k__BackingField: 8
+    <Value>k__BackingField: 1
+  - <Type>k__BackingField: 9
+    <Value>k__BackingField: 1
+  - <Type>k__BackingField: 10
+    <Value>k__BackingField: 1

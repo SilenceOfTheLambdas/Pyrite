@@ -28,8 +28,6 @@ namespace RPGSystem.Equipment
         public void GenerateArmourStats(ArmourTemplate.ArmourType typeOfArmourToGenerate, ArmourTemplate armourTemplate)
         {
             ArmourType = typeOfArmourToGenerate;
-            // Generate base item info
-            GenerateItemNameTypeAndLevel(armourTemplate);
             
             // Map equipment slot from armour type
             switch (typeOfArmourToGenerate)
@@ -48,7 +46,7 @@ namespace RPGSystem.Equipment
                     break;
             }
 
-            // Initialize resistances for all elements at 0 so we can safely add to them.
+            // Initialise resistances for all elements at 0 so we can safely add to them.
             InitializeElementalResistances();
 
             // 1) Scale by level and rarity
@@ -238,10 +236,13 @@ namespace RPGSystem.Equipment
 
             // Base armour values and weight
             var physicalArmourText = "Physical Armour: " + GeneratedArmourStats.physicalArmour;
-            var magicalArmourText = "Magical Armour: " + GeneratedArmourStats.magicalArmour;
-
-            itemDescription += physicalArmourText + "\n"
-                               + magicalArmourText + "\n";
+            itemDescription += physicalArmourText + "\n";
+            
+            if (GeneratedArmourStats.magicalArmour > 0)
+            {
+                var magicalArmourText = "Magical Armour: " + GeneratedArmourStats.magicalArmour;
+                itemDescription +=  magicalArmourText + "\n";
+            }
 
             // Core stat bonuses (only show if positive)
             bool hasAnyCoreBonus = GeneratedArmourStats.statBonuses.strength > 0 || GeneratedArmourStats.statBonuses.dexterity > 0 ||

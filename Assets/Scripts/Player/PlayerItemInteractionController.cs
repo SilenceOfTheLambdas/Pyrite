@@ -30,6 +30,12 @@ namespace Player
                     var lootContainer = interactableObject.GetComponent<LootContainer>();
                     lootContainer.DropLootAroundContainer();
                 }
+
+                if (interactableObject.CompareTag("ItemPickup"))
+                {
+                    var pickupObject = interactableObject.GetComponent<PickupObject>();
+                    pickupObject.PickupDroppedItemFromLootContainer();
+                }
             }
         }
     }

@@ -11,7 +11,7 @@ namespace RPGSystem.Equipment
     /// The generated stats of a weapon equipment type.
     /// </summary>
     [Serializable]
-    public abstract class WeaponStats : ItemStats
+    public class WeaponStats : ItemStats
     {
         /// <summary>
         /// The generated physical damage.
@@ -50,8 +50,6 @@ namespace RPGSystem.Equipment
         /// <param name="weaponTemplate">The weapon baseWeaponStats to use.</param>
         public void GenerateBaseWeaponStats(WeaponTemplate weaponTemplate)
         {
-            GenerateItemNameTypeAndLevel(weaponTemplate);
-
             // Get the base values at level 1
             physicalDamage = Random.Range(weaponTemplate.baseWeaponStats.physicalDamage.min,
                 weaponTemplate.baseWeaponStats.physicalDamage.max);

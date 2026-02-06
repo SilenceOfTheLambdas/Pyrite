@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 4489510526951903656}
   - component: {fileID: 5137572842667841152}
   - component: {fileID: 4410223681904394520}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: '[Pickup] - SimpleSword'
   m_TagString: ItemPickup
   m_Icon: {fileID: 0}

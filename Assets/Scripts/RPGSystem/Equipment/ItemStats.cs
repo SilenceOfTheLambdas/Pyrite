@@ -75,5 +75,15 @@ namespace RPGSystem.Equipment
             var maxLevel = RpgManager.Instance.PlayerRpgController.CurrentPlayerLevel + (int)equipmentRarity;
             equipmentLevel = Random.Range(RpgManager.Instance.PlayerRpgController.CurrentPlayerLevel, maxLevel);
         }
+        
+        public void GenerateItemNameTypeAndLevel(ItemTemplate itemTemplate, RpgManager.ItemRarity itemRarity)
+        {
+            equipmentName = itemTemplate.itemName;
+            itemType = itemTemplate.itemType;
+            equipmentRarity = itemRarity;
+            
+            var maxLevel = RpgManager.Instance.PlayerRpgController.CurrentPlayerLevel + (int)equipmentRarity;
+            equipmentLevel = Random.Range(RpgManager.Instance.PlayerRpgController.CurrentPlayerLevel, maxLevel);
+        }
     }
 }

@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using Player;
 using RPGSystem;
 using RPGSystem.Backend;
 using UnityEngine;
@@ -21,8 +21,7 @@ namespace World
         /// <summary>
         /// Container rarity sets the rarity of ALL items that are dropped.
         /// </summary>
-        [NonSerialized]
-        public RpgManager.ItemRarity ContainerRarity;
+        public RpgManager.ItemRarity containerRarity;
 
         private readonly List<ItemTemplate> _generatedLootItemsToDrop = new();
 
@@ -42,15 +41,15 @@ namespace World
         {
             var randomWeight = Random.Range(0, 100);
             if (randomWeight >= 100f - RpgManager.Instance.raritySettings[0].rarityDropChance)
-                ContainerRarity = RpgManager.ItemRarity.Common;
+                containerRarity = RpgManager.ItemRarity.Common;
             if (randomWeight >= 100f - RpgManager.Instance.raritySettings[1].rarityDropChance)
-                ContainerRarity = RpgManager.ItemRarity.Uncommon;
+                containerRarity = RpgManager.ItemRarity.Uncommon;
             if (randomWeight >= 100f - RpgManager.Instance.raritySettings[2].rarityDropChance)
-                ContainerRarity = RpgManager.ItemRarity.Rare;
+                containerRarity = RpgManager.ItemRarity.Rare;
             if (randomWeight >= 100f - RpgManager.Instance.raritySettings[3].rarityDropChance)
-                ContainerRarity = RpgManager.ItemRarity.Epic;
+                containerRarity = RpgManager.ItemRarity.Epic;
             if (randomWeight >= 100f - RpgManager.Instance.raritySettings[4].rarityDropChance)
-                ContainerRarity = RpgManager.ItemRarity.Unique;
+                containerRarity = RpgManager.ItemRarity.Unique;
         }
 
         private void GenerateLootItemsToDrop()
@@ -80,7 +79,9 @@ namespace World
                     0.5f,
                     Random.insideUnitCircle.y * itemDropPositionSpacing);
                 lastItemPosition = dropLocation;
-                Instantiate(itemTemplate.itemPickupPrefab, dropLocation, Quaternion.identity);
+                
+                var item = Instantiate(itemTemplate.itemPickupPrefab, dropLocation, Quaternion.identity);
+                item.GetComponent<PickupObject>().SetItemRarityAndTemplate(itemTemplate,containerRarity);
             }
 
             _hasBeenUsed = true;

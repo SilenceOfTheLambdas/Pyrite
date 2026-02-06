@@ -18,7 +18,7 @@ MonoBehaviour:
   itemType: 1
   armourType: 1
   baselineArmourStats:
-    physicalArmour: 2
+    physicalArmour: 5
     magicalArmour: 0
     elementalResistances:
     - damageType: 0
@@ -37,4 +37,12 @@ MonoBehaviour:
       magic: 0
       luck: 0
     generatedPostfixes: []
-  possiblePostfixes: []
+  possiblePostfixes:
+  - <Type>k__BackingField: 2
+    <Value>k__BackingField: 2
+  - <Type>k__BackingField: 3
+    <Value>k__BackingField: 10
+  - <Type>k__BackingField: 5
+    <Value>k__BackingField: 2
+  - <Type>k__BackingField: 11
+    <Value>k__BackingField: 3
