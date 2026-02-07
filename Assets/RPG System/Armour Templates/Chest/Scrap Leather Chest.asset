@@ -16,9 +16,13 @@ MonoBehaviour:
   inventorySlotPrefab: {fileID: 3950442174690773874, guid: 58d37a2a7807cec4491a56867d71817b, type: 3}
   itemPickupPrefab: {fileID: 2300871832176508303, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
   itemType: 1
+  baselineItemRequirements:
+    playerStrengthRequirement: 0
+    playerDexterityRequirement: 0
+    playerIntelligenceRequirement: 0
   armourType: 1
   baselineArmourStats:
-    physicalArmour: 5
+    physicalArmour: 2
     magicalArmour: 0
     elementalResistances:
     - damageType: 0
@@ -28,15 +32,14 @@ MonoBehaviour:
     - damageType: 2
       resistancePercentage: 0
     - damageType: 3
-      resistancePercentage: 0
+      resistancePercentage: 3
     statBonuses:
       strength: 0
-      dexterity: 0
+      dexterity: 35
       intelligence: 0
-      vitality: 0
+      vitality: 46
       magic: 0
       luck: 0
-    generatedPostfixes: []
   possiblePostfixes:
   - <Type>k__BackingField: 2
     <Value>k__BackingField: 2

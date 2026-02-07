@@ -274,7 +274,7 @@ namespace RPGSystem.Equipment
 
             // Affixes
             if (generatedAffixes.Count <= 0) return itemDescription;
-            itemDescription += "<color=grey><align=\"center\">___________________\n";
+            itemDescription += "<color=grey><align=\"center\">___________________\n<align=\"left\"><size=60%>";
             foreach (var generatedAffix in generatedAffixes)
             {
                 switch (generatedAffix.Type)

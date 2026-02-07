@@ -20,7 +20,7 @@ namespace RPGSystem.Backend
 
         [Header("Stat Bonuses")] [SerializeField]
         public RpgManager.CorePlayerStats statBonuses;
-        
+
         [NonSerialized]
         public List<ItemTemplate.Postfix> GeneratedPostfixes;
 
@@ -34,6 +34,30 @@ namespace RPGSystem.Backend
             public RpgManager.ElementalDamageType damageType;
             [Range(0, 100)] [SerializeField]
             public float resistancePercentage;
+        }
+
+        /// <summary>
+        /// Creates a deep copy of this BaselineArmourStats instance.
+        /// </summary>
+        public BaselineArmourStats DeepCopy()
+        {
+            var copy = new BaselineArmourStats
+            {
+                physicalArmour = this.physicalArmour,
+                magicalArmour = this.magicalArmour,
+                statBonuses = this.statBonuses,
+                elementalResistances = new List<ElementalResistance>()
+            };
+
+            if (this.elementalResistances != null)
+            {
+                foreach (var resistance in this.elementalResistances)
+                {
+                    copy.elementalResistances.Add(resistance);
+                }
+            }
+
+            return copy;
         }
     }
 }

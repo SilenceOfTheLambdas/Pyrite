@@ -12,8 +12,7 @@ namespace RPGSystem.Equipment
         /// <summary>
         /// The generated armour stats based on the baseline stats given in the item template.
         /// </summary>
-        [NonSerialized]
-        public BaselineArmourStats GeneratedArmourStats;
+        [NonSerialized] public BaselineArmourStats GeneratedArmourStats;
         
         public ArmourStats(BaselineArmourStats baselineArmourStats) => GeneratedArmourStats = baselineArmourStats;
 
@@ -56,8 +55,9 @@ namespace RPGSystem.Equipment
             GeneratedArmourStats.GeneratedPostfixes = new List<ItemTemplate.Postfix>();
             var raritySettings = RpgManager.Instance.raritySettings
                 .Find(e => e.rarity == equipmentRarity);
+            
             // If rarity allows any affixes, generate them using the ArmourTemplate's possible affixes
-            if (raritySettings.rarityAffixBonusRange.max > 0)
+            if (raritySettings.rarityAffixBonusRange.min > 0)
             {
                 GenerateAffixes(raritySettings.rarityAffixBonusRange.min,
                     raritySettings.rarityAffixBonusRange.max, armourTemplate);
@@ -236,6 +236,7 @@ namespace RPGSystem.Equipment
         public string GenerateArmourStatsDescription()
         {
             var itemDescription = "";
+            itemDescription += $"{equipmentRarity}:{equipmentLevel}\n";
 
             // Base armour values and weight
             var physicalArmourText = "Physical Armour: " + GeneratedArmourStats.physicalArmour;
@@ -274,7 +275,7 @@ namespace RPGSystem.Equipment
             // Affixes (mirror weapon formatting)
             if (GeneratedArmourStats.GeneratedPostfixes != null && GeneratedArmourStats.GeneratedPostfixes.Count > 0)
             {
-                itemDescription += "<color=grey><align=\"center\">___________________\n";
+                itemDescription += "<color=grey><align=\"center\">________\n<align=\"left\"><size=60%>";
                 foreach (var generatedAffix in GeneratedArmourStats.GeneratedPostfixes)
                 {
                     switch (generatedAffix.Type)

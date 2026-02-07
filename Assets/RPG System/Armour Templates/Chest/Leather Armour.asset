@@ -22,22 +22,22 @@ MonoBehaviour:
     playerIntelligenceRequirement: 0
   armourType: 1
   baselineArmourStats:
-    physicalArmour: 12
+    physicalArmour: 4
     magicalArmour: 0
     elementalResistances:
     - damageType: 0
-      resistancePercentage: 0
+      resistancePercentage: 2
     - damageType: 1
-      resistancePercentage: 0
+      resistancePercentage: 1
     - damageType: 2
-      resistancePercentage: 0
+      resistancePercentage: 2
     - damageType: 3
       resistancePercentage: 0
     statBonuses:
       strength: 0
-      dexterity: 0
+      dexterity: 15
       intelligence: 0
-      vitality: 0
+      vitality: 25
       magic: 0
       luck: 0
   possiblePostfixes:

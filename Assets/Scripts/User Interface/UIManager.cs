@@ -16,6 +16,7 @@ namespace User_Interface
 
         [SerializeField] private InputActionReference toggleInventoryAction;
         [SerializeField] private GameObject inventoryPanel;
+        [SerializeField] private Vector2 tooltipOffset = new Vector2(15, -15);
         /// <summary>
         /// Displayed when hovering over an item in the inventory.
         /// </summary>
@@ -54,7 +55,11 @@ namespace User_Interface
                 if (_currentItemTooltipPanel != null)
                     _currentItemTooltipPanel.SetActive(false);
             }
-            
+
+            if (_currentItemTooltipPanel != null && _currentItemTooltipPanel.activeSelf)
+            {
+                UpdateTooltipPosition();
+            }
         }
 
         public void ShowItemTooltip(InventorySlotInfo slotInfo)
@@ -88,7 +93,9 @@ namespace User_Interface
             _itemStatsDescription = _currentItemTooltipPanel.transform.Find("Item Stats").GetComponent<TextMeshProUGUI>();
             _itemStatsName = _currentItemTooltipPanel.transform.Find("Item Name").GetComponent<TextMeshProUGUI>();
             if (!_currentItemTooltipPanel.activeSelf)
+            {
                 _currentItemTooltipPanel.SetActive(true);
+            }
 
             switch (item.Stats.itemType)
             {
@@ -168,6 +175,21 @@ namespace User_Interface
         public void HideItemTooltip()
         {
             _currentItemTooltipPanel.SetActive(false);
+        }
+
+        private void UpdateTooltipPosition()
+        {
+            var mousePosition = Mouse.current.position.ReadValue();
+            var rectTransform = _currentItemTooltipPanel.GetComponent<RectTransform>();
+
+            // Start with default positioning (bottom-right of cursor)
+            var pivotX = -0.02f;
+            var pivotY = 1.02f;
+            var offsetX = tooltipOffset.x;
+            var offsetY = tooltipOffset.y;
+
+            rectTransform.pivot = new Vector2(pivotX, pivotY);
+            _currentItemTooltipPanel.transform.position = mousePosition + new Vector2(offsetX, offsetY);
         }
     }
 }

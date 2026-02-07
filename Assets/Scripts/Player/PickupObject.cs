@@ -56,11 +56,11 @@ namespace Player
                         return;
                     }
                     var armourStats = gameObject.AddComponent<ArmourStats>();
-                    armourStats.GeneratedArmourStats = armourTemplate.baselineArmourStats;
+                    armourStats.GeneratedArmourStats = armourTemplate.baselineArmourStats.DeepCopy();
                     armourStats.inventorySlotPrefab = armourTemplate.inventorySlotPrefab;
                     armourStats.GenerateItemNameTypeAndLevel(armourTemplate, itemRarity);
                     armourStats.GenerateArmourStats(armourTemplate!.armourType, armourTemplate);
-                    
+
                     _playerInventoryManager.AddItem(new InventoryItem(armourStats, 1));
                     Destroy(gameObject);
                     break;
