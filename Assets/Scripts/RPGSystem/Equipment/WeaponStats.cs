@@ -41,30 +41,35 @@ namespace RPGSystem.Equipment
         /// <summary>
         /// A generated list of affixes that apply to this weapon, this may be empty.
         /// </summary>
-        [Header("Affixes")]
-        public List<ItemTemplate.Postfix> generatedAffixes;
+        [Header("Affixes")] 
+        public List<ItemTemplate.Postfix> generatedAffixes = new();
 
         /// <summary>
         /// Generates the stats for all weapon types.
         /// </summary>
         /// <param name="weaponTemplate">The weapon baseWeaponStats to use.</param>
-        public void GenerateBaseWeaponStats(WeaponTemplate weaponTemplate)
+        public void GenerateWeaponStats(WeaponTemplate weaponTemplate)
         {
             // Get the base values at level 1
             physicalDamage = Random.Range(weaponTemplate.baseWeaponStats.physicalDamage.min,
                 weaponTemplate.baseWeaponStats.physicalDamage.max);
+            
+            // 1) First, we generate any elemental damage that may apply to this weapon
             GenerateAndAssignElementalDamage(weaponTemplate);
+            
+            // 2) Then we assign basic stats like attack speed, range, crit multiplier and critical damage chance.
+            // These values are not scaled.
             attackSpeed = weaponTemplate.baseWeaponStats.attackSpeed;
             attackRange = weaponTemplate.baseWeaponStats.attackRange;
             critMultiplier = weaponTemplate.baseWeaponStats.criticalDamageMultiplier;
             criticalDamageChance = Random.Range(weaponTemplate.baseWeaponStats.criticalDamageChance.min,
                 weaponTemplate.baseWeaponStats.criticalDamageChance.max);
-
-            // Generate affixes
+            
+            // 3) This is where any Postfixes are applied
             generatedAffixes = new List<ItemTemplate.Postfix>();
             switch (equipmentRarity)
             {
-                case RpgManager.ItemRarity.Common:
+                case RpgManager.ItemRarity.Common: // No Postfixes applied
                     break;
                 case RpgManager.ItemRarity.Uncommon:
                     GenerateAffixes(RpgManager.Instance.raritySettings[1].rarityAffixBonusRange.min,
@@ -86,10 +91,14 @@ namespace RPGSystem.Equipment
                     Debug.LogError("Invalid Rarity");
                     break;
             }
-
-            // Scale the damage based on stats of the item, player and any affixes.
+            
+            // 4) Now, we scale the physical and elemental damage after postfixes are generated as some values
+            // are scaled by the generated postfixes.
             ScalePhysicalDamage();
             ScaleElementalDamage();
+            
+            // 5) Finally, generate the weapon equip requirements
+            GenerateItemRequirements(weaponTemplate.baselineItemRequirements);
         }
 
         /// <summary>

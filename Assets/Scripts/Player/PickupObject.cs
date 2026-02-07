@@ -44,7 +44,7 @@ namespace Player
                     var weaponStats = GenerateWeaponStatsType(weaponTemplate);
                     weaponStats.inventorySlotPrefab = weaponTemplate.inventorySlotPrefab;
                     weaponStats.GenerateItemNameTypeAndLevel(weaponTemplate, itemRarity);
-                    weaponStats.GenerateBaseWeaponStats(weaponTemplate);
+                    weaponStats.GenerateWeaponStats(weaponTemplate);
 
                     _playerInventoryManager.AddItem(new InventoryItem(weaponStats, 1));
                     Destroy(gameObject);
@@ -76,9 +76,9 @@ namespace Player
         {
             switch (weaponTemplate.weaponType)
             {
-                case WeaponTemplate.WeaponType.Two_Handed_Sword:
+                case WeaponTemplate.WeaponType.TwoHandedSword:
                     break;
-                case WeaponTemplate.WeaponType.One_Handed_Sword:
+                case WeaponTemplate.WeaponType.OneHandedSword:
                     var oneHandedSwordStats = gameObject.AddComponent<WeaponStats>();
                     return oneHandedSwordStats;
                 case WeaponTemplate.WeaponType.Axe:

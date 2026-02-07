@@ -1,4 +1,5 @@
 using System;
+using Player;
 using RPGSystem.Backend;
 using RPGSystem.Equipment;
 using RPGSystem.Inventory_System;
@@ -19,6 +20,8 @@ namespace User_Interface
         /// Displayed when hovering over an item in the inventory.
         /// </summary>
         private GameObject _currentItemTooltipPanel;
+
+        private Tooltip _currentItemTooltip;
         [SerializeField] private GameObject commonItemTooltipPanel;
         [SerializeField] private GameObject uncommonItemTooltipPanel;
         [SerializeField] private GameObject rareItemTooltipPanel;
@@ -32,7 +35,7 @@ namespace User_Interface
         private void Awake()
         {
             if (Instance != null)
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             Instance = this;
         }
 
@@ -63,15 +66,19 @@ namespace User_Interface
             {
                 case RpgManager.ItemRarity.Common:
                     _currentItemTooltipPanel = commonItemTooltipPanel;
+                    _currentItemTooltip = commonItemTooltipPanel.GetComponent<Tooltip>();
                     break;
                 case RpgManager.ItemRarity.Uncommon:
                     _currentItemTooltipPanel = uncommonItemTooltipPanel;
+                    _currentItemTooltip = uncommonItemTooltipPanel.GetComponent<Tooltip>();
                     break;
                 case RpgManager.ItemRarity.Rare:
                     _currentItemTooltipPanel = rareItemTooltipPanel;
+                    _currentItemTooltip = rareItemTooltipPanel.GetComponent<Tooltip>();
                     break;
                 case RpgManager.ItemRarity.Epic:
                     _currentItemTooltipPanel = epicItemTooltipPanel;
+                    _currentItemTooltip = epicItemTooltipPanel.GetComponent<Tooltip>();
                     break;
                 case RpgManager.ItemRarity.Unique:
                     break;
@@ -96,11 +103,65 @@ namespace User_Interface
                     _itemStatsDescription.text = armourStats?.GenerateArmourStatsDescription();
                     break;
                 case ItemTemplate.ItemType.Accessory:
-                    break;
                 case ItemTemplate.ItemType.Potion:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+            SetItemRequirementsText(item.Stats);
+        }
+
+        private void SetItemRequirementsText(ItemStats itemStats)
+        {
+            // Level Requirements
+            if (itemStats.itemRequirements.playerLevelRequirement > PlayerRpgController.Instance.CurrentPlayerLevel)
+            {
+                _currentItemTooltip.itemLevelRequirementText.text = 
+                    "Level: " + $"<color=red>{itemStats.itemRequirements.playerLevelRequirement}";
+            }
+            else
+            {
+                _currentItemTooltip.itemLevelRequirementText.text = 
+                    "Level: " + itemStats.itemRequirements.playerLevelRequirement;
+            }
+            
+            // Strength Requirements
+            if (itemStats.itemRequirements.playerStrengthRequirement >
+                PlayerRpgController.Instance.CurrentPlayerAttributes.strength)
+            {
+                _currentItemTooltip.itemStrengthRequirementText.text = 
+                    "Strength: " + $"<color=red>{itemStats.itemRequirements.playerStrengthRequirement}";
+            }
+            else
+            {
+                _currentItemTooltip.itemStrengthRequirementText.text = 
+                    "Strength: " + itemStats.itemRequirements.playerStrengthRequirement;
+            }
+            
+            // Dexterity Requirements
+            if (itemStats.itemRequirements.playerDexterityRequirement >
+                PlayerRpgController.Instance.CurrentPlayerAttributes.dexterity)
+            {
+                _currentItemTooltip.itemDexterityRequirementText.text = 
+                    "Dexterity: " + $"<color=red>{itemStats.itemRequirements.playerDexterityRequirement}";
+            }
+            else
+            {
+                _currentItemTooltip.itemDexterityRequirementText.text = 
+                    "Dexterity: " + itemStats.itemRequirements.playerDexterityRequirement;
+            }
+            
+            // Intelligence Requirements
+            if (itemStats.itemRequirements.playerIntelligenceRequirement >
+                PlayerRpgController.Instance.CurrentPlayerAttributes.intelligence)
+            {
+                _currentItemTooltip.itemIntelligenceRequirementText.text = 
+                    "Intelligence: " + $"<color=red>{itemStats.itemRequirements.playerIntelligenceRequirement}";
+            }
+            else
+            {
+                _currentItemTooltip.itemIntelligenceRequirementText.text = 
+                    "Intelligence: " + itemStats.itemRequirements.playerIntelligenceRequirement;
             }
         }
         

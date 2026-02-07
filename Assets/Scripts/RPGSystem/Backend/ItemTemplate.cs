@@ -1,4 +1,5 @@
 ﻿using System;
+using RPGSystem.Equipment;
 using UnityEngine;
 
 namespace RPGSystem.Backend
@@ -15,6 +16,8 @@ namespace RPGSystem.Backend
         public GameObject itemPickupPrefab;
 
         public ItemType itemType;
+
+        public ItemRequirements baselineItemRequirements;
 
         /// <summary>
         /// The base type of this item.

@@ -53,7 +53,7 @@ namespace RPGSystem.Equipment
             ScaleArmourValues();
 
             // 2) Generate affixes from template/rarity
-            GeneratedArmourStats.generatedPostfixes = new List<ItemTemplate.Postfix>();
+            GeneratedArmourStats.GeneratedPostfixes = new List<ItemTemplate.Postfix>();
             var raritySettings = RpgManager.Instance.raritySettings
                 .Find(e => e.rarity == equipmentRarity);
             // If rarity allows any affixes, generate them using the ArmourTemplate's possible affixes
@@ -65,6 +65,9 @@ namespace RPGSystem.Equipment
 
             // 3) Apply post-fixes
             ApplyPostfixes();
+            
+            // 4) Finally, generate the requirements to equip this item
+            GenerateItemRequirements(armourTemplate.baselineItemRequirements);
         }
 
         private void InitializeElementalResistances()
@@ -100,7 +103,7 @@ namespace RPGSystem.Equipment
             var randomNumberOfAffixes = Random.Range(rarityAffixBonusRangeMin, rarityAffixBonusRangeMax);
             var tempListOfPossibleAffixes = new List<ItemTemplate.Postfix>();
 
-            // Prepare affix values scaled to current item tier, similar to WeaponStats
+            // Prepare postfix values scaled to the current item tier, similar to WeaponStats
             foreach (var possibleAffix in armourTemplate.possiblePostfixes)
             {
                 var affix = possibleAffix;
@@ -153,7 +156,7 @@ namespace RPGSystem.Equipment
             for (var i = 0; i < randomNumberOfAffixes && tempListOfPossibleAffixes.Count > 0; i++)
             {
                 var randomAffixIndex = Random.Range(0, tempListOfPossibleAffixes.Count);
-                GeneratedArmourStats.generatedPostfixes.Add(tempListOfPossibleAffixes[randomAffixIndex]);
+                GeneratedArmourStats.GeneratedPostfixes.Add(tempListOfPossibleAffixes[randomAffixIndex]);
                 tempListOfPossibleAffixes.RemoveAt(randomAffixIndex);
             }
             tempListOfPossibleAffixes.Clear();
@@ -161,9 +164,9 @@ namespace RPGSystem.Equipment
 
         private void ApplyPostfixes()
         {
-            if (GeneratedArmourStats.generatedPostfixes == null) return;
+            if (GeneratedArmourStats.GeneratedPostfixes == null) return;
 
-            foreach (var affix in GeneratedArmourStats.generatedPostfixes)
+            foreach (var affix in GeneratedArmourStats.GeneratedPostfixes)
             {
                 switch (affix.Type)
                 {
@@ -269,10 +272,10 @@ namespace RPGSystem.Equipment
             }
 
             // Affixes (mirror weapon formatting)
-            if (GeneratedArmourStats.generatedPostfixes != null && GeneratedArmourStats.generatedPostfixes.Count > 0)
+            if (GeneratedArmourStats.GeneratedPostfixes != null && GeneratedArmourStats.GeneratedPostfixes.Count > 0)
             {
                 itemDescription += "<color=grey><align=\"center\">___________________\n";
-                foreach (var generatedAffix in GeneratedArmourStats.generatedPostfixes)
+                foreach (var generatedAffix in GeneratedArmourStats.GeneratedPostfixes)
                 {
                     switch (generatedAffix.Type)
                     {

@@ -20,9 +20,9 @@ namespace RPGSystem.Backend
 
         [Header("Stat Bonuses")] [SerializeField]
         public RpgManager.CorePlayerStats statBonuses;
-
-        [Header("Post-fixes")] [SerializeField]
-        public List<ItemTemplate.Postfix> generatedPostfixes;
+        
+        [NonSerialized]
+        public List<ItemTemplate.Postfix> GeneratedPostfixes;
 
         [Serializable]
         public struct ElementalResistance

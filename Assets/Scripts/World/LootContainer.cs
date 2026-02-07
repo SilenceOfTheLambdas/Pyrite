@@ -16,7 +16,7 @@ namespace World
         private RpgManager.StatRange<int> numberOfItemsToDropRange;
         private int _numberOfItemsToDrop;
 
-        private bool _hasBeenUsed = false;
+        private bool _hasBeenUsed;
         
         /// <summary>
         /// Container rarity sets the rarity of ALL items that are dropped.

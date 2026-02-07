@@ -7,18 +7,18 @@ using UnityEngine;
 namespace RPGSystem.Item_Definitions
 {
     [CreateAssetMenu(fileName = "BaseWeaponTemplate", menuName = "Inventory/Items/New WeaponTemplate")]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class WeaponTemplate : ItemTemplate
     {
         [Header("Weapon Type")]
         public WeaponType weaponType;
+        
         [Header("BaseWeaponTemplate Baseline at level 1")]
         public BaseWeaponTemplate baseWeaponStats;
         
         public enum WeaponType
         {
-            Two_Handed_Sword, // Two-handed sword
-            One_Handed_Sword,
+            TwoHandedSword, // Two-handed sword
+            OneHandedSword,
             Axe, // One-handed axe
             Dagger, // One-handed dagger
             Bow, // Two-handed bow

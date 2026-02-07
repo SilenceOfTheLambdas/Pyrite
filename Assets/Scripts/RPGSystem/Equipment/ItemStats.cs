@@ -16,6 +16,9 @@ namespace RPGSystem.Equipment
         /// </summary>
         public string equipmentName;
         
+        /// <summary>
+        /// The prefab of the inventory slot this equipment will be placed in.
+        /// </summary>
         public GameObject inventorySlotPrefab;
         
         /// <summary>
@@ -40,6 +43,8 @@ namespace RPGSystem.Equipment
         /// </summary>
         public EquipmentSlot equipmentSlot;
         
+        public ItemRequirements itemRequirements;
+        
         public enum EquipmentSlot
         {
             MainHand,
@@ -47,7 +52,7 @@ namespace RPGSystem.Equipment
             Head,
             Body,
             Legs,
-            Feet,
+            Feet
         }
 
         /// <summary>
@@ -85,5 +90,29 @@ namespace RPGSystem.Equipment
             var maxLevel = RpgManager.Instance.PlayerRpgController.CurrentPlayerLevel + (int)equipmentRarity;
             equipmentLevel = Random.Range(RpgManager.Instance.PlayerRpgController.CurrentPlayerLevel, maxLevel);
         }
+
+        /// <summary>
+        /// Generates the item requirements needed for a player to equip this item,
+        /// based on the provided template and the item's equipment level.
+        /// </summary>
+        /// <param name="templateItemRequirements">The template that contains base requirement values for level, strength, dexterity, and intelligence.</param>
+        public void GenerateItemRequirements(ItemRequirements templateItemRequirements)
+        {
+            var template = templateItemRequirements;
+            itemRequirements.playerLevelRequirement = equipmentLevel;
+            itemRequirements.playerStrengthRequirement = (template.playerStrengthRequirement *= 1) + equipmentLevel;
+            itemRequirements.playerDexterityRequirement = (template.playerDexterityRequirement *= 1) + equipmentLevel;
+            itemRequirements.playerIntelligenceRequirement = (template.playerIntelligenceRequirement *= 1) + equipmentLevel;
+        }
+    }
+
+    [Serializable]
+    public struct ItemRequirements
+    {
+        [NonSerialized]
+        public int playerLevelRequirement;
+        public int playerStrengthRequirement;
+        public int playerDexterityRequirement;
+        public int playerIntelligenceRequirement;
     }
 }
