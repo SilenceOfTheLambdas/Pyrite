@@ -236,7 +236,6 @@ namespace RPGSystem.Equipment
         public string GenerateArmourStatsDescription()
         {
             var itemDescription = "";
-            itemDescription += $"{equipmentRarity}:{equipmentLevel}\n";
 
             // Base armour values and weight
             var physicalArmourText = "Physical Armour: " + GeneratedArmourStats.physicalArmour;
@@ -275,7 +274,7 @@ namespace RPGSystem.Equipment
             // Affixes (mirror weapon formatting)
             if (GeneratedArmourStats.GeneratedPostfixes != null && GeneratedArmourStats.GeneratedPostfixes.Count > 0)
             {
-                itemDescription += "<color=grey><align=\"center\">________\n<align=\"left\"><size=60%>";
+                itemDescription += "<color=grey><align=\"center\">________\n<align=\"left\"><size=60%>\n";
                 foreach (var generatedAffix in GeneratedArmourStats.GeneratedPostfixes)
                 {
                     switch (generatedAffix.Type)

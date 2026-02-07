@@ -1,3 +1,4 @@
+using RPGSystem.Inventory_System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
@@ -33,8 +34,11 @@ namespace Player
 
                 if (interactableObject.CompareTag("ItemPickup"))
                 {
-                    var pickupObject = interactableObject.GetComponent<PickupObject>();
-                    pickupObject.PickupDroppedItemFromLootContainer();
+                    if (!PlayerInventoryManager.Instance.IsPlayerInventoryFull())
+                    {
+                        var pickupObject = interactableObject.GetComponent<PickupObject>();
+                        pickupObject.PickupDroppedItemFromLootContainer();
+                    }
                 }
             }
         }

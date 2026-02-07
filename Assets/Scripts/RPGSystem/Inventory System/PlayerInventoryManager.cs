@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,6 +7,8 @@ namespace RPGSystem.Inventory_System
 {
     public class PlayerInventoryManager : MonoBehaviour
     {
+        public static PlayerInventoryManager Instance;
+        
         /// <summary>
         /// A list of all the items in the inventory.
         /// Key = position of the item in inventory.
@@ -17,16 +20,22 @@ namespace RPGSystem.Inventory_System
 
         public int CurrentPlayerGold { private set; get; }
 
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+                Destroy(gameObject);
+            Instance = this;
+        }
+
         public void AddItem(InventoryItem item)
         {
-            // TODO: Handle full inventory better.
-            if (inventoryItems.Count >= maximumInventorySize)
-                return;
             var itemPosition = FindNextEmptySlot();
             inventoryItems.Add(itemPosition, item);
             var itemSlot = Instantiate(item.Stats.inventorySlotPrefab, gridItemsParent.transform);
             itemSlot.GetComponent<InventorySlotInfo>().itemPosition = itemPosition;
         }
+        
+        public bool IsPlayerInventoryFull() => inventoryItems.Count >= maximumInventorySize;
 
         private Vector2 FindNextEmptySlot()
         {
