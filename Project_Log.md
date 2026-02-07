@@ -193,17 +193,27 @@ Items are then generated with the following process:
     
                 // 3) Apply post-fixes
                 ApplyPostfixes();
+                
+                // 4) Finally, generate the requirements to equip this item
+                GenerateItemRequirements(armourTemplate.baselineItemRequirements);
             }
     ```
 
 This method has a lot going on, but in essence it does the following:
+
 - Assignes the `ArmourType` property provided by the `typeOfArmourToGenerate` parameter.
+
 - The `equipmentSlot` property is then set based on the `typeOfArmourToGenerate` parameter.
+
 - The `InitializeElementalResistances()` method is called to initialise the resistances for all elements to 0 for now.
+
 - The `ScaleArmourValues()` method is called to scale the stats by level and rarity.
-- If the rarity allows any affixes, then the `GenerateAffixes(int rarityAffixBonusRangeMin, int 
-rarityAffixBonusRangeMax, ArmourTemplate armourTemplate)` method is called to generate the affixes.
-- Finally, the `ApplyPostfixes()` method is called to scale the stats based on the postfixes that were generated.
+
+- If the rarity allows any affixes, then the `GenerateAffixes(int rarityAffixBonusRangeMin, int rarityAffixBonusRangeMax, ArmourTemplate armourTemplate)` method is called to generate the affixes.
+
+- The `ApplyPostfixes()` method is called to scale the stats based on the postfixes that were generated.
+
+- Finally, the `GenerateItemRequirements(ItemRequirements baselineItemRequirements)` method is called to generate the requirements for this item.
 
 7. Finally, a new `InventoryItem` is created and then added to the player's inventory.
 
@@ -242,6 +252,8 @@ graph TD
             IS -->|C. Affixes| GEN_AFF[GenerateAffixes]
             GEN_AFF -->|Random Select| AF[Select Postfixes from Template pool]
             AF -->|Apply| AF_EFFECTS[Modify Stats/Add Bonuses]
+
+            IS -->|D. Item Requirements| A[GenerateItemRequirements]
         end
     end
 
