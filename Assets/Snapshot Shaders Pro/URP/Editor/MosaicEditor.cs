@@ -13,12 +13,12 @@
 #endif
     public class MosaicEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter enabled;
-        SerializedDataParameter overlayTexture;
-        SerializedDataParameter overlayColor;
-        SerializedDataParameter xTileCount;
-        SerializedDataParameter usePointFiltering;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter enabled;
+        private SerializedDataParameter overlayTexture;
+        private SerializedDataParameter overlayColor;
+        private SerializedDataParameter xTileCount;
+        private SerializedDataParameter usePointFiltering;
 
         public override void OnEnable()
         {
@@ -35,11 +35,9 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Mosaic>())
             {
-                EditorGUILayout.HelpBox("The Mosaic effect must be added to your renderer's Renderer Features list.", MessageType.Error);
-                if (GUILayout.Button("Add Mosaic Renderer Feature"))
-                {
-                    SnapshotUtility.AddEffectToPipelineAsset<Mosaic>();
-                }
+                EditorGUILayout.HelpBox("The Mosaic effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
+                if (GUILayout.Button("Add Mosaic Renderer Feature")) SnapshotUtility.AddEffectToPipelineAsset<Mosaic>();
             }
 
             PropertyField(renderPassEvent);

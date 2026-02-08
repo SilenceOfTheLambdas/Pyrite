@@ -13,12 +13,12 @@
 #endif
     public class TextAdventureEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter characterSize;
-        SerializedDataParameter characterAtlas;
-        SerializedDataParameter characterCount;
-        SerializedDataParameter backgroundColor;
-        SerializedDataParameter characterColor;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter characterSize;
+        private SerializedDataParameter characterAtlas;
+        private SerializedDataParameter characterCount;
+        private SerializedDataParameter backgroundColor;
+        private SerializedDataParameter characterColor;
 
         public override void OnEnable()
         {
@@ -35,11 +35,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<TextAdventure>())
             {
-                EditorGUILayout.HelpBox("The Text Adventure effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "The Text Adventure effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Text Adventure Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<TextAdventure>();
-                }
             }
 
             PropertyField(renderPassEvent);

@@ -13,14 +13,14 @@
 #endif
     public class FancyDitherEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter enabled;
-        SerializedDataParameter noiseTex;
-        SerializedDataParameter noiseSize;
-        SerializedDataParameter thresholdOffset;
-        SerializedDataParameter blendAmount;
-        SerializedDataParameter darkColor;
-        SerializedDataParameter lightColor;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter enabled;
+        private SerializedDataParameter noiseTex;
+        private SerializedDataParameter noiseSize;
+        private SerializedDataParameter thresholdOffset;
+        private SerializedDataParameter blendAmount;
+        private SerializedDataParameter darkColor;
+        private SerializedDataParameter lightColor;
 
         public override void OnEnable()
         {
@@ -39,11 +39,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<FancyDither>())
             {
-                EditorGUILayout.HelpBox("The Fancy Dither effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "The Fancy Dither effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Fancy Dither Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<FancyDither>();
-                }
             }
 
             PropertyField(renderPassEvent);

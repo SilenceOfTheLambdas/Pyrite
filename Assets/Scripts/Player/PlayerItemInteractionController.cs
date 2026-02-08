@@ -25,7 +25,7 @@ namespace Player
                         LayerMask.GetMask("Interactable"),
                         out var interactableObject,
                         20f)) return;
-                
+
                 if (interactableObject.CompareTag("LootContainer"))
                 {
                     var lootContainer = interactableObject.GetComponent<LootContainer>();
@@ -33,13 +33,11 @@ namespace Player
                 }
 
                 if (interactableObject.CompareTag("ItemPickup"))
-                {
                     if (!PlayerInventoryManager.Instance.IsPlayerInventoryFull())
                     {
                         var pickupObject = interactableObject.GetComponent<PickupObject>();
                         pickupObject.PickupDroppedItemFromLootContainer();
                     }
-                }
             }
         }
     }

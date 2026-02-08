@@ -13,18 +13,18 @@
 #endif
     public class FancyOutlineEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter enabled;
-        SerializedDataParameter outlineColor;
-        SerializedDataParameter colorSensitivity;
-        SerializedDataParameter colorStrength;
-        SerializedDataParameter depthSensitivity;
-        SerializedDataParameter depthStrength;
-        SerializedDataParameter normalSensitivity;
-        SerializedDataParameter normalStrength;
-        SerializedDataParameter depthThreshold;
-        SerializedDataParameter backgroundColor;
-        SerializedDataParameter useSceneColor;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter enabled;
+        private SerializedDataParameter outlineColor;
+        private SerializedDataParameter colorSensitivity;
+        private SerializedDataParameter colorStrength;
+        private SerializedDataParameter depthSensitivity;
+        private SerializedDataParameter depthStrength;
+        private SerializedDataParameter normalSensitivity;
+        private SerializedDataParameter normalStrength;
+        private SerializedDataParameter depthThreshold;
+        private SerializedDataParameter backgroundColor;
+        private SerializedDataParameter useSceneColor;
 
         public override void OnEnable()
         {
@@ -47,11 +47,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<FancyOutline>())
             {
-                EditorGUILayout.HelpBox("The Fancy Outlines effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "The Fancy Outlines effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Fancy Outlines Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<FancyOutline>();
-                }
             }
 
             PropertyField(renderPassEvent);

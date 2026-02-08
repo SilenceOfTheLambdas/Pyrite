@@ -13,11 +13,11 @@
 #endif
     public class SobelNeonEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter enabled;
-        SerializedDataParameter saturationFloor;
-        SerializedDataParameter lightnessFloor;
-        SerializedDataParameter backgroundColor;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter enabled;
+        private SerializedDataParameter saturationFloor;
+        private SerializedDataParameter lightnessFloor;
+        private SerializedDataParameter backgroundColor;
 
         public override void OnEnable()
         {
@@ -33,11 +33,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<SobelNeon>())
             {
-                EditorGUILayout.HelpBox("The Sobel Neon effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "The Sobel Neon effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Sobel Neon Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<SobelNeon>();
-                }
             }
 
             PropertyField(renderPassEvent);

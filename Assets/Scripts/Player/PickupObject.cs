@@ -16,7 +16,7 @@ namespace Player
         private PlayerInventoryManager _playerInventoryManager;
         public RpgManager.ItemRarity itemRarity;
         private ItemTemplate _itemTemplate;
-        
+
         private void Start()
         {
             _playerInventoryManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventoryManager>();
@@ -35,19 +35,21 @@ namespace Player
             switch (itemType)
             {
                 case ItemTemplate.ItemType.Weapon:
-                    var weaponTemplate = _itemTemplate as WeaponTemplate;
-                    if (_itemTemplate is null)
+                    if (_itemTemplate is not WeaponTemplate weaponTemplate)
                     {
                         Debug.LogError("Unable to get random weapon template!");
                         return;
                     }
-                    var weaponStats = GenerateWeaponStatsType(weaponTemplate);
-                    weaponStats.inventorySlotPrefab = weaponTemplate.inventorySlotPrefab;
+
+                    var weaponStats = new WeaponStats
+                    {
+                        inventorySlotPrefab = weaponTemplate.inventorySlotPrefab
+                    };
                     weaponStats.GenerateItemNameTypeAndLevel(weaponTemplate, itemRarity);
                     weaponStats.GenerateWeaponStats(weaponTemplate);
 
                     _playerInventoryManager.AddItem(new InventoryItem(weaponStats, 1));
-                    Destroy(gameObject);
+                    Destroy(gameObject); // Destroy pickup object
                     break;
                 case ItemTemplate.ItemType.Armour:
                     if (_itemTemplate is not ArmourTemplate armourTemplate)
@@ -55,9 +57,12 @@ namespace Player
                         Debug.LogError("Unable to get an armour template!");
                         return;
                     }
-                    var armourStats = gameObject.AddComponent<ArmourStats>();
-                    armourStats.GeneratedArmourStats = armourTemplate.baselineArmourStats.DeepCopy();
-                    armourStats.inventorySlotPrefab = armourTemplate.inventorySlotPrefab;
+
+                    var armourStats = new ArmourStats(armourTemplate.baselineArmourStats)
+                    {
+                        GeneratedArmourStats = armourTemplate.baselineArmourStats.DeepCopy(),
+                        inventorySlotPrefab = armourTemplate.inventorySlotPrefab
+                    };
                     armourStats.GenerateItemNameTypeAndLevel(armourTemplate, itemRarity);
                     armourStats.GenerateArmourStats(armourTemplate!.armourType, armourTemplate);
 
@@ -70,29 +75,6 @@ namespace Player
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        }
-
-        private WeaponStats GenerateWeaponStatsType(WeaponTemplate weaponTemplate)
-        {
-            switch (weaponTemplate.weaponType)
-            {
-                case WeaponTemplate.WeaponType.TwoHandedSword:
-                    break;
-                case WeaponTemplate.WeaponType.OneHandedSword:
-                    var oneHandedSwordStats = gameObject.AddComponent<WeaponStats>();
-                    return oneHandedSwordStats;
-                case WeaponTemplate.WeaponType.Axe:
-                case WeaponTemplate.WeaponType.Dagger:
-                case WeaponTemplate.WeaponType.Bow:
-                case WeaponTemplate.WeaponType.Staff:
-                case WeaponTemplate.WeaponType.Crossbow:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            Debug.LogError("Unable to find the weapon type from the weapon template!");
-            return null;
         }
     }
 }

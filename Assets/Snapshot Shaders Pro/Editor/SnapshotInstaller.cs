@@ -23,16 +23,13 @@ namespace SnapshotShaders
 
         public class SnapshotImport : AssetPostprocessor
         {
-            static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool didDomainReload)
+            private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets,
+                string[] movedAssets, string[] movedFromAssetPaths, bool didDomainReload)
             {
-                foreach (string str in importedAssets)
-                {
+                foreach (var str in importedAssets)
                     // If we detect that this very file was reimported, trigger the installation window.
-                    if(str.Contains("SnapshotInstaller.cs"))
-                    {
+                    if (str.Contains("SnapshotInstaller.cs"))
                         SnapshotInstallerWindow.ShowWindow();
-                    }
-                }
             }
         }
 
@@ -63,72 +60,54 @@ namespace SnapshotShaders
         // Get a list of every package installed via the Package Manager.
         private static List<UnityEditor.PackageManager.PackageInfo> GetInstalledPackages()
         {
-            ListRequest listRequest = Client.List(true, true);
+            var listRequest = Client.List(true, true);
 
-            while (listRequest.Status == StatusCode.InProgress) { }
-
-            if (listRequest.Status == StatusCode.Failure)
+            while (listRequest.Status == StatusCode.InProgress)
             {
-                Debug.LogError("(Snapshot Shaders Pro): Could not retrieve package list.");
             }
 
-            PackageCollection packageCollection = listRequest.Result;
+            if (listRequest.Status == StatusCode.Failure)
+                Debug.LogError("(Snapshot Shaders Pro): Could not retrieve package list.");
+
+            var packageCollection = listRequest.Result;
             return new List<UnityEditor.PackageManager.PackageInfo>(packageCollection);
         }
 
         // Check which RP packages are currently installed.
         private static List<Pipeline> FindCompatiblePipelines()
         {
-            List<Pipeline> compatiblePipelines = new List<Pipeline>();
+            var compatiblePipelines = new List<Pipeline>();
 
             var packageCollection = GetInstalledPackages();
 
-            for(int i = 0; i < packageCollection.Count; ++i)
+            for (var i = 0; i < packageCollection.Count; ++i)
             {
                 var packageInfo = packageCollection[i];
 
-                if(packageInfo.name == "com.unity.render-pipelines.universal")
-                {
-                    compatiblePipelines.Add(Pipeline.URP);
-                }
+                if (packageInfo.name == "com.unity.render-pipelines.universal") compatiblePipelines.Add(Pipeline.URP);
 
-                if(packageInfo.name == "com.unity.render-pipelines.high-definition")
-                {
+                if (packageInfo.name == "com.unity.render-pipelines.high-definition")
                     compatiblePipelines.Add(Pipeline.HDRP);
-                }
 
-                if(packageInfo.name == "com.unity.postprocessing")
-                {
+                if (packageInfo.name == "com.unity.postprocessing")
                     compatiblePipelines.Add(Pipeline.BuiltinPostProcess);
-                }
             }
 
-            if(!compatiblePipelines.Contains(Pipeline.BuiltinPostProcess))
-            {
+            if (!compatiblePipelines.Contains(Pipeline.BuiltinPostProcess))
                 compatiblePipelines.Add(Pipeline.BuiltinAlone);
-            }
 
             return compatiblePipelines;
         }
 
         private static List<Pipeline> FindInstalledPipelines()
         {
-            List<Pipeline> installedPipelines = new List<Pipeline>();
+            var installedPipelines = new List<Pipeline>();
 
-            if(IsInstalled(urpInstallGUID))
-            {
-                installedPipelines.Add(Pipeline.URP);
-            }
+            if (IsInstalled(urpInstallGUID)) installedPipelines.Add(Pipeline.URP);
 
-            if (IsInstalled(hdrpInstallGUID))
-            {
-                installedPipelines.Add(Pipeline.HDRP);
-            }
+            if (IsInstalled(hdrpInstallGUID)) installedPipelines.Add(Pipeline.HDRP);
 
-            if (IsInstalled(builtInInstallGUID))
-            {
-                installedPipelines.Add(Pipeline.BuiltinPostProcess);
-            }
+            if (IsInstalled(builtInInstallGUID)) installedPipelines.Add(Pipeline.BuiltinPostProcess);
 
             return installedPipelines;
         }
@@ -136,13 +115,16 @@ namespace SnapshotShaders
         // We are using built-in but PostProcessing not installed. Try to install it.
         public static bool InstallBuiltinPostProcess()
         {
-            AddRequest addRequest = Client.Add("com.unity.postprocessing");
+            var addRequest = Client.Add("com.unity.postprocessing");
 
-            while(addRequest.Status == StatusCode.InProgress) { }
-
-            if(addRequest.Status == StatusCode.Failure)
+            while (addRequest.Status == StatusCode.InProgress)
             {
-                Debug.LogError("(Snapshot Shaders Pro): Unable to install PostProcessing package for Built-in Pipeline.");
+            }
+
+            if (addRequest.Status == StatusCode.Failure)
+            {
+                Debug.LogError(
+                    "(Snapshot Shaders Pro): Unable to install PostProcessing package for Built-in Pipeline.");
                 return false;
             }
 
@@ -166,28 +148,25 @@ namespace SnapshotShaders
 
         private static void InstallSnapshot(string GUID, string pipelineName)
         {
-            string path = AssetDatabase.GUIDToAssetPath(GUID);
-            
-            if(path.Length > 0)
-            {
+            var path = AssetDatabase.GUIDToAssetPath(GUID);
+
+            if (path.Length > 0)
                 AssetDatabase.ImportPackage(path, true);
-            }
             else
-            {
-                Debug.LogError($"(Snapshot Shaders Pro): Could not find package file for {pipelineName}. Consider manually installing the package.");
-            }
+                Debug.LogError(
+                    $"(Snapshot Shaders Pro): Could not find package file for {pipelineName}. Consider manually installing the package.");
         }
 
         private static bool IsInstalled(string GUID)
         {
-            string path = string.Empty;
+            var path = string.Empty;
             path = AssetDatabase.GUIDToAssetPath(GUID);
 
-            if(path.Length > 0)
+            if (path.Length > 0)
             {
                 var file = AssetDatabase.LoadAssetAtPath(path, typeof(object));
 
-                return (file != null);
+                return file != null;
             }
 
             return false;
@@ -204,4 +183,3 @@ namespace SnapshotShaders
         }
     }
 }
-

@@ -5,7 +5,8 @@
     using UnityEngine.Rendering;
     using UnityEngine.Rendering.Universal;
 
-    [System.Serializable, VolumeComponentMenu("Snapshot Shaders Pro/Blur")]
+    [Serializable]
+    [VolumeComponentMenu("Snapshot Shaders Pro/Blur")]
     public sealed class BlurSettings : VolumeComponent, IPostProcessComponent
     {
         public BlurSettings()
@@ -14,16 +15,15 @@
         }
 
         [Tooltip("Choose where to insert this pass in URP's render loop.")]
-        public RenderPassEventParameter renderPassEvent = new RenderPassEventParameter(RenderPassEvent.BeforeRenderingPostProcessing);
+        public RenderPassEventParameter renderPassEvent = new(RenderPassEvent.BeforeRenderingPostProcessing);
 
-        [Tooltip("Blur Strength")]
-        public ClampedIntParameter strength = new ClampedIntParameter(1, 1, 500);
+        [Tooltip("Blur Strength")] public ClampedIntParameter strength = new(1, 1, 500);
 
         [Tooltip("Higher values will skip pixels during blur passes. Increase for better performance.")]
-        public ClampedIntParameter blurStepSize = new ClampedIntParameter(1, 1, 16);
+        public ClampedIntParameter blurStepSize = new(1, 1, 16);
 
         [Tooltip("Type of blur. Gaussian blur is slightly more expensive, but higher fidelity.")]
-        public BlurTypeParameter blurType = new BlurTypeParameter(BlurType.Gaussian);
+        public BlurTypeParameter blurType = new(BlurType.Gaussian);
 
         public bool IsActive()
         {
@@ -39,12 +39,15 @@
     [Serializable]
     public enum BlurType
     {
-        Gaussian, Box
+        Gaussian,
+        Box
     }
 
     [Serializable]
     public sealed class BlurTypeParameter : VolumeParameter<BlurType>
     {
-        public BlurTypeParameter(BlurType value, bool overrideState = false) : base(value, overrideState) { }
+        public BlurTypeParameter(BlurType value, bool overrideState = false) : base(value, overrideState)
+        {
+        }
     }
 }

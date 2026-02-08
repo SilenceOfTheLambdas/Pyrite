@@ -13,14 +13,14 @@
 #endif
     public class BasicDitherEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter enabled;
-        SerializedDataParameter noiseTex;
-        SerializedDataParameter noiseSize;
-        SerializedDataParameter thresholdOffset;
-        SerializedDataParameter darkColor;
-        SerializedDataParameter lightColor;
-        SerializedDataParameter useSceneColor;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter enabled;
+        private SerializedDataParameter noiseTex;
+        private SerializedDataParameter noiseSize;
+        private SerializedDataParameter thresholdOffset;
+        private SerializedDataParameter darkColor;
+        private SerializedDataParameter lightColor;
+        private SerializedDataParameter useSceneColor;
 
         public override void OnEnable()
         {
@@ -39,11 +39,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<BasicDither>())
             {
-                EditorGUILayout.HelpBox("The Basic Dither effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "The Basic Dither effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Basic Dither Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<BasicDither>();
-                }
             }
 
             PropertyField(renderPassEvent);

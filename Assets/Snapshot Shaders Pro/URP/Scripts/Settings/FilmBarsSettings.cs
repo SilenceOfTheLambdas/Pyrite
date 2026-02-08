@@ -4,7 +4,8 @@
     using UnityEngine.Rendering;
     using UnityEngine.Rendering.Universal;
 
-    [System.Serializable, VolumeComponentMenu("Snapshot Shaders Pro/FilmBars")]
+    [System.Serializable]
+    [VolumeComponentMenu("Snapshot Shaders Pro/FilmBars")]
     public sealed class FilmBarsSettings : VolumeComponent, IPostProcessComponent
     {
         public FilmBarsSettings()
@@ -13,13 +14,12 @@
         }
 
         [Tooltip("Choose where to insert this pass in URP's render loop.")]
-        public RenderPassEventParameter renderPassEvent = new RenderPassEventParameter(RenderPassEvent.BeforeRenderingPostProcessing);
+        public RenderPassEventParameter renderPassEvent = new(RenderPassEvent.BeforeRenderingPostProcessing);
 
-        [Tooltip("Is the effect active?")]
-        public BoolParameter enabled = new BoolParameter(false);
+        [Tooltip("Is the effect active?")] public BoolParameter enabled = new(false);
 
-        [Range(0.1f, 5.0f), Tooltip("Desired aspect ratio (16:9 = 1.777 approx).")]
-        public ClampedFloatParameter aspect = new ClampedFloatParameter(1.777f, 0.1f, 5.0f);
+        [Range(0.1f, 5.0f)] [Tooltip("Desired aspect ratio (16:9 = 1.777 approx).")]
+        public ClampedFloatParameter aspect = new(1.777f, 0.1f, 5.0f);
 
         public bool IsActive()
         {

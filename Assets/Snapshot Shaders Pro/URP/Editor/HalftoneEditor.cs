@@ -13,15 +13,15 @@
 #endif
     public class HalftoneEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter enabled;
-        SerializedDataParameter halftoneTexture;
-        SerializedDataParameter softness;
-        SerializedDataParameter textureSize;
-        SerializedDataParameter minMaxLuminance;
-        SerializedDataParameter darkColor;
-        SerializedDataParameter lightColor;
-        SerializedDataParameter useSceneColor;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter enabled;
+        private SerializedDataParameter halftoneTexture;
+        private SerializedDataParameter softness;
+        private SerializedDataParameter textureSize;
+        private SerializedDataParameter minMaxLuminance;
+        private SerializedDataParameter darkColor;
+        private SerializedDataParameter lightColor;
+        private SerializedDataParameter useSceneColor;
 
         public override void OnEnable()
         {
@@ -41,11 +41,10 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Halftone>())
             {
-                EditorGUILayout.HelpBox("The Halftone effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox("The Halftone effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Halftone Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<Halftone>();
-                }
             }
 
             PropertyField(renderPassEvent);

@@ -13,12 +13,12 @@
 #endif
     public class PosterizeEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter enabled;
-        SerializedDataParameter redLevels;
-        SerializedDataParameter greenLevels;
-        SerializedDataParameter blueLevels;
-        SerializedDataParameter powerRamp;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter enabled;
+        private SerializedDataParameter redLevels;
+        private SerializedDataParameter greenLevels;
+        private SerializedDataParameter blueLevels;
+        private SerializedDataParameter powerRamp;
 
         public override void OnEnable()
         {
@@ -35,11 +35,10 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Posterize>())
             {
-                EditorGUILayout.HelpBox("The Posterize effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox("The Posterize effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Posterize Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<Posterize>();
-                }
             }
 
             PropertyField(renderPassEvent);

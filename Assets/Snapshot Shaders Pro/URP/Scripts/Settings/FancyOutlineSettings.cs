@@ -4,7 +4,8 @@
     using UnityEngine.Rendering;
     using UnityEngine.Rendering.Universal;
 
-    [System.Serializable, VolumeComponentMenu("Snapshot Shaders Pro/Fancy Outlines")]
+    [System.Serializable]
+    [VolumeComponentMenu("Snapshot Shaders Pro/Fancy Outlines")]
     public sealed class FancyOutlineSettings : VolumeComponent, IPostProcessComponent
     {
         public FancyOutlineSettings()
@@ -13,40 +14,38 @@
         }
 
         [Tooltip("Choose where to insert this pass in URP's render loop.")]
-        public RenderPassEventParameter renderPassEvent = new RenderPassEventParameter(RenderPassEvent.BeforeRenderingPostProcessing);
+        public RenderPassEventParameter renderPassEvent = new(RenderPassEvent.BeforeRenderingPostProcessing);
 
-        [Tooltip("Is the effect enabled?")]
-        public BoolParameter enabled = new BoolParameter(false);
+        [Tooltip("Is the effect enabled?")] public BoolParameter enabled = new(false);
 
-        [Tooltip("Color of the outlines.")]
-        public ColorParameter outlineColor = new ColorParameter(Color.white, true, true, true);
+        [Tooltip("Color of the outlines.")] public ColorParameter outlineColor = new(Color.white, true, true, true);
 
         [Tooltip("Threshold for colour-based edge detection.")]
-        public ClampedFloatParameter colorSensitivity = new ClampedFloatParameter(0.1f, 0.0f, 1.0f);
+        public ClampedFloatParameter colorSensitivity = new(0.1f, 0.0f, 1.0f);
 
         [Tooltip("Strength of colour-based edges.")]
-        public ClampedFloatParameter colorStrength = new ClampedFloatParameter(0.5f, 0.0f, 1.0f);
+        public ClampedFloatParameter colorStrength = new(0.5f, 0.0f, 1.0f);
 
         [Tooltip("Threshold for depth-based edge detection.")]
-        public ClampedFloatParameter depthSensitivity = new ClampedFloatParameter(0.01f, 0.0f, 1.0f);
+        public ClampedFloatParameter depthSensitivity = new(0.01f, 0.0f, 1.0f);
 
         [Tooltip("Strength of depth-based edges.")]
-        public ClampedFloatParameter depthStrength = new ClampedFloatParameter(0.75f, 0.0f, 1.0f);
+        public ClampedFloatParameter depthStrength = new(0.75f, 0.0f, 1.0f);
 
         [Tooltip("Threshold for normal-based edge detection.")]
-        public ClampedFloatParameter normalSensitivity = new ClampedFloatParameter(0.1f, 0.0f, 1.0f);
+        public ClampedFloatParameter normalSensitivity = new(0.1f, 0.0f, 1.0f);
 
         [Tooltip("Strength of normal-based edges.")]
-        public ClampedFloatParameter normalStrength = new ClampedFloatParameter(0.75f, 0.0f, 1.0f);
+        public ClampedFloatParameter normalStrength = new(0.75f, 0.0f, 1.0f);
 
         [Tooltip("Pixels past this depth threshold will not be edge-detected.")]
-        public ClampedFloatParameter depthThreshold = new ClampedFloatParameter(0.99f, 0.0f, 1.0f);
+        public ClampedFloatParameter depthThreshold = new(0.99f, 0.0f, 1.0f);
 
         [Tooltip("Color of the background if Use Scene Color is turned off.")]
-        public ColorParameter backgroundColor = new ColorParameter(Color.black);
+        public ColorParameter backgroundColor = new(Color.black);
 
         [Tooltip("Use the Scene Color instead of Background Color?")]
-        public BoolParameter useSceneColor = new BoolParameter(false);
+        public BoolParameter useSceneColor = new(false);
 
         public bool IsActive()
         {

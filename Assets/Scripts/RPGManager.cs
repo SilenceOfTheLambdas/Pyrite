@@ -16,7 +16,7 @@ public class RpgManager : MonoBehaviour
     private void Awake()
     {
         if (Instance != null && Instance != this)
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         Instance = this;
     }
 
@@ -121,5 +121,5 @@ public class RpgManager : MonoBehaviour
         Luck
     }
 
-#endregion
+    #endregion
 }

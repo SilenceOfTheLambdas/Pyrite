@@ -13,11 +13,11 @@
 #endif
     public class ScanlinesEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter scanlineTex;
-        SerializedDataParameter strength;
-        SerializedDataParameter size;
-        SerializedDataParameter scrollSpeed;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter scanlineTex;
+        private SerializedDataParameter strength;
+        private SerializedDataParameter size;
+        private SerializedDataParameter scrollSpeed;
 
         public override void OnEnable()
         {
@@ -33,11 +33,10 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Scanlines>())
             {
-                EditorGUILayout.HelpBox("The Scanlines effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox("The Scanlines effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Scanlines Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<Scanlines>();
-                }
             }
 
             PropertyField(renderPassEvent);

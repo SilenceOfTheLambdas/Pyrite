@@ -11,13 +11,12 @@ namespace World
     {
         [SerializeField] private Transform itemDropStartingLocation;
         [SerializeField] private int itemDropPositionSpacing;
-        
-        [SerializeField]
-        private RpgManager.StatRange<int> numberOfItemsToDropRange;
+
+        [SerializeField] private RpgManager.StatRange<int> numberOfItemsToDropRange;
         private int _numberOfItemsToDrop;
 
         private bool _hasBeenUsed;
-        
+
         /// <summary>
         /// Container rarity sets the rarity of ALL items that are dropped.
         /// </summary>
@@ -29,10 +28,10 @@ namespace World
         {
             // Randomly assign the number of items to drop
             _numberOfItemsToDrop = Random.Range(numberOfItemsToDropRange.min, numberOfItemsToDropRange.max + 1);
-            
+
             // Randomly assign container rarity
             RandomlyAssignContainerRarity();
-            
+
             // We want to generate the loot for this container at the start for performance reasons
             GenerateLootItemsToDrop();
         }
@@ -55,9 +54,7 @@ namespace World
         private void GenerateLootItemsToDrop()
         {
             for (var i = 0; i <= _numberOfItemsToDrop; i++)
-            {
                 _generatedLootItemsToDrop.Add(ItemDatabase.Instance.GetRandomItemTemplate());
-            }
         }
 
         /// <summary>
@@ -79,9 +76,9 @@ namespace World
                     0.5f,
                     Random.insideUnitCircle.y * itemDropPositionSpacing);
                 lastItemPosition = dropLocation;
-                
+
                 var item = Instantiate(itemTemplate.itemPickupPrefab, dropLocation, Quaternion.identity);
-                item.GetComponent<PickupObject>().SetItemRarityAndTemplate(itemTemplate,containerRarity);
+                item.GetComponent<PickupObject>().SetItemRarityAndTemplate(itemTemplate, containerRarity);
             }
 
             _hasBeenUsed = true;

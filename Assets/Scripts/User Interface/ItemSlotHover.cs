@@ -6,7 +6,6 @@ namespace User_Interface
 {
     public class ItemSlotHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        
         public void OnPointerEnter(PointerEventData eventData)
         {
             UIManager.Instance.ShowItemTooltip(GetComponent<InventorySlotInfo>());

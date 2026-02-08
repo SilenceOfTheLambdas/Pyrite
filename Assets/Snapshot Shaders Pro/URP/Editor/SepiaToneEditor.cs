@@ -13,8 +13,8 @@
 #endif
     public class SepiaToneEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter strength;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter strength;
 
         public override void OnEnable()
         {
@@ -27,11 +27,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<SepiaTone>())
             {
-                EditorGUILayout.HelpBox("The Sepia Tone effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "The Sepia Tone effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Sepia Tone Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<SepiaTone>();
-                }
             }
 
             PropertyField(renderPassEvent);

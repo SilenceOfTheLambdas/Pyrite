@@ -12,11 +12,11 @@ namespace SnapshotShaders.URP
         // Get a reference to the forward renderer so we can check if an effect has been added.
         public static ScriptableRendererData GetForwardRenderer()
         {
-            ScriptableRendererData[] rendererDataList =
-                ((ScriptableRendererData[])typeof(UniversalRenderPipelineAsset)
-                .GetField("m_RendererDataList", BindingFlags.NonPublic | BindingFlags.Instance)
-                .GetValue(UniversalRenderPipeline.asset));
-            int index = (int)typeof(UniversalRenderPipelineAsset)
+            var rendererDataList =
+                (ScriptableRendererData[])typeof(UniversalRenderPipelineAsset)
+                    .GetField("m_RendererDataList", BindingFlags.NonPublic | BindingFlags.Instance)
+                    .GetValue(UniversalRenderPipeline.asset);
+            var index = (int)typeof(UniversalRenderPipelineAsset)
                 .GetField("m_DefaultRendererIndex", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(UniversalRenderPipeline.asset);
 
@@ -26,23 +26,16 @@ namespace SnapshotShaders.URP
         // Check the Forward Renderer and make sure the specified effect is attached.
         public static bool CheckEffectEnabled<T>() where T : ScriptableRendererFeature
         {
-            if (UniversalRenderPipeline.asset == null)
-            {
-                return false;
-            }
+            if (UniversalRenderPipeline.asset == null) return false;
 
-            ScriptableRendererData forwardRenderer =
+            var forwardRenderer =
                 ((ScriptableRendererData[])typeof(UniversalRenderPipelineAsset)
-                .GetField("m_RendererDataList", BindingFlags.NonPublic | BindingFlags.Instance)
-                .GetValue(UniversalRenderPipeline.asset))[0];
+                    .GetField("m_RendererDataList", BindingFlags.NonPublic | BindingFlags.Instance)
+                    .GetValue(UniversalRenderPipeline.asset))[0];
 
-            foreach (ScriptableRendererFeature item in forwardRenderer.rendererFeatures)
-            {
+            foreach (var item in forwardRenderer.rendererFeatures)
                 if (item?.GetType() == typeof(T))
-                {
                     return true;
-                }
-            }
 
             return false;
         }
@@ -61,12 +54,14 @@ namespace SnapshotShaders.URP
             var effect = ScriptableRendererFeature.CreateInstance<T>();
 
             AssetDatabase.AddObjectToAsset(effect, forwardRenderer);
-            AssetDatabase.TryGetGUIDAndLocalFileIdentifier(effect, out var guid, out long localID);
+            AssetDatabase.TryGetGUIDAndLocalFileIdentifier(effect, out var guid, out var localID);
 
             forwardRenderer.rendererFeatures.Add(effect);
             forwardRenderer.SetDirty();
 
-            Debug.Log("Added " + typeof(T).ToString() + " effect to the active Forward Renderer (" + forwardRenderer.name + ").", forwardRenderer);
+            Debug.Log(
+                "Added " + typeof(T).ToString() + " effect to the active Forward Renderer (" + forwardRenderer.name +
+                ").", forwardRenderer);
 #endif
         }
     }
@@ -75,6 +70,8 @@ namespace SnapshotShaders.URP
     [Serializable]
     public sealed class RenderPassEventParameter : VolumeParameter<RenderPassEvent>
     {
-        public RenderPassEventParameter(RenderPassEvent value, bool overrideState = false) : base(value, overrideState) { }
+        public RenderPassEventParameter(RenderPassEvent value, bool overrideState = false) : base(value, overrideState)
+        {
+        }
     }
 }

@@ -13,10 +13,10 @@
 #endif
     public class VortexEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter strength;
-        SerializedDataParameter center;
-        SerializedDataParameter offset;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter strength;
+        private SerializedDataParameter center;
+        private SerializedDataParameter offset;
 
         public override void OnEnable()
         {
@@ -31,11 +31,9 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Vortex>())
             {
-                EditorGUILayout.HelpBox("The Vortex effect must be added to your renderer's Renderer Features list.", MessageType.Error);
-                if (GUILayout.Button("Add Vortex Renderer Feature"))
-                {
-                    SnapshotUtility.AddEffectToPipelineAsset<Vortex>();
-                }
+                EditorGUILayout.HelpBox("The Vortex effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
+                if (GUILayout.Button("Add Vortex Renderer Feature")) SnapshotUtility.AddEffectToPipelineAsset<Vortex>();
             }
 
             PropertyField(renderPassEvent);

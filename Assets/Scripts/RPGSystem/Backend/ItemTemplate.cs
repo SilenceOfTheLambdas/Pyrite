@@ -42,32 +42,44 @@ namespace RPGSystem.Backend
         {
             [field: SerializeField] public PostfixType Type { get; set; }
             [field: SerializeField] public int Value { get; set; }
+
             public enum PostfixType
             {
                 /// e.g +0-10 Strength
                 AddedStrength,
+
                 /// e.g +0-10 Intelligence
                 AddedIntelligence,
+
                 /// e.g +0-10 Dexterity
                 AddedDexterity,
+
                 /// e.g +0-10 Vitality
                 AddedHealth,
+
                 /// e.g +0-10% extra physical damage
                 IncreasedPhysicalDamage,
+
                 /// e.g +0-10% extra crit chance
                 IncreasedCritChance,
+
                 /// e.g +0-10 Fire Damage
                 AddedElementalDamage,
+
                 /// e.g +0-10 Armour
                 AddedArmour,
+
                 /// e.g +0-10% Fire Resistance
                 IncreasedFireResistance,
+
                 /// e.g +0-10% Ice Resistance
                 IncreasedIceResistance,
+
                 /// e.g +0-10% Lightning Resistance
                 IncreasedLightningResistance,
+
                 /// e.g +0-10% Poison Resistance
-                IncreasedPoisonResistance,
+                IncreasedPoisonResistance
             }
         }
     }

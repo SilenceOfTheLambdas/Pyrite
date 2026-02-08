@@ -1,11 +1,12 @@
 ﻿namespace SnapshotShaders
 {
-    using SnapshotShaders.URP;
+    using URP;
     using UnityEngine;
     using UnityEngine.Rendering;
     using UnityEngine.Rendering.Universal;
 
-    [System.Serializable, VolumeComponentMenu("Snapshot Shaders Pro/Invert")]
+    [System.Serializable]
+    [VolumeComponentMenu("Snapshot Shaders Pro/Invert")]
     public sealed class InvertSettings : VolumeComponent, IPostProcessComponent
     {
         public InvertSettings()
@@ -14,10 +15,9 @@
         }
 
         [Tooltip("Choose where to insert this pass in URP's render loop.")]
-        public RenderPassEventParameter renderPassEvent = new RenderPassEventParameter(RenderPassEvent.BeforeRenderingPostProcessing);
+        public RenderPassEventParameter renderPassEvent = new(RenderPassEvent.BeforeRenderingPostProcessing);
 
-        [Tooltip("Invert effect intensity.")]
-        public ClampedFloatParameter strength = new ClampedFloatParameter(0.0f, 0.0f, 1.0f);
+        [Tooltip("Invert effect intensity.")] public ClampedFloatParameter strength = new(0.0f, 0.0f, 1.0f);
 
         public bool IsActive()
         {

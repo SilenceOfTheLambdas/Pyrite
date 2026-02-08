@@ -13,8 +13,8 @@
 #endif
     public class InvertEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter strength;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter strength;
 
         public override void OnEnable()
         {
@@ -27,11 +27,9 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Invert>())
             {
-                EditorGUILayout.HelpBox("The Invert effect must be added to your renderer's Renderer Features list.", MessageType.Error);
-                if (GUILayout.Button("Add Invert Renderer Feature"))
-                {
-                    SnapshotUtility.AddEffectToPipelineAsset<Invert>();
-                }
+                EditorGUILayout.HelpBox("The Invert effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
+                if (GUILayout.Button("Add Invert Renderer Feature")) SnapshotUtility.AddEffectToPipelineAsset<Invert>();
             }
 
             PropertyField(renderPassEvent);

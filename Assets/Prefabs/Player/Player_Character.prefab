@@ -608,6 +608,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -1005,9 +1006,14 @@ GameObject:
   - component: {fileID: 1373990850921096911}
   - component: {fileID: 1586585800260468165}
   - component: {fileID: 4769146318662985379}
+  - component: {fileID: 1987561262120825200}
+  - component: {fileID: 1498520708243738446}
+  - component: {fileID: 3831293933427656748}
+  - component: {fileID: 5049713806058200384}
+  - component: {fileID: 6185114211195835364}
   m_Layer: 0
   m_Name: Player_Character
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1085,3 +1091,192 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 103afe822b9817d4fb5f3ccd85fc5256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerMovementController
+  moveInputAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  moveSpeed: 5
+  rotationLerpSpeed: 12
+--- !u!114 &1987561262120825200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9050038953941658400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfe6d64751e541ea87f74f2e4f82b736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerRpgController
+  <CurrentPlayerAttributes>k__BackingField:
+    strength: 1
+    intelligence: 1
+    dexterity: 1
+    vitality: 1
+    magic: 1
+    luck: 1
+--- !u!114 &1498520708243738446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9050038953941658400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e588e8e50414f5943abb4f06663adac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RPGSystem.Inventory_System.PlayerInventoryManager
+  maximumInventorySize: 24
+  gridItemsParent: {fileID: 0}
+--- !u!136 &3831293933427656748
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9050038953941658400}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.0358434
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.990602, z: 0}
+--- !u!114 &5049713806058200384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9050038953941658400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4174608115bc74e8c4a58f7e74d21d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerItemInteractionController
+  interactInputAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+--- !u!114 &6185114211195835364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9050038953941658400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 503e46b039fb4c06beb403747e4eae2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RPGSystem.Equipment.EquipmentManager
+  equippedWeapon:
+    equipmentName: 
+    inventorySlotPrefab: {fileID: 0}
+    equipmentRarity: 0
+    equipmentLevel: 0
+    isEquipped: 0
+    itemType: 0
+    equipmentSlot: 0
+    itemRequirements:
+      playerStrengthRequirement: 0
+      playerDexterityRequirement: 0
+      playerIntelligenceRequirement: 0
+    physicalDamage: 0
+    elementalDamage:
+      type: 0
+      amount: 0
+    attackSpeed: 0
+    attackRange: 0
+    critMultiplier: 0
+    criticalDamageChance: 0
+    generatedAffixes: []
+  equippedHeadArmour:
+    equipmentName: 
+    inventorySlotPrefab: {fileID: 0}
+    equipmentRarity: 0
+    equipmentLevel: 0
+    isEquipped: 0
+    itemType: 0
+    equipmentSlot: 0
+    itemRequirements:
+      playerStrengthRequirement: 0
+      playerDexterityRequirement: 0
+      playerIntelligenceRequirement: 0
+  equippedChestArmour:
+    equipmentName: 
+    inventorySlotPrefab: {fileID: 0}
+    equipmentRarity: 0
+    equipmentLevel: 0
+    isEquipped: 0
+    itemType: 0
+    equipmentSlot: 0
+    itemRequirements:
+      playerStrengthRequirement: 0
+      playerDexterityRequirement: 0
+      playerIntelligenceRequirement: 0
+  equippedLegArmour:
+    equipmentName: 
+    inventorySlotPrefab: {fileID: 0}
+    equipmentRarity: 0
+    equipmentLevel: 0
+    isEquipped: 0
+    itemType: 0
+    equipmentSlot: 0
+    itemRequirements:
+      playerStrengthRequirement: 0
+      playerDexterityRequirement: 0
+      playerIntelligenceRequirement: 0
+  equippedBootArmour:
+    equipmentName: 
+    inventorySlotPrefab: {fileID: 0}
+    equipmentRarity: 0
+    equipmentLevel: 0
+    isEquipped: 0
+    itemType: 0
+    equipmentSlot: 0
+    itemRequirements:
+      playerStrengthRequirement: 0
+      playerDexterityRequirement: 0
+      playerIntelligenceRequirement: 0
+  equippedGauntlets:
+    equipmentName: 
+    inventorySlotPrefab: {fileID: 0}
+    equipmentRarity: 0
+    equipmentLevel: 0
+    isEquipped: 0
+    itemType: 0
+    equipmentSlot: 0
+    itemRequirements:
+      playerStrengthRequirement: 0
+      playerDexterityRequirement: 0
+      playerIntelligenceRequirement: 0
+  equippedRing1:
+    equipmentName: 
+    inventorySlotPrefab: {fileID: 0}
+    equipmentRarity: 0
+    equipmentLevel: 0
+    isEquipped: 0
+    itemType: 0
+    equipmentSlot: 0
+    itemRequirements:
+      playerStrengthRequirement: 0
+      playerDexterityRequirement: 0
+      playerIntelligenceRequirement: 0
+  equippedRing2:
+    equipmentName: 
+    inventorySlotPrefab: {fileID: 0}
+    equipmentRarity: 0
+    equipmentLevel: 0
+    isEquipped: 0
+    itemType: 0
+    equipmentSlot: 0
+    itemRequirements:
+      playerStrengthRequirement: 0
+      playerDexterityRequirement: 0
+      playerIntelligenceRequirement: 0

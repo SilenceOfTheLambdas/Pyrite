@@ -2,14 +2,14 @@
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 #if UNITY_6000_0_OR_NEWER
-    using UnityEngine.Rendering.RenderGraphModule;
+using UnityEngine.Rendering.RenderGraphModule;
 #endif
 
 namespace SnapshotShaders.URP
 {
     public class Pixelate : ScriptableRendererFeature
     {
-        PixelateRenderPass pass;
+        private PixelateRenderPass pass;
 
         public override void Create()
         {
@@ -21,10 +21,7 @@ namespace SnapshotShaders.URP
         {
             var settings = VolumeManager.instance.stack.GetComponent<PixelateSettings>();
 
-            if (settings != null && settings.IsActive())
-            {
-                renderer.EnqueuePass(pass);
-            }
+            if (settings != null && settings.IsActive()) renderer.EnqueuePass(pass);
         }
 
         protected override void Dispose(bool disposing)
@@ -33,7 +30,7 @@ namespace SnapshotShaders.URP
             base.Dispose(disposing);
         }
 
-        class PixelateRenderPass : ScriptableRenderPass
+        private class PixelateRenderPass : ScriptableRenderPass
         {
             private RTHandle pixelTexHandle;
 
@@ -52,8 +49,8 @@ namespace SnapshotShaders.URP
                 descriptor.depthBufferBits = (int)DepthBits.None;
 
                 var settings = VolumeManager.instance.stack.GetComponent<PixelateSettings>();
-                int width = descriptor.width / settings.pixelSize.value;
-                int height = descriptor.height / settings.pixelSize.value;
+                var width = descriptor.width / settings.pixelSize.value;
+                var height = descriptor.height / settings.pixelSize.value;
 
                 descriptor.width = width;
                 descriptor.height = height;
@@ -67,24 +64,21 @@ namespace SnapshotShaders.URP
 
                 var descriptor = GetCopyPassDescriptor(cameraTextureDescriptor);
 
-                RenderingUtils.ReAllocateIfNeeded(ref pixelTexHandle, descriptor, filterMode: FilterMode.Point);
+                RenderingUtils.ReAllocateIfNeeded(ref pixelTexHandle, descriptor, FilterMode.Point);
 
                 base.Configure(cmd, cameraTextureDescriptor);
             }
 
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
-                if (renderingData.cameraData.isPreviewCamera)
-                {
-                    return;
-                }
+                if (renderingData.cameraData.isPreviewCamera) return;
 
-                CommandBuffer cmd = CommandBufferPool.Get();
+                var cmd = CommandBufferPool.Get();
 
                 var settings = VolumeManager.instance.stack.GetComponent<PixelateSettings>();
                 renderPassEvent = settings.renderPassEvent.value;
 
-                RTHandle cameraTargetHandle = renderingData.cameraData.renderer.cameraColorTargetHandle;
+                var cameraTargetHandle = renderingData.cameraData.renderer.cameraColorTargetHandle;
 
                 // Perform the Blit operations for the Pixelate effect.
                 using (new ProfilingScope(cmd, profilingSampler))
@@ -130,33 +124,40 @@ namespace SnapshotShaders.URP
                 var settings = VolumeManager.instance.stack.GetComponent<PixelateSettings>();
                 renderPassEvent = settings.renderPassEvent.value;
 
-                UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
-                UniversalCameraData cameraData = frameData.Get<UniversalCameraData>();
+                var resourceData = frameData.Get<UniversalResourceData>();
+                var cameraData = frameData.Get<UniversalCameraData>();
 
-                UniversalRenderer renderer = (UniversalRenderer)cameraData.renderer;
+                var renderer = (UniversalRenderer)cameraData.renderer;
                 var colorCopyDescriptor = GetCopyPassDescriptor(cameraData.cameraTargetDescriptor);
-                TextureHandle copiedColor = TextureHandle.nullHandle;
+                var copiedColor = TextureHandle.nullHandle;
 
                 // Perform the intermediate copy pass (source -> temp).
-                copiedColor = UniversalRenderer.CreateRenderGraphTexture(renderGraph, colorCopyDescriptor, "_PixelateColorCopy", false, filterMode: FilterMode.Point);
+                copiedColor = UniversalRenderer.CreateRenderGraphTexture(renderGraph, colorCopyDescriptor,
+                    "_PixelateColorCopy", false, FilterMode.Point);
 
-                using (var builder = renderGraph.AddRasterRenderPass<CopyPassData>("Pixelate_CopyColor", out var passData, profilingSampler))
+                using (var builder =
+                       renderGraph.AddRasterRenderPass<CopyPassData>("Pixelate_CopyColor", out var passData,
+                           profilingSampler))
                 {
                     passData.inputTexture = resourceData.activeColorTexture;
 
                     builder.UseTexture(resourceData.activeColorTexture, AccessFlags.Read);
                     builder.SetRenderAttachment(copiedColor, 0, AccessFlags.Write);
-                    builder.SetRenderFunc((CopyPassData data, RasterGraphContext context) => ExecuteCopyPass(context.cmd, data.inputTexture));
+                    builder.SetRenderFunc((CopyPassData data, RasterGraphContext context) =>
+                        ExecuteCopyPass(context.cmd, data.inputTexture));
                 }
 
                 // Perform main pass (temp -> source).
-                using (var builder = renderGraph.AddRasterRenderPass<MainPassData>("Pixelate_MainPass", out var passData, profilingSampler))
+                using (var builder =
+                       renderGraph.AddRasterRenderPass<MainPassData>("Pixelate_MainPass", out var passData,
+                           profilingSampler))
                 {
                     passData.inputTexture = copiedColor;
 
                     builder.UseTexture(copiedColor, AccessFlags.Read);
                     builder.SetRenderAttachment(resourceData.activeColorTexture, 0, AccessFlags.Write);
-                    builder.SetRenderFunc((MainPassData data, RasterGraphContext context) => ExecuteMainPass(context.cmd, data.inputTexture));
+                    builder.SetRenderFunc((MainPassData data, RasterGraphContext context) =>
+                        ExecuteMainPass(context.cmd, data.inputTexture));
                 }
             }
 

@@ -13,21 +13,21 @@
 #endif
     public class UnderwaterEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter bumpMap;
-        SerializedDataParameter strength;
-        SerializedDataParameter waterFogColor;
-        SerializedDataParameter fogStrength;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter bumpMap;
+        private SerializedDataParameter strength;
+        private SerializedDataParameter waterFogColor;
+        private SerializedDataParameter fogStrength;
 
-        SerializedDataParameter useCaustics;
-        SerializedDataParameter causticsTexture;
-        SerializedDataParameter causticsNoiseSpeed;
-        SerializedDataParameter causticsNoiseScale;
-        SerializedDataParameter causticsNoiseStrength;
-        SerializedDataParameter causticsScrollVelocity1;
-        SerializedDataParameter causticsScrollVelocity2;
-        SerializedDataParameter causticsTiling;
-        SerializedDataParameter causticsTint;
+        private SerializedDataParameter useCaustics;
+        private SerializedDataParameter causticsTexture;
+        private SerializedDataParameter causticsNoiseSpeed;
+        private SerializedDataParameter causticsNoiseScale;
+        private SerializedDataParameter causticsNoiseStrength;
+        private SerializedDataParameter causticsScrollVelocity1;
+        private SerializedDataParameter causticsScrollVelocity2;
+        private SerializedDataParameter causticsTiling;
+        private SerializedDataParameter causticsTint;
 
         public override void OnEnable()
         {
@@ -53,11 +53,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Underwater>())
             {
-                EditorGUILayout.HelpBox("The Underwater effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "The Underwater effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Underwater Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<Underwater>();
-                }
             }
 
             PropertyField(renderPassEvent);

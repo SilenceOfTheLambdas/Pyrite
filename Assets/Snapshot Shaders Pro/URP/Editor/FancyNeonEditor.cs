@@ -13,20 +13,20 @@
 #endif
     public class FancyNeonEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter enabled;
-        SerializedDataParameter colorSensitivity;
-        SerializedDataParameter colorStrength;
-        SerializedDataParameter depthSensitivity;
-        SerializedDataParameter depthStrength;
-        SerializedDataParameter normalSensitivity;
-        SerializedDataParameter normalStrength;
-        SerializedDataParameter depthThreshold;
-        SerializedDataParameter saturationFloor;
-        SerializedDataParameter lightnessFloor;
-        SerializedDataParameter backgroundColor;
-        SerializedDataParameter emissiveEdgeColor;
-        SerializedDataParameter useSceneColor;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter enabled;
+        private SerializedDataParameter colorSensitivity;
+        private SerializedDataParameter colorStrength;
+        private SerializedDataParameter depthSensitivity;
+        private SerializedDataParameter depthStrength;
+        private SerializedDataParameter normalSensitivity;
+        private SerializedDataParameter normalStrength;
+        private SerializedDataParameter depthThreshold;
+        private SerializedDataParameter saturationFloor;
+        private SerializedDataParameter lightnessFloor;
+        private SerializedDataParameter backgroundColor;
+        private SerializedDataParameter emissiveEdgeColor;
+        private SerializedDataParameter useSceneColor;
 
         public override void OnEnable()
         {
@@ -51,11 +51,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<FancyNeon>())
             {
-                EditorGUILayout.HelpBox("The Fancy Neon effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "The Fancy Neon effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Fancy Neon Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<FancyNeon>();
-                }
             }
 
             PropertyField(renderPassEvent);

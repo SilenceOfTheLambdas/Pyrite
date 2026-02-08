@@ -1,5 +1,4 @@
 ﻿using System;
-using RPGSystem.Backend;
 using RPGSystem.Item_Definitions;
 using UnityEngine;
 
@@ -10,31 +9,40 @@ namespace RPGSystem.Equipment
     /// </summary>
     public class EquipmentManager : MonoBehaviour
     {
-        // TODO: Store currently equipped weapons, armour, etc.
         public WeaponStats equippedWeapon;
         public ArmourStats equippedHeadArmour;
         public ArmourStats equippedChestArmour;
         public ArmourStats equippedLegArmour;
         public ArmourStats equippedBootArmour;
+        public ArmourStats equippedGauntlets;
+        public ArmourStats equippedRing1;
+        public ArmourStats equippedRing2;
 
-        public void EquipItem(ItemStats itemToEquip, ItemTemplate.ItemType itemType)
+        public static EquipmentManager Instance { get; private set; }
+
+        private void Awake()
         {
-            if (itemType == ItemTemplate.ItemType.Weapon)
-            {
-                EquipWeapon(itemToEquip as WeaponStats);
-            }
-
-            if (itemType == ItemTemplate.ItemType.Armour)
-            {
-                EquipArmour(itemToEquip as ArmourStats);
-            }
+            if (Instance != null && Instance != this)
+                Destroy(gameObject);
+            Instance = this;
         }
-        
-        // TODO: Add methods to equip/unequip items.
+
+        public void EquipItem(ItemStats itemToEquip)
+        {
+            if (itemToEquip.equipmentSlot == ItemStats.EquipmentSlot.MainHand) EquipWeapon(itemToEquip as WeaponStats);
+
+            if (itemToEquip.equipmentSlot is ItemStats.EquipmentSlot.Body
+                or ItemStats.EquipmentSlot.Legs or ItemStats.EquipmentSlot.Feet
+                or ItemStats.EquipmentSlot.Gauntlets or ItemStats.EquipmentSlot.Head
+                or ItemStats.EquipmentSlot.Ring1 or ItemStats.EquipmentSlot.Ring2)
+                EquipArmour(itemToEquip as ArmourStats);
+
+            itemToEquip.isEquipped = true;
+        }
+
         private void EquipWeapon(WeaponStats weaponToEquip)
         {
-            if (equippedWeapon != null)
-                equippedWeapon = weaponToEquip;
+            equippedWeapon = weaponToEquip;
         }
 
         private void EquipArmour(ArmourStats armourToEquip)
@@ -42,25 +50,20 @@ namespace RPGSystem.Equipment
             switch (armourToEquip.ArmourType)
             {
                 case ArmourTemplate.ArmourType.Head:
-                    if (equippedHeadArmour != null)
-                        equippedHeadArmour = armourToEquip;
+                    equippedHeadArmour = armourToEquip;
                     break;
                 case ArmourTemplate.ArmourType.Chest:
-                    if (equippedChestArmour != null)
-                        equippedChestArmour = armourToEquip;
+                    equippedChestArmour = armourToEquip;
                     break;
                 case ArmourTemplate.ArmourType.Legs:
-                    if (equippedLegArmour != null)
-                        equippedLegArmour = armourToEquip;
+                    equippedLegArmour = armourToEquip;
                     break;
                 case ArmourTemplate.ArmourType.Boots:
-                    if (equippedLegArmour != null)
-                        equippedBootArmour = armourToEquip;
+                    equippedBootArmour = armourToEquip;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
-        // TODO: Update UI Manager to display equipped items.
     }
 }

@@ -4,7 +4,8 @@
     using UnityEngine.Rendering;
     using UnityEngine.Rendering.Universal;
 
-    [System.Serializable, VolumeComponentMenu("Snapshot Shaders Pro/SobelOutline")]
+    [System.Serializable]
+    [VolumeComponentMenu("Snapshot Shaders Pro/SobelOutline")]
     public sealed class SobelOutlineSettings : VolumeComponent, IPostProcessComponent
     {
         public SobelOutlineSettings()
@@ -13,22 +14,19 @@
         }
 
         [Tooltip("Choose where to insert this pass in URP's render loop.")]
-        public RenderPassEventParameter renderPassEvent = new RenderPassEventParameter(RenderPassEvent.BeforeRenderingPostProcessing);
+        public RenderPassEventParameter renderPassEvent = new(RenderPassEvent.BeforeRenderingPostProcessing);
 
-        [Tooltip("Is the effect active?")]
-        public BoolParameter enabled = new BoolParameter(false);
+        [Tooltip("Is the effect active?")] public BoolParameter enabled = new(false);
 
-        [Tooltip("Edge-detection threshold.")]
-        public ClampedFloatParameter threshold = new ClampedFloatParameter(0.5f, 0.0f, 1.0f);
+        [Tooltip("Edge-detection threshold.")] public ClampedFloatParameter threshold = new(0.5f, 0.0f, 1.0f);
 
-        [Tooltip("Outline color.")]
-        public ColorParameter outlineColor = new ColorParameter(Color.white);
+        [Tooltip("Outline color.")] public ColorParameter outlineColor = new(Color.white);
 
         [Tooltip("Background color if Use Scene Color is turned off.")]
-        public ColorParameter backgroundColor = new ColorParameter(Color.black);
+        public ColorParameter backgroundColor = new(Color.black);
 
         [Tooltip("Use the Scene Color instead of Background Color?")]
-        public BoolParameter useSceneColor = new BoolParameter(false);
+        public BoolParameter useSceneColor = new(false);
 
         public bool IsActive()
         {

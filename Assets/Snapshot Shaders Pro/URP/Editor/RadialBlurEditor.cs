@@ -13,9 +13,9 @@
 #endif
     public class RadialBlurEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter strength;
-        SerializedDataParameter stepSize;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter strength;
+        private SerializedDataParameter stepSize;
 
         public override void OnEnable()
         {
@@ -29,11 +29,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<RadialBlur>())
             {
-                EditorGUILayout.HelpBox("The Radial Blur effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "The Radial Blur effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Radial Blur Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<RadialBlur>();
-                }
             }
 
             PropertyField(renderPassEvent);

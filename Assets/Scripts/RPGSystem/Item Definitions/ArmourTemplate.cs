@@ -10,15 +10,15 @@ namespace RPGSystem.Item_Definitions
     public class ArmourTemplate : ItemTemplate
     {
         public ArmourType armourType;
-        
+
         /// <summary>
         /// Baseline stats for this armour type.
         /// </summary>
         public BaselineArmourStats baselineArmourStats;
-        
+
         [Header("Postfix")] [Description("Provide a list of possible affixes that could apply to this item.")]
         public List<Postfix> possiblePostfixes;
-        
+
         [Serializable]
         public enum ArmourType
         {

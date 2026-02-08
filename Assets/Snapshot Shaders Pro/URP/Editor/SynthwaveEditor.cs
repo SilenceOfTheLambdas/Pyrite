@@ -14,17 +14,17 @@ namespace SnapshotShaders.URP
 #endif
     public class SynthwaveEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter backgroundColor;
-        SerializedDataParameter lineColor1;
-        SerializedDataParameter lineColor2;
-        SerializedDataParameter lineColorMix;
-        SerializedDataParameter lineWidth;
-        SerializedDataParameter lineFalloff;
-        SerializedDataParameter gapWidth;
-        SerializedDataParameter offset;
-        SerializedDataParameter axisMask;
-        SerializedDataParameter useSceneColor;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter backgroundColor;
+        private SerializedDataParameter lineColor1;
+        private SerializedDataParameter lineColor2;
+        private SerializedDataParameter lineColorMix;
+        private SerializedDataParameter lineWidth;
+        private SerializedDataParameter lineFalloff;
+        private SerializedDataParameter gapWidth;
+        private SerializedDataParameter offset;
+        private SerializedDataParameter axisMask;
+        private SerializedDataParameter useSceneColor;
 
         public override void OnEnable()
         {
@@ -46,11 +46,10 @@ namespace SnapshotShaders.URP
         {
             if (!SnapshotUtility.CheckEffectEnabled<Synthwave>())
             {
-                EditorGUILayout.HelpBox("The Synthwave effect must be added to your renderer's Renderer Features list.", MessageType.Error);
-                if(GUILayout.Button("Add Synthwave Renderer Feature"))
-                {
+                EditorGUILayout.HelpBox("The Synthwave effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
+                if (GUILayout.Button("Add Synthwave Renderer Feature"))
                     SnapshotUtility.AddEffectToPipelineAsset<Synthwave>();
-                }
             }
 
             PropertyField(renderPassEvent);

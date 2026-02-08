@@ -5,8 +5,7 @@ namespace User_Interface
 {
     public class Tooltip : MonoBehaviour
     {
-        [Header("Item Requirements Text")]
-        public TextMeshProUGUI itemLevelRequirementText;
+        [Header("Item Requirements Text")] public TextMeshProUGUI itemLevelRequirementText;
         public TextMeshProUGUI itemStrengthRequirementText;
         public TextMeshProUGUI itemDexterityRequirementText;
         public TextMeshProUGUI itemIntelligenceRequirementText;

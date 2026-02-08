@@ -2,14 +2,14 @@
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 #if UNITY_6000_0_OR_NEWER
-    using UnityEngine.Rendering.RenderGraphModule;
+using UnityEngine.Rendering.RenderGraphModule;
 #endif
 
 namespace SnapshotShaders.URP
 {
     public class LightStreaks : ScriptableRendererFeature
     {
-        LightStreaksRenderPass pass;
+        private LightStreaksRenderPass pass;
 
         public override void Create()
         {
@@ -21,10 +21,7 @@ namespace SnapshotShaders.URP
         {
             var settings = VolumeManager.instance.stack.GetComponent<LightStreaksSettings>();
 
-            if (settings != null && settings.IsActive())
-            {
-                renderer.EnqueuePass(pass);
-            }
+            if (settings != null && settings.IsActive()) renderer.EnqueuePass(pass);
         }
 
         protected override void Dispose(bool disposing)
@@ -33,7 +30,7 @@ namespace SnapshotShaders.URP
             base.Dispose(disposing);
         }
 
-        class LightStreaksRenderPass : ScriptableRenderPass
+        private class LightStreaksRenderPass : ScriptableRenderPass
         {
             private Material material;
 
@@ -71,7 +68,8 @@ namespace SnapshotShaders.URP
                 return descriptor;
             }
 
-            private static RenderTextureDescriptor GetMainPassDescriptor(RenderTextureDescriptor descriptor, int downsampleAmount)
+            private static RenderTextureDescriptor GetMainPassDescriptor(RenderTextureDescriptor descriptor,
+                int downsampleAmount)
             {
                 descriptor.msaaSamples = 1;
                 descriptor.depthBufferBits = (int)DepthBits.None;
@@ -101,17 +99,11 @@ namespace SnapshotShaders.URP
 
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
-                if (renderingData.cameraData.isPreviewCamera)
-                {
-                    return;
-                }
+                if (renderingData.cameraData.isPreviewCamera) return;
 
-                if (material == null)
-                {
-                    CreateMaterial();
-                }
+                if (material == null) CreateMaterial();
 
-                CommandBuffer cmd = CommandBufferPool.Get();
+                var cmd = CommandBufferPool.Get();
 
                 // Set Light Streaks effect properties.
                 var settings = VolumeManager.instance.stack.GetComponent<LightStreaksSettings>();
@@ -120,7 +112,7 @@ namespace SnapshotShaders.URP
                 material.SetFloat("_Spread", settings.strength.value / 7.5f);
                 material.SetFloat("_LuminanceThreshold", settings.luminanceThreshold.value);
 
-                RTHandle cameraTargetHandle = renderingData.cameraData.renderer.cameraColorTargetHandle;
+                var cameraTargetHandle = renderingData.cameraData.renderer.cameraColorTargetHandle;
 
                 // Perform the Blit operations for the Light Streaks effect.
                 using (new ProfilingScope(cmd, new ProfilingSampler(profilerTag)))
@@ -178,7 +170,8 @@ namespace SnapshotShaders.URP
                 Blitter.BlitTexture(cmd, source, new Vector4(1, 1, 0, 0), material, 0);
             }
 
-            private static void ExecuteCompositePass(RasterCommandBuffer cmd, RTHandle source, RTHandle blurTex, Material material)
+            private static void ExecuteCompositePass(RasterCommandBuffer cmd, RTHandle source, RTHandle blurTex,
+                Material material)
             {
                 material.SetTexture("_BlurTex", blurTex);
                 Blitter.BlitTexture(cmd, source, new Vector4(1, 1, 0, 0), material, 1);
@@ -186,51 +179,56 @@ namespace SnapshotShaders.URP
 
             public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
             {
-                if(material == null)
-                {
-                    CreateMaterial();
-                }
+                if (material == null) CreateMaterial();
 
                 var settings = VolumeManager.instance.stack.GetComponent<LightStreaksSettings>();
                 renderPassEvent = settings.renderPassEvent.value;
 
-                UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
-                UniversalCameraData cameraData = frameData.Get<UniversalCameraData>();
+                var resourceData = frameData.Get<UniversalResourceData>();
+                var cameraData = frameData.Get<UniversalCameraData>();
 
-                UniversalRenderer renderer = (UniversalRenderer)cameraData.renderer;
+                var renderer = (UniversalRenderer)cameraData.renderer;
                 var colorCopyDescriptor = GetCopyPassDescriptor(cameraData.cameraTargetDescriptor);
-                TextureHandle copiedColor = TextureHandle.nullHandle;
+                var copiedColor = TextureHandle.nullHandle;
 
                 // Perform the intermediate copy pass (source -> temp).
-                copiedColor = UniversalRenderer.CreateRenderGraphTexture(renderGraph, colorCopyDescriptor, "_LightStreaksColorCopy", false);
+                copiedColor = UniversalRenderer.CreateRenderGraphTexture(renderGraph, colorCopyDescriptor,
+                    "_LightStreaksColorCopy", false);
 
-                using (var builder = renderGraph.AddRasterRenderPass<CopyPassData>("LightStreaks_CopyColor", out var passData, profilingSampler))
+                using (var builder = renderGraph.AddRasterRenderPass<CopyPassData>("LightStreaks_CopyColor",
+                           out var passData, profilingSampler))
                 {
                     passData.inputTexture = resourceData.activeColorTexture;
 
                     builder.UseTexture(resourceData.activeColorTexture, AccessFlags.Read);
                     builder.SetRenderAttachment(copiedColor, 0, AccessFlags.Write);
-                    builder.SetRenderFunc((CopyPassData data, RasterGraphContext context) => ExecuteCopyPass(context.cmd, data.inputTexture));
+                    builder.SetRenderFunc((CopyPassData data, RasterGraphContext context) =>
+                        ExecuteCopyPass(context.cmd, data.inputTexture));
                 }
 
-                var mainPassDescriptor = GetMainPassDescriptor(cameraData.cameraTargetDescriptor, settings.downsampleAmount.value);
-                TextureHandle blurTexture = TextureHandle.nullHandle;
+                var mainPassDescriptor =
+                    GetMainPassDescriptor(cameraData.cameraTargetDescriptor, settings.downsampleAmount.value);
+                var blurTexture = TextureHandle.nullHandle;
 
-                blurTexture = UniversalRenderer.CreateRenderGraphTexture(renderGraph, mainPassDescriptor, "_LightStreaksBlurTex", false);
+                blurTexture = UniversalRenderer.CreateRenderGraphTexture(renderGraph, mainPassDescriptor,
+                    "_LightStreaksBlurTex", false);
 
                 // Perform first main pass (temp -> blur).
-                using (var builder = renderGraph.AddRasterRenderPass<MainPassData>("LightStreaks_MainPass", out var passData, profilingSampler))
+                using (var builder = renderGraph.AddRasterRenderPass<MainPassData>("LightStreaks_MainPass",
+                           out var passData, profilingSampler))
                 {
                     passData.material = material;
                     passData.inputTexture = resourceData.activeColorTexture;
 
                     builder.UseTexture(resourceData.activeColorTexture, AccessFlags.Read);
                     builder.SetRenderAttachment(blurTexture, 0, AccessFlags.Write);
-                    builder.SetRenderFunc((MainPassData data, RasterGraphContext context) => ExecuteMainPass(context.cmd, data.inputTexture, data.material));
+                    builder.SetRenderFunc((MainPassData data, RasterGraphContext context) =>
+                        ExecuteMainPass(context.cmd, data.inputTexture, data.material));
                 }
 
                 // Perform second main pass (blur -> source).
-                using (var builder = renderGraph.AddRasterRenderPass<CompositePassData>("LightStreaks_CompositePass", out var passData, profilingSampler))
+                using (var builder = renderGraph.AddRasterRenderPass<CompositePassData>("LightStreaks_CompositePass",
+                           out var passData, profilingSampler))
                 {
                     passData.material = material;
                     passData.inputTexture = copiedColor;
@@ -239,7 +237,8 @@ namespace SnapshotShaders.URP
                     builder.UseTexture(copiedColor, AccessFlags.Read);
                     builder.UseTexture(blurTexture, AccessFlags.Read);
                     builder.SetRenderAttachment(resourceData.activeColorTexture, 0, AccessFlags.Write);
-                    builder.SetRenderFunc((CompositePassData data, RasterGraphContext context) => ExecuteCompositePass(context.cmd, data.inputTexture, data.blurTexture, data.material));
+                    builder.SetRenderFunc((CompositePassData data, RasterGraphContext context) =>
+                        ExecuteCompositePass(context.cmd, data.inputTexture, data.blurTexture, data.material));
                 }
             }
 #endif

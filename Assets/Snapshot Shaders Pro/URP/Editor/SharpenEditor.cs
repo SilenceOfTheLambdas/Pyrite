@@ -13,8 +13,8 @@
 #endif
     public class SharpenEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter intensity;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter intensity;
 
         public override void OnEnable()
         {
@@ -27,11 +27,10 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Sharpen>())
             {
-                EditorGUILayout.HelpBox("The Sharpen effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox("The Sharpen effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Sharpen Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<Sharpen>();
-                }
             }
 
             PropertyField(renderPassEvent);

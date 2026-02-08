@@ -2,14 +2,14 @@
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 #if UNITY_6000_0_OR_NEWER
-    using UnityEngine.Rendering.RenderGraphModule;
+using UnityEngine.Rendering.RenderGraphModule;
 #endif
 
 namespace SnapshotShaders.URP
 {
     public class Mosaic : ScriptableRendererFeature
     {
-        MosaicRenderPass pass;
+        private MosaicRenderPass pass;
 
         public override void Create()
         {
@@ -21,10 +21,7 @@ namespace SnapshotShaders.URP
         {
             var settings = VolumeManager.instance.stack.GetComponent<MosaicSettings>();
 
-            if (settings != null && settings.IsActive())
-            {
-                renderer.EnqueuePass(pass);
-            }
+            if (settings != null && settings.IsActive()) renderer.EnqueuePass(pass);
         }
 
         protected override void Dispose(bool disposing)
@@ -33,7 +30,7 @@ namespace SnapshotShaders.URP
             base.Dispose(disposing);
         }
 
-        class MosaicRenderPass : ScriptableRenderPass
+        private class MosaicRenderPass : ScriptableRenderPass
         {
             private Material material;
             private RTHandle tempTexHandle;
@@ -68,13 +65,13 @@ namespace SnapshotShaders.URP
                 descriptor.msaaSamples = 1;
                 descriptor.depthBufferBits = (int)DepthBits.None;
 
-                int screenWidth = descriptor.width;
-                int screenHeight = descriptor.height;
+                var screenWidth = descriptor.width;
+                var screenHeight = descriptor.height;
 
                 var settings = VolumeManager.instance.stack.GetComponent<MosaicSettings>();
                 float xTileCount = settings.xTileCount.value;
                 float yTileCount = Mathf.RoundToInt((float)screenHeight / screenWidth * xTileCount);
-                FilterMode filterMode = settings.usePointFiltering.value ? FilterMode.Point : FilterMode.Bilinear;
+                var filterMode = settings.usePointFiltering.value ? FilterMode.Point : FilterMode.Bilinear;
 
                 descriptor.width = (int)xTileCount;
                 descriptor.height = (int)yTileCount;
@@ -90,24 +87,18 @@ namespace SnapshotShaders.URP
                 xTileCount = descriptor.width;
                 yTileCount = descriptor.height;
 
-                RenderingUtils.ReAllocateIfNeeded(ref tempTexHandle, descriptor, filterMode: FilterMode.Point);
+                RenderingUtils.ReAllocateIfNeeded(ref tempTexHandle, descriptor, FilterMode.Point);
 
                 base.Configure(cmd, cameraTextureDescriptor);
             }
 
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
-                if (renderingData.cameraData.isPreviewCamera)
-                {
-                    return;
-                }
+                if (renderingData.cameraData.isPreviewCamera) return;
 
-                if (material == null)
-                {
-                    CreateMaterial();
-                }
+                if (material == null) CreateMaterial();
 
-                CommandBuffer cmd = CommandBufferPool.Get();
+                var cmd = CommandBufferPool.Get();
 
                 // Set Mosaic effect properties.
                 var settings = VolumeManager.instance.stack.GetComponent<MosaicSettings>();
@@ -117,7 +108,7 @@ namespace SnapshotShaders.URP
                 material.SetInt("_XTileCount", xTileCount);
                 material.SetInt("_YTileCount", yTileCount);
 
-                RTHandle cameraTargetHandle = renderingData.cameraData.renderer.cameraColorTargetHandle;
+                var cameraTargetHandle = renderingData.cameraData.renderer.cameraColorTargetHandle;
 
                 // Perform the Blit operations for the Mosaic effect.
                 using (new ProfilingScope(cmd, profilingSampler))
@@ -154,7 +145,8 @@ namespace SnapshotShaders.URP
                 Blitter.BlitTexture(cmd, source, new Vector4(1, 1, 0, 0), 0.0f, false);
             }
 
-            private static void ExecuteMainPass(RasterCommandBuffer cmd, RTHandle source, Material material, int xTileCount, int yTileCount)
+            private static void ExecuteMainPass(RasterCommandBuffer cmd, RTHandle source, Material material,
+                int xTileCount, int yTileCount)
             {
                 // Set Mosaic effect properties.
                 var settings = VolumeManager.instance.stack.GetComponent<MosaicSettings>();
@@ -168,45 +160,49 @@ namespace SnapshotShaders.URP
 
             public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
             {
-                if(material == null)
-                {
-                    CreateMaterial();
-                }
+                if (material == null) CreateMaterial();
 
                 var settings = VolumeManager.instance.stack.GetComponent<MosaicSettings>();
                 renderPassEvent = settings.renderPassEvent.value;
 
-                UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
-                UniversalCameraData cameraData = frameData.Get<UniversalCameraData>();
+                var resourceData = frameData.Get<UniversalResourceData>();
+                var cameraData = frameData.Get<UniversalCameraData>();
 
-                UniversalRenderer renderer = (UniversalRenderer)cameraData.renderer;
+                var renderer = (UniversalRenderer)cameraData.renderer;
                 var colorCopyDescriptor = GetCopyPassDescriptor(cameraData.cameraTargetDescriptor);
-                TextureHandle copiedColor = TextureHandle.nullHandle;
+                var copiedColor = TextureHandle.nullHandle;
 
                 xTileCount = colorCopyDescriptor.width;
                 yTileCount = colorCopyDescriptor.height;
 
                 // Perform the intermediate copy pass (source -> temp).
-                copiedColor = UniversalRenderer.CreateRenderGraphTexture(renderGraph, colorCopyDescriptor, "_MosaicColorCopy", false, filterMode: FilterMode.Point);
+                copiedColor = UniversalRenderer.CreateRenderGraphTexture(renderGraph, colorCopyDescriptor,
+                    "_MosaicColorCopy", false, FilterMode.Point);
 
-                using (var builder = renderGraph.AddRasterRenderPass<CopyPassData>("Mosaic_CopyColor", out var passData, profilingSampler))
+                using (var builder =
+                       renderGraph.AddRasterRenderPass<CopyPassData>("Mosaic_CopyColor", out var passData,
+                           profilingSampler))
                 {
                     passData.inputTexture = resourceData.activeColorTexture;
 
                     builder.UseTexture(resourceData.activeColorTexture, AccessFlags.Read);
                     builder.SetRenderAttachment(copiedColor, 0, AccessFlags.Write);
-                    builder.SetRenderFunc((CopyPassData data, RasterGraphContext context) => ExecuteCopyPass(context.cmd, data.inputTexture));
+                    builder.SetRenderFunc((CopyPassData data, RasterGraphContext context) =>
+                        ExecuteCopyPass(context.cmd, data.inputTexture));
                 }
 
                 // Perform main pass (temp -> source).
-                using (var builder = renderGraph.AddRasterRenderPass<MainPassData>("Mosaic_MainPass", out var passData, profilingSampler))
+                using (var builder =
+                       renderGraph.AddRasterRenderPass<MainPassData>("Mosaic_MainPass", out var passData,
+                           profilingSampler))
                 {
                     passData.material = material;
                     passData.inputTexture = copiedColor;
 
                     builder.UseTexture(copiedColor, AccessFlags.Read);
                     builder.SetRenderAttachment(resourceData.activeColorTexture, 0, AccessFlags.Write);
-                    builder.SetRenderFunc((MainPassData data, RasterGraphContext context) => ExecuteMainPass(context.cmd, data.inputTexture, data.material, xTileCount, yTileCount));
+                    builder.SetRenderFunc((MainPassData data, RasterGraphContext context) =>
+                        ExecuteMainPass(context.cmd, data.inputTexture, data.material, xTileCount, yTileCount));
                 }
             }
 

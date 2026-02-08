@@ -13,14 +13,14 @@
 #endif
     public class CutoutEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter enabled;
-        SerializedDataParameter cutoutTexture;
-        SerializedDataParameter borderColor;
-        SerializedDataParameter stretch;
-        SerializedDataParameter zoom;
-        SerializedDataParameter offset;
-        SerializedDataParameter rotation;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter enabled;
+        private SerializedDataParameter cutoutTexture;
+        private SerializedDataParameter borderColor;
+        private SerializedDataParameter stretch;
+        private SerializedDataParameter zoom;
+        private SerializedDataParameter offset;
+        private SerializedDataParameter rotation;
 
         public override void OnEnable()
         {
@@ -39,11 +39,9 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Cutout>())
             {
-                EditorGUILayout.HelpBox("The Cutout effect must be added to your renderer's Renderer Features list.", MessageType.Error);
-                if (GUILayout.Button("Add Cutout Renderer Feature"))
-                {
-                    SnapshotUtility.AddEffectToPipelineAsset<Cutout>();
-                }
+                EditorGUILayout.HelpBox("The Cutout effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
+                if (GUILayout.Button("Add Cutout Renderer Feature")) SnapshotUtility.AddEffectToPipelineAsset<Cutout>();
             }
 
             PropertyField(renderPassEvent);

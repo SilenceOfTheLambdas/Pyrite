@@ -13,8 +13,8 @@
 #endif
     public class PixelateEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter pixelSize;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter pixelSize;
 
         public override void OnEnable()
         {
@@ -27,11 +27,10 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Pixelate>())
             {
-                EditorGUILayout.HelpBox("The Pixelate effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox("The Pixelate effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Pixelate Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<Pixelate>();
-                }
             }
 
             PropertyField(renderPassEvent);

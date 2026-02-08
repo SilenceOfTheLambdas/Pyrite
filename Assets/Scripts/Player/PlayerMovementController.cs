@@ -14,6 +14,7 @@ namespace Player
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
         }
+
         private void Start()
         {
             Assert.IsNotNull(_navMeshAgent, "Could not find NavMeshAgent attached to player game object.");
@@ -24,11 +25,9 @@ namespace Player
 
             // Cache the action from the reference if provided via inspector
             if (moveInputAction != null)
-            {
                 _moveAction = moveInputAction.action != null
                     ? moveInputAction.action
                     : moveInputAction.asset.FindActionMap("Player").FindAction("Move");
-            }
         }
 
         private void OnEnable()
@@ -44,7 +43,7 @@ namespace Player
         private void Update()
         {
             #region Player Movement
-            
+
             if (_moveAction != null)
             {
                 var input = _moveAction.ReadValue<Vector2>();
@@ -52,35 +51,40 @@ namespace Player
             }
 
             // Update Animation based on current movement velocity
-            float speed = (transform.position - _lastPosition).magnitude / Time.deltaTime;
+            var speed = (transform.position - _lastPosition).magnitude / Time.deltaTime;
             _animator.SetFloat(MovementSpeed, speed, 0.1f, Time.deltaTime);
             _lastPosition = transform.position;
-            
+
             #endregion
         }
 
         private void MovePlayer(Vector2 input)
         {
             // Convert input (WASD) to a world-space direction relative to the camera
-            Vector3 camForward = Vector3.forward;
-            Vector3 camRight = Vector3.right;
+            var camForward = Vector3.forward;
+            var camRight = Vector3.right;
             if (_camera != null)
             {
-                camForward = _camera.transform.forward; camForward.y = 0f; camForward.Normalize();
-                camRight = _camera.transform.right;   camRight.y = 0f;   camRight.Normalize();
+                camForward = _camera.transform.forward;
+                camForward.y = 0f;
+                camForward.Normalize();
+                camRight = _camera.transform.right;
+                camRight.y = 0f;
+                camRight.Normalize();
             }
 
-            Vector3 moveDir = (camForward * input.y + camRight * input.x);
+            var moveDir = camForward * input.y + camRight * input.x;
 
             // Apply movement
             if (moveDir.sqrMagnitude > 0.0001f)
             {
-                Vector3 displacement = moveDir.normalized * moveSpeed * Time.deltaTime;
+                var displacement = moveDir.normalized * moveSpeed * Time.deltaTime;
                 _navMeshAgent.Move(displacement);
 
                 // Smoothly rotate to face movement direction
                 var targetRot = Quaternion.LookRotation(moveDir, Vector3.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationLerpSpeed * Time.deltaTime);
+                transform.rotation =
+                    Quaternion.Slerp(transform.rotation, targetRot, rotationLerpSpeed * Time.deltaTime);
             }
         }
 
@@ -92,7 +96,7 @@ namespace Player
         [SerializeField] private InputActionReference moveInputAction;
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float rotationLerpSpeed = 12f;
-        
+
         private static readonly int MovementSpeed = Animator.StringToHash("MovementSpeed");
     }
 }

@@ -13,11 +13,11 @@
 #endif
     public class NoiseGrainEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter strength;
-        SerializedDataParameter speed;
-        SerializedDataParameter noiseSize;
-        SerializedDataParameter noiseInterpolation;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter strength;
+        private SerializedDataParameter speed;
+        private SerializedDataParameter noiseSize;
+        private SerializedDataParameter noiseInterpolation;
 
         public override void OnEnable()
         {
@@ -33,11 +33,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<NoiseGrain>())
             {
-                EditorGUILayout.HelpBox("The Noise Grain effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "The Noise Grain effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Noise Grain Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<NoiseGrain>();
-                }
             }
 
             PropertyField(renderPassEvent);

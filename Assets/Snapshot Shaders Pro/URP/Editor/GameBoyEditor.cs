@@ -13,13 +13,13 @@
 #endif
     public class GameBoyEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter enabled;
-        SerializedDataParameter darkestColor;
-        SerializedDataParameter darkColor;
-        SerializedDataParameter lightColor;
-        SerializedDataParameter lightestColor;
-        SerializedDataParameter powerRamp;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter enabled;
+        private SerializedDataParameter darkestColor;
+        private SerializedDataParameter darkColor;
+        private SerializedDataParameter lightColor;
+        private SerializedDataParameter lightestColor;
+        private SerializedDataParameter powerRamp;
 
         public override void OnEnable()
         {
@@ -37,11 +37,10 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<GameBoy>())
             {
-                EditorGUILayout.HelpBox("The Game Boy effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox("The Game Boy effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Game Boy Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<GameBoy>();
-                }
             }
 
             PropertyField(renderPassEvent);

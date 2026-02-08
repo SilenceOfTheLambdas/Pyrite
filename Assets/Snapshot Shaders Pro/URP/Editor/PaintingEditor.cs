@@ -13,8 +13,8 @@
 #endif
     public class PaintingEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter kernelSize;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter kernelSize;
 
         public override void OnEnable()
         {
@@ -27,11 +27,10 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Painting>())
             {
-                EditorGUILayout.HelpBox("The Painting effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox("The Painting effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Painting Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<Painting>();
-                }
             }
 
             PropertyField(renderPassEvent);

@@ -9,12 +9,11 @@ namespace RPGSystem.Item_Definitions
     [CreateAssetMenu(fileName = "BaseWeaponTemplate", menuName = "Inventory/Items/New WeaponTemplate")]
     public class WeaponTemplate : ItemTemplate
     {
-        [Header("Weapon Type")]
-        public WeaponType weaponType;
-        
+        [Header("Weapon Type")] public WeaponType weaponType;
+
         [Header("BaseWeaponTemplate Baseline at level 1")]
         public BaseWeaponTemplate baseWeaponStats;
-        
+
         public enum WeaponType
         {
             TwoHandedSword, // Two-handed sword

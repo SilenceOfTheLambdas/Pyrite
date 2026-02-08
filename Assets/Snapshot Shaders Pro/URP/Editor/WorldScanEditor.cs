@@ -13,12 +13,12 @@
 #endif
     public class WorldScanEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter scanOrigin;
-        SerializedDataParameter scanDistance;
-        SerializedDataParameter scanWidth;
-        SerializedDataParameter overlayRampTex;
-        SerializedDataParameter overlayColor;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter scanOrigin;
+        private SerializedDataParameter scanDistance;
+        private SerializedDataParameter scanWidth;
+        private SerializedDataParameter overlayRampTex;
+        private SerializedDataParameter overlayColor;
 
         public override void OnEnable()
         {
@@ -35,11 +35,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<WorldScan>())
             {
-                EditorGUILayout.HelpBox("The World Scan effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "The World Scan effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add World Scan Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<WorldScan>();
-                }
             }
 
             PropertyField(renderPassEvent);

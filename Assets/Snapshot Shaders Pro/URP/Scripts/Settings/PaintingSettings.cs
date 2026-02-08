@@ -4,7 +4,8 @@
     using UnityEngine.Rendering;
     using UnityEngine.Rendering.Universal;
 
-    [System.Serializable, VolumeComponentMenu("Snapshot Shaders Pro/Painting")]
+    [System.Serializable]
+    [VolumeComponentMenu("Snapshot Shaders Pro/Painting")]
     public sealed class PaintingSettings : VolumeComponent, IPostProcessComponent
     {
         public PaintingSettings()
@@ -13,10 +14,10 @@
         }
 
         [Tooltip("Choose where to insert this pass in URP's render loop.")]
-        public RenderPassEventParameter renderPassEvent = new RenderPassEventParameter(RenderPassEvent.BeforeRenderingPostProcessing);
+        public RenderPassEventParameter renderPassEvent = new(RenderPassEvent.BeforeRenderingPostProcessing);
 
         [Tooltip("Oil Painting effect radius.")]
-        public ClampedIntParameter kernelSize = new ClampedIntParameter(1, 1, 51);
+        public ClampedIntParameter kernelSize = new(1, 1, 51);
 
         public bool IsActive()
         {

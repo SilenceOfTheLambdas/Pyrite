@@ -33,16 +33,14 @@ namespace RPGSystem.Equipment
         /// </summary>
         public float attackRange;
 
-        [Header("Crit Stats")]
-        public float critMultiplier;
+        [Header("Crit Stats")] public float critMultiplier;
 
         public float criticalDamageChance;
 
         /// <summary>
         /// A generated list of affixes that apply to this weapon, this may be empty.
         /// </summary>
-        [Header("Affixes")] 
-        public List<ItemTemplate.Postfix> generatedAffixes = new();
+        [Header("Affixes")] public List<ItemTemplate.Postfix> generatedAffixes = new();
 
         /// <summary>
         /// Generates the stats for all weapon types.
@@ -53,10 +51,12 @@ namespace RPGSystem.Equipment
             // Get the base values at level 1
             physicalDamage = Random.Range(weaponTemplate.baseWeaponStats.physicalDamage.min,
                 weaponTemplate.baseWeaponStats.physicalDamage.max);
-            
+
+            equipmentSlot = EquipmentSlot.MainHand;
+
             // 1) First, we generate any elemental damage that may apply to this weapon
             GenerateAndAssignElementalDamage(weaponTemplate);
-            
+
             // 2) Then we assign basic stats like attack speed, range, crit multiplier and critical damage chance.
             // These values are not scaled.
             attackSpeed = weaponTemplate.baseWeaponStats.attackSpeed;
@@ -64,7 +64,7 @@ namespace RPGSystem.Equipment
             critMultiplier = weaponTemplate.baseWeaponStats.criticalDamageMultiplier;
             criticalDamageChance = Random.Range(weaponTemplate.baseWeaponStats.criticalDamageChance.min,
                 weaponTemplate.baseWeaponStats.criticalDamageChance.max);
-            
+
             // 3) This is where any Postfixes are applied
             generatedAffixes = new List<ItemTemplate.Postfix>();
             switch (equipmentRarity)
@@ -91,12 +91,12 @@ namespace RPGSystem.Equipment
                     Debug.LogError("Invalid Rarity");
                     break;
             }
-            
+
             // 4) Now, we scale the physical and elemental damage after postfixes are generated as some values
             // are scaled by the generated postfixes.
             ScalePhysicalDamage();
             ScaleElementalDamage();
-            
+
             // 5) Finally, generate the weapon equip requirements
             GenerateItemRequirements(weaponTemplate.baselineItemRequirements);
         }
@@ -145,14 +145,12 @@ namespace RPGSystem.Equipment
 
             // Now adjusting for any affixes that deal elemental damage.
             foreach (var affix in generatedAffixes)
-            {
                 if (affix.Type == ItemTemplate.Postfix.PostfixType.AddedElementalDamage)
                 {
                     var tierStatIncrease = affix.Value;
-                    elementalDamage.amount += (RpgManager.Instance.currentItemTier * tierStatIncrease) *
+                    elementalDamage.amount += RpgManager.Instance.currentItemTier * tierStatIncrease *
                                               RpgManager.Instance.itemLevelFactor;
                 }
-            }
         }
 
         /// <summary>
@@ -161,7 +159,8 @@ namespace RPGSystem.Equipment
         /// <param name="rarityAffixBonusRangeMin">The minimum number of affixes that could apply to this item.</param>
         /// <param name="rarityAffixBonusRangeMax">The maximum number of affixes that could apply to this item.</param>
         /// <param name="weaponTemplate">A reference to the weapon template to use.</param>
-        private void GenerateAffixes(int rarityAffixBonusRangeMin, int rarityAffixBonusRangeMax, WeaponTemplate weaponTemplate)
+        private void GenerateAffixes(int rarityAffixBonusRangeMin, int rarityAffixBonusRangeMax,
+            WeaponTemplate weaponTemplate)
         {
             // Choose a random number of affixes at the start
             var randomNumberOfAffixes = Random.Range(rarityAffixBonusRangeMin, rarityAffixBonusRangeMax);
@@ -204,17 +203,17 @@ namespace RPGSystem.Equipment
                     var generatedPossibleAffix = possibleAffix;
                     generatedPossibleAffix.Type = possibleAffix.Type;
                     generatedPossibleAffix.Value = Random.Range(RpgManager.Instance
-                            .itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange
-                            .min.magic, RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1]
-                            .tierStatsRange.max.magic);
+                        .itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange
+                        .min.magic, RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1]
+                        .tierStatsRange.max.magic);
                     tempListOfPossibleAffixes.Add(generatedPossibleAffix);
                     hasGeneratedElementalDamage = true;
                 }
             }
+
             #endregion
 
             #region Actually assigning affixes to this generated weapon randomly
-
 
             for (var i = 0; i < randomNumberOfAffixes; i++)
             {
@@ -224,15 +223,14 @@ namespace RPGSystem.Equipment
                     // Check if we have an elemental damage affix.
                     if (tempListOfPossibleAffixes[randomAffixIndex].Type ==
                         ItemTemplate.Postfix.PostfixType.AddedElementalDamage)
-                    {
                         // If so, we choose a random element type to apply to the weapon
                         elementalDamage.type = SelectRandomElementalDamageType();
-                    }
 
                     generatedAffixes.Add(tempListOfPossibleAffixes[randomAffixIndex]);
                     tempListOfPossibleAffixes.RemoveAt(randomAffixIndex);
                 }
             }
+
             tempListOfPossibleAffixes.Clear();
 
             #endregion
@@ -251,7 +249,7 @@ namespace RPGSystem.Equipment
 
         public string GenerateWeaponStatsDescription()
         {
-            string itemDescription = "";
+            var itemDescription = "";
 
             var physicalDamageText = "Physical Dmg: " + physicalDamage;
             var attackSpeedText = $"Attack Speed: {attackSpeed:F1}";
@@ -260,10 +258,10 @@ namespace RPGSystem.Equipment
             var critMultiplierText = "Crit Multi: x" + critMultiplier;
 
             itemDescription += physicalDamageText + "\n"
-                + attackSpeedText + "\n"
-                + attackRangeText + "\n"
-                + criticalDamageChanceText + "\n"
-                + critMultiplierText + "\n";
+                                                  + attackSpeedText + "\n"
+                                                  + attackRangeText + "\n"
+                                                  + criticalDamageChanceText + "\n"
+                                                  + critMultiplierText + "\n";
 
             // Elemental Damage
             if (elementalDamage.amount > 0)
@@ -276,7 +274,6 @@ namespace RPGSystem.Equipment
             if (generatedAffixes.Count <= 0) return itemDescription;
             itemDescription += "<color=grey><align=\"center\">________\n<align=\"left\"><size=60%>\n";
             foreach (var generatedAffix in generatedAffixes)
-            {
                 switch (generatedAffix.Type)
                 {
                     case ItemTemplate.Postfix.PostfixType.AddedStrength:
@@ -285,7 +282,8 @@ namespace RPGSystem.Equipment
                     case ItemTemplate.Postfix.PostfixType.AddedHealth:
                     case ItemTemplate.Postfix.PostfixType.AddedElementalDamage:
                     case ItemTemplate.Postfix.PostfixType.AddedArmour:
-                        itemDescription += $"Adds {generatedAffix.Value} to {generatedAffix.Type.ToString().Remove(0, 5)}\n";
+                        itemDescription +=
+                            $"Adds {generatedAffix.Value} to {generatedAffix.Type.ToString().Remove(0, 5)}\n";
                         break;
                     case ItemTemplate.Postfix.PostfixType.IncreasedPhysicalDamage:
                     case ItemTemplate.Postfix.PostfixType.IncreasedCritChance:
@@ -293,12 +291,12 @@ namespace RPGSystem.Equipment
                     case ItemTemplate.Postfix.PostfixType.IncreasedIceResistance:
                     case ItemTemplate.Postfix.PostfixType.IncreasedLightningResistance:
                     case ItemTemplate.Postfix.PostfixType.IncreasedPoisonResistance:
-                        itemDescription += $"Increased {generatedAffix.Type.ToString().Remove(0, 9)} by {generatedAffix.Value}%\n";
+                        itemDescription +=
+                            $"Increased {generatedAffix.Type.ToString().Remove(0, 9)} by {generatedAffix.Value}%\n";
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-            }
 
             return itemDescription;
         }

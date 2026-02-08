@@ -13,10 +13,10 @@
 #endif
     public class LightStreaksEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter strength;
-        SerializedDataParameter luminanceThreshold;
-        SerializedDataParameter downsampleAmount;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter strength;
+        private SerializedDataParameter luminanceThreshold;
+        private SerializedDataParameter downsampleAmount;
 
         public override void OnEnable()
         {
@@ -31,11 +31,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<LightStreaks>())
             {
-                EditorGUILayout.HelpBox("The Light Streaks effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "The Light Streaks effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Light Streaks Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<LightStreaks>();
-                }
             }
 
             PropertyField(renderPassEvent);

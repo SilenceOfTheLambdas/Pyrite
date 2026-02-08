@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Utils;
 
 namespace User_Interface
 {
@@ -18,6 +19,7 @@ namespace User_Interface
         [SerializeField] private InputActionReference toggleInventoryAction;
         [SerializeField] private GameObject inventoryPanel;
         [SerializeField] private Vector2 tooltipOffset = new(15, -15);
+
         /// <summary>
         /// Displayed when hovering over an item in the inventory.
         /// </summary>
@@ -58,18 +60,19 @@ namespace User_Interface
                     _currentItemTooltipPanel.SetActive(false);
             }
 
-            if (_currentItemTooltipPanel != null && _currentItemTooltipPanel.activeSelf)
-            {
-                UpdateTooltipPosition();
-            }
+            if (_currentItemTooltipPanel != null && _currentItemTooltipPanel.activeSelf) UpdateTooltipPosition();
         }
 
         public void ShowItemTooltip(InventorySlotInfo slotInfo)
         {
             var itemPosition = slotInfo.itemPosition;
-            var item = _playerInventoryManager.GetItemBySlotPosition(itemPosition);
-            
-            switch (item.Stats.equipmentRarity)
+            ItemStats item;
+
+            if (slotInfo.item.Stats.isEquipped)
+                item = _playerInventoryManager.GetEquippedItemBySlot(slotInfo.item.Stats.equipmentSlot);
+            else item = _playerInventoryManager.GetItemBySlotPosition(itemPosition);
+
+            switch (item.equipmentRarity)
             {
                 case RpgManager.ItemRarity.Common:
                     _currentItemTooltipPanel = commonItemTooltipPanel;
@@ -92,23 +95,22 @@ namespace User_Interface
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            _rectTransform = _currentItemTooltipPanel.GetComponent<RectTransform>();
-            _itemStatsDescription = _currentItemTooltipPanel.transform.Find("Item Stats").GetComponent<TextMeshProUGUI>();
-            _itemStatsName = _currentItemTooltipPanel.transform.Find("Item Name").GetComponent<TextMeshProUGUI>();
-            if (!_currentItemTooltipPanel.activeSelf)
-            {
-                _currentItemTooltipPanel.SetActive(true);
-            }
 
-            switch (item.Stats.itemType)
+            _rectTransform = _currentItemTooltipPanel.GetComponent<RectTransform>();
+            _itemStatsDescription =
+                _currentItemTooltipPanel.transform.Find("Item Stats").GetComponent<TextMeshProUGUI>();
+            _itemStatsName = _currentItemTooltipPanel.transform.Find("Item Name").GetComponent<TextMeshProUGUI>();
+            if (!_currentItemTooltipPanel.activeSelf) _currentItemTooltipPanel.SetActive(true);
+
+            switch (item.itemType)
             {
                 case ItemTemplate.ItemType.Weapon:
-                    var itemStats = item.Stats as WeaponStats;
+                    var itemStats = item as WeaponStats;
                     _itemStatsName.SetText(itemStats?.equipmentName);
                     _itemStatsDescription.text = itemStats?.GenerateWeaponStatsDescription();
                     break;
                 case ItemTemplate.ItemType.Armour:
-                    var armourStats = item.Stats as ArmourStats;
+                    var armourStats = item as ArmourStats;
                     _itemStatsName.SetText(armourStats?.equipmentName);
                     _itemStatsDescription.text = armourStats?.GenerateArmourStatsDescription();
                     break;
@@ -118,63 +120,48 @@ namespace User_Interface
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            SetItemRequirementsText(item.Stats);
+
+            SetItemRequirementsText(item);
         }
 
         private void SetItemRequirementsText(ItemStats itemStats)
         {
             // Level Requirements
             if (itemStats.itemRequirements.playerLevelRequirement > PlayerRpgController.Instance.CurrentPlayerLevel)
-            {
-                _currentItemTooltip.itemLevelRequirementText.text = 
+                _currentItemTooltip.itemLevelRequirementText.text =
                     "Level: " + $"<color=red>{itemStats.itemRequirements.playerLevelRequirement}";
-            }
             else
-            {
-                _currentItemTooltip.itemLevelRequirementText.text = 
+                _currentItemTooltip.itemLevelRequirementText.text =
                     "Level: " + itemStats.itemRequirements.playerLevelRequirement;
-            }
-            
+
             // Strength Requirements
             if (itemStats.itemRequirements.playerStrengthRequirement >
                 PlayerRpgController.Instance.CurrentPlayerAttributes.strength)
-            {
-                _currentItemTooltip.itemStrengthRequirementText.text = 
+                _currentItemTooltip.itemStrengthRequirementText.text =
                     "Strength: " + $"<color=red>{itemStats.itemRequirements.playerStrengthRequirement}";
-            }
             else
-            {
-                _currentItemTooltip.itemStrengthRequirementText.text = 
+                _currentItemTooltip.itemStrengthRequirementText.text =
                     "Strength: " + itemStats.itemRequirements.playerStrengthRequirement;
-            }
-            
+
             // Dexterity Requirements
             if (itemStats.itemRequirements.playerDexterityRequirement >
                 PlayerRpgController.Instance.CurrentPlayerAttributes.dexterity)
-            {
-                _currentItemTooltip.itemDexterityRequirementText.text = 
+                _currentItemTooltip.itemDexterityRequirementText.text =
                     "Dexterity: " + $"<color=red>{itemStats.itemRequirements.playerDexterityRequirement}";
-            }
             else
-            {
-                _currentItemTooltip.itemDexterityRequirementText.text = 
+                _currentItemTooltip.itemDexterityRequirementText.text =
                     "Dexterity: " + itemStats.itemRequirements.playerDexterityRequirement;
-            }
-            
+
             // Intelligence Requirements
             if (itemStats.itemRequirements.playerIntelligenceRequirement >
                 PlayerRpgController.Instance.CurrentPlayerAttributes.intelligence)
-            {
-                _currentItemTooltip.itemIntelligenceRequirementText.text = 
+                _currentItemTooltip.itemIntelligenceRequirementText.text =
                     "Intelligence: " + $"<color=red>{itemStats.itemRequirements.playerIntelligenceRequirement}";
-            }
             else
-            {
-                _currentItemTooltip.itemIntelligenceRequirementText.text = 
+                _currentItemTooltip.itemIntelligenceRequirementText.text =
                     "Intelligence: " + itemStats.itemRequirements.playerIntelligenceRequirement;
-            }
         }
-        
+
         public void HideItemTooltip()
         {
             _currentItemTooltipPanel.SetActive(false);

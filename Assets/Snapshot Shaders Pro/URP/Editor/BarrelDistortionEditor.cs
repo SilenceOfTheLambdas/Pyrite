@@ -13,9 +13,9 @@
 #endif
     public class BarrelDistortionEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter strength;
-        SerializedDataParameter backgroundColor;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter strength;
+        private SerializedDataParameter backgroundColor;
 
         public override void OnEnable()
         {
@@ -29,11 +29,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<BarrelDistortion>())
             {
-                EditorGUILayout.HelpBox("The Barrel Distortion effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "The Barrel Distortion effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Barrel Distortion Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<BarrelDistortion>();
-                }
             }
 
             PropertyField(renderPassEvent);

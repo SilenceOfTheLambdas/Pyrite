@@ -13,10 +13,10 @@
 #endif
     public class BlurEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter strength;
-        SerializedDataParameter blurStepSize;
-        SerializedDataParameter blurType;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter strength;
+        private SerializedDataParameter blurStepSize;
+        private SerializedDataParameter blurType;
 
         public override void OnEnable()
         {
@@ -31,11 +31,9 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Blur>())
             {
-                EditorGUILayout.HelpBox("The Blur effect must be added to your renderer's Renderer Features list.", MessageType.Error);
-                if (GUILayout.Button("Add Blur Renderer Feature"))
-                {
-                    SnapshotUtility.AddEffectToPipelineAsset<Blur>();
-                }
+                EditorGUILayout.HelpBox("The Blur effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
+                if (GUILayout.Button("Add Blur Renderer Feature")) SnapshotUtility.AddEffectToPipelineAsset<Blur>();
             }
 
             PropertyField(renderPassEvent);

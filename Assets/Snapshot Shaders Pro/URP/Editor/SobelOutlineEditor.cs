@@ -13,12 +13,12 @@
 #endif
     public class SobelOutlineEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter enabled;
-        SerializedDataParameter threshold;
-        SerializedDataParameter outlineColor;
-        SerializedDataParameter backgroundColor;
-        SerializedDataParameter useSceneColor;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter enabled;
+        private SerializedDataParameter threshold;
+        private SerializedDataParameter outlineColor;
+        private SerializedDataParameter backgroundColor;
+        private SerializedDataParameter useSceneColor;
 
         public override void OnEnable()
         {
@@ -35,11 +35,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<SobelOutline>())
             {
-                EditorGUILayout.HelpBox("The Outline (Sobel) effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "The Outline (Sobel) effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Outline (Sobel) Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<SobelOutline>();
-                }
             }
 
             PropertyField(renderPassEvent);

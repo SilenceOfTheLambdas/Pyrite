@@ -13,13 +13,13 @@
 #endif
     public class DrawingEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter drawingTex;
-        SerializedDataParameter animCycleTime;
-        SerializedDataParameter strength;
-        SerializedDataParameter tiling;
-        SerializedDataParameter smudge;
-        SerializedDataParameter depthThreshold;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter drawingTex;
+        private SerializedDataParameter animCycleTime;
+        private SerializedDataParameter strength;
+        private SerializedDataParameter tiling;
+        private SerializedDataParameter smudge;
+        private SerializedDataParameter depthThreshold;
 
         public override void OnEnable()
         {
@@ -37,11 +37,10 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Drawing>())
             {
-                EditorGUILayout.HelpBox("The Drawing effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox("The Drawing effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Drawing Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<Drawing>();
-                }
             }
 
             PropertyField(renderPassEvent);

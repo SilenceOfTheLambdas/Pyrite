@@ -5,7 +5,8 @@ namespace SnapshotShaders.URP
     using UnityEngine.Rendering;
     using UnityEngine.Rendering.Universal;
 
-    [System.Serializable, VolumeComponentMenu("Snapshot Shaders Pro/Synthwave")]
+    [Serializable]
+    [VolumeComponentMenu("Snapshot Shaders Pro/Synthwave")]
     public sealed class SynthwaveSettings : VolumeComponent, IPostProcessComponent
     {
         public SynthwaveSettings()
@@ -14,40 +15,39 @@ namespace SnapshotShaders.URP
         }
 
         [Tooltip("Choose where to insert this pass in URP's render loop.")]
-        public RenderPassEventParameter renderPassEvent = new RenderPassEventParameter(RenderPassEvent.BeforeRenderingPostProcessing);
+        public RenderPassEventParameter renderPassEvent = new(RenderPassEvent.BeforeRenderingPostProcessing);
 
         [Tooltip("Color of the background if Use Scene Color is turned off.")]
-        public ColorParameter backgroundColor = new ColorParameter(Color.black);
-        
+        public ColorParameter backgroundColor = new(Color.black);
+
         [Tooltip("Bottom color of the synthwave lines. HDR colors will glow if a Bloom effect is present.")]
-        public ColorParameter lineColor1 = new ColorParameter(Color.white, true, true, true);
+        public ColorParameter lineColor1 = new(Color.white, true, true, true);
 
         [ColorUsage(true, true)]
         [Tooltip("Top color of the synthwave lines. HDR colors will glow if a Bloom effect is present.")]
-        public ColorParameter lineColor2 = new ColorParameter(Color.white, true, true, true);
+        public ColorParameter lineColor2 = new(Color.white, true, true, true);
 
         [Tooltip("Controls the mix between the two line colors." +
-            " Lower values favour the top color (2). Higher values favor the bottom color (1).")]
+                 " Lower values favour the top color (2). Higher values favor the bottom color (1).")]
         public FloatParameter lineColorMix = new ClampedFloatParameter(1.0f, 0.0f, 2.0f);
 
         [Tooltip("Thickness of the lines in world space units.")]
-        public FloatParameter lineWidth = new FloatParameter(0.0f);
+        public FloatParameter lineWidth = new(0.0f);
 
         [Tooltip("Falloff between synthwave lines and background color in world space units.")]
-        public FloatParameter lineFalloff = new FloatParameter(0.05f);
+        public FloatParameter lineFalloff = new(0.05f);
 
         [Tooltip("Space between lines along each axis in world space units.")]
-        public Vector3Parameter gapWidth = new Vector3Parameter(Vector3.one);
+        public Vector3Parameter gapWidth = new(Vector3.one);
 
         [Tooltip("Offset from (0, 0, 0) along each axis in world space units.")]
-        public Vector3Parameter offset = new Vector3Parameter(Vector3.zero);
+        public Vector3Parameter offset = new(Vector3.zero);
 
-        [SerializeField]
-        [Tooltip("Synthwave lines are shown only along these axes.")]
-        public AxisMaskParameter axisMask = new AxisMaskParameter(AxisMask.XZ);
+        [SerializeField] [Tooltip("Synthwave lines are shown only along these axes.")]
+        public AxisMaskParameter axisMask = new(AxisMask.XZ);
 
         [Tooltip("Use the Scene Color instead of Background Color?")]
-        public BoolParameter useSceneColor = new BoolParameter(false);
+        public BoolParameter useSceneColor = new(false);
 
         public bool IsActive()
         {
@@ -63,12 +63,17 @@ namespace SnapshotShaders.URP
     [Serializable]
     public enum AxisMask
     {
-        XY, XZ, YZ, XYZ
+        XY,
+        XZ,
+        YZ,
+        XYZ
     }
 
     [Serializable]
     public sealed class AxisMaskParameter : VolumeParameter<AxisMask>
     {
-        public AxisMaskParameter(AxisMask value, bool overrideState = false) : base(value, overrideState) { }
+        public AxisMaskParameter(AxisMask value, bool overrideState = false) : base(value, overrideState)
+        {
+        }
     }
 }

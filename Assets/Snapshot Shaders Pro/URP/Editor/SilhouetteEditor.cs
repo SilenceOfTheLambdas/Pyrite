@@ -13,11 +13,11 @@
 #endif
     public class SilhouetteEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter enabled;
-        SerializedDataParameter nearColor;
-        SerializedDataParameter farColor;
-        SerializedDataParameter powerRamp;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter enabled;
+        private SerializedDataParameter nearColor;
+        private SerializedDataParameter farColor;
+        private SerializedDataParameter powerRamp;
 
         public override void OnEnable()
         {
@@ -33,11 +33,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Silhouette>())
             {
-                EditorGUILayout.HelpBox("The Silhouette effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "The Silhouette effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Silhouette Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<Silhouette>();
-                }
             }
 
             PropertyField(renderPassEvent);

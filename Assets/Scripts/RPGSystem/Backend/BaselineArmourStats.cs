@@ -12,6 +12,7 @@ namespace RPGSystem.Backend
     {
         [Header("Base Defenses")] [SerializeField]
         public int physicalArmour;
+
         public int magicalArmour;
 
         [Header("Resistances")] [SerializeField]
@@ -21,8 +22,7 @@ namespace RPGSystem.Backend
         [Header("Stat Bonuses")] [SerializeField]
         public RpgManager.CorePlayerStats statBonuses;
 
-        [NonSerialized]
-        public List<ItemTemplate.Postfix> GeneratedPostfixes;
+        [NonSerialized] public List<ItemTemplate.Postfix> GeneratedPostfixes;
 
         [Serializable]
         public struct ElementalResistance
@@ -30,10 +30,9 @@ namespace RPGSystem.Backend
             /// <summary>
             /// The type of damage this armour resists.
             /// </summary>
-            [SerializeField]
-            public RpgManager.ElementalDamageType damageType;
-            [Range(0, 100)] [SerializeField]
-            public float resistancePercentage;
+            [SerializeField] public RpgManager.ElementalDamageType damageType;
+
+            [Range(0, 100)] [SerializeField] public float resistancePercentage;
         }
 
         /// <summary>
@@ -43,19 +42,15 @@ namespace RPGSystem.Backend
         {
             var copy = new BaselineArmourStats
             {
-                physicalArmour = this.physicalArmour,
-                magicalArmour = this.magicalArmour,
-                statBonuses = this.statBonuses,
+                physicalArmour = physicalArmour,
+                magicalArmour = magicalArmour,
+                statBonuses = statBonuses,
                 elementalResistances = new List<ElementalResistance>()
             };
 
-            if (this.elementalResistances != null)
-            {
-                foreach (var resistance in this.elementalResistances)
-                {
+            if (elementalResistances != null)
+                foreach (var resistance in elementalResistances)
                     copy.elementalResistances.Add(resistance);
-                }
-            }
 
             return copy;
         }

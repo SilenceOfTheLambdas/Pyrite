@@ -2,14 +2,14 @@
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 #if UNITY_6000_0_OR_NEWER
-    using UnityEngine.Rendering.RenderGraphModule;
+using UnityEngine.Rendering.RenderGraphModule;
 #endif
 
 namespace SnapshotShaders.URP
 {
     public class Underwater : ScriptableRendererFeature
     {
-        UnderwaterRenderPass pass;
+        private UnderwaterRenderPass pass;
 
         public override void Create()
         {
@@ -35,7 +35,7 @@ namespace SnapshotShaders.URP
             base.Dispose(disposing);
         }
 
-        class UnderwaterRenderPass : ScriptableRenderPass
+        private class UnderwaterRenderPass : ScriptableRenderPass
         {
             private Material material;
             private RTHandle tempTexHandle;
@@ -48,6 +48,7 @@ namespace SnapshotShaders.URP
                 requiresIntermediateTexture = true;
 #endif
             }
+
             private void CreateMaterial()
             {
                 var shader = Shader.Find("SnapshotProURP/Underwater");
@@ -81,17 +82,11 @@ namespace SnapshotShaders.URP
 
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
-                if (renderingData.cameraData.isPreviewCamera)
-                {
-                    return;
-                }
+                if (renderingData.cameraData.isPreviewCamera) return;
 
-                if (material == null)
-                {
-                    CreateMaterial();
-                }
+                if (material == null) CreateMaterial();
 
-                CommandBuffer cmd = CommandBufferPool.Get();
+                var cmd = CommandBufferPool.Get();
 
                 // Set Underwater effect properties.
                 var settings = VolumeManager.instance.stack.GetComponent<UnderwaterSettings>();
@@ -102,13 +97,9 @@ namespace SnapshotShaders.URP
                 material.SetFloat("_FogStrength", settings.fogStrength.value);
 
                 if (settings.useCaustics.value)
-                {
                     material.EnableKeyword("USE_CAUSTICS_ON");
-                }
                 else
-                {
                     material.DisableKeyword("USE_CAUSTICS_ON");
-                } 
 
                 material.SetTexture("_CausticsTexture", settings.causticsTexture.value);
                 material.SetFloat("_CausticsNoiseSpeed", settings.causticsNoiseSpeed.value);
@@ -119,7 +110,7 @@ namespace SnapshotShaders.URP
                 material.SetVector("_CausticsTiling", settings.causticsTiling.value);
                 material.SetColor("_CausticsTint", settings.causticsTint.value);
 
-                RTHandle cameraTargetHandle = renderingData.cameraData.renderer.cameraColorTargetHandle;
+                var cameraTargetHandle = renderingData.cameraData.renderer.cameraColorTargetHandle;
 
                 // Perform the Blit operations for the Underwater effect.
                 using (new ProfilingScope(cmd, profilingSampler))
@@ -166,13 +157,9 @@ namespace SnapshotShaders.URP
                 material.SetFloat("_FogStrength", settings.fogStrength.value);
 
                 if (settings.useCaustics.value)
-                {
                     material.EnableKeyword("USE_CAUSTICS_ON");
-                }
                 else
-                {
                     material.DisableKeyword("USE_CAUSTICS_ON");
-                }
 
                 material.SetTexture("_CausticsTexture", settings.causticsTexture.value);
                 material.SetFloat("_CausticsNoiseSpeed", settings.causticsNoiseSpeed.value);
@@ -188,42 +175,46 @@ namespace SnapshotShaders.URP
 
             public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
             {
-                if(material == null)
-                {
-                    CreateMaterial();
-                }
+                if (material == null) CreateMaterial();
 
                 var settings = VolumeManager.instance.stack.GetComponent<UnderwaterSettings>();
                 renderPassEvent = settings.renderPassEvent.value;
 
-                UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
-                UniversalCameraData cameraData = frameData.Get<UniversalCameraData>();
+                var resourceData = frameData.Get<UniversalResourceData>();
+                var cameraData = frameData.Get<UniversalCameraData>();
 
-                UniversalRenderer renderer = (UniversalRenderer)cameraData.renderer;
+                var renderer = (UniversalRenderer)cameraData.renderer;
                 var colorCopyDescriptor = GetCopyPassDescriptor(cameraData.cameraTargetDescriptor);
-                TextureHandle copiedColor = TextureHandle.nullHandle;
+                var copiedColor = TextureHandle.nullHandle;
 
                 // Perform the intermediate copy pass (source -> temp).
-                copiedColor = UniversalRenderer.CreateRenderGraphTexture(renderGraph, colorCopyDescriptor, "_UnderwaterColorCopy", false);
+                copiedColor = UniversalRenderer.CreateRenderGraphTexture(renderGraph, colorCopyDescriptor,
+                    "_UnderwaterColorCopy", false);
 
-                using (var builder = renderGraph.AddRasterRenderPass<CopyPassData>("Underwater_CopyColor", out var passData, profilingSampler))
+                using (var builder =
+                       renderGraph.AddRasterRenderPass<CopyPassData>("Underwater_CopyColor", out var passData,
+                           profilingSampler))
                 {
                     passData.inputTexture = resourceData.activeColorTexture;
 
                     builder.UseTexture(resourceData.activeColorTexture, AccessFlags.Read);
                     builder.SetRenderAttachment(copiedColor, 0, AccessFlags.Write);
-                    builder.SetRenderFunc((CopyPassData data, RasterGraphContext context) => ExecuteCopyPass(context.cmd, data.inputTexture));
+                    builder.SetRenderFunc((CopyPassData data, RasterGraphContext context) =>
+                        ExecuteCopyPass(context.cmd, data.inputTexture));
                 }
 
                 // Perform main pass (temp -> source).
-                using (var builder = renderGraph.AddRasterRenderPass<MainPassData>("Underwater_MainPass", out var passData, profilingSampler))
+                using (var builder =
+                       renderGraph.AddRasterRenderPass<MainPassData>("Underwater_MainPass", out var passData,
+                           profilingSampler))
                 {
                     passData.material = material;
                     passData.inputTexture = copiedColor;
 
                     builder.UseTexture(copiedColor, AccessFlags.Read);
                     builder.SetRenderAttachment(resourceData.activeColorTexture, 0, AccessFlags.Write);
-                    builder.SetRenderFunc((MainPassData data, RasterGraphContext context) => ExecuteMainPass(context.cmd, data.inputTexture, data.material));
+                    builder.SetRenderFunc((MainPassData data, RasterGraphContext context) =>
+                        ExecuteMainPass(context.cmd, data.inputTexture, data.material));
                 }
             }
 

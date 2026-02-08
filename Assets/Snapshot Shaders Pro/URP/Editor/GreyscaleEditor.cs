@@ -13,8 +13,8 @@
 #endif
     public class GreyscaleEditor : VolumeComponentEditor
     {
-        SerializedDataParameter renderPassEvent;
-        SerializedDataParameter strength;
+        private SerializedDataParameter renderPassEvent;
+        private SerializedDataParameter strength;
 
         public override void OnEnable()
         {
@@ -27,11 +27,10 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Greyscale>())
             {
-                EditorGUILayout.HelpBox("The Greyscale effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                EditorGUILayout.HelpBox("The Greyscale effect must be added to your renderer's Renderer Features list.",
+                    MessageType.Error);
                 if (GUILayout.Button("Add Greyscale Renderer Feature"))
-                {
                     SnapshotUtility.AddEffectToPipelineAsset<Greyscale>();
-                }
             }
 
             PropertyField(renderPassEvent);
