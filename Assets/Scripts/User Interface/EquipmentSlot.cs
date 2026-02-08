@@ -22,6 +22,13 @@ namespace User_Interface
             if (isSlotEmpty)
             {
                 var slotInfo = eventData.pointerDrag.GetComponent<InventorySlotInfo>();
+                
+                // Check if the player meets the requirements to equip this item
+                if (!slotInfo.item.Stats.CheckItemRequirements())
+                {
+                    return;
+                }
+                
                 eventData.pointerDrag.GetComponent<CanvasGroup>().blocksRaycasts = false;
                 if (slotInfo.item.Stats.equipmentSlot != equipmentSlot) return;
 

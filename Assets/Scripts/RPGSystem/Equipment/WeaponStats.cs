@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Player;
 using RPGSystem.Backend;
 using RPGSystem.Item_Definitions;
 using UnityEngine;

@@ -1,6 +1,7 @@
 using RPGSystem.Inventory_System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace User_Interface
 {
@@ -8,6 +9,7 @@ namespace User_Interface
     {
         private CanvasGroup _canvasGroup;
         private Vector2 _originalItemPosition;
+        private Transform _originalParent;
         private InventorySlotInfo _inventorySlotInfo;
 
         private void Awake()
@@ -23,7 +25,8 @@ namespace User_Interface
         
         public void OnBeginDrag(PointerEventData eventData)
         {
-            _originalItemPosition = _inventorySlotInfo.itemPosition;
+            _originalItemPosition = transform.position;
+            _originalParent = transform.parent;
 
             if (_canvasGroup != null)
             {
@@ -44,6 +47,13 @@ namespace User_Interface
             {
                 _canvasGroup.blocksRaycasts = true;
                 _canvasGroup.alpha = 1f;
+            }
+
+            // If our parent is the same, we weren't dropped into a slot.
+            // Or check if we were dropped over nothing
+            if (transform.parent == _originalParent || eventData.pointerDrag == null)
+            {
+                transform.position = _originalItemPosition;
             }
         }
     }

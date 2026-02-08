@@ -1,4 +1,5 @@
 ﻿using System;
+using Player;
 using RPGSystem.Backend;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -103,6 +104,22 @@ namespace RPGSystem.Equipment
             itemRequirements.playerDexterityRequirement = (template.playerDexterityRequirement *= 1) + equipmentLevel;
             itemRequirements.playerIntelligenceRequirement =
                 (template.playerIntelligenceRequirement *= 1) + equipmentLevel;
+        }
+        
+        /// <summary>
+        /// Checks if the player meets the requirements to use the item.
+        /// </summary>
+        /// <returns>
+        /// True if the player's level and attributes satisfy the item's requirements, otherwise false.
+        /// </returns>
+        public bool CheckItemRequirements()
+        {
+            var player = PlayerRpgController.Instance;
+            
+            return player.CurrentPlayerLevel >= itemRequirements.playerLevelRequirement
+                   && player.CurrentPlayerAttributes.strength >= itemRequirements.playerStrengthRequirement
+                   && player.CurrentPlayerAttributes.dexterity >= itemRequirements.playerDexterityRequirement
+                   && player.CurrentPlayerAttributes.intelligence >= itemRequirements.playerIntelligenceRequirement;
         }
     }
 
