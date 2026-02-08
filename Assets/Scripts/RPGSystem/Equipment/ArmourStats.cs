@@ -32,21 +32,15 @@ namespace RPGSystem.Equipment
             ArmourType = typeOfArmourToGenerate;
 
             // Map equipment slot from armour type
-            switch (typeOfArmourToGenerate)
+            equipmentSlot = typeOfArmourToGenerate switch
             {
-                case ArmourTemplate.ArmourType.Head:
-                    equipmentSlot = EquipmentSlot.Head;
-                    break;
-                case ArmourTemplate.ArmourType.Chest:
-                    equipmentSlot = EquipmentSlot.Body;
-                    break;
-                case ArmourTemplate.ArmourType.Legs:
-                    equipmentSlot = EquipmentSlot.Legs;
-                    break;
-                case ArmourTemplate.ArmourType.Boots:
-                    equipmentSlot = EquipmentSlot.Feet;
-                    break;
-            }
+                ArmourTemplate.ArmourType.Head => EquipmentSlot.Head,
+                ArmourTemplate.ArmourType.Chest => EquipmentSlot.Body,
+                ArmourTemplate.ArmourType.Legs => EquipmentSlot.Legs,
+                ArmourTemplate.ArmourType.Boots => EquipmentSlot.Feet,
+                ArmourTemplate.ArmourType.Gauntlets => EquipmentSlot.Gauntlets,
+                _ => equipmentSlot
+            };
 
             // Initialise resistances for all elements at 0 so we can safely add to them.
             InitializeElementalResistances();

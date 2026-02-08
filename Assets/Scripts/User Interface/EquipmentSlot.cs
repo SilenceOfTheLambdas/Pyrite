@@ -24,19 +24,19 @@ namespace User_Interface
                 var slotInfo = eventData.pointerDrag.GetComponent<InventorySlotInfo>();
                 
                 // Check if the player meets the requirements to equip this item
-                if (!slotInfo.item.Stats.CheckItemRequirements())
+                if (!slotInfo.Item.Stats.CheckItemRequirements())
                 {
                     return;
                 }
                 
                 eventData.pointerDrag.GetComponent<CanvasGroup>().blocksRaycasts = false;
-                if (slotInfo.item.Stats.equipmentSlot != equipmentSlot) return;
+                if (slotInfo.Item.Stats.equipmentSlot != equipmentSlot) return;
 
-                if (EquipItem(slotInfo.item))
+                if (EquipItem(slotInfo.Item))
                 {
                     eventData.pointerDrag.transform.SetParent(transform);
                     eventData.pointerDrag.transform.localPosition = Vector3.zero;
-                    PlayerInventoryManager.Instance.RemoveItemFromInventory(slotInfo.itemPosition);
+                    PlayerInventoryManager.Instance.RemoveItemFromInventory(slotInfo.Item.itemIndex);
                 }
             }
         }

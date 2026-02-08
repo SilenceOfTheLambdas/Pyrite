@@ -8,7 +8,7 @@ namespace User_Interface
     {
         public void OnPointerEnter(PointerEventData eventData)
         {
-            UIManager.Instance.ShowItemTooltip(GetComponent<InventorySlotInfo>());
+            UIManager.Instance.ShowItemTooltip(GetComponent<InventorySlotInfo>().Item);
         }
 
         public void OnPointerExit(PointerEventData eventData)

@@ -24,8 +24,10 @@ namespace RPGSystem.Item_Definitions
         {
             Head,
             Chest,
+            Gauntlets,
             Legs,
-            Boots
+            Boots,
+            Ring
         }
     }
 }

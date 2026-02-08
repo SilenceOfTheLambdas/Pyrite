@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f861b7fdecf64f53bd88066207c3c74f, type: 3}
+  m_Name: Scrap Leather Leggings
+  m_EditorClassIdentifier: Assembly-CSharp::RPGSystem.Item_Definitions.ArmourTemplate
+  itemName: Scrap Leather Leggings
+  inventorySlotPrefab: {fileID: 3950442174690773874, guid: 58d37a2a7807cec4491a56867d71817b, type: 3}
+  itemPickupPrefab: {fileID: 2300871832176508303, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
+  itemType: 1
+  baselineItemRequirements:
+    playerStrengthRequirement: 1
+    playerDexterityRequirement: 0
+    playerIntelligenceRequirement: 0
+  armourType: 3
+  baselineArmourStats:
+    physicalArmour: 3
+    magicalArmour: 0
+    elementalResistances:
+    - damageType: 0
+      resistancePercentage: 0
+    statBonuses:
+      strength: 0
+      dexterity: 0
+      intelligence: 0
+      vitality: 0
+      magic: 0
+      luck: 0
+  possiblePostfixes:
+  - <Type>k__BackingField: 0
+    <Value>k__BackingField: 0
+  - <Type>k__BackingField: 1
+    <Value>k__BackingField: 0
+  - <Type>k__BackingField: 2
+    <Value>k__BackingField: 0
+  - <Type>k__BackingField: 3
+    <Value>k__BackingField: 0
+  - <Type>k__BackingField: 7
+    <Value>k__BackingField: 0

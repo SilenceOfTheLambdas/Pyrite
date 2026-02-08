@@ -5,6 +5,7 @@ namespace RPGSystem.Inventory_System
     public class InventoryItem
     {
         public ItemStats Stats;
+        public int itemIndex;
         public int itemCount;
 
         public InventoryItem(ItemStats itemStats, int itemCount)

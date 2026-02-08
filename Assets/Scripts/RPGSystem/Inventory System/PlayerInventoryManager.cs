@@ -15,7 +15,7 @@ namespace RPGSystem.Inventory_System
         /// Key = position of the item in inventory.
         /// Value = the Inventory Item itself.
         /// </summary>
-        public Dictionary<Vector2, InventoryItem> InventoryItems = new();
+        public Dictionary<int, InventoryItem> InventoryItems = new();
 
         [SerializeField] private int maximumInventorySize = 24;
         [SerializeField] private GameObject gridItemsParent;
@@ -33,13 +33,13 @@ namespace RPGSystem.Inventory_System
         {
             // Find the next empty slot and then add the item to the player's inventory
             var itemPosition = FindNextEmptySlot();
+            item.itemIndex = itemPosition;
             InventoryItems.Add(itemPosition, item);
 
             // Spawn the inventorySlotPrefab in the UI inventory grid
             var itemSlot = Instantiate(item.Stats.inventorySlotPrefab, gridItemsParent.transform);
             var inventorySlotInfo = itemSlot.GetComponent<InventorySlotInfo>();
-            inventorySlotInfo.itemPosition = itemPosition;
-            inventorySlotInfo.item = item;
+            inventorySlotInfo.Item = item;
         }
 
         public bool IsPlayerInventoryFull()
@@ -47,20 +47,10 @@ namespace RPGSystem.Inventory_System
             return InventoryItems.Count >= maximumInventorySize;
         }
 
-        private Vector2 FindNextEmptySlot()
+        private int FindNextEmptySlot()
         {
-            if (InventoryItems.Count == 0)
-                return Vector2.zero;
-
-            if (InventoryItems.Last().Key.x > 5)
-                return new Vector2(InventoryItems.Last().Key.x + 1, 0);
-
-            return new Vector2(InventoryItems.Last().Key.x, InventoryItems.Last().Key.y + 1);
-        }
-
-        public ItemStats GetItemBySlotPosition(Vector2 position)
-        {
-            return InventoryItems[position].Stats;
+            if (InventoryItems.Count == 0 ) return 0;
+            return InventoryItems.Count + 1;
         }
 
         public ItemStats GetEquippedItemBySlot(ItemStats.EquipmentSlot equipmentSlot)
@@ -80,9 +70,20 @@ namespace RPGSystem.Inventory_System
             };
         }
 
-        public void RemoveItemFromInventory(Vector2 position)
+        public void RemoveItemFromInventory(int itemIndex)
         {
-            InventoryItems.Remove(position);
+            if (!InventoryItems.ContainsKey(itemIndex)) return;
+            
+            InventoryItems.Remove(itemIndex);
+            
+            // Shift all items down
+            var itemsToShift = InventoryItems.Where(kvp => kvp.Key > itemIndex).ToList();
+            foreach (var valuePair in itemsToShift)
+            {
+                InventoryItems.Remove(valuePair.Key);
+                InventoryItems[valuePair.Key - 1] = valuePair.Value;
+                InventoryItems[valuePair.Key - 1].itemIndex = valuePair.Key - 1;
+            }
         }
 
         public void AddPlayerGold(int amount)

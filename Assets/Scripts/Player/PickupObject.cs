@@ -1,8 +1,6 @@
 using System;
-using RPGSystem;
 using RPGSystem.Backend;
 using RPGSystem.Equipment;
-using RPGSystem.Equipment.Swords;
 using RPGSystem.Inventory_System;
 using RPGSystem.Item_Definitions;
 using UnityEngine;
@@ -12,7 +10,6 @@ namespace Player
 {
     public class PickupObject : MonoBehaviour
     {
-        public ItemTemplate.ItemType itemType;
         private PlayerInventoryManager _playerInventoryManager;
         public RpgManager.ItemRarity itemRarity;
         private ItemTemplate _itemTemplate;
@@ -32,7 +29,7 @@ namespace Player
 
         public void PickupDroppedItemFromLootContainer()
         {
-            switch (itemType)
+            switch (_itemTemplate.itemType)
             {
                 case ItemTemplate.ItemType.Weapon:
                     if (_itemTemplate is not WeaponTemplate weaponTemplate)

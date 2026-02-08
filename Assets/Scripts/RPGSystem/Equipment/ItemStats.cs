@@ -98,12 +98,18 @@ namespace RPGSystem.Equipment
         /// <param name="templateItemRequirements">The template that contains base requirement values for level, strength, dexterity, and intelligence.</param>
         public void GenerateItemRequirements(ItemRequirements templateItemRequirements)
         {
+            // Base formula: BaseRequirement + (ItemLevel × Multiplier × RarityFactor)
             var template = templateItemRequirements;
+            var rarityMultiplier = RpgManager.Instance.raritySettings.Find(e => e.rarity == equipmentRarity)
+                .rarityMultiplier;
             itemRequirements.playerLevelRequirement = equipmentLevel;
-            itemRequirements.playerStrengthRequirement = (template.playerStrengthRequirement *= 1) + equipmentLevel;
-            itemRequirements.playerDexterityRequirement = (template.playerDexterityRequirement *= 1) + equipmentLevel;
+
+            itemRequirements.playerStrengthRequirement =
+                Mathf.RoundToInt(template.playerStrengthRequirement + (equipmentLevel * 0.5f * rarityMultiplier));
+            itemRequirements.playerDexterityRequirement = 
+                Mathf.RoundToInt(template.playerDexterityRequirement + (equipmentLevel * 0.5f * rarityMultiplier));
             itemRequirements.playerIntelligenceRequirement =
-                (template.playerIntelligenceRequirement *= 1) + equipmentLevel;
+                Mathf.RoundToInt(template.playerIntelligenceRequirement + (equipmentLevel * 0.5f * rarityMultiplier));
         }
         
         /// <summary>

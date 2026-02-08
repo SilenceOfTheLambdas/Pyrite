@@ -61,6 +61,9 @@ namespace RPGSystem.Equipment
                 case ArmourTemplate.ArmourType.Boots:
                     equippedBootArmour = armourToEquip;
                     break;
+                case ArmourTemplate.ArmourType.Gauntlets:
+                    equippedGauntlets = armourToEquip;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

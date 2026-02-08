@@ -4,8 +4,6 @@ using System.Linq;
 using Player;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 public class RpgManager : MonoBehaviour
 {

@@ -7901,67 +7901,67 @@ MonoBehaviour:
       max: 5
     tierStatsRange:
       min:
-        strength: 1
-        dexterity: 1
-        intelligence: 1
-        vitality: 1
-        magic: 1
-        luck: 1
+        strength: 0
+        dexterity: 0
+        intelligence: 0
+        vitality: 0
+        magic: 0
+        luck: 0
       max:
-        strength: 4
-        dexterity: 4
-        intelligence: 4
-        vitality: 6
-        magic: 4
-        luck: 2
+        strength: 3
+        dexterity: 3
+        intelligence: 3
+        vitality: 3
+        magic: 3
+        luck: 1
   - itemTier: 2
     tierLevelRange:
       min: 6
       max: 10
     tierStatsRange:
       min:
-        strength: 0
-        dexterity: 0
-        intelligence: 0
-        vitality: 0
-        magic: 0
-        luck: 0
+        strength: 3
+        dexterity: 3
+        intelligence: 3
+        vitality: 3
+        magic: 3
+        luck: 1
       max:
-        strength: 0
-        dexterity: 0
-        intelligence: 0
-        vitality: 0
-        magic: 0
-        luck: 0
+        strength: 5
+        dexterity: 5
+        intelligence: 5
+        vitality: 5
+        magic: 5
+        luck: 3
   itemLevelFactor: 0.1
   raritySettings:
   - rarity: 0
     rarityDropChance: 10
-    rarityMultiplier: 1
+    rarityMultiplier: 0.5
     rarityAffixBonusRange:
       min: 0
       max: 0
   - rarity: 1
     rarityDropChance: 15
-    rarityMultiplier: 1.1
+    rarityMultiplier: 1
     rarityAffixBonusRange:
       min: 1
       max: 2
   - rarity: 2
     rarityDropChance: 35
-    rarityMultiplier: 1.25
+    rarityMultiplier: 1.1
     rarityAffixBonusRange:
       min: 3
       max: 4
   - rarity: 3
     rarityDropChance: 18
-    rarityMultiplier: 1.5
+    rarityMultiplier: 1.4
     rarityAffixBonusRange:
       min: 5
       max: 6
   - rarity: 4
     rarityDropChance: 3
-    rarityMultiplier: 2
+    rarityMultiplier: 1.5
     rarityAffixBonusRange:
       min: 6
       max: 7
@@ -7982,6 +7982,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f2471bbb7dad87d46ad7b3543292940c, type: 2}
   - {fileID: 11400000, guid: e36557948d4078742830a3ac9e2e4fe2, type: 2}
   - {fileID: 11400000, guid: 6d29851af76e6af4c824a19e3f0baaac, type: 2}
+  - {fileID: 11400000, guid: e7c01864264eaab488f044c2c7bce2ea, type: 2}
+  - {fileID: 11400000, guid: 8532363b61f9c8d49ba93c28b39a8d91, type: 2}
+  - {fileID: 11400000, guid: fc00587686eb73247ad1c5e0d29b5716, type: 2}
+  - {fileID: 11400000, guid: ac8af414f3bc5304884c82d06917db0b, type: 2}
 --- !u!1 &1563170705
 GameObject:
   m_ObjectHideFlags: 0
@@ -11897,6 +11901,30 @@ PrefabInstance:
       propertyPath: gridItemsParent
       value: 
       objectReference: {fileID: 418603733}
+    - target: {fileID: 1987561262120825200, guid: 8864f518fbbb9154fb3ac238a35bba3c, type: 3}
+      propertyPath: <CurrentPlayerAttributes>k__BackingField.luck
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1987561262120825200, guid: 8864f518fbbb9154fb3ac238a35bba3c, type: 3}
+      propertyPath: <CurrentPlayerAttributes>k__BackingField.magic
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1987561262120825200, guid: 8864f518fbbb9154fb3ac238a35bba3c, type: 3}
+      propertyPath: <CurrentPlayerAttributes>k__BackingField.strength
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1987561262120825200, guid: 8864f518fbbb9154fb3ac238a35bba3c, type: 3}
+      propertyPath: <CurrentPlayerAttributes>k__BackingField.vitality
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1987561262120825200, guid: 8864f518fbbb9154fb3ac238a35bba3c, type: 3}
+      propertyPath: <CurrentPlayerAttributes>k__BackingField.dexterity
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1987561262120825200, guid: 8864f518fbbb9154fb3ac238a35bba3c, type: 3}
+      propertyPath: <CurrentPlayerAttributes>k__BackingField.intelligence
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7552969010386995466, guid: 8864f518fbbb9154fb3ac238a35bba3c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2

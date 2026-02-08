@@ -63,14 +63,11 @@ namespace User_Interface
             if (_currentItemTooltipPanel != null && _currentItemTooltipPanel.activeSelf) UpdateTooltipPosition();
         }
 
-        public void ShowItemTooltip(InventorySlotInfo slotInfo)
+        public void ShowItemTooltip(InventoryItem inventoryItem)
         {
-            var itemPosition = slotInfo.itemPosition;
-            ItemStats item;
-
-            if (slotInfo.item.Stats.isEquipped)
-                item = _playerInventoryManager.GetEquippedItemBySlot(slotInfo.item.Stats.equipmentSlot);
-            else item = _playerInventoryManager.GetItemBySlotPosition(itemPosition);
+            var item = inventoryItem.Stats.isEquipped ? 
+                _playerInventoryManager.GetEquippedItemBySlot(inventoryItem.Stats.equipmentSlot) 
+                : _playerInventoryManager.InventoryItems[inventoryItem.itemIndex].Stats;
 
             switch (item.equipmentRarity)
             {
