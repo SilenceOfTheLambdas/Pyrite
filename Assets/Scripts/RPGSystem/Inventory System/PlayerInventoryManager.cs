@@ -77,7 +77,7 @@ namespace RPGSystem.Inventory_System
             InventoryItems.Remove(itemIndex);
             
             // Shift all items down
-            var itemsToShift = InventoryItems.Where(kvp => kvp.Key > itemIndex).ToList();
+            var itemsToShift = InventoryItems.Where(kvp => kvp.Key >= itemIndex).ToList();
             foreach (var valuePair in itemsToShift)
             {
                 InventoryItems.Remove(valuePair.Key);

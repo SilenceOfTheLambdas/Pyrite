@@ -22,7 +22,7 @@ MonoBehaviour:
     playerIntelligenceRequirement: 0
   armourType: 0
   baselineArmourStats:
-    physicalArmour: 1
+    physicalArmour: 2
     magicalArmour: 1
     elementalResistances:
     - damageType: 0

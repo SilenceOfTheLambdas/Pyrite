@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f861b7fdecf64f53bd88066207c3c74f, type: 3}
   m_Name: Leather Armour
   m_EditorClassIdentifier: Assembly-CSharp::RPGSystem.Item_Definitions.ArmourTemplate
-  itemName: Leather Armour
+  itemName: Leather Chest Armour
   inventorySlotPrefab: {fileID: 3950442174690773874, guid: 58d37a2a7807cec4491a56867d71817b, type: 3}
   itemPickupPrefab: {fileID: 2300871832176508303, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
   itemType: 1
@@ -22,7 +22,7 @@ MonoBehaviour:
     playerIntelligenceRequirement: 0
   armourType: 1
   baselineArmourStats:
-    physicalArmour: 4
+    physicalArmour: 6
     magicalArmour: 0
     elementalResistances:
     - damageType: 0
