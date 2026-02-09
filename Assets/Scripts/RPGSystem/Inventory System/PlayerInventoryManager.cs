@@ -33,6 +33,15 @@ namespace RPGSystem.Inventory_System
         {
             // Find the next empty slot and then add the item to the player's inventory
             var itemPosition = FindNextEmptySlot();
+            Debug.Log($"Adding item to inventory at position {itemPosition}");
+            InventoryItems.Add(itemPosition, item);
+            item.itemIndex = InventoryItems.Count - 1;
+        }
+
+        public void AddItemFromGround(InventoryItem item)
+        {
+            // Find the next empty slot and then add the item to the player's inventory
+            var itemPosition = FindNextEmptySlot();
             item.itemIndex = itemPosition;
             InventoryItems.Add(itemPosition, item);
 
@@ -50,7 +59,7 @@ namespace RPGSystem.Inventory_System
         private int FindNextEmptySlot()
         {
             if (InventoryItems.Count == 0 ) return 0;
-            return InventoryItems.Count + 1;
+            return InventoryItems.Count;
         }
 
         public ItemStats GetEquippedItemBySlot(ItemStats.EquipmentSlot equipmentSlot)

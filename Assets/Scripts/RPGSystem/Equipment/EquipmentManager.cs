@@ -40,6 +40,40 @@ namespace RPGSystem.Equipment
             itemToEquip.isEquipped = true;
         }
 
+        public void UnequipItem(ItemStats itemToUnequip)
+        {
+            switch (itemToUnequip.equipmentSlot)
+            {
+                case ItemStats.EquipmentSlot.MainHand:
+                    equippedWeapon = null;
+                    break;
+                case ItemStats.EquipmentSlot.Head:
+                    equippedHeadArmour = null;
+                    break;
+                case ItemStats.EquipmentSlot.Body:
+                    equippedChestArmour = null;
+                    break;
+                case ItemStats.EquipmentSlot.Legs:
+                    equippedLegArmour = null;
+                    break;
+                case ItemStats.EquipmentSlot.Feet:
+                    equippedBootArmour = null;
+                    break;
+                case ItemStats.EquipmentSlot.Gauntlets:
+                    equippedGauntlets = null;
+                    break;
+                case ItemStats.EquipmentSlot.Ring1:
+                    equippedRing1 = null;
+                    break;
+                case ItemStats.EquipmentSlot.Ring2:
+                    equippedRing2 = null;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            itemToUnequip.isEquipped = false;
+        }
+
         private void EquipWeapon(WeaponStats weaponToEquip)
         {
             equippedWeapon = weaponToEquip;
@@ -63,6 +97,9 @@ namespace RPGSystem.Equipment
                     break;
                 case ArmourTemplate.ArmourType.Gauntlets:
                     equippedGauntlets = armourToEquip;
+                    break;
+                case ArmourTemplate.ArmourType.Ring:
+                    equippedRing1 = armourToEquip;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

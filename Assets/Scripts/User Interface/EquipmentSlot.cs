@@ -34,6 +34,7 @@ namespace User_Interface
 
                 if (EquipItem(slotInfo.Item))
                 {
+                    slotInfo.EquipmentSlot = this;
                     eventData.pointerDrag.transform.SetParent(transform);
                     eventData.pointerDrag.transform.localPosition = Vector3.zero;
                     PlayerInventoryManager.Instance.RemoveItemFromInventory(slotInfo.Item.itemIndex);

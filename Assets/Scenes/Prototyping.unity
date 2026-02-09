@@ -9986,6 +9986,7 @@ GameObject:
   - component: {fileID: 1800976918}
   - component: {fileID: 1800976917}
   - component: {fileID: 1800976920}
+  - component: {fileID: 1800976921}
   m_Layer: 5
   m_Name: GridBackground
   m_TagString: Untagged
@@ -10118,6 +10119,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1800976921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800976915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e997a0c314922f44a5ad107073ba051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryDropHandler
+  inventoryParent: {fileID: 418603734}
 --- !u!1 &1847426995
 GameObject:
   m_ObjectHideFlags: 0

@@ -45,7 +45,7 @@ namespace Player
                     weaponStats.GenerateItemNameTypeAndLevel(weaponTemplate, itemRarity);
                     weaponStats.GenerateWeaponStats(weaponTemplate);
 
-                    _playerInventoryManager.AddItem(new InventoryItem(weaponStats, 1));
+                    _playerInventoryManager.AddItemFromGround(new InventoryItem(weaponStats, 1));
                     Destroy(gameObject); // Destroy pickup object
                     break;
                 case ItemTemplate.ItemType.Armour:
@@ -63,7 +63,7 @@ namespace Player
                     armourStats.GenerateItemNameTypeAndLevel(armourTemplate, itemRarity);
                     armourStats.GenerateArmourStats(armourTemplate!.armourType, armourTemplate);
 
-                    _playerInventoryManager.AddItem(new InventoryItem(armourStats, 1));
+                    _playerInventoryManager.AddItemFromGround(new InventoryItem(armourStats, 1));
                     Destroy(gameObject);
                     break;
                 case ItemTemplate.ItemType.Accessory:
