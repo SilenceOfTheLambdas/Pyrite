@@ -26,7 +26,7 @@ namespace User_Interface
                 eventData.pointerDrag.GetComponent<InventorySlotInfo>().EquipmentSlot.isSlotEmpty = true;
                 
                 // Un-equip item
-                EquipmentManager.Instance.UnequipItem(slotInfo.Item.Stats);
+                EquipmentManager.Instance.UnequipItemBySlot(slotInfo.Item.Stats.equipmentSlot);
                 PlayerInventoryManager.Instance.AddItem(slotInfo.Item);
             }
         }

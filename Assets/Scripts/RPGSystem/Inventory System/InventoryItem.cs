@@ -5,18 +5,12 @@ namespace RPGSystem.Inventory_System
     public class InventoryItem
     {
         public ItemStats Stats;
-        public int itemIndex;
-        public int itemCount;
+        public InventorySlotInfo SlotInfo;
+        public int ItemIndex;
 
-        public InventoryItem(ItemStats itemStats, int itemCount)
+        public InventoryItem(ItemStats itemStats)
         {
             Stats = itemStats;
-            this.itemCount = itemCount;
-        }
-
-        private void UpdateItemCount(int newItemCount)
-        {
-            itemCount = newItemCount;
         }
     }
 }

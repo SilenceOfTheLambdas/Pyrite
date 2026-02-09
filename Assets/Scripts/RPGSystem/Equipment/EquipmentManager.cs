@@ -36,42 +36,49 @@ namespace RPGSystem.Equipment
                 or ItemStats.EquipmentSlot.Gauntlets or ItemStats.EquipmentSlot.Head
                 or ItemStats.EquipmentSlot.Ring1 or ItemStats.EquipmentSlot.Ring2)
                 EquipArmour(itemToEquip as ArmourStats);
-
+            
             itemToEquip.isEquipped = true;
         }
 
-        public void UnequipItem(ItemStats itemToUnequip)
+        public void UnequipItemBySlot(ItemStats.EquipmentSlot itemToUnequip)
         {
-            switch (itemToUnequip.equipmentSlot)
+            switch (itemToUnequip)
             {
                 case ItemStats.EquipmentSlot.MainHand:
+                    equippedWeapon.isEquipped = false;
                     equippedWeapon = null;
                     break;
                 case ItemStats.EquipmentSlot.Head:
+                    equippedHeadArmour.isEquipped = false;
                     equippedHeadArmour = null;
                     break;
                 case ItemStats.EquipmentSlot.Body:
+                    equippedChestArmour.isEquipped = false;
                     equippedChestArmour = null;
                     break;
                 case ItemStats.EquipmentSlot.Legs:
+                    equippedLegArmour.isEquipped = false;
                     equippedLegArmour = null;
                     break;
                 case ItemStats.EquipmentSlot.Feet:
+                    equippedBootArmour.isEquipped = false;
                     equippedBootArmour = null;
                     break;
                 case ItemStats.EquipmentSlot.Gauntlets:
+                    equippedGauntlets.isEquipped = false;
                     equippedGauntlets = null;
                     break;
                 case ItemStats.EquipmentSlot.Ring1:
+                    equippedRing1.isEquipped = false;
                     equippedRing1 = null;
                     break;
                 case ItemStats.EquipmentSlot.Ring2:
+                    equippedRing2.isEquipped = false;
                     equippedRing2 = null;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            itemToUnequip.isEquipped = false;
         }
 
         private void EquipWeapon(WeaponStats weaponToEquip)

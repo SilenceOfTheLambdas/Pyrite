@@ -1,7 +1,5 @@
-using RPGSystem.Inventory_System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace User_Interface
 {
@@ -10,7 +8,6 @@ namespace User_Interface
         private CanvasGroup _canvasGroup;
         private Vector2 _originalItemPosition;
         private Transform _originalParent;
-        private InventorySlotInfo _inventorySlotInfo;
 
         private void Awake()
         {
@@ -19,7 +16,6 @@ namespace User_Interface
 
         private void Start()
         {
-            _inventorySlotInfo = GetComponent<InventorySlotInfo>();
             _canvasGroup.blocksRaycasts = true;
         }
         

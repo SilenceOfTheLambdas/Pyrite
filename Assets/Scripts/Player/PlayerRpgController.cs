@@ -12,7 +12,6 @@ namespace Player
             else Instance = this;
 
             // Setting player starting stats.
-            CurrentPlayerLevel = 1;
             CurrentPlayerExp = 0;
             CurrentPlayerHealth = 100;
             PlayerMaxHealth = 100;
@@ -20,6 +19,7 @@ namespace Player
 
         #region Variables
 
+        [field: SerializeField]
         public int CurrentPlayerLevel { get; private set; }
         public int CurrentPlayerExp { get; private set; }
         public int CurrentPlayerHealth { get; private set; }

@@ -10864,6 +10864,7 @@ MonoBehaviour:
   toggleInventoryAction: {fileID: 1949900416646384441, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   inventoryPanel: {fileID: 1885597904}
   tooltipOffset: {x: 0, y: 0}
+  inventoryGridParent: {fileID: 418603734}
   commonItemTooltipPanel: {fileID: 1700506664}
   uncommonItemTooltipPanel: {fileID: 1507540979}
   rareItemTooltipPanel: {fileID: 1563170705}
@@ -11915,6 +11916,10 @@ PrefabInstance:
       propertyPath: gridItemsParent
       value: 
       objectReference: {fileID: 418603733}
+    - target: {fileID: 1987561262120825200, guid: 8864f518fbbb9154fb3ac238a35bba3c, type: 3}
+      propertyPath: <CurrentPlayerLevel>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1987561262120825200, guid: 8864f518fbbb9154fb3ac238a35bba3c, type: 3}
       propertyPath: <CurrentPlayerAttributes>k__BackingField.luck
       value: 10

@@ -7,8 +7,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
-using Utils;
 
 namespace User_Interface
 {
@@ -19,6 +17,8 @@ namespace User_Interface
         [SerializeField] private InputActionReference toggleInventoryAction;
         [SerializeField] private GameObject inventoryPanel;
         [SerializeField] private Vector2 tooltipOffset = new(15, -15);
+
+        public Transform inventoryGridParent;
 
         /// <summary>
         /// Displayed when hovering over an item in the inventory.
@@ -67,7 +67,7 @@ namespace User_Interface
         {
             var item = inventoryItem.Stats.isEquipped ? 
                 _playerInventoryManager.GetEquippedItemBySlot(inventoryItem.Stats.equipmentSlot) 
-                : _playerInventoryManager.InventoryItems[inventoryItem.itemIndex].Stats;
+                : _playerInventoryManager.InventoryItems.Find(item => item.ItemIndex == inventoryItem.ItemIndex)?.Stats;
 
             switch (item.equipmentRarity)
             {
@@ -105,11 +105,13 @@ namespace User_Interface
                     var itemStats = item as WeaponStats;
                     _itemStatsName.SetText(itemStats?.equipmentName);
                     _itemStatsDescription.text = itemStats?.GenerateWeaponStatsDescription();
+                    _itemStatsDescription.text += $"{inventoryItem.ItemIndex}\n"; // DEBUG
                     break;
                 case ItemTemplate.ItemType.Armour:
                     var armourStats = item as ArmourStats;
                     _itemStatsName.SetText(armourStats?.equipmentName);
                     _itemStatsDescription.text = armourStats?.GenerateArmourStatsDescription();
+                    _itemStatsDescription.text += $"{inventoryItem.ItemIndex}\n"; // DEBUG
                     break;
                 case ItemTemplate.ItemType.Accessory:
                 case ItemTemplate.ItemType.Potion:
