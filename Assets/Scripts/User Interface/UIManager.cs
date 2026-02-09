@@ -135,7 +135,7 @@ namespace User_Interface
 
             // Strength Requirements
             if (itemStats.itemRequirements.playerStrengthRequirement >
-                PlayerRpgController.Instance.CurrentPlayerAttributes.strength)
+                PlayerRpgController.Instance.currentPlayerAttributes.strength)
                 _currentItemTooltip.itemStrengthRequirementText.text =
                     "Strength: " + $"<color=red>{itemStats.itemRequirements.playerStrengthRequirement}";
             else
@@ -144,7 +144,7 @@ namespace User_Interface
 
             // Dexterity Requirements
             if (itemStats.itemRequirements.playerDexterityRequirement >
-                PlayerRpgController.Instance.CurrentPlayerAttributes.dexterity)
+                PlayerRpgController.Instance.currentPlayerAttributes.dexterity)
                 _currentItemTooltip.itemDexterityRequirementText.text =
                     "Dexterity: " + $"<color=red>{itemStats.itemRequirements.playerDexterityRequirement}";
             else
@@ -153,7 +153,7 @@ namespace User_Interface
 
             // Intelligence Requirements
             if (itemStats.itemRequirements.playerIntelligenceRequirement >
-                PlayerRpgController.Instance.CurrentPlayerAttributes.intelligence)
+                PlayerRpgController.Instance.currentPlayerAttributes.intelligence)
                 _currentItemTooltip.itemIntelligenceRequirementText.text =
                     "Intelligence: " + $"<color=red>{itemStats.itemRequirements.playerIntelligenceRequirement}";
             else

@@ -14,6 +14,7 @@ namespace RPGSystem.Equipment
         /// The generated armour stats based on the baseline stats given in the item template.
         /// </summary>
         [NonSerialized] public BaselineArmourStats GeneratedArmourStats;
+        [NonSerialized] public List<BaselineArmourStats.ElementalResistance> ElementalResistances;
 
         public ArmourStats(BaselineArmourStats baselineArmourStats)
         {
@@ -49,7 +50,7 @@ namespace RPGSystem.Equipment
             ScaleArmourValues();
 
             // 2) Generate affixes from template/rarity
-            GeneratedArmourStats.GeneratedPostfixes = new List<ItemTemplate.Postfix>();
+            GeneratedArmourStats.GeneratedAffixes = new List<ItemTemplate.Affix>();
             var raritySettings = RpgManager.Instance.raritySettings
                 .Find(e => e.rarity == equipmentRarity);
 
@@ -67,12 +68,12 @@ namespace RPGSystem.Equipment
 
         private void InitializeElementalResistances()
         {
-            if (GeneratedArmourStats.elementalResistances == null)
-                GeneratedArmourStats.elementalResistances = new List<BaselineArmourStats.ElementalResistance>();
-            GeneratedArmourStats.elementalResistances.Clear();
+            if (ElementalResistances == null)
+                ElementalResistances = new List<BaselineArmourStats.ElementalResistance>();
+            ElementalResistances.Clear();
 
             foreach (RpgManager.ElementalDamageType type in Enum.GetValues(typeof(RpgManager.ElementalDamageType)))
-                GeneratedArmourStats.elementalResistances.Add(new BaselineArmourStats.ElementalResistance
+                ElementalResistances.Add(new BaselineArmourStats.ElementalResistance
                 {
                     damageType = type,
                     resistancePercentage = 0
@@ -97,7 +98,7 @@ namespace RPGSystem.Equipment
             ArmourTemplate armourTemplate)
         {
             var randomNumberOfAffixes = Random.Range(rarityAffixBonusRangeMin, rarityAffixBonusRangeMax);
-            var tempListOfPossibleAffixes = new List<ItemTemplate.Postfix>();
+            var tempListOfPossibleAffixes = new List<ItemTemplate.Affix>();
 
             // Prepare postfix values scaled to the current item tier, similar to WeaponStats
             foreach (var possibleAffix in armourTemplate.possiblePostfixes)
@@ -105,7 +106,7 @@ namespace RPGSystem.Equipment
                 var affix = possibleAffix;
                 switch (affix.Type)
                 {
-                    case ItemTemplate.Postfix.PostfixType.AddedStrength:
+                    case ItemTemplate.Affix.PostfixType.AddedStrength:
                         affix.Value = Random.Range(
                             RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min
                                 .strength,
@@ -113,7 +114,7 @@ namespace RPGSystem.Equipment
                                 .strength);
                         tempListOfPossibleAffixes.Add(affix);
                         break;
-                    case ItemTemplate.Postfix.PostfixType.AddedDexterity:
+                    case ItemTemplate.Affix.PostfixType.AddedDexterity:
                         affix.Value = Random.Range(
                             RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min
                                 .dexterity,
@@ -121,7 +122,7 @@ namespace RPGSystem.Equipment
                                 .dexterity);
                         tempListOfPossibleAffixes.Add(affix);
                         break;
-                    case ItemTemplate.Postfix.PostfixType.AddedIntelligence:
+                    case ItemTemplate.Affix.PostfixType.AddedIntelligence:
                         affix.Value = Random.Range(
                             RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min
                                 .intelligence,
@@ -129,7 +130,7 @@ namespace RPGSystem.Equipment
                                 .intelligence);
                         tempListOfPossibleAffixes.Add(affix);
                         break;
-                    case ItemTemplate.Postfix.PostfixType.AddedHealth:
+                    case ItemTemplate.Affix.PostfixType.AddedHealth:
                         affix.Value = Random.Range(
                             RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min
                                 .vitality,
@@ -137,7 +138,7 @@ namespace RPGSystem.Equipment
                                 .vitality);
                         tempListOfPossibleAffixes.Add(affix);
                         break;
-                    case ItemTemplate.Postfix.PostfixType.AddedArmour:
+                    case ItemTemplate.Affix.PostfixType.AddedArmour:
                         // Use vitality as a proxy for defensive scaling
                         affix.Value = Random.Range(
                             RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min
@@ -146,10 +147,10 @@ namespace RPGSystem.Equipment
                                 .vitality);
                         tempListOfPossibleAffixes.Add(affix);
                         break;
-                    case ItemTemplate.Postfix.PostfixType.IncreasedFireResistance:
-                    case ItemTemplate.Postfix.PostfixType.IncreasedIceResistance:
-                    case ItemTemplate.Postfix.PostfixType.IncreasedLightningResistance:
-                    case ItemTemplate.Postfix.PostfixType.IncreasedPoisonResistance:
+                    case ItemTemplate.Affix.PostfixType.IncreasedFireResistance:
+                    case ItemTemplate.Affix.PostfixType.IncreasedIceResistance:
+                    case ItemTemplate.Affix.PostfixType.IncreasedLightningResistance:
+                    case ItemTemplate.Affix.PostfixType.IncreasedPoisonResistance:
                         // Use magic stat to scale resistance affixes
                         affix.Value = Random.Range(
                             RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min
@@ -164,7 +165,7 @@ namespace RPGSystem.Equipment
             for (var i = 0; i < randomNumberOfAffixes && tempListOfPossibleAffixes.Count > 0; i++)
             {
                 var randomAffixIndex = Random.Range(0, tempListOfPossibleAffixes.Count);
-                GeneratedArmourStats.GeneratedPostfixes.Add(tempListOfPossibleAffixes[randomAffixIndex]);
+                GeneratedArmourStats.GeneratedAffixes.Add(tempListOfPossibleAffixes[randomAffixIndex]);
                 tempListOfPossibleAffixes.RemoveAt(randomAffixIndex);
             }
 
@@ -173,24 +174,24 @@ namespace RPGSystem.Equipment
 
         private void ApplyPostfixes()
         {
-            if (GeneratedArmourStats.GeneratedPostfixes == null) return;
+            if (GeneratedArmourStats.GeneratedAffixes == null) return;
 
-            foreach (var affix in GeneratedArmourStats.GeneratedPostfixes)
+            foreach (var affix in GeneratedArmourStats.GeneratedAffixes)
                 switch (affix.Type)
                 {
-                    case ItemTemplate.Postfix.PostfixType.AddedStrength:
+                    case ItemTemplate.Affix.PostfixType.AddedStrength:
                         GeneratedArmourStats.statBonuses.strength += affix.Value;
                         break;
-                    case ItemTemplate.Postfix.PostfixType.AddedDexterity:
+                    case ItemTemplate.Affix.PostfixType.AddedDexterity:
                         GeneratedArmourStats.statBonuses.dexterity += affix.Value;
                         break;
-                    case ItemTemplate.Postfix.PostfixType.AddedIntelligence:
+                    case ItemTemplate.Affix.PostfixType.AddedIntelligence:
                         GeneratedArmourStats.statBonuses.intelligence += affix.Value;
                         break;
-                    case ItemTemplate.Postfix.PostfixType.AddedHealth:
+                    case ItemTemplate.Affix.PostfixType.AddedHealth:
                         GeneratedArmourStats.statBonuses.vitality += affix.Value;
                         break;
-                    case ItemTemplate.Postfix.PostfixType.AddedArmour:
+                    case ItemTemplate.Affix.PostfixType.AddedArmour:
                         // Flat armour bonus scaled a little by item level factor and tier
                         var flatArmour = (int)(RpgManager.Instance.currentItemTier * affix.Value *
                                                RpgManager.Instance.itemLevelFactor);
@@ -198,16 +199,16 @@ namespace RPGSystem.Equipment
                         GeneratedArmourStats.magicalArmour +=
                             (int)(flatArmour * 0.6f); // magical slightly lower by default
                         break;
-                    case ItemTemplate.Postfix.PostfixType.IncreasedFireResistance:
+                    case ItemTemplate.Affix.PostfixType.IncreasedFireResistance:
                         AddResistance(RpgManager.ElementalDamageType.Fire, affix.Value);
                         break;
-                    case ItemTemplate.Postfix.PostfixType.IncreasedIceResistance:
+                    case ItemTemplate.Affix.PostfixType.IncreasedIceResistance:
                         AddResistance(RpgManager.ElementalDamageType.Ice, affix.Value);
                         break;
-                    case ItemTemplate.Postfix.PostfixType.IncreasedLightningResistance:
+                    case ItemTemplate.Affix.PostfixType.IncreasedLightningResistance:
                         AddResistance(RpgManager.ElementalDamageType.Lightning, affix.Value);
                         break;
-                    case ItemTemplate.Postfix.PostfixType.IncreasedPoisonResistance:
+                    case ItemTemplate.Affix.PostfixType.IncreasedPoisonResistance:
                         AddResistance(RpgManager.ElementalDamageType.Poison, affix.Value);
                         break;
                 }
@@ -215,24 +216,24 @@ namespace RPGSystem.Equipment
 
         private void AddResistance(RpgManager.ElementalDamageType type, float amount)
         {
-            for (var i = 0; i < GeneratedArmourStats.elementalResistances.Count; i++)
+            for (var i = 0; i < ElementalResistances.Count; i++)
             {
-                if (GeneratedArmourStats.elementalResistances[i].damageType != type) continue;
-                var res = GeneratedArmourStats.elementalResistances[i];
+                if (ElementalResistances[i].damageType != type) continue;
+                var res = ElementalResistances[i];
                 res.resistancePercentage = Mathf.Clamp(res.resistancePercentage + amount, 0f, 100f);
-                GeneratedArmourStats.elementalResistances[i] = res;
+                ElementalResistances[i] = res;
                 return;
             }
         }
 
         private void SetResistance(RpgManager.ElementalDamageType type, float amount)
         {
-            for (var i = 0; i < GeneratedArmourStats.elementalResistances.Count; i++)
+            for (var i = 0; i < ElementalResistances.Count; i++)
             {
-                if (GeneratedArmourStats.elementalResistances[i].damageType != type) continue;
-                var res = GeneratedArmourStats.elementalResistances[i];
+                if (ElementalResistances[i].damageType != type) continue;
+                var res = ElementalResistances[i];
                 res.resistancePercentage = Mathf.Clamp(amount, 0f, 100f);
-                GeneratedArmourStats.elementalResistances[i] = res;
+                ElementalResistances[i] = res;
                 return;
             }
         }
@@ -279,8 +280,8 @@ namespace RPGSystem.Equipment
             }
 
             // Elemental Resistances (only list > 0)
-            if (GeneratedArmourStats.elementalResistances != null)
-                foreach (var res in GeneratedArmourStats.elementalResistances)
+            if (ElementalResistances != null)
+                foreach (var res in ElementalResistances)
                 {
                     if (res.resistancePercentage <= 0) continue;
                     itemDescription +=
@@ -288,27 +289,27 @@ namespace RPGSystem.Equipment
                 }
 
             // Affixes (mirror weapon formatting)
-            if (GeneratedArmourStats.GeneratedPostfixes != null && GeneratedArmourStats.GeneratedPostfixes.Count > 0)
+            if (GeneratedArmourStats.GeneratedAffixes != null && GeneratedArmourStats.GeneratedAffixes.Count > 0)
             {
                 itemDescription += "<color=grey><align=\"center\">________\n<align=\"left\"><size=60%>\n";
-                foreach (var generatedAffix in GeneratedArmourStats.GeneratedPostfixes)
+                foreach (var generatedAffix in GeneratedArmourStats.GeneratedAffixes)
                     switch (generatedAffix.Type)
                     {
-                        case ItemTemplate.Postfix.PostfixType.AddedStrength:
-                        case ItemTemplate.Postfix.PostfixType.AddedIntelligence:
-                        case ItemTemplate.Postfix.PostfixType.AddedDexterity:
-                        case ItemTemplate.Postfix.PostfixType.AddedHealth:
-                        case ItemTemplate.Postfix.PostfixType.AddedElementalDamage:
-                        case ItemTemplate.Postfix.PostfixType.AddedArmour:
+                        case ItemTemplate.Affix.PostfixType.AddedStrength:
+                        case ItemTemplate.Affix.PostfixType.AddedIntelligence:
+                        case ItemTemplate.Affix.PostfixType.AddedDexterity:
+                        case ItemTemplate.Affix.PostfixType.AddedHealth:
+                        case ItemTemplate.Affix.PostfixType.AddedElementalDamageToWeapon:
+                        case ItemTemplate.Affix.PostfixType.AddedArmour:
                             itemDescription +=
                                 $"Adds {generatedAffix.Value} to {generatedAffix.Type.ToString().Remove(0, 5)}\n";
                             break;
-                        case ItemTemplate.Postfix.PostfixType.IncreasedPhysicalDamage:
-                        case ItemTemplate.Postfix.PostfixType.IncreasedCritChance:
-                        case ItemTemplate.Postfix.PostfixType.IncreasedFireResistance:
-                        case ItemTemplate.Postfix.PostfixType.IncreasedIceResistance:
-                        case ItemTemplate.Postfix.PostfixType.IncreasedLightningResistance:
-                        case ItemTemplate.Postfix.PostfixType.IncreasedPoisonResistance:
+                        case ItemTemplate.Affix.PostfixType.IncreasedPhysicalDamage:
+                        case ItemTemplate.Affix.PostfixType.IncreasedCritChance:
+                        case ItemTemplate.Affix.PostfixType.IncreasedFireResistance:
+                        case ItemTemplate.Affix.PostfixType.IncreasedIceResistance:
+                        case ItemTemplate.Affix.PostfixType.IncreasedLightningResistance:
+                        case ItemTemplate.Affix.PostfixType.IncreasedPoisonResistance:
                             itemDescription +=
                                 $"Increased {generatedAffix.Type.ToString().Remove(0, 9)} by {generatedAffix.Value}%\n";
                             break;
@@ -319,5 +320,12 @@ namespace RPGSystem.Equipment
 
             return itemDescription;
         }
+
+        // public ArmourStats DeepCopy()
+        // {
+        //     var copy = (ArmourStats)MemberwiseClone();
+        //     copy.GeneratedArmourStats = copy.GeneratedArmourStats.DeepCopy();
+        //     return copy;
+        // }
     }
 }

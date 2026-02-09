@@ -38,7 +38,7 @@ namespace RPGSystem.Backend
         }
 
         [Serializable]
-        public struct Postfix
+        public struct Affix
         {
             [field: SerializeField] public PostfixType Type { get; set; }
             [field: SerializeField] public int Value { get; set; }
@@ -64,7 +64,7 @@ namespace RPGSystem.Backend
                 IncreasedCritChance,
 
                 /// e.g +0-10 Fire Damage
-                AddedElementalDamage,
+                AddedElementalDamageToWeapon,
 
                 /// e.g +0-10 Armour
                 AddedArmour,

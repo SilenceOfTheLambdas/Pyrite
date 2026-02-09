@@ -73,12 +73,27 @@ public class RpgManager : MonoBehaviour
     }
 
     [Serializable]
-    public struct ElementalDamage
+    public struct ElementalDamage : IEquatable<ElementalDamage>
     {
         public ElementalDamageType type;
 
         [Tooltip("Set to 0 for elemental damage to NOT be applied.")]
         public float amount;
+
+        public bool Equals(ElementalDamage other)
+        {
+            return type == other.type;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is ElementalDamage other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine((int)type, amount);
+        }
     }
 
     public enum ElementalDamageType
@@ -107,6 +122,32 @@ public class RpgManager : MonoBehaviour
         public int vitality;
         public int magic;
         public int luck;
+        
+        public static CorePlayerStats operator +(CorePlayerStats a, CorePlayerStats b)
+        {
+            return new CorePlayerStats
+            {
+                strength = a.strength + b.strength,
+                dexterity = a.dexterity + b.dexterity,
+                intelligence = a.intelligence + b.intelligence,
+                vitality = a.vitality + b.vitality,
+                magic = a.magic + b.magic,
+                luck = a.luck + b.luck
+            };
+        }
+        
+        public static CorePlayerStats operator -(CorePlayerStats a, CorePlayerStats b)
+        {
+            return new CorePlayerStats
+            {
+                strength = a.strength - b.strength,
+                dexterity = a.dexterity - b.dexterity,
+                intelligence = a.intelligence - b.intelligence,
+                vitality = a.vitality - b.vitality,
+                magic = a.magic - b.magic,
+                luck = a.luck - b.luck
+            };
+        }
     }
 
     public enum AttributeType

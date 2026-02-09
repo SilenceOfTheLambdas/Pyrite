@@ -15,24 +15,33 @@ namespace RPGSystem.Backend
 
         public int magicalArmour;
 
-        [Header("Resistances")] [SerializeField]
-        // Allows you to assign specific resistances (e.g. 50% Fire Res)
-        public List<ElementalResistance> elementalResistances;
-
         [Header("Stat Bonuses")] [SerializeField]
         public RpgManager.CorePlayerStats statBonuses;
 
-        [NonSerialized] public List<ItemTemplate.Postfix> GeneratedPostfixes;
-
-        [Serializable]
-        public struct ElementalResistance
+        [NonSerialized] public List<ItemTemplate.Affix> GeneratedAffixes;
+        
+        public static BaselineArmourStats operator +(BaselineArmourStats a, BaselineArmourStats b)
         {
-            /// <summary>
-            /// The type of damage this armour resists.
-            /// </summary>
-            [SerializeField] public RpgManager.ElementalDamageType damageType;
+            var combined = new BaselineArmourStats
+            {
+                physicalArmour = a.physicalArmour + b.physicalArmour,
+                magicalArmour = a.magicalArmour + b.magicalArmour,
+                statBonuses = a.statBonuses + b.statBonuses
+            };
 
-            [Range(0, 100)] [SerializeField] public float resistancePercentage;
+            return combined;
+        }
+        
+        public static BaselineArmourStats operator -(BaselineArmourStats a, BaselineArmourStats b)
+        {
+            var combined = new BaselineArmourStats
+            {
+                physicalArmour = a.physicalArmour - b.physicalArmour,
+                magicalArmour = a.magicalArmour - b.magicalArmour,
+                statBonuses = a.statBonuses - b.statBonuses
+            };
+
+            return combined;
         }
 
         /// <summary>
@@ -44,15 +53,47 @@ namespace RPGSystem.Backend
             {
                 physicalArmour = physicalArmour,
                 magicalArmour = magicalArmour,
-                statBonuses = statBonuses,
-                elementalResistances = new List<ElementalResistance>()
+                statBonuses = statBonuses
             };
 
-            if (elementalResistances != null)
-                foreach (var resistance in elementalResistances)
-                    copy.elementalResistances.Add(resistance);
-
             return copy;
+        }
+        
+        [Serializable]
+        public struct ElementalResistance : IEquatable<ElementalResistance>
+        {
+            /// <summary>
+            /// The type of damage this armour resists.
+            /// </summary>
+            [SerializeField] public RpgManager.ElementalDamageType damageType;
+
+            [Range(0, 100)] [SerializeField] public float resistancePercentage;
+            
+            public static ElementalResistance operator +(ElementalResistance a, ElementalResistance b)
+            {
+                if (a.damageType == b.damageType)
+                    return new ElementalResistance
+                    {
+                        // damageType = a.damageType,
+                        resistancePercentage = a.resistancePercentage + b.resistancePercentage
+                    };
+                throw new InvalidOperationException("Cannot add two ElementalResistances of different damage types.");
+            }
+
+            public bool Equals(ElementalResistance other)
+            {
+                return damageType == other.damageType;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj is ElementalResistance other && Equals(other);
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine((int)damageType, resistancePercentage);
+            }
         }
     }
 }

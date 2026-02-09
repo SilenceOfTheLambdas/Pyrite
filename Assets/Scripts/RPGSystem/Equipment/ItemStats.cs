@@ -123,9 +123,9 @@ namespace RPGSystem.Equipment
             var player = PlayerRpgController.Instance;
             
             return player.CurrentPlayerLevel >= itemRequirements.playerLevelRequirement
-                   && player.CurrentPlayerAttributes.strength >= itemRequirements.playerStrengthRequirement
-                   && player.CurrentPlayerAttributes.dexterity >= itemRequirements.playerDexterityRequirement
-                   && player.CurrentPlayerAttributes.intelligence >= itemRequirements.playerIntelligenceRequirement;
+                   && player.currentPlayerAttributes.strength >= itemRequirements.playerStrengthRequirement
+                   && player.currentPlayerAttributes.dexterity >= itemRequirements.playerDexterityRequirement
+                   && player.currentPlayerAttributes.intelligence >= itemRequirements.playerIntelligenceRequirement;
         }
     }
 

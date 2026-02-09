@@ -41,7 +41,7 @@ namespace RPGSystem.Equipment
         /// <summary>
         /// A generated list of affixes that apply to this weapon, this may be empty.
         /// </summary>
-        [Header("Affixes")] public List<ItemTemplate.Postfix> generatedAffixes = new();
+        [Header("Affixes")] public List<ItemTemplate.Affix> generatedAffixes = new();
 
         /// <summary>
         /// Generates the stats for all weapon types.
@@ -67,7 +67,7 @@ namespace RPGSystem.Equipment
                 weaponTemplate.baseWeaponStats.criticalDamageChance.max);
 
             // 3) This is where any Postfixes are applied
-            generatedAffixes = new List<ItemTemplate.Postfix>();
+            generatedAffixes = new List<ItemTemplate.Affix>();
             switch (equipmentRarity)
             {
                 case RpgManager.ItemRarity.Common: // No Postfixes applied
@@ -146,7 +146,7 @@ namespace RPGSystem.Equipment
 
             // Now adjusting for any affixes that deal elemental damage.
             foreach (var affix in generatedAffixes)
-                if (affix.Type == ItemTemplate.Postfix.PostfixType.AddedElementalDamage)
+                if (affix.Type == ItemTemplate.Affix.PostfixType.AddedElementalDamageToWeapon)
                 {
                     var tierStatIncrease = affix.Value;
                     elementalDamage.amount += RpgManager.Instance.currentItemTier * tierStatIncrease *
@@ -165,14 +165,14 @@ namespace RPGSystem.Equipment
         {
             // Choose a random number of affixes at the start
             var randomNumberOfAffixes = Random.Range(rarityAffixBonusRangeMin, rarityAffixBonusRangeMax);
-            var tempListOfPossibleAffixes = new List<ItemTemplate.Postfix>();
+            var tempListOfPossibleAffixes = new List<ItemTemplate.Affix>();
 
-            #region Generating Postfix Values based on Level Tier
+            #region Generating Affix Values based on Level Tier
 
             var hasGeneratedElementalDamage = false;
             foreach (var possibleAffix in weaponTemplate.possibleAffixes)
             {
-                if (possibleAffix.Type == ItemTemplate.Postfix.PostfixType.IncreasedPhysicalDamage)
+                if (possibleAffix.Type == ItemTemplate.Affix.PostfixType.IncreasedPhysicalDamage)
                 {
                     var generatedPossibleAffix = possibleAffix;
                     generatedPossibleAffix.Type = possibleAffix.Type;
@@ -184,8 +184,8 @@ namespace RPGSystem.Equipment
                     tempListOfPossibleAffixes.Add(generatedPossibleAffix);
                 }
 
-                if (possibleAffix.Type is ItemTemplate.Postfix.PostfixType.IncreasedCritChance
-                    or ItemTemplate.Postfix.PostfixType.AddedDexterity)
+                if (possibleAffix.Type is ItemTemplate.Affix.PostfixType.IncreasedCritChance
+                    or ItemTemplate.Affix.PostfixType.AddedDexterity)
                 {
                     var generatedPossibleAffix = possibleAffix;
                     generatedPossibleAffix.Type = possibleAffix.Type;
@@ -198,7 +198,7 @@ namespace RPGSystem.Equipment
                 }
 
                 // We only want to generate one elemental damage affix.
-                if (possibleAffix.Type is ItemTemplate.Postfix.PostfixType.AddedElementalDamage
+                if (possibleAffix.Type is ItemTemplate.Affix.PostfixType.AddedElementalDamageToWeapon
                     && !hasGeneratedElementalDamage)
                 {
                     var generatedPossibleAffix = possibleAffix;
@@ -223,7 +223,7 @@ namespace RPGSystem.Equipment
                 {
                     // Check if we have an elemental damage affix.
                     if (tempListOfPossibleAffixes[randomAffixIndex].Type ==
-                        ItemTemplate.Postfix.PostfixType.AddedElementalDamage)
+                        ItemTemplate.Affix.PostfixType.AddedElementalDamageToWeapon)
                         // If so, we choose a random element type to apply to the weapon
                         elementalDamage.type = SelectRandomElementalDamageType();
 
@@ -277,21 +277,21 @@ namespace RPGSystem.Equipment
             foreach (var generatedAffix in generatedAffixes)
                 switch (generatedAffix.Type)
                 {
-                    case ItemTemplate.Postfix.PostfixType.AddedStrength:
-                    case ItemTemplate.Postfix.PostfixType.AddedIntelligence:
-                    case ItemTemplate.Postfix.PostfixType.AddedDexterity:
-                    case ItemTemplate.Postfix.PostfixType.AddedHealth:
-                    case ItemTemplate.Postfix.PostfixType.AddedElementalDamage:
-                    case ItemTemplate.Postfix.PostfixType.AddedArmour:
+                    case ItemTemplate.Affix.PostfixType.AddedStrength:
+                    case ItemTemplate.Affix.PostfixType.AddedIntelligence:
+                    case ItemTemplate.Affix.PostfixType.AddedDexterity:
+                    case ItemTemplate.Affix.PostfixType.AddedHealth:
+                    case ItemTemplate.Affix.PostfixType.AddedElementalDamageToWeapon:
+                    case ItemTemplate.Affix.PostfixType.AddedArmour:
                         itemDescription +=
                             $"Adds {generatedAffix.Value} to {generatedAffix.Type.ToString().Remove(0, 5)}\n";
                         break;
-                    case ItemTemplate.Postfix.PostfixType.IncreasedPhysicalDamage:
-                    case ItemTemplate.Postfix.PostfixType.IncreasedCritChance:
-                    case ItemTemplate.Postfix.PostfixType.IncreasedFireResistance:
-                    case ItemTemplate.Postfix.PostfixType.IncreasedIceResistance:
-                    case ItemTemplate.Postfix.PostfixType.IncreasedLightningResistance:
-                    case ItemTemplate.Postfix.PostfixType.IncreasedPoisonResistance:
+                    case ItemTemplate.Affix.PostfixType.IncreasedPhysicalDamage:
+                    case ItemTemplate.Affix.PostfixType.IncreasedCritChance:
+                    case ItemTemplate.Affix.PostfixType.IncreasedFireResistance:
+                    case ItemTemplate.Affix.PostfixType.IncreasedIceResistance:
+                    case ItemTemplate.Affix.PostfixType.IncreasedLightningResistance:
+                    case ItemTemplate.Affix.PostfixType.IncreasedPoisonResistance:
                         itemDescription +=
                             $"Increased {generatedAffix.Type.ToString().Remove(0, 9)} by {generatedAffix.Value}%\n";
                         break;

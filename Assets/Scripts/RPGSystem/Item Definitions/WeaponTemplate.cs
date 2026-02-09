@@ -26,6 +26,6 @@ namespace RPGSystem.Item_Definitions
         }
 
         [Header("Affixes")] [Description("Provide a list of possible affixes that could apply to this item.")]
-        public List<Postfix> possibleAffixes;
+        public List<Affix> possibleAffixes;
     }
 }

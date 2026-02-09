@@ -16,8 +16,8 @@ namespace RPGSystem.Item_Definitions
         /// </summary>
         public BaselineArmourStats baselineArmourStats;
 
-        [Header("Postfix")] [Description("Provide a list of possible affixes that could apply to this item.")]
-        public List<Postfix> possiblePostfixes;
+        [Header("Affix")] [Description("Provide a list of possible affixes that could apply to this item.")]
+        public List<Affix> possiblePostfixes;
 
         [Serializable]
         public enum ArmourType
