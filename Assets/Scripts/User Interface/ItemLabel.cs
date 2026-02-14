@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -7,27 +8,43 @@ namespace User_Interface
     {
         [SerializeField] private TextMeshProUGUI labelText;
 
+        private void Start()
+        {
+            labelText = GetComponentInChildren<TextMeshProUGUI>();
+        }
+
         /// <summary>
         /// Sets the text of the item label that is displayed above the item in the world.
         /// </summary>
         /// <param name="text"></param>
-        public void SetLabelText(string text)
+        public void SetLabelText(string text, Color rarityColour)
         {
-            if (labelText != null)
+            if (labelText == null) return;
+            
+            labelText.text = text;
+            labelText.color = rarityColour;
+        }
+
+        [Serializable]
+        public struct LabelRarityColour
+        {
+            public static Color CommonColour = Color.white;
+            public static Color UncommonColour = new(68, 141, 203);
+            public static Color RareColour = new(255, 238, 30);
+            public static Color EpicColour = new(220, 0, 255);
+            public static Color UniqueColour = new(68, 141, 203);
+            
+            public static Color GetColourForRarity(RpgManager.ItemRarity rarity)
             {
-                labelText.text = text;
-            }
-            else
-            {
-                labelText = GetComponentInChildren<TextMeshProUGUI>();
-                if (labelText != null)
+                return rarity switch
                 {
-                    labelText.text = text;
-                }
-                else
-                {
-                    Debug.LogWarning($"TextMeshProUGUI 'labelText' is not assigned and not found in children on {gameObject.name}");
-                }
+                    RpgManager.ItemRarity.Common => CommonColour,
+                    RpgManager.ItemRarity.Uncommon => UncommonColour,
+                    RpgManager.ItemRarity.Rare => RareColour,
+                    RpgManager.ItemRarity.Epic => EpicColour,
+                    RpgManager.ItemRarity.Unique => UniqueColour,
+                    _ => CommonColour
+                };
             }
         }
     }

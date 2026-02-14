@@ -5,7 +5,6 @@ using RPGSystem.Inventory_System;
 using RPGSystem.Item_Definitions;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Serialization;
 using User_Interface;
 
 namespace Player
@@ -36,7 +35,7 @@ namespace Player
 
             if (itemLabel != null)
             {
-                itemLabel.SetLabelText(_itemTemplate.itemName);
+                itemLabel.SetLabelText(_itemTemplate.itemName, ItemLabel.LabelRarityColour.GetColourForRarity(itemRarity));
             }
             else
             {

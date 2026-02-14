@@ -4,6 +4,7 @@ using System.Linq;
 using Player;
 using UnityEngine;
 using UnityEngine.Assertions;
+using User_Interface;
 
 public class RpgManager : MonoBehaviour
 {
@@ -46,6 +47,7 @@ public class RpgManager : MonoBehaviour
     public struct ItemRaritySettings
     {
         public ItemRarity rarity;
+        public ItemLabel.LabelRarityColour rarityColour;
         [Range(0f, 100f)] public float rarityDropChance;
         public float rarityMultiplier;
         public StatRange<int> rarityAffixBonusRange;
