@@ -431,8 +431,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 272.83243, y: -18.14}
-  m_SizeDelta: {x: 94.33516, y: 36.28}
+  m_AnchoredPosition: {x: 303.03, y: -8.94}
+  m_SizeDelta: {x: 94.52, y: 17.88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &43017079
 MonoBehaviour:
@@ -3159,8 +3159,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170, y: -31.23}
-  m_SizeDelta: {x: 320, y: 42.46}
+  m_AnchoredPosition: {x: 200, y: -31.23}
+  m_SizeDelta: {x: 380, y: 42.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &586958123
 MonoBehaviour:
@@ -3928,8 +3928,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170, y: -211.95}
-  m_SizeDelta: {x: 320, y: 36.28}
+  m_AnchoredPosition: {x: 200, y: -202.75}
+  m_SizeDelta: {x: 380, y: 17.88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &838798880
 MonoBehaviour:
@@ -5034,8 +5034,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.59944, y: -18.14}
-  m_SizeDelta: {x: 76.13083, y: 36.28}
+  m_AnchoredPosition: {x: 209.63, y: -8.94}
+  m_SizeDelta: {x: 76.28, y: 17.88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &992923408
 MonoBehaviour:
@@ -7185,8 +7185,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 25.814419, y: -18.14}
-  m_SizeDelta: {x: 51.628838, y: 36.28}
+  m_AnchoredPosition: {x: 55.575005, y: -8.94}
+  m_SizeDelta: {x: 51.73, y: 17.88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1463304569
 MonoBehaviour:
@@ -7888,16 +7888,10 @@ MonoBehaviour:
         strength: 0
         dexterity: 0
         intelligence: 0
-        vitality: 0
-        magic: 0
-        luck: 0
       max:
         strength: 3
         dexterity: 3
         intelligence: 3
-        vitality: 3
-        magic: 3
-        luck: 1
   - itemTier: 2
     tierLevelRange:
       min: 6
@@ -7907,16 +7901,10 @@ MonoBehaviour:
         strength: 3
         dexterity: 3
         intelligence: 3
-        vitality: 3
-        magic: 3
-        luck: 1
       max:
         strength: 5
         dexterity: 5
         intelligence: 5
-        vitality: 5
-        magic: 5
-        luck: 3
   itemLevelFactor: 0.1
   raritySettings:
   - rarity: 0
@@ -8162,8 +8150,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 96.581436, y: -18.14}
-  m_SizeDelta: {x: 73.90519, y: 36.28}
+  m_AnchoredPosition: {x: 126.465004, y: -8.94}
+  m_SizeDelta: {x: 74.05, y: 17.88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1564342774
 MonoBehaviour:
@@ -9381,7 +9369,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 790, y: -540}
-  m_SizeDelta: {x: 340, y: 240.08997}
+  m_SizeDelta: {x: 400, y: 221.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1700506666
 MonoBehaviour:
@@ -11417,8 +11405,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170, y: -123.134995}
-  m_SizeDelta: {x: 320, y: 109.35}
+  m_AnchoredPosition: {x: 200, y: -123.134995}
+  m_SizeDelta: {x: 380, y: 109.35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2103331447
 MonoBehaviour:
@@ -13023,9 +13011,6 @@ MonoBehaviour:
       strength: 0
       dexterity: 0
       intelligence: 0
-      vitality: 0
-      magic: 0
-      luck: 0
   currentPlayerAttributes:
     strength: 5
     intelligence: 5

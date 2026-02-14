@@ -24,16 +24,10 @@ MonoBehaviour:
   baselineArmourStats:
     physicalArmour: 3
     magicalArmour: 0
-    elementalResistances:
-    - damageType: 0
-      resistancePercentage: 0
     statBonuses:
-      strength: 0
+      strength: 1
       dexterity: 0
       intelligence: 0
-      vitality: 0
-      magic: 0
-      luck: 0
   possiblePostfixes:
   - <Type>k__BackingField: 0
     <Value>k__BackingField: 0

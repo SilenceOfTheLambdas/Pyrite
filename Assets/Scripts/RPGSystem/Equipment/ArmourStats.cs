@@ -132,19 +132,17 @@ namespace RPGSystem.Equipment
                         break;
                     case ItemTemplate.Affix.PostfixType.AddedHealth:
                         affix.Value = Random.Range(
-                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min
-                                .vitality,
-                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.max
-                                .vitality);
+                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min.strength,
+                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.max.strength);
                         tempListOfPossibleAffixes.Add(affix);
                         break;
                     case ItemTemplate.Affix.PostfixType.AddedArmour:
                         // Use vitality as a proxy for defensive scaling
                         affix.Value = Random.Range(
                             RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min
-                                .vitality,
+                                .strength * (int)equipmentRarity,
                             RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.max
-                                .vitality);
+                                .strength * (int)equipmentRarity);
                         tempListOfPossibleAffixes.Add(affix);
                         break;
                     case ItemTemplate.Affix.PostfixType.IncreasedFireResistance:
@@ -153,10 +151,8 @@ namespace RPGSystem.Equipment
                     case ItemTemplate.Affix.PostfixType.IncreasedPoisonResistance:
                         // Use magic stat to scale resistance affixes
                         affix.Value = Random.Range(
-                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min
-                                .magic,
-                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.max
-                                .magic);
+                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min.intelligence * (int)equipmentRarity,
+                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.max.intelligence * (int)equipmentRarity);
                         tempListOfPossibleAffixes.Add(affix);
                         break;
                 }
@@ -189,7 +185,9 @@ namespace RPGSystem.Equipment
                         GeneratedArmourStats.statBonuses.intelligence += affix.Value;
                         break;
                     case ItemTemplate.Affix.PostfixType.AddedHealth:
-                        GeneratedArmourStats.statBonuses.vitality += affix.Value;
+                        GeneratedArmourStats.statBonuses.strength += 
+                            affix.Value + (int)(RpgManager.Instance.currentItemTier * affix.Value *
+                            RpgManager.Instance.itemLevelFactor);
                         break;
                     case ItemTemplate.Affix.PostfixType.AddedArmour:
                         // Flat armour bonus scaled a little by item level factor and tier
@@ -259,24 +257,15 @@ namespace RPGSystem.Equipment
             // Core stat bonuses (only show if positive)
             var hasAnyCoreBonus = GeneratedArmourStats.statBonuses.strength > 0 ||
                                   GeneratedArmourStats.statBonuses.dexterity > 0 ||
-                                  GeneratedArmourStats.statBonuses.intelligence > 0 ||
-                                  GeneratedArmourStats.statBonuses.vitality > 0 ||
-                                  GeneratedArmourStats.statBonuses.magic > 0 ||
-                                  GeneratedArmourStats.statBonuses.luck > 0;
+                                  GeneratedArmourStats.statBonuses.intelligence > 0;
             if (hasAnyCoreBonus)
             {
                 if (GeneratedArmourStats.statBonuses.strength > 0)
-                    itemDescription += $"Strength: +{GeneratedArmourStats.statBonuses.strength}\n";
+                    itemDescription += $"{GeneratedArmourStats.statBonuses.strength} Added to Strength\n";
                 if (GeneratedArmourStats.statBonuses.dexterity > 0)
-                    itemDescription += $"Dexterity: +{GeneratedArmourStats.statBonuses.dexterity}\n";
+                    itemDescription += $"{GeneratedArmourStats.statBonuses.dexterity} Added to Dexterity\n";
                 if (GeneratedArmourStats.statBonuses.intelligence > 0)
-                    itemDescription += $"Intelligence: +{GeneratedArmourStats.statBonuses.intelligence}\n";
-                if (GeneratedArmourStats.statBonuses.vitality > 0)
-                    itemDescription += $"Vitality: +{GeneratedArmourStats.statBonuses.vitality}\n";
-                if (GeneratedArmourStats.statBonuses.magic > 0)
-                    itemDescription += $"Magic: +{GeneratedArmourStats.statBonuses.magic}\n";
-                if (GeneratedArmourStats.statBonuses.luck > 0)
-                    itemDescription += $"Luck: +{GeneratedArmourStats.statBonuses.luck}\n";
+                    itemDescription += $"{GeneratedArmourStats.statBonuses.intelligence} Added To Intelligence\n";
             }
 
             // Elemental Resistances (only list > 0)

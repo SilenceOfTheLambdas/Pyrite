@@ -5,6 +5,8 @@ using RPGSystem.Inventory_System;
 using RPGSystem.Item_Definitions;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
+using User_Interface;
 
 namespace Player
 {
@@ -13,6 +15,7 @@ namespace Player
         private PlayerInventoryManager _playerInventoryManager;
         public RpgManager.ItemRarity itemRarity;
         private ItemTemplate _itemTemplate;
+        [SerializeField] private ItemLabel itemLabel;
 
         private void Start()
         {
@@ -25,6 +28,20 @@ namespace Player
         {
             _itemTemplate = template;
             itemRarity = rarity;
+
+            if (itemLabel == null)
+            {
+                itemLabel = GetComponentInChildren<ItemLabel>();
+            }
+
+            if (itemLabel != null)
+            {
+                itemLabel.SetLabelText(_itemTemplate.itemName);
+            }
+            else
+            {
+                Debug.LogWarning($"ItemLabel not found on {gameObject.name}. Item name: {_itemTemplate.itemName}");
+            }
         }
 
         public void PickupDroppedItemFromLootContainer()

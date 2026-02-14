@@ -119,9 +119,6 @@ public class RpgManager : MonoBehaviour
         public int strength;
         public int dexterity;
         public int intelligence;
-        public int vitality;
-        public int magic;
-        public int luck;
         
         public static CorePlayerStats operator +(CorePlayerStats a, CorePlayerStats b)
         {
@@ -129,10 +126,7 @@ public class RpgManager : MonoBehaviour
             {
                 strength = a.strength + b.strength,
                 dexterity = a.dexterity + b.dexterity,
-                intelligence = a.intelligence + b.intelligence,
-                vitality = a.vitality + b.vitality,
-                magic = a.magic + b.magic,
-                luck = a.luck + b.luck
+                intelligence = a.intelligence + b.intelligence
             };
         }
         
@@ -142,22 +136,9 @@ public class RpgManager : MonoBehaviour
             {
                 strength = a.strength - b.strength,
                 dexterity = a.dexterity - b.dexterity,
-                intelligence = a.intelligence - b.intelligence,
-                vitality = a.vitality - b.vitality,
-                magic = a.magic - b.magic,
-                luck = a.luck - b.luck
+                intelligence = a.intelligence - b.intelligence
             };
         }
-    }
-
-    public enum AttributeType
-    {
-        Strength,
-        Dexterity,
-        Intelligence,
-        Vitality,
-        Magic,
-        Luck
     }
 
     #endregion

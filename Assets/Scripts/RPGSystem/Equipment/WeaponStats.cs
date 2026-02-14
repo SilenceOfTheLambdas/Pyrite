@@ -205,8 +205,8 @@ namespace RPGSystem.Equipment
                     generatedPossibleAffix.Type = possibleAffix.Type;
                     generatedPossibleAffix.Value = Random.Range(RpgManager.Instance
                         .itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange
-                        .min.magic, RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1]
-                        .tierStatsRange.max.magic);
+                        .min.intelligence, RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1]
+                        .tierStatsRange.max.intelligence);
                     tempListOfPossibleAffixes.Add(generatedPossibleAffix);
                     hasGeneratedElementalDamage = true;
                 }
