@@ -6262,11 +6262,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5394743940268996519, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
       propertyPath: numberOfItemsToDropRange.max
-      value: 10
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5394743940268996519, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
       propertyPath: numberOfItemsToDropRange.min
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11808,11 +11808,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5394743940268996519, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
       propertyPath: numberOfItemsToDropRange.max
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5394743940268996519, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
       propertyPath: numberOfItemsToDropRange.min
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12093,11 +12093,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5394743940268996519, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
       propertyPath: numberOfItemsToDropRange.max
-      value: 10
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5394743940268996519, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
       propertyPath: numberOfItemsToDropRange.min
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

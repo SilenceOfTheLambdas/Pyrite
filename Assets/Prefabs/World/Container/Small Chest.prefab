@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 329905119113013727}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -101,6 +101,7 @@ MonoBehaviour:
   numberOfItemsToDropRange:
     min: 1
     max: 3
+  containerRarity: 0
 --- !u!65 &2679461017482708811
 BoxCollider:
   m_ObjectHideFlags: 0

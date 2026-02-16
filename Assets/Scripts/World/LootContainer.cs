@@ -68,17 +68,21 @@ namespace World
         public void DropLootAroundContainer()
         {
             if (_hasBeenUsed) return;
-            var lastItemPosition = itemDropStartingLocation.position;
+
             foreach (var itemTemplate in _generatedLootItemsToDrop)
             {
-                var dropLocation = lastItemPosition + new Vector3(
-                    Random.insideUnitCircle.x * itemDropPositionSpacing,
-                    0.5f,
-                    Random.insideUnitCircle.y * itemDropPositionSpacing);
-                lastItemPosition = dropLocation;
-
-                var item = Instantiate(itemTemplate.itemPickupPrefab, dropLocation, Quaternion.identity);
-                item.GetComponent<PickupObject>().SetItemRarityAndTemplate(itemTemplate, containerRarity);
+                // Calculate X and Z position
+                var randomCircle = Random.insideUnitCircle * itemDropPositionSpacing;
+                var spawnPosition = itemDropStartingLocation.position + new Vector3(randomCircle.x, 5f, randomCircle.y);
+                
+                // Raycast down to find the floor
+                if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hit, 10f, LayerMask.GetMask("Walkable")))
+                {
+                    // Spawn slightly above the ground
+                    var finalDropLocation = hit.point + new Vector3(0, 0.5f, 0);
+                    var item = Instantiate(itemTemplate.itemPickupPrefab, finalDropLocation, Quaternion.identity);
+                    item.GetComponent<PickupObject>().SetItemRarityAndTemplate(itemTemplate, containerRarity);
+                }
             }
 
             _hasBeenUsed = true;

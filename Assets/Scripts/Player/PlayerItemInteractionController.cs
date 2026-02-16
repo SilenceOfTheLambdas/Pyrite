@@ -38,6 +38,13 @@ namespace Player
                         var pickupObject = interactableObject.GetComponent<PickupObject>();
                         pickupObject.PickupDroppedItemFromLootContainer();
                     }
+                
+                if (interactableObject.CompareTag("ItemLabel"))
+                    if (!PlayerInventoryManager.Instance.IsPlayerInventoryFull())
+                    {
+                        var pickupObject = interactableObject.GetComponentInParent<PickupObject>();
+                        pickupObject.PickupDroppedItemFromLootContainer();
+                    }
             }
         }
     }
