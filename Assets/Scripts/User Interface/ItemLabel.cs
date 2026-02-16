@@ -13,6 +13,16 @@ namespace User_Interface
             labelText = GetComponentInChildren<TextMeshProUGUI>();
         }
 
+        private void OnEnable()
+        {
+            ItemLabelManager.Instance.RegisterLabel(this);
+        }
+
+        private void OnDisable()
+        {
+            ItemLabelManager.Instance.UnRegisterLabel(this);
+        }
+
         /// <summary>
         /// Sets the text of the item label that is displayed above the item in the world.
         /// </summary>
@@ -23,6 +33,11 @@ namespace User_Interface
             
             labelText.text = text;
             labelText.color = rarityColour;
+        }
+
+        private void OnDestroy()
+        {
+            ItemLabelManager.Instance.UnRegisterLabel(this);
         }
 
         [Serializable]

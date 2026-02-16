@@ -22,7 +22,7 @@ namespace Player
             {
                 if (!CameraController.TryGetClickedObject(
                         _camera,
-                        LayerMask.GetMask("Interactable"),
+                        LayerMask.GetMask("Interactable", "UI"),
                         out var interactableObject,
                         20f)) return;
 

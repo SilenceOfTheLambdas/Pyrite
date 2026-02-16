@@ -10,6 +10,7 @@ TagManager:
   - GoldPickup
   - ItemSlot
   - LootContainer
+  - ItemLabel
   layers:
   - Default
   - TransparentFX
