@@ -24,10 +24,12 @@ namespace User_Interface
         }
 
         /// <summary>
-        /// Sets the text of the item label that is displayed above the item in the world.
+        /// Sets the text of the item label that is displayed above the item in the world. And also adjusts the colour
+        /// of the text based on the rarity colour parameter (item items rarity).
         /// </summary>
         /// <param name="text"></param>
-        public void SetLabelText(string text, Color rarityColour)
+        /// <param name="rarityColour"></param>
+        public void SetLabelTextAndRarity(string text, Color rarityColour)
         {
             if (labelText == null) return;
             

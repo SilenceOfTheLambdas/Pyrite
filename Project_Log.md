@@ -23,6 +23,9 @@ discuss some reasoning behind some of the decisions that I made.
 # Challenges and Solutions
 
 ## Creating the Inventory System
+
+---
+
 I needed an inventory system that was easy to scale and extend, whilst also providing a clean and intuitive user 
 interface. To achieve this, I created a system made of *Scriptable Objects*. This allowed me to create a system that 
 was more flexible and extensible, making it easier to add new items and adjust the behaviour of existing items.
@@ -264,6 +267,146 @@ graph TD
     style LC fill:#bbf,stroke:#333,stroke-width:2px
     style IS fill:#bfb,stroke:#333,stroke-width:2px
 ```
+## In-world Item Labels
+
+---
+
+For my game, I wanted to incorporate labels that are displayed over an item that has been dropped in the world.
+The system was inspired by games like: Path of Exile, Torchlight 2, and Diablo. These labels should display the name of
+the item along with some kind of visual indicator as to the rarity of said item. The feature needed to be performant and 
+easy to interact with, as players may be picking-up items in haste.
+
+Creating the initial label over the item was pretty trivial, a simple UI canvas with the render-mode set to 'screen-space'
+and set to an appropriate size. A TextMeshPro Text element was then added as a child to this canvas, which will hold the
+name of the item. Both of these objects were then added as a child to the ItemPickupPrefab object:
+```
+- Pickup
+  - Model
+  - Item Label Canvas
+    - Item Label Text
+```
+
+### Looking at the camera
+To make the label nice and legible, the label needed to face the camera similar to a billboard effect. Making this
+happen was very easy, the script `LookAtCamera` gets a reference to `Camera.main` and then uses the `transform.LookAt()`
+function to rotate the pickup object so that it faces the camera:
+
+```csharp
+transform.LookAt(transform.position + _cameraTransform.rotation * Vector3.forward, _cameraTransform.rotation * Vector3.up);
+```
+
+### Setting the label text
+The `ItemLabel` monobehaviour is responsible for setting both the label text and the colour of the text based on rarity.
+
+```csharp
+/// <summary>
+/// Sets the text of the item label that is displayed above the item in the world. And also adjusts the colour
+/// of the text based on the rarity colour parameter (item items rarity).
+/// </summary>
+/// <param name="text"></param>
+/// <param name="rarityColour"></param>
+public void SetLabelTextAndRarity(string text, Color rarityColour)
+{
+    if (labelText == null) return;
+    
+    labelText.text = text;
+    labelText.color = rarityColour;
+}
+```
+
+This function is called from the `PickupObject` behaviour. The `rarityColour` parameter is set using the
+`ItemLabel.LabelRarityColour.GetColourForRarity()` method implemented in the `LabelRarityColour` struct implemented in
+the `ItemLabel` monobehaviour.
+
+```csharp
+itemLabel.SetLabelTextAndRarity(_itemTemplate.itemName, ItemLabel.LabelRarityColour.GetColourForRarity(itemRarity));
+```
+
+```csharp
+[Serializable]
+public struct LabelRarityColour
+{
+    public static Color CommonColour = Color.white;
+    public static Color UncommonColour = new(68, 141, 203);
+    public static Color RareColour = new(255, 238, 30);
+    public static Color EpicColour = new(220, 0, 255);
+    public static Color UniqueColour = new(68, 141, 203);
+    
+    public static Color GetColourForRarity(RpgManager.ItemRarity rarity)
+    {
+        return rarity switch
+        {
+            RpgManager.ItemRarity.Common => CommonColour,
+            RpgManager.ItemRarity.Uncommon => UncommonColour,
+            RpgManager.ItemRarity.Rare => RareColour,
+            RpgManager.ItemRarity.Epic => EpicColour,
+            RpgManager.ItemRarity.Unique => UniqueColour,
+            _ => CommonColour
+        };
+    }
+}
+```
+
+### Positioning the Labels
+During testing of the game I found that when multiple items where dropped in the world, the labels would overlap. This
+made clicking on them to pick them up and seeing the label text hard. I needed to create a system that adjusted the position
+of the labels when another label intersects it.
+
+Due to the label canvases being in world-space, checking for intersections required that the coordinates be interpolated 
+in screen-space instead. The function `LabelWorldRectToScreenRect()` does exactly that, it returns a new rectangle in 
+screen-space based on the size and position of a world-space rectangle given in the parameters.
+`labelRectTransform.GetWorldCorners(worldCorners)` is a unity function that takes-in an empty array of size 4, and outputs
+values into that array. This value will be the world-space points of the `labelRectTransform`.
+The function uses Unity's `Camera.main.WorldToScreenPoint()` function to calculate the min and max points for a given rect in world-space.
+
+```csharp
+private Rect LabelWorldRectToScreenRect(RectTransform labelRectTransform)
+{
+    var worldCorners = new Vector3[4];
+    labelRectTransform.GetWorldCorners(worldCorners);
+
+    Vector2 minScreenPoint = _mainCamera.WorldToScreenPoint(worldCorners[0]);
+    Vector2 maxScreenPoint = _mainCamera.WorldToScreenPoint(worldCorners[2]);
+
+    return new Rect(minScreenPoint, maxScreenPoint - minScreenPoint);
+}
+```
+
+The `ItemLabelManager` monobehaviour stores a list of currently active `ItemLabels` and then each one is checked in the
+`LateUpdate()` method:
+
+```csharp
+for (var i = 0; i < _labels.Count - 1; i++)
+{
+    // Convert the world position of the label to screen space and update its position accordingly.
+    var screenLabelRectA = LabelWorldRectToScreenRect(_labels[i].GetComponent<RectTransform>());
+    var screenLabelRectB = LabelWorldRectToScreenRect(_labels[i+1].GetComponent<RectTransform>());
+    if (screenLabelRectA.Overlaps(screenLabelRectB))
+    {
+        // 1. Get the current screen position including depth of the second label.
+        Vector3 screenPosB = _mainCamera.WorldToScreenPoint(_labels[i+1].transform.position);
+        
+        // 2. Calculate the overlap height in pixels.
+        // To push B exactly above A: new Y = Top of A + half height of B (assuming pivot is centre).
+        float targetScreenY = screenLabelRectA.yMax + (screenLabelRectB.height * 0.5f);
+        
+        // 3. Update screen position.
+        screenPosB.y = targetScreenY;
+        
+        // 4. Convert back to world space using the original depth (z) of label B.
+        Vector3 newWorldPos = _mainCamera.ScreenToWorldPoint(screenPosB);
+        
+        // 5. Apply the new position
+        _labels[i+1].transform.position = newWorldPos;
+    }
+}
+```
+This system will now look at the current ItemLabel and the one next on the list, using the `Overlaps()` function to detect
+if two rectangles are overlapping. In my original implementation I didn't account for camera Z-depth which ended-up causing
+issues with the labels showing right in-front of the camera and way too high-up in the air. This newer implementation
+makes use of the `WorldToScreenPoint()` function and correctly account for the depth of the camera.
+Then, the y-position of the second rectangle is pushed upwards based on the size of the label. This new position is then
+applied directly to the item label in the list.
 
 ## Links
 

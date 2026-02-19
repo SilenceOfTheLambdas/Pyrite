@@ -35,7 +35,7 @@ namespace Player
 
             if (itemLabel != null)
             {
-                itemLabel.SetLabelText(_itemTemplate.itemName, ItemLabel.LabelRarityColour.GetColourForRarity(itemRarity));
+                itemLabel.SetLabelTextAndRarity(_itemTemplate.itemName, ItemLabel.LabelRarityColour.GetColourForRarity(itemRarity));
             }
             else
             {
