@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -31,10 +32,19 @@ namespace User_Interface
         /// <param name="rarityColour"></param>
         public void SetLabelTextAndRarity(string text, Color rarityColour)
         {
-            if (labelText == null) return;
-            
-            labelText.text = text;
-            labelText.color = rarityColour;
+            StartCoroutine(SetLabelRoutine(text, rarityColour));
+        }
+
+        private IEnumerator SetLabelRoutine(string text, Color rarityColour)
+        {
+            yield return new WaitForEndOfFrame();
+            if (labelText == null) labelText = GetComponentInChildren<TextMeshProUGUI>();
+            if (labelText != null)
+            {
+                labelText.text = text;
+                labelText.color = rarityColour;
+                labelText.ForceMeshUpdate();
+            }
         }
 
         private void OnDestroy()
@@ -46,10 +56,10 @@ namespace User_Interface
         public struct LabelRarityColour
         {
             public static Color CommonColour = Color.white;
-            public static Color UncommonColour = new(68, 141, 203);
-            public static Color RareColour = new(255, 238, 30);
-            public static Color EpicColour = new(220, 0, 255);
-            public static Color UniqueColour = new(68, 141, 203);
+            public static Color UncommonColour = new Color32(68, 141, 203, 255);
+            public static Color RareColour = new Color32(255, 238, 30, 255);
+            public static Color EpicColour = new Color32(220, 0, 255, 255);
+            public static Color UniqueColour = new Color32(203, 77, 0, 255);
             
             public static Color GetColourForRarity(RpgManager.ItemRarity rarity)
             {

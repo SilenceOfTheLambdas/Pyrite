@@ -347,6 +347,13 @@ public struct LabelRarityColour
 }
 ```
 
+UPDATE (20/02/2026) - There were issues when using the default `Color()` object as this clamps the values between 0 and 1.
+When using colours that went up to 255, Unity attempted to clamp the values between 0 & 1 and this led to improper behaviour
+where the TextMeshProUGUI colours were not being updated. Rather oddly, the Epic colour did apply but I found-out that 
+this was due to the clamping being able to produce a magenta colour which matched the proper colour closely.
+The fix for this was simple; I instead used `Color32()` which accepts values up to 255. Now the colours are displayed 
+correctly after they are instantiated in the world.
+
 ### Positioning the Labels
 During testing of the game I found that when multiple items where dropped in the world, the labels would overlap. This
 made clicking on them to pick them up and seeing the label text hard. I needed to create a system that adjusted the position
