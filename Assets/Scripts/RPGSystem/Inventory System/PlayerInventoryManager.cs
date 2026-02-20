@@ -33,7 +33,6 @@ namespace RPGSystem.Inventory_System
         {
             // Find the next empty slot and then add the item to the player's inventory
             var itemPosition = FindNextEmptySlot();
-            Debug.Log($"Adding item to inventory at position {itemPosition}");
             InventoryItems.Add(item);
             item.SlotInfo.gameObject.transform.SetParent(gridItemsParent.transform);
             item.ItemIndex = itemPosition;

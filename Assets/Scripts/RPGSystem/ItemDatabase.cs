@@ -42,29 +42,15 @@ namespace RPGSystem
 
             return armourTemplates;
         }
-
+        
         /// <summary>
-        /// Attempts to get a random item baseWeaponStats of a given type.
+        /// Attempts to find an ItemTemplate with a given name.
         /// </summary>
-        /// <param name="itemType">The type of item baseWeaponStats to look for.</param>
-        /// <returns>Returns null if none were found, otherwise it returns a random item baseWeaponStats.</returns>
-        public ItemTemplate GetRandomItemTemplateByType(ItemTemplate.ItemType itemType)
+        /// <param name="itemName">Case-sensitive string representing the name of the item template to look up.</param>
+        /// <returns>Null if no entry in the list was found</returns>
+        public ItemTemplate GetTemplateByName(string itemName)
         {
-            switch (itemType)
-            {
-                case ItemTemplate.ItemType.Weapon:
-                {
-                    var weaponsList = GetAllWeaponTemplates();
-                    return weaponsList[Random.Range(0, weaponsList.Count)];
-                }
-                case ItemTemplate.ItemType.Armour:
-                {
-                    var armourList = GetAllArmourTemplates();
-                    return armourList[Random.Range(0, armourList.Count)];
-                }
-                default:
-                    return null;
-            }
+            return itemTemplates.Find(itemTemplate => itemTemplate.itemName == itemName);
         }
 
         /// <summary>

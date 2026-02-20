@@ -18,6 +18,9 @@ namespace RPGSystem.Equipment
         public ArmourStats equippedRing1;
         public ArmourStats equippedRing2;
 
+        [Header("Weapon Attachment Point")] [SerializeField]
+        private Transform rightHandAttachmentPoint;
+
         public static EquipmentManager Instance { get; private set; }
         
         public event Action<WeaponStats> OnWeaponEquipped;
@@ -61,6 +64,8 @@ namespace RPGSystem.Equipment
                     equippedWeapon.isEquipped = false;
                     OnWeaponUnequipped?.Invoke(equippedWeapon);
                     equippedWeapon = null;
+                    if (rightHandAttachmentPoint.childCount > 0)
+                        Destroy(rightHandAttachmentPoint.GetChild(0).gameObject);
                     break;
                 case ItemStats.EquipmentSlot.Head:
                     equippedHeadArmour.isEquipped = false;
@@ -105,6 +110,15 @@ namespace RPGSystem.Equipment
         private void EquipWeapon(WeaponStats weaponToEquip)
         {
             equippedWeapon = weaponToEquip;
+            // Show the equipped weapon on the character
+            var weaponTemplate = ItemDatabase.Instance.GetTemplateByName(weaponToEquip.equipmentName) as WeaponTemplate;
+            if (weaponTemplate == null)
+            {
+                Debug.LogError($"Unable to find weapon template with given name: {weaponToEquip.equipmentName}!");
+                return;
+            }
+            // Spawn the weapon model
+           Instantiate(weaponTemplate.equippedWeaponModelPrefab, rightHandAttachmentPoint);
         }
 
         private void EquipArmour(ArmourStats armourToEquip)

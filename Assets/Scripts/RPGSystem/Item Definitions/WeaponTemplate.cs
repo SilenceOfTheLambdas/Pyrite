@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using RPGSystem.Backend;
 using UnityEngine;
 
@@ -10,6 +9,9 @@ namespace RPGSystem.Item_Definitions
     public class WeaponTemplate : ItemTemplate
     {
         [Header("Weapon Type")] public WeaponType weaponType;
+
+        [Header("Weapon Equipped Model Prefab")]
+        public GameObject equippedWeaponModelPrefab;
 
         [Header("BaseWeaponTemplate Baseline at level 1")]
         public BaseWeaponTemplate baseWeaponStats;

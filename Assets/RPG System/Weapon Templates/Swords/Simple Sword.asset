@@ -21,6 +21,7 @@ MonoBehaviour:
     playerDexterityRequirement: 1
     playerIntelligenceRequirement: 0
   weaponType: 1
+  equippedWeaponModelPrefab: {fileID: 2300871832176508303, guid: 89fb43cfb0cc6ac4eafb5f70aa642d49, type: 3}
   baseWeaponStats:
     physicalDamage:
       min: 3
