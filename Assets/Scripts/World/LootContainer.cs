@@ -17,9 +17,7 @@ namespace World
 
         private bool _hasBeenUsed;
 
-        /// <summary>
-        /// Container rarity sets the rarity of ALL items that are dropped.
-        /// </summary>
+        [SerializeField] private bool overrideContainerRarity;
         public RpgManager.ItemRarity containerRarity;
 
         private readonly List<ItemTemplate> _generatedLootItemsToDrop = new();
@@ -29,8 +27,9 @@ namespace World
             // Randomly assign the number of items to drop
             _numberOfItemsToDrop = Random.Range(numberOfItemsToDropRange.min, numberOfItemsToDropRange.max + 1);
 
-            // Randomly assign container rarity
-            RandomlyAssignContainerRarity();
+            if (!overrideContainerRarity)
+                // Randomly assign container rarity if we do not override the rarity
+                RandomlyAssignContainerRarity();
 
             // We want to generate the loot for this container at the start for performance reasons
             GenerateLootItemsToDrop();

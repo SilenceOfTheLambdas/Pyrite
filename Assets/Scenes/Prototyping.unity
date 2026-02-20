@@ -7475,6 +7475,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5394743940268996519, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
+      propertyPath: containerRarity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5394743940268996519, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
+      propertyPath: overrideContainerRarity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5394743940268996519, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
       propertyPath: numberOfItemsToDropRange.max
       value: 2
       objectReference: {fileID: 0}
@@ -11807,6 +11815,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5394743940268996519, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
+      propertyPath: containerRarity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5394743940268996519, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
+      propertyPath: overrideContainerRarity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5394743940268996519, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
       propertyPath: numberOfItemsToDropRange.max
       value: 5
       objectReference: {fileID: 0}
@@ -12090,6 +12106,14 @@ PrefabInstance:
     - target: {fileID: 4057334081213651872, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5394743940268996519, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
+      propertyPath: containerRarity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5394743940268996519, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
+      propertyPath: overrideContainerRarity
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5394743940268996519, guid: 7e41a78c02988224b948833cfc58f121, type: 3}
       propertyPath: numberOfItemsToDropRange.max
