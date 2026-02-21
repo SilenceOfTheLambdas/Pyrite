@@ -10,6 +10,7 @@ namespace RPGSystem.Equipment
     public class EquipmentManager : MonoBehaviour
     {
         public WeaponStats equippedWeapon;
+        public bool HasWeaponEquipped { private set; get; }
         public ArmourStats equippedHeadArmour;
         public ArmourStats equippedChestArmour;
         public ArmourStats equippedLegArmour;
@@ -42,6 +43,7 @@ namespace RPGSystem.Equipment
             {
                 EquipWeapon(itemToEquip as WeaponStats);
                 OnWeaponEquipped?.Invoke(itemToEquip as WeaponStats);
+                HasWeaponEquipped = true;
             }
 
             if (itemToEquip.equipmentSlot is ItemStats.EquipmentSlot.Body
@@ -62,6 +64,7 @@ namespace RPGSystem.Equipment
             {
                 case ItemStats.EquipmentSlot.MainHand:
                     equippedWeapon.isEquipped = false;
+                    HasWeaponEquipped = false;
                     OnWeaponUnequipped?.Invoke(equippedWeapon);
                     equippedWeapon = null;
                     if (rightHandAttachmentPoint.childCount > 0)

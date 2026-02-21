@@ -13,12 +13,14 @@ namespace Player
             _camera = Camera.main;
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
+            _playerAttackController = GetComponent<PlayerAttackController>();
         }
 
         private void Start()
         {
-            Assert.IsNotNull(_navMeshAgent, "Could not find NavMeshAgent attached to player game object.");
-            Assert.IsNotNull(_animator, "Player needs to have an Animator component attached.");
+            if (_navMeshAgent == null) Debug.LogError("Could not find NavMeshAgent attached to player game object!");
+            if (_animator == null) Debug.LogError("Could not find Animator component attached to player game object!");
+            if (_playerAttackController == null) Debug.LogError("Could not find PlayerAttackController component!");
 
             // Use manual rotation so we can face the move direction smoothly
             _navMeshAgent.updateRotation = false;
@@ -44,7 +46,7 @@ namespace Player
         {
             #region Player Movement
 
-            if (_moveAction != null)
+            if (_moveAction != null && _playerAttackController.playerIsAttacking == false)
             {
                 var input = _moveAction.ReadValue<Vector2>();
                 MovePlayer(input);
@@ -93,7 +95,8 @@ namespace Player
         private Animator _animator;
         private InputAction _moveAction;
         private Vector3 _lastPosition;
-        [SerializeField] private InputActionReference moveInputAction;
+        private PlayerAttackController _playerAttackController;
+        public InputActionReference moveInputAction;
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float rotationLerpSpeed = 12f;
 
