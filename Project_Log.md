@@ -1,4 +1,24 @@
-﻿# Project Log 0.1.2
+﻿# Project Log
+
+<!-- TOC -->
+* [Project Log](#project-log)
+  * [Overview](#overview)
+    * [Responsibilities](#responsibilities)
+    * [Technical Stack](#technical-stack)
+* [Challenges and Solutions](#challenges-and-solutions)
+  * [Creating the Inventory System](#creating-the-inventory-system)
+    * [Creating an Item Template](#creating-an-item-template)
+    * [Generating Item Stats](#generating-item-stats)
+      * [Final Diagram](#final-diagram)
+    * [Update (24/02/26)](#update-240226)
+  * [In-world Item Labels](#in-world-item-labels)
+    * [Looking at the camera](#looking-at-the-camera)
+    * [Setting the label text](#setting-the-label-text)
+    * [Positioning the Labels](#positioning-the-labels)
+    * [Player Movement & Animations](#player-movement--animations)
+* [Links](#links)
+* [References](#references)
+<!-- TOC -->
 
 ## Overview
 
@@ -31,7 +51,7 @@ interface. To achieve this, I created a system made of *Scriptable Objects*. Thi
 was more flexible and extensible, making it easier to add new items and adjust the behaviour of existing items.
 I chose to use a *ScriptableObject* to store the data for each item type template, as this allowed me to easily 
 extend the system to include new item types. It also helped separate data and logic. My inspiration for this system 
-was games like *Path of Exile* and *Torchlight*. I wanted to create a system that was similar to these games in 
+was games like Path of Exile[1](#references) and Torchlight[2](#references). I wanted to create a system that was similar to these games in 
 respect to item stats and affixes and how they are generated. The challenge was to achieve a system that provided 
 depth but still maintained flexibility and simplicity.
 
@@ -267,6 +287,26 @@ graph TD
     style LC fill:#bbf,stroke:#333,stroke-width:2px
     style IS fill:#bfb,stroke:#333,stroke-width:2px
 ```
+
+### Update (24/02/26)
+
+As I started developing my project further, I was finding the architecture of the code to be more and more cumbersome.
+The inspector also started to look cluttered, and I wasn't happy with the steps needed to create a new item. I always like
+to imagine as if another person who isn't experienced with my code is trying to use whatever system I make. Re-creating that
+journey left me feeling a bit confused, so I knew I needed to make some changes.
+
+One of the biggest changes I made was adopting an open-source tool called EditorAttributes[3](#references) which implemented
+a load of attributes that can be applied to properties to simplify the look and feel of the inspector. I made use of the 
+`DataTable`, `Required`, and the various group attributes to make the inspector look cleaner and make it more obvious as
+to what properties were required for an item template.
+
+<img alt="New Inspector Look" width="380" height="660" src="docs/Images/New-InspectorLook.png" title="Improved inspector look after apply EditorAttributes."/>
+<img alt="Previous Inspector Look" src="docs/Images/Item_Template_SS.png"/>
+
+**Now the inspector looks a lot better, with warnings that appear if certain properties are not assigned a value.**
+
+Furthermore, I also renamed postfixes to prefixes to reduce naming fatigue and to also match how PoE names it.
+
 ## In-world Item Labels
 
 ---
@@ -415,7 +455,40 @@ makes use of the `WorldToScreenPoint()` function and correctly account for the d
 Then, the y-position of the second rectangle is pushed upwards based on the size of the label. This new position is then
 applied directly to the item label in the list.
 
-## Links
+### Player Movement & Animations
+
+My original plan for movement in the game was to have movement controlled by the mouse cursor. But, after testing I
+decided to change to a WASD movement system. This was easy to implement but did mean that I had to make some important 
+design decisions regarding how animations are handled. Most notably, I wanted the player movement to feel responsive whilst
+giving 'weight' to attacks.
+
+My basis for how attacks should look is the video game: Path of Exile 2, as this game made use of WASD movement and featured
+attack animations. I learnt from playing PoE that the player stops moving when they attack and the animation has 2 'stages'.
+The first being an outward slash, and then if the player presses the attack key again (or is still pressing it) an 
+inward attack animation is played.
+
+<img alt="PoE2-AttackAnimation.gif" height="480" src="docs/Images/PoE2-AttackAnimation.gif" title="Attack Animation for Club in Path of Exile 2" width="480"/>
+
+So I implemented a similar animation system to my game; using animations obtained from Mixamo. I developed a system that
+first checks to see if a player has a weapon equipped, and then instantiates a weapon model attached to the players' right
+hand rig. It will then play the first attack animation: `OutwardSlash`, and if the player then activates the attack button
+within a set time, the `InwardSlash` animation is played.
+
+To set up the timing for the animation stages I used animation events. The first starting a timer that acts as a "timer" 
+for a follow-up attack. Another event in the `OutwardSlash` animation then stops this "timer".
+Finally, at the end of the animation an event is triggered that sets the players' state to idle.
+
+![Attack-AnimationEvent.png](docs/Images/Attack-AnimationEvent.png)
+
+# Links
 
 - [GitHub Source Code](https://github.com/SilenceOfTheLambdas/Pyrite)
 - [Trello Board](https://trello.com/invite/b/6983a14a69c734a3259c062c/ATTI1883390cb21bd303e45d8f3dba8e5756DA098DE0/pyrite-game)
+
+---
+
+# References
+
+1. Path of Exile - Grinding Gear Games - [Path of Exile Website](https://www.pathofexile.com)
+2. Torchlight - Runic Games, Arc Games, Panic Button - [Torchlight 2 Website](https://www.torchlight2.com/en)
+3. Editor Attributes - v0lt - [Unity Asset Store Link](https://assetstore.unity.com/packages/tools/gui/editorattributes-269285)
