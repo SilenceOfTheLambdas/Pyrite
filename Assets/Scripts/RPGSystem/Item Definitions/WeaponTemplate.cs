@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using EditorAttributes;
 using RPGSystem.Backend;
 using UnityEngine;
 
@@ -8,12 +9,10 @@ namespace RPGSystem.Item_Definitions
     [CreateAssetMenu(fileName = "BaseWeaponTemplate", menuName = "Inventory/Items/New WeaponTemplate")]
     public class WeaponTemplate : ItemTemplate
     {
-        [Header("Weapon Type")] public WeaponType weaponType;
+        [AssetPreview(64f, 64f), Required] public GameObject equippedWeaponModelPrefab;
 
-        [Header("Weapon Equipped Model Prefab")]
-        public GameObject equippedWeaponModelPrefab;
-
-        [Header("BaseWeaponTemplate Baseline at level 1")]
+        [Title("Weapon Stats")]
+        public WeaponType weaponType;
         public BaseWeaponTemplate baseWeaponStats;
 
         public enum WeaponType
@@ -27,7 +26,7 @@ namespace RPGSystem.Item_Definitions
             Crossbow // Two-handed crossbow
         }
 
-        [Header("Affixes")] [Description("Provide a list of possible affixes that could apply to this item.")]
-        public List<Affix> possibleAffixes;
+        [Title("Possible Suffixes"), DataTable(true)] [Description("Provide a list of possible affixes that could apply to this item.")]
+        public List<Suffix> possibleSuffixes;
     }
 }

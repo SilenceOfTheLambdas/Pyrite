@@ -1,4 +1,5 @@
 ﻿using System;
+using EditorAttributes;
 using RPGSystem.Equipment;
 using UnityEngine;
 
@@ -6,17 +7,13 @@ namespace RPGSystem.Backend
 {
     public class ItemTemplate : ScriptableObject
     {
-        /// <summary>
-        /// The name of the item
-        /// </summary>
+        [Title("Item Information")]
         public string itemName;
-
-        public GameObject inventorySlotPrefab;
-
-        public GameObject itemPickupPrefab;
-
         public ItemType itemType;
-
+        [SerializeField, Required] public GameObject inventorySlotPrefab;
+        [AssetPreview(64f, 64f), Required] public GameObject itemPickupPrefab;
+        
+        [Title("Item Requirements"), DataTable(true)]
         public ItemRequirements baselineItemRequirements;
 
         /// <summary>
@@ -38,12 +35,12 @@ namespace RPGSystem.Backend
         }
 
         [Serializable]
-        public struct Affix
+        public struct Suffix
         {
-            [field: SerializeField] public PostfixType Type { get; set; }
+            [field: SerializeField] public SuffixType Type { get; set; }
             [field: SerializeField] public int Value { get; set; }
 
-            public enum PostfixType
+            public enum SuffixType
             {
                 /// e.g +0-10 Strength
                 AddedStrength,

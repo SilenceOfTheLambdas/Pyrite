@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using EditorAttributes;
 using RPGSystem.Backend;
 using RPGSystem.Equipment;
 using UnityEngine;
+using Void = EditorAttributes.Void;
 
 namespace Player
 {
@@ -10,24 +12,39 @@ namespace Player
     {
         #region Properties
 
-        [field: SerializeField]
-        public int CurrentPlayerLevel { get; private set; }
-        public int CurrentPlayerExp { get; private set; }
-        public int CurrentPlayerHealth { get; private set; }
-        public int PlayerMaxHealth { get; private set; }
+        [TabGroup(nameof(healthXpLevel), nameof(damage), nameof(armour), nameof(attributes))]
+        [SerializeField] private Void groupHolder;
+        
+        [VerticalGroup(nameof(CurrentPlayerLevel), nameof(CurrentPlayerExp), nameof(CurrentPlayerHealth), nameof(PlayerMaxHealth))]
+        [SerializeField, HideInInspector] private Void healthXpLevel;
+        [field: SerializeField, HideProperty] public int CurrentPlayerLevel { get; private set; }
+        [field: SerializeField, HideProperty] public int CurrentPlayerExp { get; private set; }
+        [field: SerializeField, HideProperty] public int CurrentPlayerHealth { get; private set; }
+        [field: SerializeField, HideProperty] public int PlayerMaxHealth { get; private set; }
         
         // Player Damage Properties
-        public float currentPhysicalDamage;
-        public List<RpgManager.ElementalDamage> currentElementalDamage;
-        public float currentAttackSpeed;
-        public float currentAttackRange;
-        public float currentCriticalChance;
-        public float currentCriticalDamageMultiplier;
+        [VerticalGroup(nameof(currentPhysicalDamage), nameof(currentElementalDamage), nameof(currentAttackSpeed), 
+            nameof(currentAttackRange), nameof(currentCriticalChance), nameof(currentCriticalDamageMultiplier))]
+        [SerializeField, HideInInspector] private Void damage;
+        [Title("Player Damage Stats")]
+        [HideProperty] public float currentPhysicalDamage;
+        [HideProperty] public List<RpgManager.ElementalDamage> currentElementalDamage;
+        [HideProperty] public float currentAttackSpeed;
+        [HideProperty] public float currentAttackRange;
+        [HideProperty] public float currentCriticalChance;
+        [HideProperty] public float currentCriticalDamageMultiplier;
         
-        // Player Armour Properties
-        public BaselineArmourStats totalPlayerArmourStats;
-        public PlayerStats currentPlayerAttributes;
-        public List<BaselineArmourStats.ElementalResistance> currentElementalResistances;
+        
+        [VerticalGroup(nameof(totalPlayerArmourStats), nameof(currentElementalResistances))]
+        [SerializeField, HideInInspector] private Void armour;
+        [Title("Player Armour Stats")]
+        [HideProperty] public BaselineArmourStats totalPlayerArmourStats;
+        [HideProperty, DataTable(true)] public List<BaselineArmourStats.ElementalResistance> currentElementalResistances;
+        
+        [VerticalGroup(nameof(currentPlayerAttributes))]
+        [SerializeField, HideInInspector] private Void attributes;
+        [Title("Player Attributes")]
+        [HideProperty, DataTable(true)] public PlayerStats currentPlayerAttributes;
         
         #endregion
         public static PlayerRpgController Instance { get; private set; }
@@ -91,30 +108,30 @@ namespace Player
             {
                 switch (affix.Type)
                 {
-                    case ItemTemplate.Affix.PostfixType.AddedStrength:
+                    case ItemTemplate.Suffix.SuffixType.AddedStrength:
                         currentPlayerAttributes.strength += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedIntelligence:
+                    case ItemTemplate.Suffix.SuffixType.AddedIntelligence:
                         currentPlayerAttributes.intelligence += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedDexterity:
+                    case ItemTemplate.Suffix.SuffixType.AddedDexterity:
                         currentPlayerAttributes.dexterity += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedHealth:
+                    case ItemTemplate.Suffix.SuffixType.AddedHealth:
                         PlayerMaxHealth += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedPhysicalDamage:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedPhysicalDamage:
                         currentPhysicalDamage += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedCritChance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedCritChance:
                         currentCriticalChance += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedElementalDamageToWeapon:
-                    case ItemTemplate.Affix.PostfixType.AddedArmour:
-                    case ItemTemplate.Affix.PostfixType.IncreasedFireResistance:
-                    case ItemTemplate.Affix.PostfixType.IncreasedIceResistance:
-                    case ItemTemplate.Affix.PostfixType.IncreasedLightningResistance:
-                    case ItemTemplate.Affix.PostfixType.IncreasedPoisonResistance:
+                    case ItemTemplate.Suffix.SuffixType.AddedElementalDamageToWeapon:
+                    case ItemTemplate.Suffix.SuffixType.AddedArmour:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedFireResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedIceResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedLightningResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedPoisonResistance:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -132,39 +149,39 @@ namespace Player
             {
                 switch (affix.Type)
                 {
-                    case ItemTemplate.Affix.PostfixType.AddedStrength:
+                    case ItemTemplate.Suffix.SuffixType.AddedStrength:
                         currentPlayerAttributes.strength += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedIntelligence:
+                    case ItemTemplate.Suffix.SuffixType.AddedIntelligence:
                         currentPlayerAttributes.intelligence += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedDexterity:
+                    case ItemTemplate.Suffix.SuffixType.AddedDexterity:
                         currentPlayerAttributes.dexterity += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedHealth:
+                    case ItemTemplate.Suffix.SuffixType.AddedHealth:
                         PlayerMaxHealth += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedPhysicalDamage:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedPhysicalDamage:
                         currentPhysicalDamage += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedCritChance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedCritChance:
                         currentCriticalChance += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedElementalDamageToWeapon:
+                    case ItemTemplate.Suffix.SuffixType.AddedElementalDamageToWeapon:
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedArmour:
+                    case ItemTemplate.Suffix.SuffixType.AddedArmour:
                         totalPlayerArmourStats.physicalArmour += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedFireResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedFireResistance:
                         IncreaseElementalResistance(RpgManager.ElementalDamageType.Fire, affix.Value);
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedIceResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedIceResistance:
                         IncreaseElementalResistance(RpgManager.ElementalDamageType.Ice, affix.Value);
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedLightningResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedLightningResistance:
                         IncreaseElementalResistance(RpgManager.ElementalDamageType.Lightning, affix.Value);
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedPoisonResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedPoisonResistance:
                         IncreaseElementalResistance(RpgManager.ElementalDamageType.Poison, affix.Value);
                         break;
                     default:
@@ -186,30 +203,30 @@ namespace Player
             {
                 switch (postfix.Type)
                 {
-                    case ItemTemplate.Affix.PostfixType.AddedStrength:
+                    case ItemTemplate.Suffix.SuffixType.AddedStrength:
                         currentPlayerAttributes.strength -= postfix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedIntelligence:
+                    case ItemTemplate.Suffix.SuffixType.AddedIntelligence:
                         currentPlayerAttributes.intelligence -= postfix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedDexterity:
+                    case ItemTemplate.Suffix.SuffixType.AddedDexterity:
                         currentPlayerAttributes.dexterity -= postfix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedHealth:
+                    case ItemTemplate.Suffix.SuffixType.AddedHealth:
                         PlayerMaxHealth -= postfix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedPhysicalDamage:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedPhysicalDamage:
                         currentPhysicalDamage -= postfix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedCritChance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedCritChance:
                         currentCriticalChance -= postfix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedElementalDamageToWeapon:
-                    case ItemTemplate.Affix.PostfixType.AddedArmour:
-                    case ItemTemplate.Affix.PostfixType.IncreasedFireResistance:
-                    case ItemTemplate.Affix.PostfixType.IncreasedIceResistance:
-                    case ItemTemplate.Affix.PostfixType.IncreasedLightningResistance:
-                    case ItemTemplate.Affix.PostfixType.IncreasedPoisonResistance:
+                    case ItemTemplate.Suffix.SuffixType.AddedElementalDamageToWeapon:
+                    case ItemTemplate.Suffix.SuffixType.AddedArmour:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedFireResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedIceResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedLightningResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedPoisonResistance:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -227,39 +244,39 @@ namespace Player
             {
                 switch (postfix.Type)
                 {
-                    case ItemTemplate.Affix.PostfixType.AddedStrength:
+                    case ItemTemplate.Suffix.SuffixType.AddedStrength:
                         currentPlayerAttributes.strength -= postfix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedIntelligence:
+                    case ItemTemplate.Suffix.SuffixType.AddedIntelligence:
                         currentPlayerAttributes.intelligence -= postfix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedDexterity:
+                    case ItemTemplate.Suffix.SuffixType.AddedDexterity:
                         currentPlayerAttributes.dexterity -= postfix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedHealth:
+                    case ItemTemplate.Suffix.SuffixType.AddedHealth:
                         PlayerMaxHealth -= postfix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedPhysicalDamage:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedPhysicalDamage:
                         currentPhysicalDamage -= postfix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedCritChance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedCritChance:
                         currentCriticalChance -= postfix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedElementalDamageToWeapon:
+                    case ItemTemplate.Suffix.SuffixType.AddedElementalDamageToWeapon:
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedArmour:
+                    case ItemTemplate.Suffix.SuffixType.AddedArmour:
                         totalPlayerArmourStats.physicalArmour -= postfix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedFireResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedFireResistance:
                         IncreaseElementalResistance(RpgManager.ElementalDamageType.Fire, -postfix.Value);
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedIceResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedIceResistance:
                         IncreaseElementalResistance(RpgManager.ElementalDamageType.Ice, -postfix.Value);
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedLightningResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedLightningResistance:
                         IncreaseElementalResistance(RpgManager.ElementalDamageType.Lightning, -postfix.Value);
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedPoisonResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedPoisonResistance:
                         IncreaseElementalResistance(RpgManager.ElementalDamageType.Poison, -postfix.Value);
                         break;
                     default:

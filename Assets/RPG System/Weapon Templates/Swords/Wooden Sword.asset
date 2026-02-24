@@ -10,37 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24f3abcacb174e869d4cb9671848c5ba, type: 3}
-  m_Name: Simple Sword
+  m_Name: Wooden Sword
   m_EditorClassIdentifier: Assembly-CSharp::Inventory_System.Item_Definitions.Weapon
-  itemName: Simple Sword
+  itemName: Scrap Wooden Sword
+  itemType: 0
   inventorySlotPrefab: {fileID: 3950442174690773874, guid: 58d37a2a7807cec4491a56867d71817b, type: 3}
   itemPickupPrefab: {fileID: 2300871832176508303, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
-  itemType: 0
   baselineItemRequirements:
     playerStrengthRequirement: 2
     playerDexterityRequirement: 1
     playerIntelligenceRequirement: 0
-  weaponType: 1
   equippedWeaponModelPrefab: {fileID: 2300871832176508303, guid: 89fb43cfb0cc6ac4eafb5f70aa642d49, type: 3}
+  weaponType: 1
   baseWeaponStats:
     physicalDamage:
       min: 3
       max: 5
     elementalDamage:
-      min:
-        type: 0
-        amount: 1
-      max:
-        type: 0
-        amount: 4
+      type: 0
+      amount: 0
     attackSpeed: 0.8
     attackRange: 1
     criticalDamageMultiplier: 1.3
     criticalDamageChance:
       min: 0.3
       max: 0.5
-  possibleAffixes:
-  - <Type>k__BackingField: 6
-    <Value>k__BackingField: 1
+  possibleSuffixes:
   - <Type>k__BackingField: 4
     <Value>k__BackingField: 1
+  - <Type>k__BackingField: 6
+    <Value>k__BackingField: 1
+  - <Type>k__BackingField: 5
+    <Value>k__BackingField: 0

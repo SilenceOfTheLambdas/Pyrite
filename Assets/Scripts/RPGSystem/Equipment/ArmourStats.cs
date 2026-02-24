@@ -50,7 +50,7 @@ namespace RPGSystem.Equipment
             ScaleArmourValues();
 
             // 2) Generate affixes from template/rarity
-            GeneratedArmourStats.GeneratedAffixes = new List<ItemTemplate.Affix>();
+            GeneratedArmourStats.GeneratedAffixes = new List<ItemTemplate.Suffix>();
             var raritySettings = RpgManager.Instance.raritySettings
                 .Find(e => e.rarity == equipmentRarity);
 
@@ -98,15 +98,15 @@ namespace RPGSystem.Equipment
             ArmourTemplate armourTemplate)
         {
             var randomNumberOfAffixes = Random.Range(rarityAffixBonusRangeMin, rarityAffixBonusRangeMax);
-            var tempListOfPossibleAffixes = new List<ItemTemplate.Affix>();
+            var tempListOfPossibleAffixes = new List<ItemTemplate.Suffix>();
 
             // Prepare postfix values scaled to the current item tier, similar to WeaponStats
-            foreach (var possibleAffix in armourTemplate.possiblePostfixes)
+            foreach (var possibleAffix in armourTemplate.possibleSuffixes)
             {
                 var affix = possibleAffix;
                 switch (affix.Type)
                 {
-                    case ItemTemplate.Affix.PostfixType.AddedStrength:
+                    case ItemTemplate.Suffix.SuffixType.AddedStrength:
                         affix.Value = Random.Range(
                             RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min
                                 .strength,
@@ -114,7 +114,7 @@ namespace RPGSystem.Equipment
                                 .strength);
                         tempListOfPossibleAffixes.Add(affix);
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedDexterity:
+                    case ItemTemplate.Suffix.SuffixType.AddedDexterity:
                         affix.Value = Random.Range(
                             RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min
                                 .dexterity,
@@ -122,7 +122,7 @@ namespace RPGSystem.Equipment
                                 .dexterity);
                         tempListOfPossibleAffixes.Add(affix);
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedIntelligence:
+                    case ItemTemplate.Suffix.SuffixType.AddedIntelligence:
                         affix.Value = Random.Range(
                             RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min
                                 .intelligence,
@@ -130,13 +130,13 @@ namespace RPGSystem.Equipment
                                 .intelligence);
                         tempListOfPossibleAffixes.Add(affix);
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedHealth:
+                    case ItemTemplate.Suffix.SuffixType.AddedHealth:
                         affix.Value = Random.Range(
                             RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min.strength,
                             RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.max.strength);
                         tempListOfPossibleAffixes.Add(affix);
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedArmour:
+                    case ItemTemplate.Suffix.SuffixType.AddedArmour:
                         // Use vitality as a proxy for defensive scaling
                         affix.Value = Random.Range(
                             RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min
@@ -145,10 +145,10 @@ namespace RPGSystem.Equipment
                                 .strength * (int)equipmentRarity);
                         tempListOfPossibleAffixes.Add(affix);
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedFireResistance:
-                    case ItemTemplate.Affix.PostfixType.IncreasedIceResistance:
-                    case ItemTemplate.Affix.PostfixType.IncreasedLightningResistance:
-                    case ItemTemplate.Affix.PostfixType.IncreasedPoisonResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedFireResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedIceResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedLightningResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedPoisonResistance:
                         // Use magic stat to scale resistance affixes
                         affix.Value = Random.Range(
                             RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min.intelligence * (int)equipmentRarity,
@@ -175,21 +175,21 @@ namespace RPGSystem.Equipment
             foreach (var affix in GeneratedArmourStats.GeneratedAffixes)
                 switch (affix.Type)
                 {
-                    case ItemTemplate.Affix.PostfixType.AddedStrength:
+                    case ItemTemplate.Suffix.SuffixType.AddedStrength:
                         GeneratedArmourStats.statBonuses.strength += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedDexterity:
+                    case ItemTemplate.Suffix.SuffixType.AddedDexterity:
                         GeneratedArmourStats.statBonuses.dexterity += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedIntelligence:
+                    case ItemTemplate.Suffix.SuffixType.AddedIntelligence:
                         GeneratedArmourStats.statBonuses.intelligence += affix.Value;
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedHealth:
+                    case ItemTemplate.Suffix.SuffixType.AddedHealth:
                         GeneratedArmourStats.statBonuses.strength += 
                             affix.Value + (int)(RpgManager.Instance.currentItemTier * affix.Value *
                             RpgManager.Instance.itemLevelFactor);
                         break;
-                    case ItemTemplate.Affix.PostfixType.AddedArmour:
+                    case ItemTemplate.Suffix.SuffixType.AddedArmour:
                         // Flat armour bonus scaled a little by item level factor and tier
                         var flatArmour = (int)(RpgManager.Instance.currentItemTier * affix.Value *
                                                RpgManager.Instance.itemLevelFactor);
@@ -197,16 +197,16 @@ namespace RPGSystem.Equipment
                         GeneratedArmourStats.magicalArmour +=
                             (int)(flatArmour * 0.6f); // magical slightly lower by default
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedFireResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedFireResistance:
                         AddResistance(RpgManager.ElementalDamageType.Fire, affix.Value);
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedIceResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedIceResistance:
                         AddResistance(RpgManager.ElementalDamageType.Ice, affix.Value);
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedLightningResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedLightningResistance:
                         AddResistance(RpgManager.ElementalDamageType.Lightning, affix.Value);
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedPoisonResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedPoisonResistance:
                         AddResistance(RpgManager.ElementalDamageType.Poison, affix.Value);
                         break;
                 }
@@ -284,21 +284,21 @@ namespace RPGSystem.Equipment
                 foreach (var generatedAffix in GeneratedArmourStats.GeneratedAffixes)
                     switch (generatedAffix.Type)
                     {
-                        case ItemTemplate.Affix.PostfixType.AddedStrength:
-                        case ItemTemplate.Affix.PostfixType.AddedIntelligence:
-                        case ItemTemplate.Affix.PostfixType.AddedDexterity:
-                        case ItemTemplate.Affix.PostfixType.AddedHealth:
-                        case ItemTemplate.Affix.PostfixType.AddedElementalDamageToWeapon:
-                        case ItemTemplate.Affix.PostfixType.AddedArmour:
+                        case ItemTemplate.Suffix.SuffixType.AddedStrength:
+                        case ItemTemplate.Suffix.SuffixType.AddedIntelligence:
+                        case ItemTemplate.Suffix.SuffixType.AddedDexterity:
+                        case ItemTemplate.Suffix.SuffixType.AddedHealth:
+                        case ItemTemplate.Suffix.SuffixType.AddedElementalDamageToWeapon:
+                        case ItemTemplate.Suffix.SuffixType.AddedArmour:
                             itemDescription +=
                                 $"Adds {generatedAffix.Value} to {generatedAffix.Type.ToString().Remove(0, 5)}\n";
                             break;
-                        case ItemTemplate.Affix.PostfixType.IncreasedPhysicalDamage:
-                        case ItemTemplate.Affix.PostfixType.IncreasedCritChance:
-                        case ItemTemplate.Affix.PostfixType.IncreasedFireResistance:
-                        case ItemTemplate.Affix.PostfixType.IncreasedIceResistance:
-                        case ItemTemplate.Affix.PostfixType.IncreasedLightningResistance:
-                        case ItemTemplate.Affix.PostfixType.IncreasedPoisonResistance:
+                        case ItemTemplate.Suffix.SuffixType.IncreasedPhysicalDamage:
+                        case ItemTemplate.Suffix.SuffixType.IncreasedCritChance:
+                        case ItemTemplate.Suffix.SuffixType.IncreasedFireResistance:
+                        case ItemTemplate.Suffix.SuffixType.IncreasedIceResistance:
+                        case ItemTemplate.Suffix.SuffixType.IncreasedLightningResistance:
+                        case ItemTemplate.Suffix.SuffixType.IncreasedPoisonResistance:
                             itemDescription +=
                                 $"Increased {generatedAffix.Type.ToString().Remove(0, 9)} by {generatedAffix.Value}%\n";
                             break;

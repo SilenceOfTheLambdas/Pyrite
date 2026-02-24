@@ -41,7 +41,7 @@ namespace RPGSystem.Equipment
         /// <summary>
         /// A generated list of affixes that apply to this weapon, this may be empty.
         /// </summary>
-        [Header("Affixes")] public List<ItemTemplate.Affix> generatedAffixes = new();
+        [Header("Affixes")] public List<ItemTemplate.Suffix> generatedAffixes = new();
 
         /// <summary>
         /// Generates the stats for all weapon types.
@@ -67,7 +67,7 @@ namespace RPGSystem.Equipment
                 weaponTemplate.baseWeaponStats.criticalDamageChance.max);
 
             // 3) This is where any Postfixes are applied
-            generatedAffixes = new List<ItemTemplate.Affix>();
+            generatedAffixes = new List<ItemTemplate.Suffix>();
             switch (equipmentRarity)
             {
                 case RpgManager.ItemRarity.Common: // No Postfixes applied
@@ -111,18 +111,13 @@ namespace RPGSystem.Equipment
         {
             var weaponTemplateElementalDamage = weaponTemplate.baseWeaponStats.elementalDamage;
             // First, check if this weapon template supports elemental damage
-            if (weaponTemplateElementalDamage.min.amount > 0)
-            {
-                // If it does, then generate a random amount of damage based on the weapon template
-                var damageAmount = Random.Range(weaponTemplateElementalDamage.min.amount,
-                    weaponTemplateElementalDamage.max.amount);
-
-                // Then assign the generated ElementalDamage of this weapon
-                RpgManager.ElementalDamage generatedElementalDamage;
-                generatedElementalDamage.type = weaponTemplateElementalDamage.min.type;
-                generatedElementalDamage.amount = damageAmount;
-                elementalDamage = generatedElementalDamage;
-            }
+            if (!(weaponTemplateElementalDamage.amount > 0)) return;
+            
+            // Then assign the generated ElementalDamage of this weapon
+            RpgManager.ElementalDamage generatedElementalDamage;
+            generatedElementalDamage.type = weaponTemplateElementalDamage.type;
+            generatedElementalDamage.amount = weaponTemplateElementalDamage.amount;
+            elementalDamage = generatedElementalDamage;
         }
 
         private void ScalePhysicalDamage()
@@ -146,7 +141,7 @@ namespace RPGSystem.Equipment
 
             // Now adjusting for any affixes that deal elemental damage.
             foreach (var affix in generatedAffixes)
-                if (affix.Type == ItemTemplate.Affix.PostfixType.AddedElementalDamageToWeapon)
+                if (affix.Type == ItemTemplate.Suffix.SuffixType.AddedElementalDamageToWeapon)
                 {
                     var tierStatIncrease = affix.Value;
                     elementalDamage.amount += RpgManager.Instance.currentItemTier * tierStatIncrease *
@@ -165,14 +160,14 @@ namespace RPGSystem.Equipment
         {
             // Choose a random number of affixes at the start
             var randomNumberOfAffixes = Random.Range(rarityAffixBonusRangeMin, rarityAffixBonusRangeMax);
-            var tempListOfPossibleAffixes = new List<ItemTemplate.Affix>();
+            var tempListOfPossibleAffixes = new List<ItemTemplate.Suffix>();
 
-            #region Generating Affix Values based on Level Tier
+            #region Generating Suffix Values based on Level Tier
 
             var hasGeneratedElementalDamage = false;
-            foreach (var possibleAffix in weaponTemplate.possibleAffixes)
+            foreach (var possibleAffix in weaponTemplate.possibleSuffixes)
             {
-                if (possibleAffix.Type == ItemTemplate.Affix.PostfixType.IncreasedPhysicalDamage)
+                if (possibleAffix.Type == ItemTemplate.Suffix.SuffixType.IncreasedPhysicalDamage)
                 {
                     var generatedPossibleAffix = possibleAffix;
                     generatedPossibleAffix.Type = possibleAffix.Type;
@@ -184,8 +179,8 @@ namespace RPGSystem.Equipment
                     tempListOfPossibleAffixes.Add(generatedPossibleAffix);
                 }
 
-                if (possibleAffix.Type is ItemTemplate.Affix.PostfixType.IncreasedCritChance
-                    or ItemTemplate.Affix.PostfixType.AddedDexterity)
+                if (possibleAffix.Type is ItemTemplate.Suffix.SuffixType.IncreasedCritChance
+                    or ItemTemplate.Suffix.SuffixType.AddedDexterity)
                 {
                     var generatedPossibleAffix = possibleAffix;
                     generatedPossibleAffix.Type = possibleAffix.Type;
@@ -198,7 +193,7 @@ namespace RPGSystem.Equipment
                 }
 
                 // We only want to generate one elemental damage affix.
-                if (possibleAffix.Type is ItemTemplate.Affix.PostfixType.AddedElementalDamageToWeapon
+                if (possibleAffix.Type is ItemTemplate.Suffix.SuffixType.AddedElementalDamageToWeapon
                     && !hasGeneratedElementalDamage)
                 {
                     var generatedPossibleAffix = possibleAffix;
@@ -223,7 +218,7 @@ namespace RPGSystem.Equipment
                 {
                     // Check if we have an elemental damage affix.
                     if (tempListOfPossibleAffixes[randomAffixIndex].Type ==
-                        ItemTemplate.Affix.PostfixType.AddedElementalDamageToWeapon)
+                        ItemTemplate.Suffix.SuffixType.AddedElementalDamageToWeapon)
                         // If so, we choose a random element type to apply to the weapon
                         elementalDamage.type = SelectRandomElementalDamageType();
 
@@ -277,21 +272,21 @@ namespace RPGSystem.Equipment
             foreach (var generatedAffix in generatedAffixes)
                 switch (generatedAffix.Type)
                 {
-                    case ItemTemplate.Affix.PostfixType.AddedStrength:
-                    case ItemTemplate.Affix.PostfixType.AddedIntelligence:
-                    case ItemTemplate.Affix.PostfixType.AddedDexterity:
-                    case ItemTemplate.Affix.PostfixType.AddedHealth:
-                    case ItemTemplate.Affix.PostfixType.AddedElementalDamageToWeapon:
-                    case ItemTemplate.Affix.PostfixType.AddedArmour:
+                    case ItemTemplate.Suffix.SuffixType.AddedStrength:
+                    case ItemTemplate.Suffix.SuffixType.AddedIntelligence:
+                    case ItemTemplate.Suffix.SuffixType.AddedDexterity:
+                    case ItemTemplate.Suffix.SuffixType.AddedHealth:
+                    case ItemTemplate.Suffix.SuffixType.AddedElementalDamageToWeapon:
+                    case ItemTemplate.Suffix.SuffixType.AddedArmour:
                         itemDescription +=
                             $"Adds {generatedAffix.Value} to {generatedAffix.Type.ToString().Remove(0, 5)}\n";
                         break;
-                    case ItemTemplate.Affix.PostfixType.IncreasedPhysicalDamage:
-                    case ItemTemplate.Affix.PostfixType.IncreasedCritChance:
-                    case ItemTemplate.Affix.PostfixType.IncreasedFireResistance:
-                    case ItemTemplate.Affix.PostfixType.IncreasedIceResistance:
-                    case ItemTemplate.Affix.PostfixType.IncreasedLightningResistance:
-                    case ItemTemplate.Affix.PostfixType.IncreasedPoisonResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedPhysicalDamage:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedCritChance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedFireResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedIceResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedLightningResistance:
+                    case ItemTemplate.Suffix.SuffixType.IncreasedPoisonResistance:
                         itemDescription +=
                             $"Increased {generatedAffix.Type.ToString().Remove(0, 9)} by {generatedAffix.Value}%\n";
                         break;

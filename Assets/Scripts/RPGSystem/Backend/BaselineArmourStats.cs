@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using EditorAttributes;
 using UnityEngine;
+using Void = EditorAttributes.Void;
 
 namespace RPGSystem.Backend
 {
@@ -10,15 +12,15 @@ namespace RPGSystem.Backend
     [Serializable]
     public class BaselineArmourStats
     {
-        [Header("Base Defenses")] [SerializeField]
-        public int physicalArmour;
+        [SerializeField, HorizontalGroup(drawInBox: true,nameof(physicalArmour), nameof(magicalArmour))]
+        private Void armourGroupHolder;
+        [HideProperty, HideInInspector] public int physicalArmour;
+        [HideProperty, HideInInspector] public int magicalArmour;
 
-        public int magicalArmour;
-
-        [Header("Stat Bonuses")] [SerializeField]
+        [SerializeField] [DataTable(true)]
         public RpgManager.CorePlayerStats statBonuses;
 
-        [NonSerialized] public List<ItemTemplate.Affix> GeneratedAffixes;
+        [NonSerialized] public List<ItemTemplate.Suffix> GeneratedAffixes;
         
         public static BaselineArmourStats operator +(BaselineArmourStats a, BaselineArmourStats b)
         {

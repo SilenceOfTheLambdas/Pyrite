@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Scrap Leather Gauntlets
   m_EditorClassIdentifier: Assembly-CSharp::RPGSystem.Item_Definitions.ArmourTemplate
   itemName: Scrap Leather Gauntlets
+  itemType: 1
   inventorySlotPrefab: {fileID: 3950442174690773874, guid: 58d37a2a7807cec4491a56867d71817b, type: 3}
   itemPickupPrefab: {fileID: 2300871832176508303, guid: 1f8e53cc73303dc448ae6df49568f260, type: 3}
-  itemType: 1
   baselineItemRequirements:
     playerStrengthRequirement: 1
     playerDexterityRequirement: 1
@@ -28,10 +28,20 @@ MonoBehaviour:
       strength: 0
       dexterity: 0
       intelligence: 1
-  possiblePostfixes:
-  - <Type>k__BackingField: 0
-    <Value>k__BackingField: 0
+  possibleSuffixes:
   - <Type>k__BackingField: 2
     <Value>k__BackingField: 0
+  - <Type>k__BackingField: 1
+    <Value>k__BackingField: 0
+  - <Type>k__BackingField: 5
+    <Value>k__BackingField: 0
   - <Type>k__BackingField: 7
+    <Value>k__BackingField: 0
+  - <Type>k__BackingField: 8
+    <Value>k__BackingField: 0
+  - <Type>k__BackingField: 9
+    <Value>k__BackingField: 0
+  - <Type>k__BackingField: 10
+    <Value>k__BackingField: 0
+  - <Type>k__BackingField: 11
     <Value>k__BackingField: 0

@@ -1,4 +1,5 @@
 ﻿using System;
+using EditorAttributes;
 using Player;
 using RPGSystem.Backend;
 using UnityEngine;
@@ -132,9 +133,9 @@ namespace RPGSystem.Equipment
     [Serializable]
     public struct ItemRequirements
     {
-        [NonSerialized] public int playerLevelRequirement;
         public int playerStrengthRequirement;
         public int playerDexterityRequirement;
         public int playerIntelligenceRequirement;
+        [NonSerialized] public int playerLevelRequirement;
     }
 }

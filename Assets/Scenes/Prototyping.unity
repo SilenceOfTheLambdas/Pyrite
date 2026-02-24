@@ -4827,10 +4827,10 @@ MonoBehaviour:
   offsetX: -0.2
   offsetY: 0.35
   offsetZ: -0.2
-  maxCameraDistance: 8
-  minCameraDistance: 3.5
+  maxCameraDistance: 10
+  minCameraDistance: 4
   cameraFollowSpeed: 6
-  cameraZoomSpeed: 5
+  cameraZoomSpeed: 10
 --- !u!1 &965597937
 GameObject:
   m_ObjectHideFlags: 0
