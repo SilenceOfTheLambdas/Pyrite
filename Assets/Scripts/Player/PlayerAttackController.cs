@@ -2,6 +2,7 @@ using RPGSystem.Equipment;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using Utils;
 
 namespace Player
 {
@@ -22,33 +23,31 @@ namespace Player
             _animator = GetComponent<Animator>();
             _playerMovementController = GetComponent<PlayerMovementController>();
             if (_animator == null) Debug.LogError("Player is missing an Animator component!");
-            if (attackInputAction != null)
-            {
-                attackInputAction.action.performed += PerformAttack;
-            }
             else Debug.LogError("Attack Input action must be assigned!");
         }
 
-        private void PerformAttack(InputAction.CallbackContext ctx)
+        private void PerformAttack(int AttackAnimationName)
         {
             if (!EquipmentManager.Instance.HasWeaponEquipped) return;
-            if (_readyForFollowUpAttack) return;
             // Check if the mouse pointer is hovered over a UI object
-            if (EventSystem.current.IsPointerOverGameObject())
-                return;
+            if (EventSystem.current.IsPointerOverGameObject() || CameraController.IsMouseOverInteractable(Camera.main)) return;
             playerIsAttacking = true;
-            _animator.SetTrigger(SwordSlash);
+            _animator.SetTrigger(AttackAnimationName);
         }
 
         private void Update()
         {
-            if (_readyForFollowUpAttack && attackInputAction.action.triggered)
+            // Handle continuous / Held Attack
+            if (attackInputAction.action.IsPressed())
             {
-                _animator.SetTrigger(InwardSlash);
+                if (_readyForFollowUpAttack)
+                    PerformAttack(InwardSlash);
+                else if (!playerIsAttacking)
+                    PerformAttack(SwordSlash);
             }
             
             // Check if any movement inputs were activated
-            if (_playerMovementController.moveInputAction.action.IsPressed())
+            if (_playerMovementController.moveInputAction.action.triggered)
             {
                 _readyForFollowUpAttack = false;
                 _animator.SetTrigger(InterruptAttack);
@@ -75,6 +74,7 @@ namespace Player
         public void SetPlayerIdleState()
         {
             playerIsAttacking = false;
+            _readyForFollowUpAttack = false;
         }
     }
 }
