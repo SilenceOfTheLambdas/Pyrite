@@ -483,7 +483,7 @@ Finally, at the end of the animation an event is triggered that sets the players
 # Links
 
 - [GitHub Source Code](https://github.com/SilenceOfTheLambdas/Pyrite)
-- [Trello Board](https://trello.com/invite/b/6983a14a69c734a3259c062c/ATTI1883390cb21bd303e45d8f3dba8e5756DA098DE0/pyrite-game)
+- [Trello Board](https://trello.com/b/pMaj4hAf/pyrite-game)
 
 ---
 
