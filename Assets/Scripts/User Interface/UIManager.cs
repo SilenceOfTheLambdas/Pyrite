@@ -105,13 +105,11 @@ namespace User_Interface
                     var itemStats = item as WeaponStats;
                     _itemStatsName.SetText(itemStats?.equipmentName);
                     _itemStatsDescription.text = itemStats?.GenerateWeaponStatsDescription();
-                    _itemStatsDescription.text += $"{inventoryItem.ItemIndex}\n"; // DEBUG
                     break;
                 case ItemTemplate.ItemType.Armour:
                     var armourStats = item as ArmourStats;
                     _itemStatsName.SetText(armourStats?.equipmentName);
                     _itemStatsDescription.text = armourStats?.GenerateArmourStatsDescription();
-                    _itemStatsDescription.text += $"{inventoryItem.ItemIndex}\n"; // DEBUG
                     break;
                 case ItemTemplate.ItemType.Accessory:
                 case ItemTemplate.ItemType.Potion:

@@ -22,8 +22,6 @@ namespace Player
         {
             _animator = GetComponent<Animator>();
             _playerMovementController = GetComponent<PlayerMovementController>();
-            if (_animator == null) Debug.LogError("Player is missing an Animator component!");
-            else Debug.LogError("Attack Input action must be assigned!");
         }
 
         private void PerformAttack(int AttackAnimationName)

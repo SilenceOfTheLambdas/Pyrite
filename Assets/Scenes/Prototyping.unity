@@ -7308,8 +7308,6 @@ GameObject:
   - component: {fileID: 1479947489}
   - component: {fileID: 1479947488}
   - component: {fileID: 1479947487}
-  - component: {fileID: 1479947491}
-  - component: {fileID: 1479947490}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -7404,52 +7402,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1479947490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1479947485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
-  m_SendPointerHoverToParent: 1
-  m_MoveRepeatDelay: 0.5
-  m_MoveRepeatRate: 0.1
-  m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_DeselectOnBackgroundClick: 1
-  m_PointerBehavior: 0
-  m_CursorLockBehavior: 0
-  m_ScrollDeltaPerTick: 6
---- !u!114 &1479947491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1479947485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
 --- !u!114 &1486958065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13093,6 +13045,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerRpgController
   <CurrentPlayerLevel>k__BackingField: 5
+  <CurrentPlayerExp>k__BackingField: 0
+  <CurrentPlayerHealth>k__BackingField: 0
+  <PlayerMaxHealth>k__BackingField: 0
   currentPhysicalDamage: 0
   currentElementalDamage: []
   currentAttackSpeed: 0
@@ -13106,13 +13061,6 @@ MonoBehaviour:
       strength: 0
       dexterity: 0
       intelligence: 0
-  currentPlayerAttributes:
-    strength: 5
-    intelligence: 5
-    dexterity: 5
-    vitality: 5
-    magic: 5
-    luck: 5
   currentElementalResistances:
   - damageType: 0
     resistancePercentage: 0
@@ -13122,6 +13070,13 @@ MonoBehaviour:
     resistancePercentage: 0
   - damageType: 3
     resistancePercentage: 0
+  currentPlayerAttributes:
+    strength: 5
+    intelligence: 5
+    dexterity: 5
+    vitality: 5
+    magic: 5
+    luck: 5
 --- !u!4 &8688641409476996096
 Transform:
   m_ObjectHideFlags: 0
