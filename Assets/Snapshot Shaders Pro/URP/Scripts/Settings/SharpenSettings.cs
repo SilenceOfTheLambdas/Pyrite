@@ -4,20 +4,21 @@
     using UnityEngine.Rendering;
     using UnityEngine.Rendering.Universal;
 
-    [System.Serializable]
-    [VolumeComponentMenu("Snapshot Shaders Pro/Sharpen")]
+    [System.Serializable, VolumeComponentMenu("Snapshot Shaders Pro/Sharpen"), DisplayInfo(name = "Sharpen")]
     public sealed class SharpenSettings : VolumeComponent, IPostProcessComponent
     {
+#if !UNITY_6000_3_OR_NEWER
         public SharpenSettings()
         {
             displayName = "Sharpen";
         }
+#endif
 
         [Tooltip("Choose where to insert this pass in URP's render loop.")]
-        public RenderPassEventParameter renderPassEvent = new(RenderPassEvent.BeforeRenderingPostProcessing);
+        public RenderPassEventParameter renderPassEvent = new RenderPassEventParameter(RenderPassEvent.BeforeRenderingPostProcessing);
 
-        [Range(0f, 1f)] [Tooltip("Sharpen effect intensity.")]
-        public ClampedFloatParameter intensity = new(0.0f, 0.0f, 1.0f);
+        [Range(0f, 1f), Tooltip("Sharpen effect intensity.")]
+        public ClampedFloatParameter intensity = new ClampedFloatParameter(0.0f, 0.0f, 1.0f);
 
         public bool IsActive()
         {

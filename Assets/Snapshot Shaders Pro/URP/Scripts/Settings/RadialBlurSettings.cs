@@ -4,23 +4,24 @@
     using UnityEngine.Rendering;
     using UnityEngine.Rendering.Universal;
 
-    [System.Serializable]
-    [VolumeComponentMenu("Snapshot Shaders Pro/RadialBlur")]
+    [System.Serializable, VolumeComponentMenu("Snapshot Shaders Pro/RadialBlur"), DisplayInfo(name = "Radial Blur")]
     public sealed class RadialBlurSettings : VolumeComponent, IPostProcessComponent
     {
+#if !UNITY_6000_3_OR_NEWER
         public RadialBlurSettings()
         {
             displayName = "Radial Blur";
         }
+#endif
 
         [Tooltip("Choose where to insert this pass in URP's render loop.")]
-        public RenderPassEventParameter renderPassEvent = new(RenderPassEvent.BeforeRenderingPostProcessing);
+        public RenderPassEventParameter renderPassEvent = new RenderPassEventParameter(RenderPassEvent.BeforeRenderingPostProcessing);
 
         [Tooltip("Blur Strength. Higher values require more system resources.")]
-        public ClampedIntParameter strength = new(1, 1, 500);
+        public ClampedIntParameter strength = new ClampedIntParameter(1, 1, 500);
 
-        [Range(1, 20)] [Tooltip("Distance between samples. Larger values may result in artefacts.")]
-        public ClampedIntParameter stepSize = new(5, 1, 20);
+        [Range(1, 20), Tooltip("Distance between samples. Larger values may result in artefacts.")]
+        public ClampedIntParameter stepSize = new ClampedIntParameter(5, 1, 20);
 
         public bool IsActive()
         {

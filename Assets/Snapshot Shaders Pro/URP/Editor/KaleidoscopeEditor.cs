@@ -13,8 +13,8 @@
 #endif
     public class KaleidoscopeEditor : VolumeComponentEditor
     {
-        private SerializedDataParameter renderPassEvent;
-        private SerializedDataParameter segmentCount;
+        SerializedDataParameter renderPassEvent;
+        SerializedDataParameter segmentCount;
 
         public override void OnEnable()
         {
@@ -27,11 +27,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Kaleidoscope>())
             {
-                EditorGUILayout.HelpBox(
-                    "The Kaleidoscope effect must be added to your renderer's Renderer Features list.",
-                    MessageType.Error);
+                EditorGUILayout.HelpBox("The Kaleidoscope effect must be added to your renderer's Renderer Features list.", MessageType.Error);
                 if (GUILayout.Button("Add Kaleidoscope Renderer Feature"))
+                {
                     SnapshotUtility.AddEffectToPipelineAsset<Kaleidoscope>();
+                }
             }
 
             PropertyField(renderPassEvent);

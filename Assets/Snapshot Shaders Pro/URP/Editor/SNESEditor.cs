@@ -13,10 +13,10 @@
 #endif
     public class SNESEditor : VolumeComponentEditor
     {
-        private SerializedDataParameter renderPassEvent;
-        private SerializedDataParameter enabled;
-        private SerializedDataParameter bandingValues;
-        private SerializedDataParameter powerRamp;
+        SerializedDataParameter renderPassEvent;
+        SerializedDataParameter enabled;
+        SerializedDataParameter bandingValues;
+        SerializedDataParameter powerRamp;
 
         public override void OnEnable()
         {
@@ -31,9 +31,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<SNES>())
             {
-                EditorGUILayout.HelpBox("The SNES effect must be added to your renderer's Renderer Features list.",
-                    MessageType.Error);
-                if (GUILayout.Button("Add SNES Renderer Feature")) SnapshotUtility.AddEffectToPipelineAsset<SNES>();
+                EditorGUILayout.HelpBox("The SNES effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                if (GUILayout.Button("Add SNES Renderer Feature"))
+                {
+                    SnapshotUtility.AddEffectToPipelineAsset<SNES>();
+                }
             }
 
             PropertyField(renderPassEvent);

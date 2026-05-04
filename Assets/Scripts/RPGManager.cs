@@ -57,7 +57,8 @@ public class RpgManager : MonoBehaviour
     [Serializable]
     public struct ItemTier
     {
-        [Header("Tier Settings")] [Tooltip("Assign a given tier to a range of levels.")]
+        [Header("Tier Settings")]
+        [Tooltip("Assign a given tier to a range of levels.")]
         public int itemTier;
 
         public StatRange<int> tierLevelRange;
@@ -122,7 +123,7 @@ public class RpgManager : MonoBehaviour
         public int strength;
         public int dexterity;
         public int intelligence;
-        
+
         public static CorePlayerStats operator +(CorePlayerStats a, CorePlayerStats b)
         {
             return new CorePlayerStats
@@ -132,7 +133,7 @@ public class RpgManager : MonoBehaviour
                 intelligence = a.intelligence + b.intelligence
             };
         }
-        
+
         public static CorePlayerStats operator -(CorePlayerStats a, CorePlayerStats b)
         {
             return new CorePlayerStats

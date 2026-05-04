@@ -4,29 +4,31 @@
     using UnityEngine.Rendering;
     using UnityEngine.Rendering.Universal;
 
-    [System.Serializable]
-    [VolumeComponentMenu("Snapshot Shaders Pro/Silhouette")]
+    [System.Serializable, VolumeComponentMenu("Snapshot Shaders Pro/Silhouette"), DisplayInfo(name = "Silhouette")]
     public sealed class SilhouetteSettings : VolumeComponent, IPostProcessComponent
     {
+#if !UNITY_6000_3_OR_NEWER
         public SilhouetteSettings()
         {
             displayName = "Silhouette";
         }
+#endif
 
         [Tooltip("Choose where to insert this pass in URP's render loop.")]
-        public RenderPassEventParameter renderPassEvent = new(RenderPassEvent.BeforeRenderingPostProcessing);
+        public RenderPassEventParameter renderPassEvent = new RenderPassEventParameter(RenderPassEvent.BeforeRenderingPostProcessing);
 
-        [Tooltip("Is the effect active?")] public BoolParameter enabled = new(false);
+        [Tooltip("Is the effect active?")]
+        public BoolParameter enabled = new BoolParameter(false);
 
         [Tooltip("Color at the camera's near clip plane.")]
-        public ColorParameter nearColor = new(new Color(0.0f, 0.0f, 0.0f, 1.0f));
+        public ColorParameter nearColor = new ColorParameter(new Color(0.0f, 0.0f, 0.0f, 1.0f));
 
         [Tooltip("Color at the camera's far clip plane.")]
-        public ColorParameter farColor = new(new Color(1.0f, 1.0f, 1.0f, 1.0f));
+        public ColorParameter farColor = new ColorParameter(new Color(1.0f, 1.0f, 1.0f, 1.0f));
 
         [Tooltip("Modify the input colors via a power ramp. 1 = original mapping, " +
-                 "higher = favors near color, lower = favors far color.")]
-        public ClampedFloatParameter powerRamp = new(1.0f, 0.0f, 4.0f);
+            "higher = favors near color, lower = favors far color.")]
+        public ClampedFloatParameter powerRamp = new ClampedFloatParameter(1.0f, 0.0f, 4.0f);
 
         public bool IsActive()
         {

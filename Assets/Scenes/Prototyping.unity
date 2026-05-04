@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 1
+  m_AdditionalLightsShadowResolutionTier: 0
   m_CustomShadowLayers: 0
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
@@ -340,7 +340,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36609781}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
@@ -392,7 +392,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -668,7 +668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 1
+  m_AdditionalLightsShadowResolutionTier: 0
   m_CustomShadowLayers: 0
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
@@ -692,7 +692,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 127510354}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
@@ -744,7 +744,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -938,7 +938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 1
+  m_AdditionalLightsShadowResolutionTier: 0
   m_CustomShadowLayers: 0
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
@@ -962,7 +962,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 157219693}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
@@ -1014,7 +1014,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -1577,7 +1577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 1
+  m_AdditionalLightsShadowResolutionTier: 0
   m_CustomShadowLayers: 0
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
@@ -1601,7 +1601,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 311570765}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
@@ -1653,7 +1653,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -1704,7 +1704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 1
+  m_AdditionalLightsShadowResolutionTier: 0
   m_CustomShadowLayers: 0
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
@@ -1728,7 +1728,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 319384859}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
@@ -1780,7 +1780,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -4119,7 +4119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 1
+  m_AdditionalLightsShadowResolutionTier: 0
   m_CustomShadowLayers: 0
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
@@ -4143,7 +4143,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 864657095}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
@@ -4195,7 +4195,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -4559,7 +4559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 1
+  m_AdditionalLightsShadowResolutionTier: 0
   m_CustomShadowLayers: 0
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
@@ -4583,7 +4583,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 927364133}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
@@ -4635,7 +4635,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -5915,7 +5915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 1
+  m_AdditionalLightsShadowResolutionTier: 0
   m_CustomShadowLayers: 0
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
@@ -5939,7 +5939,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192418486}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 16
@@ -5991,7 +5991,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -7397,6 +7397,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0

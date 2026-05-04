@@ -96,7 +96,7 @@ MonoBehaviour:
   components:
   - {fileID: 1881579288749618558}
   - {fileID: -32820517437979890}
-  - {fileID: -2280883265803272023}
+  - {fileID: 7682026765980749766}
 --- !u!114 &1881579288749618558
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -137,3 +137,34 @@ MonoBehaviour:
   maxNits:
     m_OverrideState: 0
     m_Value: 1000
+--- !u!114 &7682026765980749766
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e354a3492955ad744815dbd507c58d64, type: 3}
+  m_Name: SobelOutlineSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SnapshotShaders.URP.SobelOutlineSettings
+  active: 1
+  renderPassEvent:
+    m_OverrideState: 1
+    m_Value: 600
+  enabled:
+    m_OverrideState: 1
+    m_Value: 1
+  threshold:
+    m_OverrideState: 1
+    m_Value: 0.5
+  outlineColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  backgroundColor:
+    m_OverrideState: 0
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  useSceneColor:
+    m_OverrideState: 1
+    m_Value: 1

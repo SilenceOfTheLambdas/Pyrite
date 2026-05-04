@@ -1,5 +1,6 @@
 ﻿<Solution>
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="EditorAttributes.Editor.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
-  <Project Path="SnapshotInstaller.csproj" />
+  <Project Path="EditorAttributes.csproj" />
 </Solution>

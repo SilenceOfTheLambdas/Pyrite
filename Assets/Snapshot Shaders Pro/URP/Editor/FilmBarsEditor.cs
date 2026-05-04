@@ -13,9 +13,9 @@
 #endif
     public class FilmBarsEditor : VolumeComponentEditor
     {
-        private SerializedDataParameter renderPassEvent;
-        private SerializedDataParameter enabled;
-        private SerializedDataParameter aspect;
+        SerializedDataParameter renderPassEvent;
+        SerializedDataParameter enabled;
+        SerializedDataParameter aspect;
 
         public override void OnEnable()
         {
@@ -29,10 +29,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<FilmBars>())
             {
-                EditorGUILayout.HelpBox("The Film Bars effect must be added to your renderer's Renderer Features list.",
-                    MessageType.Error);
+                EditorGUILayout.HelpBox("The Film Bars effect must be added to your renderer's Renderer Features list.", MessageType.Error);
                 if (GUILayout.Button("Add Film Bars Renderer Feature"))
+                {
                     SnapshotUtility.AddEffectToPipelineAsset<FilmBars>();
+                }
             }
 
             PropertyField(renderPassEvent);

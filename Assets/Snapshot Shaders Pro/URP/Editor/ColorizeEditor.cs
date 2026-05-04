@@ -13,8 +13,8 @@
 #endif
     public class ColorizeEditor : VolumeComponentEditor
     {
-        private SerializedDataParameter renderPassEvent;
-        private SerializedDataParameter tintColor;
+        SerializedDataParameter renderPassEvent;
+        SerializedDataParameter tintColor;
 
         public override void OnEnable()
         {
@@ -27,10 +27,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Colorize>())
             {
-                EditorGUILayout.HelpBox("The Colorize effect must be added to your renderer's Renderer Features list.",
-                    MessageType.Error);
+                EditorGUILayout.HelpBox("The Colorize effect must be added to your renderer's Renderer Features list.", MessageType.Error);
                 if (GUILayout.Button("Add Colorize Renderer Feature"))
+                {
                     SnapshotUtility.AddEffectToPipelineAsset<Colorize>();
+                }
             }
 
             PropertyField(renderPassEvent);

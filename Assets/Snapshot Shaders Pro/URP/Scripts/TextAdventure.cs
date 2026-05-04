@@ -2,14 +2,14 @@
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 #if UNITY_6000_0_OR_NEWER
-using UnityEngine.Rendering.RenderGraphModule;
+    using UnityEngine.Rendering.RenderGraphModule;
 #endif
 
 namespace SnapshotShaders.URP
 {
     public class TextAdventure : ScriptableRendererFeature
     {
-        private TextAdventureRenderPass pass;
+        TextAdventureRenderPass pass;
 
         public override void Create()
         {
@@ -21,7 +21,10 @@ namespace SnapshotShaders.URP
         {
             var settings = VolumeManager.instance.stack.GetComponent<TextAdventureSettings>();
 
-            if (settings != null && settings.IsActive()) renderer.EnqueuePass(pass);
+            if (settings != null && settings.IsActive())
+            {
+                renderer.EnqueuePass(pass);
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -30,7 +33,7 @@ namespace SnapshotShaders.URP
             base.Dispose(disposing);
         }
 
-        private class TextAdventureRenderPass : ScriptableRenderPass
+        class TextAdventureRenderPass : ScriptableRenderPass
         {
             private Material material;
             private RTHandle tempTexHandle;
@@ -66,8 +69,8 @@ namespace SnapshotShaders.URP
 
                 var settings = VolumeManager.instance.stack.GetComponent<TextAdventureSettings>();
                 float size = settings.characterSize.value;
-                var aspect = (float)Screen.height / Screen.width;
-                var pixelSize = new Vector2Int(Mathf.CeilToInt(Screen.width / size),
+                float aspect = (float)Screen.height / Screen.width;
+                var pixelSize = new Vector2Int(Mathf.CeilToInt((Screen.width) / size),
                     Mathf.CeilToInt(Screen.height / size));
 
                 descriptor.width = pixelSize.x;
@@ -76,6 +79,7 @@ namespace SnapshotShaders.URP
                 return descriptor;
             }
 
+#if !UNITY_6000_4_OR_NEWER
             public override void Configure(CommandBuffer cmd, RenderTextureDescriptor cameraTextureDescriptor)
             {
                 ResetTarget();
@@ -89,11 +93,17 @@ namespace SnapshotShaders.URP
 
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
-                if (renderingData.cameraData.isPreviewCamera) return;
+                if (renderingData.cameraData.isPreviewCamera)
+                {
+                    return;
+                }
 
-                if (material == null) CreateMaterial();
+                if (material == null)
+                {
+                    CreateMaterial();
+                }
 
-                var cmd = CommandBufferPool.Get();
+                CommandBuffer cmd = CommandBufferPool.Get();
 
                 // Set Text Adventure effect properties.
                 var settings = VolumeManager.instance.stack.GetComponent<TextAdventureSettings>();
@@ -104,7 +114,7 @@ namespace SnapshotShaders.URP
                 material.SetColor("_BackgroundColor", settings.backgroundColor.value);
                 material.SetColor("_CharacterColor", settings.characterColor.value);
 
-                var cameraTargetHandle = renderingData.cameraData.renderer.cameraColorTargetHandle;
+                RTHandle cameraTargetHandle = renderingData.cameraData.renderer.cameraColorTargetHandle;
 
                 // Perform the Blit operations for the Text Adventure effect.
                 using (new ProfilingScope(cmd, profilingSampler))
@@ -117,6 +127,7 @@ namespace SnapshotShaders.URP
                 cmd.Clear();
                 CommandBufferPool.Release(cmd);
             }
+#endif
 
             public void Dispose()
             {
@@ -141,8 +152,7 @@ namespace SnapshotShaders.URP
                 Blitter.BlitTexture(cmd, source, new Vector4(1, 1, 0, 0), 0.0f, false);
             }
 
-            private static void ExecuteMainPass(RasterCommandBuffer cmd, RTHandle source, Material material,
-                Vector2Int pixelSize)
+            private static void ExecuteMainPass(RasterCommandBuffer cmd, RTHandle source, Material material, Vector2Int pixelSize)
             {
                 // Set Text Adventure effect properties.
                 var settings = VolumeManager.instance.stack.GetComponent<TextAdventureSettings>();
@@ -157,45 +167,43 @@ namespace SnapshotShaders.URP
 
             public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
             {
-                if (material == null) CreateMaterial();
+                if(material == null)
+                {
+                    CreateMaterial();
+                }
 
                 var settings = VolumeManager.instance.stack.GetComponent<TextAdventureSettings>();
                 renderPassEvent = settings.renderPassEvent.value;
 
-                var resourceData = frameData.Get<UniversalResourceData>();
-                var cameraData = frameData.Get<UniversalCameraData>();
+                UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
+                UniversalCameraData cameraData = frameData.Get<UniversalCameraData>();
 
-                var renderer = (UniversalRenderer)cameraData.renderer;
+                UniversalRenderer renderer = (UniversalRenderer)cameraData.renderer;
                 var colorCopyDescriptor = GetCopyPassDescriptor(cameraData.cameraTargetDescriptor);
                 pixelSize = new Vector2Int(colorCopyDescriptor.width, colorCopyDescriptor.height);
-                var copiedColor = TextureHandle.nullHandle;
+                TextureHandle copiedColor = TextureHandle.nullHandle;
 
                 // Perform the intermediate copy pass (source -> temp).
-                copiedColor = UniversalRenderer.CreateRenderGraphTexture(renderGraph, colorCopyDescriptor,
-                    "_TextAdventureColorCopy", false, FilterMode.Point);
+                copiedColor = UniversalRenderer.CreateRenderGraphTexture(renderGraph, colorCopyDescriptor, "_TextAdventureColorCopy", false, filterMode: FilterMode.Point);
 
-                using (var builder = renderGraph.AddRasterRenderPass<CopyPassData>("TextAdventure_CopyColor",
-                           out var passData, profilingSampler))
+                using (var builder = renderGraph.AddRasterRenderPass<CopyPassData>("TextAdventure_CopyColor", out var passData, profilingSampler))
                 {
                     passData.inputTexture = resourceData.activeColorTexture;
 
                     builder.UseTexture(resourceData.activeColorTexture, AccessFlags.Read);
                     builder.SetRenderAttachment(copiedColor, 0, AccessFlags.Write);
-                    builder.SetRenderFunc((CopyPassData data, RasterGraphContext context) =>
-                        ExecuteCopyPass(context.cmd, data.inputTexture));
+                    builder.SetRenderFunc((CopyPassData data, RasterGraphContext context) => ExecuteCopyPass(context.cmd, data.inputTexture));
                 }
 
                 // Perform main pass (temp -> source).
-                using (var builder = renderGraph.AddRasterRenderPass<MainPassData>("TextAdventure_MainPass",
-                           out var passData, profilingSampler))
+                using (var builder = renderGraph.AddRasterRenderPass<MainPassData>("TextAdventure_MainPass", out var passData, profilingSampler))
                 {
                     passData.material = material;
                     passData.inputTexture = copiedColor;
 
                     builder.UseTexture(copiedColor, AccessFlags.Read);
                     builder.SetRenderAttachment(resourceData.activeColorTexture, 0, AccessFlags.Write);
-                    builder.SetRenderFunc((MainPassData data, RasterGraphContext context) =>
-                        ExecuteMainPass(context.cmd, data.inputTexture, data.material, pixelSize));
+                    builder.SetRenderFunc((MainPassData data, RasterGraphContext context) => ExecuteMainPass(context.cmd, data.inputTexture, data.material, pixelSize));
                 }
             }
 

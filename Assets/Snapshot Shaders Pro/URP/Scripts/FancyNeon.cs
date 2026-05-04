@@ -2,14 +2,14 @@
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 #if UNITY_6000_0_OR_NEWER
-using UnityEngine.Rendering.RenderGraphModule;
+    using UnityEngine.Rendering.RenderGraphModule;
 #endif
 
 namespace SnapshotShaders.URP
 {
     public class FancyNeon : ScriptableRendererFeature
     {
-        private FancyNeonRenderPass pass;
+        FancyNeonRenderPass pass;
 
         public override void Create()
         {
@@ -35,7 +35,7 @@ namespace SnapshotShaders.URP
             base.Dispose(disposing);
         }
 
-        private class FancyNeonRenderPass : ScriptableRenderPass
+        class FancyNeonRenderPass : ScriptableRenderPass
         {
             private Material material;
             private RTHandle tempTexHandle;
@@ -70,6 +70,7 @@ namespace SnapshotShaders.URP
                 return descriptor;
             }
 
+#if !UNITY_6000_4_OR_NEWER
             public override void Configure(CommandBuffer cmd, RenderTextureDescriptor cameraTextureDescriptor)
             {
                 ResetTarget();
@@ -82,11 +83,17 @@ namespace SnapshotShaders.URP
 
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
-                if (renderingData.cameraData.isPreviewCamera) return;
+                if (renderingData.cameraData.isPreviewCamera)
+                {
+                    return;
+                }
 
-                if (material == null) CreateMaterial();
+                if (material == null)
+                {
+                    CreateMaterial();
+                }
 
-                var cmd = CommandBufferPool.Get();
+                CommandBuffer cmd = CommandBufferPool.Get();
 
                 // Set Fancy Neon effect properties.
                 var settings = VolumeManager.instance.stack.GetComponent<FancyNeonSettings>();
@@ -112,7 +119,7 @@ namespace SnapshotShaders.URP
                 material.SetFloat("_LightnessFloor", settings.lightnessFloor.value);
                 material.SetColor("_EmissiveColor", settings.emissiveEdgeColor.value);
 
-                var cameraTargetHandle = renderingData.cameraData.renderer.cameraColorTargetHandle;
+                RTHandle cameraTargetHandle = renderingData.cameraData.renderer.cameraColorTargetHandle;
 
                 // Perform the Blit operations for the Fancy Neon effect.
                 using (new ProfilingScope(cmd, profilingSampler))
@@ -125,6 +132,7 @@ namespace SnapshotShaders.URP
                 cmd.Clear();
                 CommandBufferPool.Release(cmd);
             }
+#endif
 
             public void Dispose()
             {
@@ -179,46 +187,42 @@ namespace SnapshotShaders.URP
 
             public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
             {
-                if (material == null) CreateMaterial();
+                if(material == null)
+                {
+                    CreateMaterial();
+                }
 
                 var settings = VolumeManager.instance.stack.GetComponent<FancyNeonSettings>();
                 renderPassEvent = settings.renderPassEvent.value;
 
-                var resourceData = frameData.Get<UniversalResourceData>();
-                var cameraData = frameData.Get<UniversalCameraData>();
+                UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
+                UniversalCameraData cameraData = frameData.Get<UniversalCameraData>();
 
-                var renderer = (UniversalRenderer)cameraData.renderer;
+                UniversalRenderer renderer = (UniversalRenderer)cameraData.renderer;
                 var colorCopyDescriptor = GetCopyPassDescriptor(cameraData.cameraTargetDescriptor);
-                var copiedColor = TextureHandle.nullHandle;
+                TextureHandle copiedColor = TextureHandle.nullHandle;
 
                 // Perform the intermediate copy pass (source -> temp).
-                copiedColor = UniversalRenderer.CreateRenderGraphTexture(renderGraph, colorCopyDescriptor,
-                    "_FancyNeonColorCopy", false);
+                copiedColor = UniversalRenderer.CreateRenderGraphTexture(renderGraph, colorCopyDescriptor, "_FancyNeonColorCopy", false);
 
-                using (var builder =
-                       renderGraph.AddRasterRenderPass<CopyPassData>("FancyNeon_CopyColor", out var passData,
-                           profilingSampler))
+                using (var builder = renderGraph.AddRasterRenderPass<CopyPassData>("FancyNeon_CopyColor", out var passData, profilingSampler))
                 {
                     passData.inputTexture = resourceData.activeColorTexture;
 
                     builder.UseTexture(resourceData.activeColorTexture, AccessFlags.Read);
                     builder.SetRenderAttachment(copiedColor, 0, AccessFlags.Write);
-                    builder.SetRenderFunc((CopyPassData data, RasterGraphContext context) =>
-                        ExecuteCopyPass(context.cmd, data.inputTexture));
+                    builder.SetRenderFunc((CopyPassData data, RasterGraphContext context) => ExecuteCopyPass(context.cmd, data.inputTexture));
                 }
 
                 // Perform main pass (temp -> source).
-                using (var builder =
-                       renderGraph.AddRasterRenderPass<MainPassData>("FancyNeon_MainPass", out var passData,
-                           profilingSampler))
+                using (var builder = renderGraph.AddRasterRenderPass<MainPassData>("FancyNeon_MainPass", out var passData, profilingSampler))
                 {
                     passData.material = material;
                     passData.inputTexture = copiedColor;
 
                     builder.UseTexture(copiedColor, AccessFlags.Read);
                     builder.SetRenderAttachment(resourceData.activeColorTexture, 0, AccessFlags.Write);
-                    builder.SetRenderFunc((MainPassData data, RasterGraphContext context) =>
-                        ExecuteMainPass(context.cmd, data.inputTexture, data.material));
+                    builder.SetRenderFunc((MainPassData data, RasterGraphContext context) => ExecuteMainPass(context.cmd, data.inputTexture, data.material));
                 }
             }
 

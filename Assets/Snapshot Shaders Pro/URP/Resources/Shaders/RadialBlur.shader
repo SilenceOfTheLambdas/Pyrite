@@ -2,64 +2,66 @@
 {
     SubShader
     {
-        Tags
-        {
-            "RenderType" = "Opaque"
-            "RenderPipeline" = "UniversalPipeline"
-        }
+		Tags
+		{
+			"RenderType" = "Opaque"
+			"RenderPipeline" = "UniversalPipeline"
+		}
 
-        HLSLINCLUDE
-        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-        #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
+		HLSLINCLUDE
 
-        #define E 2.71828f
+		#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+		#include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
 
-        #if UNITY_VERSION < 600000
-        float4 _BlitTexture_TexelSize;
-        #endif
-        uint _KernelSize;
-        float _Spread;
-        float _StepSize;
+		#define E 2.71828f
 
-        float gaussian(int x)
-        {
-            float sigmaSqu = (_Spread * _Spread);
-            return (1 / sqrt(TWO_PI * sigmaSqu)) * pow(E, -(x * x) / (2 * sigmaSqu));
-        }
-        ENDHLSL
+#if UNITY_VERSION < 600000
+		float4 _BlitTexture_TexelSize;
+#endif
+		uint _KernelSize;
+		float _Spread;
+		float _StepSize;
+
+		float gaussian(int x)
+		{
+			float sigmaSqu = (_Spread * _Spread);
+			return (1 / sqrt(TWO_PI * sigmaSqu)) * pow(E, -(x * x) / (2 * sigmaSqu));
+		}
+
+		ENDHLSL
 
         Pass
         {
-            HLSLPROGRAM
+			HLSLPROGRAM
             #pragma vertex Vert
             #pragma fragment frag_horizontal
 
-            float4 frag_horizontal(Varyings i) : SV_TARGET
-            {
-                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+            float4 frag_horizontal (Varyings i) : SV_TARGET
+			{
+				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i); 
 
-                float3 col = 0.0f;
-                float kernelSum = 0.0f;
+				float3 col = 0.0f;
+				float kernelSum = 0.0f;
 
-                float2 offset = i.texcoord - 0.5f;
+				float2 offset = i.texcoord - 0.5f;
 
-                int upper = ((_KernelSize - 1) / 2);
-                int lower = -upper;
+				int upper = ((_KernelSize - 1) / 2);
+				int lower = -upper;
 
-                for (int x = lower; x <= upper; ++x)
-                {
-                    float2 uv = i.texcoord + offset * x * _StepSize;
+				for (int x = lower; x <= upper; ++x)
+				{
+					float2 uv = i.texcoord + offset * x * _StepSize;
 
-                    float gauss = gaussian(x);
-                    kernelSum += gauss;
+					float gauss = gaussian(x);
+					kernelSum += gauss;
 
-                    col += gauss * SAMPLE_TEXTURE2D_X(_BlitTexture, sampler_LinearClamp, uv).rgb;
-                }
+					col += gauss * SAMPLE_TEXTURE2D_X(_BlitTexture, sampler_LinearClamp, uv).rgb;
+				}
 
-                col /= kernelSum;
+				col /= kernelSum;
 
-                return float4(col, 1.0f);
-            }
+				return float4(col, 1.0f);
+			}
             ENDHLSL
         }
     }

@@ -4,20 +4,21 @@
     using UnityEngine.Rendering;
     using UnityEngine.Rendering.Universal;
 
-    [System.Serializable]
-    [VolumeComponentMenu("Snapshot Shaders Pro/SepiaTone")]
+    [System.Serializable, VolumeComponentMenu("Snapshot Shaders Pro/SepiaTone"), DisplayInfo(name = "Sepia Tone")]
     public sealed class SepiaToneSettings : VolumeComponent, IPostProcessComponent
     {
+#if !UNITY_6000_3_OR_NEWER
         public SepiaToneSettings()
         {
             displayName = "Sepia Tone";
         }
+#endif
 
         [Tooltip("Choose where to insert this pass in URP's render loop.")]
-        public RenderPassEventParameter renderPassEvent = new(RenderPassEvent.BeforeRenderingPostProcessing);
+        public RenderPassEventParameter renderPassEvent = new RenderPassEventParameter(RenderPassEvent.BeforeRenderingPostProcessing);
 
         [Tooltip("Sepia Tone effect intensity.")]
-        public ClampedFloatParameter strength = new(0.0f, 0.0f, 1.0f);
+        public ClampedFloatParameter strength = new ClampedFloatParameter(0.0f, 0.0f, 1.0f);
 
         public bool IsActive()
         {

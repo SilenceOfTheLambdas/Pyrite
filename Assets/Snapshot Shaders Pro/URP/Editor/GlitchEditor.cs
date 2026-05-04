@@ -13,11 +13,11 @@
 #endif
     public class GlitchEditor : VolumeComponentEditor
     {
-        private SerializedDataParameter renderPassEvent;
-        private SerializedDataParameter enabled;
-        private SerializedDataParameter offsetTexture;
-        private SerializedDataParameter offsetStrength;
-        private SerializedDataParameter verticalTiling;
+        SerializedDataParameter renderPassEvent;
+        SerializedDataParameter enabled;
+        SerializedDataParameter offsetTexture;
+        SerializedDataParameter offsetStrength;
+        SerializedDataParameter verticalTiling;
 
         public override void OnEnable()
         {
@@ -33,9 +33,11 @@
         {
             if (!SnapshotUtility.CheckEffectEnabled<Glitch>())
             {
-                EditorGUILayout.HelpBox("The Glitch effect must be added to your renderer's Renderer Features list.",
-                    MessageType.Error);
-                if (GUILayout.Button("Add Glitch Renderer Feature")) SnapshotUtility.AddEffectToPipelineAsset<Glitch>();
+                EditorGUILayout.HelpBox("The Glitch effect must be added to your renderer's Renderer Features list.", MessageType.Error);
+                if (GUILayout.Button("Add Glitch Renderer Feature"))
+                {
+                    SnapshotUtility.AddEffectToPipelineAsset<Glitch>();
+                }
             }
 
             PropertyField(renderPassEvent);
