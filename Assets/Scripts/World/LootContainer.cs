@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Player;
 using RPGSystem;
 using RPGSystem.Backend;
@@ -73,7 +74,7 @@ namespace World
                 // Calculate X and Z position
                 var randomCircle = Random.insideUnitCircle * itemDropPositionSpacing;
                 var spawnPosition = itemDropStartingLocation.position + new Vector3(randomCircle.x, 5f, randomCircle.y);
-                
+
                 // Raycast down to find the floor
                 if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hit, 10f, LayerMask.GetMask("Walkable")))
                 {

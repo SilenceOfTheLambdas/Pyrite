@@ -82,8 +82,7 @@ namespace Utils
             var mousePosition = Mouse.current.position.ReadValue();
             var ray = camera.ScreenPointToRay(mousePosition);
 
-            if (Physics.Raycast(ray, out _, 1000f, LayerMask.GetMask("Interactable"),
-                    QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(ray, out _, 1000f, LayerMask.GetMask("Interactable")))
             {
                 return true;
             }

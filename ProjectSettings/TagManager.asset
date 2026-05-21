@@ -11,6 +11,7 @@ TagManager:
   - ItemSlot
   - LootContainer
   - ItemLabel
+  - NPC
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - UI
   - Interactable
   - Player
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -57,3 +58,4 @@ TagManager:
   - Light Layer 5
   - Light Layer 6
   - Light Layer 7
+  m_MigratedRenderPipelines: []

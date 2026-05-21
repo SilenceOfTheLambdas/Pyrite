@@ -6,6 +6,8 @@ using Utils;
 
 namespace Player
 {
+    [RequireComponent(typeof(PlayerMovementController))]
+    [RequireComponent(typeof(Animator))]
     public class PlayerAttackController : MonoBehaviour
     {
         [SerializeField] private InputActionReference attackInputAction;
@@ -13,7 +15,7 @@ namespace Player
         private Animator _animator;
         private bool _readyForFollowUpAttack;
         private PlayerMovementController _playerMovementController;
-        
+
         private static readonly int SwordSlash = Animator.StringToHash("SwordSlash");
         private static readonly int InwardSlash = Animator.StringToHash("InwardSlash");
         private static readonly int InterruptAttack = Animator.StringToHash("InterruptAttack");
@@ -35,6 +37,10 @@ namespace Player
 
         private void Update()
         {
+            // Do not perform attacks when player mouse is hovered over an interactable
+            if (CameraController.IsMouseOverInteractable(Camera.main))
+                return;
+
             // Handle continuous / Held Attack
             if (attackInputAction.action.IsPressed())
             {
@@ -43,13 +49,14 @@ namespace Player
                 else if (!playerIsAttacking)
                     PerformAttack(SwordSlash);
             }
-            
+
             // Check if any movement inputs were activated
             if (_playerMovementController.moveInputAction.action.triggered)
             {
                 _readyForFollowUpAttack = false;
                 _animator.SetTrigger(InterruptAttack);
-            } else _animator.ResetTrigger(InterruptAttack);
+            }
+            else _animator.ResetTrigger(InterruptAttack);
         }
 
         private void OnEnable()

@@ -16,7 +16,7 @@ namespace Player
             _camera = Camera.main;
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             if (interactInputAction.action.triggered)
             {
@@ -38,7 +38,7 @@ namespace Player
                         var pickupObject = interactableObject.GetComponent<PickupObject>();
                         pickupObject.PickupDroppedItemFromLootContainer();
                     }
-                
+
                 if (interactableObject.CompareTag("ItemLabel"))
                     if (!PlayerInventoryManager.Instance.IsPlayerInventoryFull())
                     {
