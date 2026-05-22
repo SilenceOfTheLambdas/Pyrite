@@ -1529,7 +1529,6 @@ Transform:
   - {fileID: 1963154347}
   - {fileID: 961739753}
   - {fileID: 1160234427}
-  - {fileID: 1468913476}
   - {fileID: 1837828957}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5002,56 +5001,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &988088435
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 988088437}
-  - component: {fileID: 988088436}
-  m_Layer: 0
-  m_Name: Grid Sandbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &988088436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988088435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ff0d2db374ed814aaf28ea7152545b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pyrite.Grid.GridSandbox
-  blockPrefab: {fileID: 1757883010603968668, guid: 67175b73783911b49bb512e3fb0869f7, type: 3}
-  hoverPreviewInstance: {fileID: 919132149155446097, guid: e38b2d974fc615a47b11ee9f5e1d117a, type: 3}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  sandboxGridRadius: 15
---- !u!4 &988088437
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988088435}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: 0.5, z: -2.27}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &992923406
 GameObject:
   m_ObjectHideFlags: 0
@@ -7433,50 +7382,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1463304567}
   m_CullTransparentMesh: 1
---- !u!1 &1468913475
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1468913476}
-  - component: {fileID: 1468913477}
-  m_Layer: 0
-  m_Name: EventBus
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1468913476
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1468913475}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 300970292}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1468913477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1468913475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b56a7567481a3104580ee0cf8658015e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!1 &1479947485
 GameObject:
   m_ObjectHideFlags: 0
@@ -8042,7 +7947,7 @@ GameObject:
   - component: {fileID: 1551504831}
   - component: {fileID: 1551504832}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: ItemDatabase/RPGManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10347,7 +10252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pyrite.Grid.GridManager
   cellSize: 2
-  gridYBaseline: 0
+  gridYBaseline: 0.5
 --- !u!1 &1847426995
 GameObject:
   m_ObjectHideFlags: 0
@@ -13546,4 +13451,3 @@ SceneRoots:
   - {fileID: 987513565}
   - {fileID: 300970292}
   - {fileID: 1038900457449770308}
-  - {fileID: 988088437}

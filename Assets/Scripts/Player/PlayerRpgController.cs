@@ -14,16 +14,16 @@ namespace Player
 
         [TabGroup(nameof(healthXpLevel), nameof(damage), nameof(armour), nameof(attributes))]
         [SerializeField] private Void groupHolder;
-        
+
         [VerticalGroup(nameof(CurrentPlayerLevel), nameof(CurrentPlayerExp), nameof(CurrentPlayerHealth), nameof(PlayerMaxHealth))]
         [SerializeField, HideInInspector] private Void healthXpLevel;
         [field: SerializeField, HideProperty] public int CurrentPlayerLevel { get; private set; }
         [field: SerializeField, HideProperty] public int CurrentPlayerExp { get; private set; }
         [field: SerializeField, HideProperty] public int CurrentPlayerHealth { get; private set; }
         [field: SerializeField, HideProperty] public int PlayerMaxHealth { get; private set; }
-        
+
         // Player Damage Properties
-        [VerticalGroup(nameof(currentPhysicalDamage), nameof(currentElementalDamage), nameof(currentAttackSpeed), 
+        [VerticalGroup(nameof(currentPhysicalDamage), nameof(currentElementalDamage), nameof(currentAttackSpeed),
             nameof(currentAttackRange), nameof(currentCriticalChance), nameof(currentCriticalDamageMultiplier))]
         [SerializeField, HideInInspector] private Void damage;
         [Title("Player Damage Stats")]
@@ -33,22 +33,22 @@ namespace Player
         [HideProperty] public float currentAttackRange;
         [HideProperty] public float currentCriticalChance;
         [HideProperty] public float currentCriticalDamageMultiplier;
-        
-        
+
+
         [VerticalGroup(nameof(totalPlayerArmourStats), nameof(currentElementalResistances))]
         [SerializeField, HideInInspector] private Void armour;
         [Title("Player Armour Stats")]
         [HideProperty] public BaselineArmourStats totalPlayerArmourStats;
         [HideProperty, DataTable(true)] public List<BaselineArmourStats.ElementalResistance> currentElementalResistances;
-        
+
         [VerticalGroup(nameof(currentPlayerAttributes))]
         [SerializeField, HideInInspector] private Void attributes;
         [Title("Player Attributes")]
         [HideProperty, DataTable(true)] public PlayerStats currentPlayerAttributes;
-        
+
         #endregion
         public static PlayerRpgController Instance { get; private set; }
-        
+
         private void Awake()
         {
             if (Instance != null && Instance != this) Destroy(gameObject);
@@ -58,7 +58,7 @@ namespace Player
             CurrentPlayerExp = 0;
             CurrentPlayerHealth = 100;
             PlayerMaxHealth = 100;
-            
+
             // Initialise the player's total armour stats with 0 values for all stats and 0% resistance for all elemental damage types.
             currentElementalResistances = new List<BaselineArmourStats.ElementalResistance>
             {
@@ -89,17 +89,15 @@ namespace Player
         {
             EquipmentManager.Instance.OnWeaponEquipped += IncreasePlayerStats;
             EquipmentManager.Instance.OnArmourEquipped += IncreasePlayerStats;
-            
+
             EquipmentManager.Instance.OnWeaponUnequipped += DecreasePlayerStats;
             EquipmentManager.Instance.OnArmourUnequipped += DecreasePlayerStats;
         }
-        
+
         private void IncreasePlayerStats(WeaponStats weaponStats)
         {
             currentPhysicalDamage = weaponStats.physicalDamage;
             currentElementalDamage.Add(weaponStats.elementalDamage);
-            currentAttackSpeed = weaponStats.attackSpeed;
-            currentAttackRange = weaponStats.attackRange;
             currentCriticalChance = weaponStats.criticalDamageChance;
             currentCriticalDamageMultiplier = weaponStats.critMultiplier;
 
@@ -194,8 +192,6 @@ namespace Player
         {
             currentPhysicalDamage -= weaponStats.physicalDamage;
             currentElementalDamage.Remove(weaponStats.elementalDamage);
-            currentAttackSpeed -= weaponStats.attackSpeed;
-            currentAttackRange -= weaponStats.attackRange;
             currentCriticalChance -= weaponStats.criticalDamageChance;
             currentCriticalDamageMultiplier -= weaponStats.critMultiplier;
 
@@ -284,7 +280,7 @@ namespace Player
                 }
             }
         }
-        
+
         private void IncreaseElementalResistance(RpgManager.ElementalDamageType damageType, float resistanceIncrease)
         {
             var resistance = currentElementalResistances.Find(r => r.damageType == damageType);

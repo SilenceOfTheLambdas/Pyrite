@@ -26,7 +26,8 @@ namespace RPGSystem.Item_Definitions
             Crossbow // Two-handed crossbow
         }
 
-        [Title("Possible Suffixes"), DataTable(true)] [Description("Provide a list of possible affixes that could apply to this item.")]
+        [Title("Possible Suffixes"), DataTable(true)]
+        [Description("Provide a list of possible affixes that could apply to this item.")]
         public List<Suffix> possibleSuffixes;
     }
 }

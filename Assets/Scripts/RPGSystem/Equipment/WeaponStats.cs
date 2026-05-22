@@ -24,16 +24,6 @@ namespace RPGSystem.Equipment
         /// </summary>
         public RpgManager.ElementalDamage elementalDamage;
 
-        /// <summary>
-        /// The generated attack speed.
-        /// </summary>
-        public float attackSpeed;
-
-        /// <summary>
-        /// The generated attack range.
-        /// </summary>
-        public float attackRange;
-
         [Header("Crit Stats")] public float critMultiplier;
 
         public float criticalDamageChance;
@@ -60,8 +50,6 @@ namespace RPGSystem.Equipment
 
             // 2) Then we assign basic stats like attack speed, range, crit multiplier and critical damage chance.
             // These values are not scaled.
-            attackSpeed = weaponTemplate.baseWeaponStats.attackSpeed;
-            attackRange = weaponTemplate.baseWeaponStats.attackRange;
             critMultiplier = weaponTemplate.baseWeaponStats.criticalDamageMultiplier;
             criticalDamageChance = Random.Range(weaponTemplate.baseWeaponStats.criticalDamageChance.min,
                 weaponTemplate.baseWeaponStats.criticalDamageChance.max);
@@ -112,7 +100,7 @@ namespace RPGSystem.Equipment
             var weaponTemplateElementalDamage = weaponTemplate.baseWeaponStats.elementalDamage;
             // First, check if this weapon template supports elemental damage
             if (!(weaponTemplateElementalDamage.amount > 0)) return;
-            
+
             // Then assign the generated ElementalDamage of this weapon
             RpgManager.ElementalDamage generatedElementalDamage;
             generatedElementalDamage.type = weaponTemplateElementalDamage.type;
@@ -248,14 +236,10 @@ namespace RPGSystem.Equipment
             var itemDescription = "";
 
             var physicalDamageText = "Physical Dmg: " + physicalDamage;
-            var attackSpeedText = $"Attack Speed: {attackSpeed:F1}";
-            var attackRangeText = "Range: " + attackRange;
             var criticalDamageChanceText = $"Crit Chance: {criticalDamageChance:F1}%";
             var critMultiplierText = "Crit Multi: x" + critMultiplier;
 
             itemDescription += physicalDamageText + "\n"
-                                                  + attackSpeedText + "\n"
-                                                  + attackRangeText + "\n"
                                                   + criticalDamageChanceText + "\n"
                                                   + critMultiplierText + "\n";
 

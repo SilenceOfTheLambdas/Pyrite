@@ -11,12 +11,9 @@ namespace RPGSystem.Backend
         public RpgManager.StatRange<int> physicalDamage;
         [DataTable(true)]
         public RpgManager.ElementalDamage elementalDamage;
-        
-        [VerticalGroup(true, nameof(attackSpeed), nameof(attackRange), nameof(criticalDamageMultiplier))]
-        [HideInInspector] public float attackSpeed;
-        [HideInInspector] public float attackRange;
+
         [HideInInspector] public float criticalDamageMultiplier;
-        
+
         [DataTable(true)]
         public RpgManager.StatRange<float> criticalDamageChance;
     }
