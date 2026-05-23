@@ -31,6 +31,8 @@ namespace User_Interface
         [SerializeField] private GameObject rareItemTooltipPanel;
         [SerializeField] private GameObject epicItemTooltipPanel;
 
+        [SerializeField] private CombatHUDManager combatHUDManager;
+
         private TextMeshProUGUI _itemStatsName;
         private TextMeshProUGUI _itemStatsDescription;
 
@@ -49,6 +51,9 @@ namespace User_Interface
             _playerInventoryManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventoryManager>();
             Assert.IsNotNull(_playerInventoryManager,
                 "Player needs to have a PlayerInventoryManager component attached.");
+
+            // Display combat HUD when OnCombatStarted event is fired
+            Combatinitiator.OnCombatStarted += DisplayCombatHUD;
         }
 
         private void Update()
@@ -65,8 +70,8 @@ namespace User_Interface
 
         public void ShowItemTooltip(InventoryItem inventoryItem)
         {
-            var item = inventoryItem.Stats.isEquipped ? 
-                _playerInventoryManager.GetEquippedItemBySlot(inventoryItem.Stats.equipmentSlot) 
+            var item = inventoryItem.Stats.isEquipped ?
+                _playerInventoryManager.GetEquippedItemBySlot(inventoryItem.Stats.equipmentSlot)
                 : _playerInventoryManager.InventoryItems.Find(item => item.ItemIndex == inventoryItem.ItemIndex)?.Stats;
 
             switch (item.equipmentRarity)
@@ -176,6 +181,11 @@ namespace User_Interface
 
             _rectTransform.pivot = new Vector2(pivotX, pivotY);
             _currentItemTooltipPanel.transform.position = mousePosition + new Vector2(offsetX, offsetY);
+        }
+
+        private void DisplayCombatHUD()
+        {
+
         }
     }
 }
