@@ -16,5 +16,10 @@ namespace User_Interface
             Assert.IsNotNull(_skillsGridRootObject, "Could not find GridLayoutGrid child game object.");
             Assert.IsNotEmpty(skillButtons, "There are no skill buttons assigned to the combat HUD manager!");
         }
+
+        public void AddNewSkillToHotbar()
+        {
+
+        }
     }
 }
