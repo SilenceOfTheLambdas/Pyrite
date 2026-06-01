@@ -185,7 +185,12 @@ namespace User_Interface
 
         private void DisplayCombatHUD()
         {
+            combatHUDManager.gameObject.SetActive(value: true);
+        }
 
+        private void HideCombatHUD()
+        {
+            combatHUDManager.gameObject.SetActive(false);
         }
     }
 }

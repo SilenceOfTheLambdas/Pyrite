@@ -8,18 +8,32 @@ namespace User_Interface
     public class CombatHUDManager : MonoBehaviour
     {
         [SerializeField] private List<SkillButton> skillButtons;
-        private readonly GameObject _skillsGridRootObject;
+        private HorizontalLayoutGroup _skillsGridRootObject;
 
         private void Awake()
         {
-            gameObject.GetComponentInChildren<HorizontalLayoutGroup>();
-            Assert.IsNotNull(_skillsGridRootObject, "Could not find GridLayoutGrid child game object.");
+            _skillsGridRootObject = gameObject.GetComponentInChildren<HorizontalLayoutGroup>();
+            Assert.IsNotNull(_skillsGridRootObject, "Could not find HorizontalLayoutGroup child game object.");
             Assert.IsNotEmpty(skillButtons, "There are no skill buttons assigned to the combat HUD manager!");
         }
 
         public void AddNewSkillToHotbar()
         {
 
+        }
+
+        /// <summary>
+        /// Attempts to return the next available empty skill button.
+        /// </summary>
+        /// <returns></returns>
+        private SkillButton GetNextEmptySkillButton()
+        {
+            foreach (var skillButton in skillButtons)
+            {
+                if (skillButton.hasSkillAssigned == false)
+                    return skillButton;
+            }
+            return null;
         }
     }
 }
