@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Pyrite.Combat;
 using UnityEngine;
+using User_Interface;
 
 public class Turn
 {
@@ -39,6 +40,7 @@ public class CombatManager : MonoBehaviour
         _currentCombatState = CombatState.Setup;
         // TODO: Move Camera
         // Switch/Display Combat HUD
+        
         // Planning stage
         // Carry-out queued actions
     }
