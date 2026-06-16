@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Combat;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,6 +26,7 @@ namespace User_Interface
         private void Start()
         {
             Combatinitiator.OnCombatStarted += EnableCombatHUD;
+            ActionsManager.OnCombatActionAdded += AddNewSkillToHotbar;
             // TODO: On Combat Ended
         }
 
@@ -40,18 +42,20 @@ namespace User_Interface
             turnPanel.SetActive(false);
         }
 
-        public void AddNewSkillToHotbar()
+        private void AddNewSkillToHotbar(CombatAction combatAction)
         {
+            Debug.Log($"Adding skill {combatAction.Skill} to the hotbar");
+            GetNextEmptySkillButton()?.SetSkill(combatAction);
         }
 
         /// <summary>
         /// Attempts to return the next available empty skill button.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A SkillButton if an unassigned one if found, null otherwise</returns>
         private SkillButton GetNextEmptySkillButton()
         {
             foreach (var skillButton in skillButtons)
-                if (skillButton.hasSkillAssigned == false)
+                if (!skillButton.hasSkillAssigned)
                     return skillButton;
             return null;
         }

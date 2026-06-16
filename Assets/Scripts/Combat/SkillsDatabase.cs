@@ -14,10 +14,12 @@ namespace Combat
 
         public void Awake()
         {
-            if (Instance == null)
-                Instance = this;
-            else 
-                Destroy(this);
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+            }
+
+            Instance = this;
         }
 
         /// <summary>
@@ -29,9 +31,8 @@ namespace Combat
         {
             foreach (var skill in skills)
             {
-                return string.Equals(skill.name, skillName, StringComparison.CurrentCultureIgnoreCase)
-                    ? skill
-                    : null;
+                if (string.Equals(skillName, skill.skillName, StringComparison.CurrentCultureIgnoreCase))
+                    return skill;
             }
             return null;
         }
