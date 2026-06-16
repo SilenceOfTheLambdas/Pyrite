@@ -45,7 +45,7 @@ Shader "Unify/UI/Tinted Blur"
         Pass
         {
             Name "Default"
-        CGPROGRAM
+            CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
             #pragma target 2.0
@@ -58,17 +58,17 @@ Shader "Unify/UI/Tinted Blur"
 
             struct appdata_t
             {
-                float4 vertex   : POSITION;
-                float4 color    : COLOR;
+                float4 vertex : POSITION;
+                float4 color : COLOR;
                 float2 texcoord : TEXCOORD0;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct v2f
             {
-                float4 vertex   : SV_POSITION;
-                fixed4 color    : COLOR;
-                float2 texcoord  : TEXCOORD0;
+                float4 vertex : SV_POSITION;
+                fixed4 color : COLOR;
+                float2 texcoord : TEXCOORD0;
                 float4 worldPosition : TEXCOORD1;
                 float4 screenPos : TEXCOORD2;
                 UNITY_VERTEX_OUTPUT_STEREO
@@ -98,24 +98,24 @@ Shader "Unify/UI/Tinted Blur"
             fixed4 frag(v2f IN) : SV_Target
             {
                 half4 mainTexColor = tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd;
-                
-                half4 color = (tex2D(_GlobalUniversalBlurTexture, IN.screenPos / IN.screenPos.w) + _TextureSampleAdd) * IN.color;
+
+                half4 color = (tex2D(_GlobalUniversalBlurTexture, IN.screenPos / IN.screenPos.w) + _TextureSampleAdd) *
+                    IN.color;
 
                 #ifdef UNITY_UI_CLIP_RECT
                 mainTexColor.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
                 #endif
-                
-                #ifdef UNITY_UI_ALPHACLIP
-                clip (mainTexColor.a - 0.001);
-                #endif
-                
-                color *= mainTexColor;
 
+                #ifdef UNITY_UI_ALPHACLIP
+                clip(mainTexColor.a - 0.001);
+                #endif
+
+                color *= mainTexColor;
 
 
                 return color;
             }
-        ENDCG
+            ENDCG
         }
     }
 }

@@ -20,19 +20,26 @@ namespace EditorAttributes
         /// <param name="severety">The severety of the validation</param>
         /// <param name="killBuild">Throw an error during build time and cancel it</param>
         /// <returns>The validation check object</returns>
-        public static ValidationCheck Fail(string validationMessage, MessageMode severety = MessageMode.Error, bool killBuild = false) => new()
+        public static ValidationCheck Fail(string validationMessage, MessageMode severety = MessageMode.Error,
+            bool killBuild = false)
         {
-            PassedCheck = false,
-            ValidationMessage = validationMessage,
-            Severety = severety,
-            KillBuild = killBuild
-        };
+            return new ValidationCheck
+            {
+                PassedCheck = false,
+                ValidationMessage = validationMessage,
+                Severety = severety,
+                KillBuild = killBuild
+            };
+        }
 
         /// <summary>
         /// Marks the validation as passed
         /// </summary>
         /// <returns>The validation check object</returns>
-        public static ValidationCheck Pass() => new() { PassedCheck = true };
+        public static ValidationCheck Pass()
+        {
+            return new ValidationCheck { PassedCheck = true };
+        }
     }
 
     /// <summary>
@@ -51,7 +58,10 @@ namespace EditorAttributes
         /// </summary>
         /// <param name="conditionName">The name of the condition to evaluate</param>
         /// <param name="applyToCollection">Validate the whole collection instead of individual items</param>
-        public ValidateAttribute(string conditionName, bool applyToCollection = true) : base(applyToCollection) => ConditionName = conditionName;
+        public ValidateAttribute(string conditionName, bool applyToCollection = true) : base(applyToCollection)
+        {
+            ConditionName = conditionName;
+        }
 
         /// <summary>
         /// Attribute to create custom validation
@@ -61,7 +71,9 @@ namespace EditorAttributes
         /// <param name="severety">The severety of the failed validation</param>
         /// <param name="buildKiller">Throws an error during build time and cancels it if validation fails</param>
         /// <param name="applyToCollection">Validate the whole collection instead of individual items</param>
-        public ValidateAttribute(string validationMessage, string conditionName, MessageMode severety = MessageMode.Error, bool buildKiller = false, bool applyToCollection = true) : base(applyToCollection)
+        public ValidateAttribute(string validationMessage, string conditionName,
+            MessageMode severety = MessageMode.Error, bool buildKiller = false,
+            bool applyToCollection = true) : base(applyToCollection)
         {
             ConditionName = conditionName;
             ValidationMessage = validationMessage;

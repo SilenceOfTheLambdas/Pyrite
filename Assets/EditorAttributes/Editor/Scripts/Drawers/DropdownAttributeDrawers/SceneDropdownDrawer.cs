@@ -12,17 +12,18 @@ namespace EditorAttributes.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             if (!IsSupportedPropertyType(property))
-                return new HelpBox("The SceneDropdown Attribute can only be attached to a string or int", HelpBoxMessageType.Error);
+                return new HelpBox("The SceneDropdown Attribute can only be attached to a string or int",
+                    HelpBoxMessageType.Error);
 
             VisualElement root = new();
             HelpBox errorBox = new();
 
-            List<string> sceneNames = GetSceneList(errorBox);
-            DropdownField dropdownField = CreateDropdownField(sceneNames, property);
+            var sceneNames = GetSceneList(errorBox);
+            var dropdownField = CreateDropdownField(sceneNames, property);
 
             UpdateVisualElement(dropdownField, () =>
             {
-                List<string> sceneNames = GetSceneList(errorBox);
+                var sceneNames = GetSceneList(errorBox);
 
                 if (IsCollectionValid(sceneNames))
                     dropdownField.choices = sceneNames;
@@ -38,23 +39,27 @@ namespace EditorAttributes.Editor
         {
             var dropdown = element as DropdownField;
 
-            string sceneName = int.TryParse(clipboardValue, out int sceneIndex) ? SceneNameFromIndex(sceneIndex) : clipboardValue;
+            var sceneName = int.TryParse(clipboardValue, out var sceneIndex)
+                ? SceneNameFromIndex(sceneIndex)
+                : clipboardValue;
 
             if (dropdown.choices.Contains(sceneName))
-            {
                 dropdown.value = sceneName;
-            }
             else
-            {
-                Debug.LogWarning($"Could not paste value <b>{clipboardValue}</b> since is not availiable as an option in the dropdown");
-            }
+                Debug.LogWarning(
+                    $"Could not paste value <b>{clipboardValue}</b> since is not availiable as an option in the dropdown");
         }
 
-        protected override bool IsSupportedPropertyType(SerializedProperty property) => property.propertyType is SerializedPropertyType.String or SerializedPropertyType.Integer;
+        protected override bool IsSupportedPropertyType(SerializedProperty property)
+        {
+            return property.propertyType is SerializedPropertyType.String or SerializedPropertyType.Integer;
+        }
 
         protected override string SetDropdownDefaultValue(List<string> collectionValues, SerializedProperty property)
         {
-            string propertyStringValue = property.propertyType == SerializedPropertyType.String ? property.stringValue : SceneNameFromIndex(property.intValue);
+            var propertyStringValue = property.propertyType == SerializedPropertyType.String
+                ? property.stringValue
+                : SceneNameFromIndex(property.intValue);
             return collectionValues.Contains(propertyStringValue) ? propertyStringValue : collectionValues[0];
         }
 
@@ -64,35 +69,32 @@ namespace EditorAttributes.Editor
                 return;
 
             if (property.propertyType == SerializedPropertyType.String)
-            {
                 property.stringValue = dropdown.value;
-            }
             else
-            {
                 property.intValue = dropdown.index;
-            }
 
             property.serializedObject.ApplyModifiedProperties();
         }
 
-        protected override void SetDropdownValueFromProperty(SerializedProperty trackedProperty, DropdownField dropdownField)
+        protected override void SetDropdownValueFromProperty(SerializedProperty trackedProperty,
+            DropdownField dropdownField)
         {
-            string sceneName = trackedProperty.propertyType == SerializedPropertyType.Integer ? SceneNameFromIndex(trackedProperty.intValue) : trackedProperty.stringValue;
+            var sceneName = trackedProperty.propertyType == SerializedPropertyType.Integer
+                ? SceneNameFromIndex(trackedProperty.intValue)
+                : trackedProperty.stringValue;
 
             if (dropdownField.choices.Contains(sceneName))
-            {
                 dropdownField.SetValueWithoutNotify(sceneName);
-            }
             else
-            {
-                Debug.LogWarning($"The value <b>{GetPropertyValueAsString(trackedProperty)}</b> set to the <b>{trackedProperty.name}</b> variable is not a valid scene identifier", trackedProperty.serializedObject.targetObject);
-            }
+                Debug.LogWarning(
+                    $"The value <b>{GetPropertyValueAsString(trackedProperty)}</b> set to the <b>{trackedProperty.name}</b> variable is not a valid scene identifier",
+                    trackedProperty.serializedObject.targetObject);
         }
 
         private List<string> GetSceneList(HelpBox errorBox)
         {
             List<string> sceneList = new();
-            string[] activeSceneList = EditorBuildSettingsScene.GetActiveSceneList(EditorBuildSettings.scenes);
+            var activeSceneList = EditorBuildSettingsScene.GetActiveSceneList(EditorBuildSettings.scenes);
 
             if (activeSceneList == null || activeSceneList.Length == 0)
             {
@@ -102,7 +104,8 @@ namespace EditorAttributes.Editor
 
             foreach (var scene in activeSceneList)
             {
-                string sceneName = scene.Split('/')[^1].Split('.')[0]; // Remove the asset paths and file extension from the name
+                var sceneName =
+                    scene.Split('/')[^1].Split('.')[0]; // Remove the asset paths and file extension from the name
 
                 sceneList.Add(sceneName);
             }
@@ -112,14 +115,14 @@ namespace EditorAttributes.Editor
 
         private string SceneNameFromIndex(int BuildIndex)
         {
-            string path = SceneUtility.GetScenePathByBuildIndex(BuildIndex);
+            var path = SceneUtility.GetScenePathByBuildIndex(BuildIndex);
 
             if (path == string.Empty)
                 return "";
 
-            int slashIndex = path.LastIndexOf('/');
-            string name = path[(slashIndex + 1)..];
-            int dotIndex = name.LastIndexOf('.');
+            var slashIndex = path.LastIndexOf('/');
+            var name = path[(slashIndex + 1)..];
+            var dotIndex = name.LastIndexOf('.');
 
             return name[..dotIndex];
         }

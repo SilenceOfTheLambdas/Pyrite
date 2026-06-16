@@ -12,12 +12,13 @@ namespace EditorAttributes.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             if (!IsSupportedPropertyType(property))
-                return new HelpBox("The FolderPath Attribute can only be attached to a string", HelpBoxMessageType.Error);
+                return new HelpBox("The FolderPath Attribute can only be attached to a string",
+                    HelpBoxMessageType.Error);
 
             var folderPathAttribute = attribute as FolderPathAttribute;
 
             VisualElement root = new();
-            PropertyField propertyField = CreatePropertyField(property);
+            var propertyField = CreatePropertyField(property);
 
             Button button = new(SetFolderPath);
             Image buttonIcon = new() { image = EditorGUIUtility.IconContent("d_Folder Icon").image };
@@ -35,11 +36,11 @@ namespace EditorAttributes.Editor
 
             void SetFolderPath()
             {
-                string folderPath = EditorUtility.OpenFolderPanel("Select folder", "Assets", "");
+                var folderPath = EditorUtility.OpenFolderPanel("Select folder", "Assets", "");
 
                 if (folderPathAttribute.GetRelativePath && !string.IsNullOrEmpty(folderPath))
                 {
-                    string projectRoot = Application.dataPath[..^"Assets".Length];
+                    var projectRoot = Application.dataPath[..^"Assets".Length];
 
                     folderPath = Path.GetRelativePath(projectRoot, folderPath);
                 }
@@ -52,6 +53,9 @@ namespace EditorAttributes.Editor
             }
         }
 
-        protected override bool IsSupportedPropertyType(SerializedProperty property) => property.propertyType == SerializedPropertyType.String;
+        protected override bool IsSupportedPropertyType(SerializedProperty property)
+        {
+            return property.propertyType == SerializedPropertyType.String;
+        }
     }
 }

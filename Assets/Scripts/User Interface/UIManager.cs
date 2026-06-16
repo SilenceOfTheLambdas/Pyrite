@@ -70,8 +70,8 @@ namespace User_Interface
 
         public void ShowItemTooltip(InventoryItem inventoryItem)
         {
-            var item = inventoryItem.Stats.isEquipped ?
-                _playerInventoryManager.GetEquippedItemBySlot(inventoryItem.Stats.equipmentSlot)
+            var item = inventoryItem.Stats.isEquipped
+                ? _playerInventoryManager.GetEquippedItemBySlot(inventoryItem.Stats.equipmentSlot)
                 : _playerInventoryManager.InventoryItems.Find(item => item.ItemIndex == inventoryItem.ItemIndex)?.Stats;
 
             switch (item.equipmentRarity)
@@ -185,7 +185,7 @@ namespace User_Interface
 
         private void DisplayCombatHUD()
         {
-            combatHUDManager.gameObject.SetActive(value: true);
+            combatHUDManager.gameObject.SetActive(true);
         }
 
         private void HideCombatHUD()

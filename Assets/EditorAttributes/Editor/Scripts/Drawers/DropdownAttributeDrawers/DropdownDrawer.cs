@@ -23,17 +23,20 @@ namespace EditorAttributes.Editor
             HelpBox errorBox = new();
 
             collectionInfo = ReflectionUtils.GetValidMemberInfo(DropdownAttribute.CollectionName, property);
-            propertyValues = ConvertCollectionValuesToStrings(DropdownAttribute.CollectionName, property, collectionInfo, errorBox);
+            propertyValues =
+                ConvertCollectionValuesToStrings(DropdownAttribute.CollectionName, property, collectionInfo, errorBox);
             displayValues = GetDisplayValues(collectionInfo, DropdownAttribute, property, propertyValues);
 
-            DropdownField dropdownField = CreateDropdownField(displayValues, property);
+            var dropdownField = CreateDropdownField(displayValues, property);
 
             root.Add(dropdownField);
 
             UpdateVisualElement(dropdownField, () =>
             {
-                List<string> currentPropertyValues = ConvertCollectionValuesToStrings(DropdownAttribute.CollectionName, property, collectionInfo, errorBox);
-                List<string> currentDisplayValues = GetDisplayValues(collectionInfo, DropdownAttribute, property, currentPropertyValues);
+                var currentPropertyValues = ConvertCollectionValuesToStrings(DropdownAttribute.CollectionName, property,
+                    collectionInfo, errorBox);
+                var currentDisplayValues =
+                    GetDisplayValues(collectionInfo, DropdownAttribute, property, currentPropertyValues);
 
                 if (IsCollectionValid(currentPropertyValues))
                 {
@@ -84,13 +87,16 @@ namespace EditorAttributes.Editor
             }
             else
             {
-                Debug.LogWarning($"Could not paste value <b>{clipboardValue}</b> since is not availiable as an option in the dropdown");
+                Debug.LogWarning(
+                    $"Could not paste value <b>{clipboardValue}</b> since is not availiable as an option in the dropdown");
             }
         }
 
         protected override DropdownField CreateDropdownField(List<string> choices, SerializedProperty property)
         {
-            DropdownField dropdownField = IsCollectionValid(choices) ? new(property.displayName, choices, GetDefaultValueIndex(propertyValues, property)) : new(property.displayName, nullList, 0);
+            DropdownField dropdownField = IsCollectionValid(choices)
+                ? new DropdownField(property.displayName, choices, GetDefaultValueIndex(propertyValues, property))
+                : new DropdownField(property.displayName, nullList, 0);
 
             dropdownField.tooltip = property.tooltip;
             dropdownField.showMixedValue = property.hasMultipleDifferentValues;
@@ -101,9 +107,13 @@ namespace EditorAttributes.Editor
             if (dropdownField.value != "NULL" && !HasMismatchedDisplayCollectionCounts(propertyValues, displayValues))
                 SetPropertyValueFromDropdown(property, dropdownField);
 
-            dropdownField.TrackPropertyValue(property, (trackedProperty) => SetDropdownValueFromProperty(trackedProperty, dropdownField));
-            dropdownField.RegisterValueChangedCallback((callback) => SetPropertyValueFromDropdown(property, dropdownField));
-            dropdownField.RegisterCallbackOnce<GeometryChangedEvent>((callback) => dropdownField.Q(className: DropdownField.inputUssClassName).style.backgroundColor = EditorExtension.GLOBAL_COLOR / 2f);
+            dropdownField.TrackPropertyValue(property,
+                (trackedProperty) => SetDropdownValueFromProperty(trackedProperty, dropdownField));
+            dropdownField.RegisterValueChangedCallback((callback) =>
+                SetPropertyValueFromDropdown(property, dropdownField));
+            dropdownField.RegisterCallbackOnce<GeometryChangedEvent>((callback) =>
+                dropdownField.Q(className: DropdownField.inputUssClassName).style.backgroundColor =
+                    EditorExtension.GLOBAL_COLOR / 2f);
 
             return dropdownField;
         }
@@ -114,35 +124,33 @@ namespace EditorAttributes.Editor
                 return;
 
             if (DropdownAttribute.DisplayNames != null || IsCollectionDictionary(collectionInfo, property, out _))
-            {
                 SetPropertyValueFromString(propertyValues[dropdown.index], property);
-            }
             else
-            {
                 SetPropertyValueFromString(dropdown.value, property);
-            }
         }
 
-        protected override void SetDropdownValueFromProperty(SerializedProperty trackedProperty, DropdownField dropdownField)
+        protected override void SetDropdownValueFromProperty(SerializedProperty trackedProperty,
+            DropdownField dropdownField)
         {
-            string propertyStringValue = GetPropertyValueAsString(trackedProperty);
+            var propertyStringValue = GetPropertyValueAsString(trackedProperty);
 
             if (propertyValues.Contains(propertyStringValue))
-            {
                 dropdownField.SetValueWithoutNotify(displayValues[propertyValues.IndexOf(propertyStringValue)]);
-            }
             else
-            {
-                Debug.LogWarning($"The value <b>{propertyStringValue}</b> set to the <b>{trackedProperty.name}</b> variable is not a value available in the dropdown", trackedProperty.serializedObject.targetObject);
-            }
+                Debug.LogWarning(
+                    $"The value <b>{propertyStringValue}</b> set to the <b>{trackedProperty.name}</b> variable is not a value available in the dropdown",
+                    trackedProperty.serializedObject.targetObject);
         }
 
         private int GetDefaultValueIndex(List<string> collectionValues, SerializedProperty property)
         {
-            string propertyStringValue = GetPropertyValueAsString(property);
+            var propertyStringValue = GetPropertyValueAsString(property);
             return collectionValues.Contains(propertyStringValue) ? collectionValues.IndexOf(propertyStringValue) : 0;
         }
 
-        private bool HasMismatchedDisplayCollectionCounts(List<string> propertyValues, List<string> collectionValues) => DropdownAttribute.DisplayNames != null && propertyValues.Count != collectionValues.Count;
+        private bool HasMismatchedDisplayCollectionCounts(List<string> propertyValues, List<string> collectionValues)
+        {
+            return DropdownAttribute.DisplayNames != null && propertyValues.Count != collectionValues.Count;
+        }
     }
 }

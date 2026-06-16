@@ -17,21 +17,24 @@ namespace EditorAttributes.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             if (!IsSupportedPropertyType(property))
-                return new HelpBox("The AnimatorParamDropdown Attribute can only be attached to a string or int", HelpBoxMessageType.Error);
+                return new HelpBox("The AnimatorParamDropdown Attribute can only be attached to a string or int",
+                    HelpBoxMessageType.Error);
 
             var animatorParamAttribute = attribute as AnimatorParamDropdownAttribute;
 
             VisualElement root = new();
             HelpBox errorBox = new();
 
-            List<string> animatorParameters = GetAnimatorParameters(animatorParamAttribute, property, errorBox, out animatorParametersHash);
-            DropdownField dropdownField = CreateDropdownField(animatorParameters, property);
+            var animatorParameters =
+                GetAnimatorParameters(animatorParamAttribute, property, errorBox, out animatorParametersHash);
+            var dropdownField = CreateDropdownField(animatorParameters, property);
 
             root.Add(dropdownField);
 
             UpdateVisualElement(dropdownField, () =>
             {
-                List<string> animatorParams = GetAnimatorParameters(animatorParamAttribute, property, errorBox, out animatorParametersHash);
+                var animatorParams = GetAnimatorParameters(animatorParamAttribute, property, errorBox,
+                    out animatorParametersHash);
 
                 if (IsCollectionValid(animatorParams))
                     dropdownField.choices = animatorParams;
@@ -45,19 +48,17 @@ namespace EditorAttributes.Editor
         {
             var dropdown = element as DropdownField;
 
-            string parameterName = clipboardValue;
+            var parameterName = clipboardValue;
 
-            if (int.TryParse(clipboardValue, out int parameterHash) && animatorParametersHash.ContainsKey(parameterHash))
+            if (int.TryParse(clipboardValue, out var parameterHash) &&
+                animatorParametersHash.ContainsKey(parameterHash))
                 parameterName = animatorParametersHash[parameterHash];
 
             if (dropdown.choices.Contains(parameterName))
-            {
                 dropdown.value = parameterName;
-            }
             else
-            {
-                Debug.LogWarning($"Could not paste value <b>{clipboardValue}</b> since is not availiable as an option in the dropdown");
-            }
+                Debug.LogWarning(
+                    $"Could not paste value <b>{clipboardValue}</b> since is not availiable as an option in the dropdown");
         }
 
         protected override string SetDropdownDefaultValue(List<string> collectionValues, SerializedProperty property)
@@ -65,13 +66,9 @@ namespace EditorAttributes.Editor
             string propertyStringValue;
 
             if (property.propertyType == SerializedPropertyType.Integer)
-            {
                 animatorParametersHash.TryGetValue(property.intValue, out propertyStringValue);
-            }
             else
-            {
                 propertyStringValue = property.stringValue;
-            }
 
             return collectionValues.Contains(propertyStringValue) ? propertyStringValue : collectionValues[0];
         }
@@ -82,43 +79,38 @@ namespace EditorAttributes.Editor
                 return;
 
             if (property.propertyType == SerializedPropertyType.String)
-            {
                 property.stringValue = dropdown.value;
-            }
             else
-            {
                 property.intValue = Animator.StringToHash(dropdown.value);
-            }
 
             property.serializedObject.ApplyModifiedProperties();
         }
 
-        protected override void SetDropdownValueFromProperty(SerializedProperty trackedProperty, DropdownField dropdownField)
+        protected override void SetDropdownValueFromProperty(SerializedProperty trackedProperty,
+            DropdownField dropdownField)
         {
             string parameterName;
 
             if (trackedProperty.propertyType == SerializedPropertyType.Integer)
-            {
                 animatorParametersHash.TryGetValue(trackedProperty.intValue, out parameterName);
-            }
             else
-            {
                 parameterName = trackedProperty.stringValue;
-            }
 
             if (dropdownField.choices.Contains(parameterName))
-            {
                 dropdownField.SetValueWithoutNotify(parameterName);
-            }
             else
-            {
-                Debug.LogWarning($"The value <b>{GetPropertyValueAsString(trackedProperty)}</b> set to the <b>{trackedProperty.name}</b> variable is not a valid animator parameter", trackedProperty.serializedObject.targetObject);
-            }
+                Debug.LogWarning(
+                    $"The value <b>{GetPropertyValueAsString(trackedProperty)}</b> set to the <b>{trackedProperty.name}</b> variable is not a valid animator parameter",
+                    trackedProperty.serializedObject.targetObject);
         }
 
-        protected override bool IsSupportedPropertyType(SerializedProperty property) => property.propertyType is SerializedPropertyType.String or SerializedPropertyType.Integer;
+        protected override bool IsSupportedPropertyType(SerializedProperty property)
+        {
+            return property.propertyType is SerializedPropertyType.String or SerializedPropertyType.Integer;
+        }
 
-        private List<string> GetAnimatorParameters(AnimatorParamDropdownAttribute animatorParamAttribute, SerializedProperty property, HelpBox errorBox, out Dictionary<int, string> paramterHashTable)
+        private List<string> GetAnimatorParameters(AnimatorParamDropdownAttribute animatorParamAttribute,
+            SerializedProperty property, HelpBox errorBox, out Dictionary<int, string> paramterHashTable)
         {
             List<string> paramList = new();
             paramterHashTable = new Dictionary<int, string>();
@@ -127,12 +119,13 @@ namespace EditorAttributes.Editor
 
             if (animatorParamAttribute.AnimatorFieldName != string.Empty)
             {
-                MemberInfo memberInfo = ReflectionUtils.GetValidMemberInfo(animatorParamAttribute.AnimatorFieldName, property);
-                Type memberInfoType = ReflectionUtils.GetMemberInfoType(memberInfo);
+                var memberInfo = ReflectionUtils.GetValidMemberInfo(animatorParamAttribute.AnimatorFieldName, property);
+                var memberInfoType = ReflectionUtils.GetMemberInfoType(memberInfo);
 
                 if (memberInfoType != typeof(Animator))
                 {
-                    errorBox.text = $"The provided field <b>{animatorParamAttribute.AnimatorFieldName}</b> is not of type <b>Animator</b>";
+                    errorBox.text =
+                        $"The provided field <b>{animatorParamAttribute.AnimatorFieldName}</b> is not of type <b>Animator</b>";
 
                     paramterHashTable = null;
                     return null;
@@ -148,7 +141,9 @@ namespace EditorAttributes.Editor
             if (animator != null && animator.runtimeAnimatorController != null)
             {
                 // Hack for having the animator refesh its parameters when editing them in edit mode otherwise the parameters array will be empty
-                var editorController = AssetDatabase.LoadAssetAtPath<AnimatorController>(AssetDatabase.GetAssetPath(animator.runtimeAnimatorController));
+                var editorController =
+                    AssetDatabase.LoadAssetAtPath<AnimatorController>(
+                        AssetDatabase.GetAssetPath(animator.runtimeAnimatorController));
 
                 foreach (var parameter in editorController.parameters)
                 {
@@ -158,7 +153,8 @@ namespace EditorAttributes.Editor
             }
             else
             {
-                errorBox.text = "The <b>Animator</b> or <b>Animator Controller</b> is null, make sure they are assigned";
+                errorBox.text =
+                    "The <b>Animator</b> or <b>Animator Controller</b> is null, make sure they are assigned";
 
                 paramterHashTable = null;
                 return null;

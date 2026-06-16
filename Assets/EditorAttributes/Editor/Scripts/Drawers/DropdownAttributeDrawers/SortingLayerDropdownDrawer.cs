@@ -13,7 +13,8 @@ namespace EditorAttributes.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             if (!IsSupportedPropertyType(property))
-                return new HelpBox("The SortingLayerDropdown Attribute can only be attached to int fields", HelpBoxMessageType.Error);
+                return new HelpBox("The SortingLayerDropdown Attribute can only be attached to int fields",
+                    HelpBoxMessageType.Error);
 
             MaskField maskField = new(property.displayName, GetSortingLayerNames(), property.intValue)
             {
@@ -30,8 +31,11 @@ namespace EditorAttributes.Editor
                 property.serializedObject.ApplyModifiedProperties();
             });
 
-            maskField.TrackPropertyValue(property, (trackedProperty) => maskField.SetValueWithoutNotify(trackedProperty.intValue));
-            maskField.RegisterCallbackOnce<GeometryChangedEvent>((callback) => maskField.Q(className: MaskField.inputUssClassName).style.backgroundColor = EditorExtension.GLOBAL_COLOR / 2f);
+            maskField.TrackPropertyValue(property,
+                (trackedProperty) => maskField.SetValueWithoutNotify(trackedProperty.intValue));
+            maskField.RegisterCallbackOnce<GeometryChangedEvent>((callback) =>
+                maskField.Q(className: MaskField.inputUssClassName).style.backgroundColor =
+                    EditorExtension.GLOBAL_COLOR / 2f);
 
             return maskField;
         }
@@ -51,7 +55,10 @@ namespace EditorAttributes.Editor
             }
         }
 
-        protected override bool IsSupportedPropertyType(SerializedProperty property) => property.propertyType == SerializedPropertyType.Integer;
+        protected override bool IsSupportedPropertyType(SerializedProperty property)
+        {
+            return property.propertyType == SerializedPropertyType.Integer;
+        }
 
         private List<string> GetSortingLayerNames()
         {

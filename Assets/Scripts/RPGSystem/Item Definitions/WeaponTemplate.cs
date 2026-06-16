@@ -9,10 +9,9 @@ namespace RPGSystem.Item_Definitions
     [CreateAssetMenu(fileName = "BaseWeaponTemplate", menuName = "Inventory/Items/New WeaponTemplate")]
     public class WeaponTemplate : ItemTemplate
     {
-        [AssetPreview(64f, 64f), Required] public GameObject equippedWeaponModelPrefab;
+        [AssetPreview(64f, 64f)] [Required] public GameObject equippedWeaponModelPrefab;
 
-        [Title("Weapon Stats")]
-        public WeaponType weaponType;
+        [Title("Weapon Stats")] public WeaponType weaponType;
         public BaseWeaponTemplate baseWeaponStats;
 
         public enum WeaponType
@@ -26,7 +25,8 @@ namespace RPGSystem.Item_Definitions
             Crossbow // Two-handed crossbow
         }
 
-        [Title("Possible Suffixes"), DataTable(true)]
+        [Title("Possible Suffixes")]
+        [DataTable(true)]
         [Description("Provide a list of possible affixes that could apply to this item.")]
         public List<Suffix> possibleSuffixes;
     }

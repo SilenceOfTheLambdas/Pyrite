@@ -7,7 +7,7 @@ namespace Unified.UniversalBlur.Runtime
     public class ShowAsPass : PropertyAttribute
     {
         public string TargetMaterialField { get; private set; }
-        
+
         public ShowAsPass(string targetMaterialField)
         {
             TargetMaterialField = targetMaterialField;

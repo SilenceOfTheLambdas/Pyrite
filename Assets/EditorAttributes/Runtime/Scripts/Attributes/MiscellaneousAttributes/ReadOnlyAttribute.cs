@@ -10,6 +10,8 @@ namespace EditorAttributes
         /// <summary>
         /// Attribute to make a field readonly in the inspector
         /// </summary>
-        public ReadOnlyAttribute() : base(true) { }
+        public ReadOnlyAttribute() : base(true)
+        {
+        }
     }
 }

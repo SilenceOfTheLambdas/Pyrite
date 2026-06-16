@@ -13,7 +13,9 @@ namespace EditorAttributes.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             if (!IsSupportedPropertyType(property))
-                return new HelpBox("The DataTable Attribute can only be attached to serialized structs or classes and collections containing them", HelpBoxMessageType.Error);
+                return new HelpBox(
+                    "The DataTable Attribute can only be attached to serialized structs or classes and collections containing them",
+                    HelpBoxMessageType.Error);
 
             var dataTableAttribute = attribute as DataTableAttribute;
             VisualElement root = new();
@@ -28,7 +30,8 @@ namespace EditorAttributes.Editor
             Label label = new(property.displayName)
             {
                 tooltip = property.tooltip,
-                style = {
+                style =
+                {
                     overflow = Overflow.Hidden,
                     unityFontStyleAndWeight = FontStyle.Bold,
                     marginRight = 50f,
@@ -41,20 +44,23 @@ namespace EditorAttributes.Editor
 
             root.Add(label);
 
-            SerializedProperty serializedProperty = property.Copy();
+            var serializedProperty = property.Copy();
 
-            int initialDepth = serializedProperty.depth;
+            var initialDepth = serializedProperty.depth;
 
             while (serializedProperty.NextVisible(true) && serializedProperty.depth > initialDepth)
             {
-                if (serializedProperty.depth >= initialDepth + 2) // Skip the X Y Z W properties that are inside Vectors since we draw the vector field ourself
+                if (serializedProperty.depth >=
+                    initialDepth +
+                    2) // Skip the X Y Z W properties that are inside Vectors since we draw the vector field ourself
                     continue;
 
                 VisualElement tableColumn = new();
                 tableColumn.style.flexGrow = 1f;
                 tableColumn.style.flexBasis = 0.1f;
 
-                bool isFoldoutProperty = serializedProperty.propertyType is SerializedPropertyType.Generic or SerializedPropertyType.Vector4;
+                var isFoldoutProperty =
+                    serializedProperty.propertyType is SerializedPropertyType.Generic or SerializedPropertyType.Vector4;
 
                 // Draw column labels
                 if (dataTableAttribute.ShowLabels && IsFirstCollectionElement(property) && !isFoldoutProperty)
@@ -88,19 +94,19 @@ namespace EditorAttributes.Editor
                         UpdateFoldoutPropertyLabels(propertyField);
 
                         // If the foldout is folded when the editor is drawn, the labels will not be found by the query so we update them when the foldout is unfolded
-                        propertyField.Q<Foldout>().RegisterValueChangedCallback((callback) => UpdateFoldoutPropertyLabels(propertyField));
+                        propertyField.Q<Foldout>()
+                            .RegisterValueChangedCallback((callback) => UpdateFoldoutPropertyLabels(propertyField));
                     }
                     else
                     {
-                        var labels = propertyField.Query<Label>(className: PropertyField.labelUssClassName).ToList();
-
-                        foreach (var label in labels)
-                            label.style.display = DisplayStyle.None;
+                        RemoveGeneratedPropertyLabels(propertyField);
                     }
                 });
 
                 // If new collection entries are added they will not have the flexGrow value, so we listen for changes to update the labels on the new entries
-                if (serializedProperty.isArray && serializedProperty.propertyType != SerializedPropertyType.String) // Strings are considered arrays but we don't want to include them
+                if (serializedProperty.isArray &&
+                    serializedProperty.propertyType !=
+                    SerializedPropertyType.String) // Strings are considered arrays but we don't want to include them
                     propertyField.RegisterValueChangeCallback((callback) => UpdateFoldoutPropertyLabels(propertyField));
 
                 tableColumn.Add(propertyField);
@@ -110,7 +116,10 @@ namespace EditorAttributes.Editor
             return root;
         }
 
-        protected override bool IsSupportedPropertyType(SerializedProperty property) => property.propertyType == SerializedPropertyType.Generic;
+        protected override bool IsSupportedPropertyType(SerializedProperty property)
+        {
+            return property.propertyType == SerializedPropertyType.Generic;
+        }
 
         private bool IsFirstCollectionElement(SerializedProperty property)
         {
@@ -128,7 +137,21 @@ namespace EditorAttributes.Editor
             var labels = propertyField.Query<Label>(className: PropertyField.labelUssClassName).ToList();
 
             foreach (var label in labels)
+            {
                 label.style.flexGrow = 1f;
+                label.style.maxWidth = 100f;
+            }
+        }
+
+        private async void RemoveGeneratedPropertyLabels(PropertyField propertyField)
+        {
+            await Task.Delay(1);
+
+            var labels = propertyField.Query<Label>(className: PropertyField.labelUssClassName).ToList();
+            labels.AddRange(propertyField.Query<Label>(className: PopupField<Void>.labelUssClassName).ToList());
+
+            foreach (var label in labels)
+                label.style.display = DisplayStyle.None;
         }
     }
 }

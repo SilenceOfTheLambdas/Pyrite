@@ -11,8 +11,8 @@ namespace EditorAttributes.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             var toggleGroup = attribute as ToggleGroupAttribute;
-            string foldoutSaveKey = CreatePropertySaveKey(property, "IsToggleGroupFolded");
-            string toggleSaveKey = CreatePropertySaveKey(property, "IsToggleGroupToggled");
+            var foldoutSaveKey = CreatePropertySaveKey(property, "IsToggleGroupFolded");
+            var toggleSaveKey = CreatePropertySaveKey(property, "IsToggleGroupToggled");
 
             VisualElement root = new();
 
@@ -28,7 +28,9 @@ namespace EditorAttributes.Editor
             {
                 text = "",
                 style = { marginRight = 10f },
-                value = property.propertyType == SerializedPropertyType.Boolean ? property.boolValue : EditorPrefs.GetBool(toggleSaveKey)
+                value = property.propertyType == SerializedPropertyType.Boolean
+                    ? property.boolValue
+                    : EditorPrefs.GetBool(toggleSaveKey)
             };
 
             foldout.contentContainer.SetEnabled(toggleBox.value);
@@ -38,9 +40,9 @@ namespace EditorAttributes.Editor
 
             root.Add(toggleBox);
 
-            foreach (string variableName in toggleGroup.FieldsToGroup)
+            foreach (var variableName in toggleGroup.FieldsToGroup)
             {
-                VisualElement groupProperty = CreateGroupProperty(variableName, property);
+                var groupProperty = CreateGroupProperty(variableName, property);
                 groupProperty.style.unityFontStyleAndWeight = FontStyle.Normal;
 
                 foldout.Add(groupProperty);
@@ -55,7 +57,9 @@ namespace EditorAttributes.Editor
                 }
                 else
                 {
-                    EditorPrefs.SetBool(toggleSaveKey, callback.newValue); // The value is already serialized via the property, there is no point in saving it.
+                    EditorPrefs.SetBool(toggleSaveKey,
+                        callback
+                            .newValue); // The value is already serialized via the property, there is no point in saving it.
                 }
 
                 foldout.contentContainer.SetEnabled(callback.newValue);
@@ -67,18 +71,22 @@ namespace EditorAttributes.Editor
             {
                 var toggle = foldout.Q<Toggle>();
 
-                toggle.style.backgroundColor = CanApplyGlobalColor ? EditorExtension.GLOBAL_COLOR / 3f : new Color(0.1f, 0.1f, 0.1f, 0.2f);
+                toggle.style.backgroundColor = CanApplyGlobalColor
+                    ? EditorExtension.GLOBAL_COLOR / 3f
+                    : new Color(0.1f, 0.1f, 0.1f, 0.2f);
 
                 var parentElement = foldout.Q<Label>().parent;
 
                 parentElement.Insert(1, toggleBox);
 
                 // Register this callback later since value changed callbacks are called on inspector initalization and we don't want to save values on initalization
-                foldout.RegisterValueChangedCallback((callback) => EditorPrefs.SetBool(foldoutSaveKey, callback.newValue));
+                foldout.RegisterValueChangedCallback((callback) =>
+                    EditorPrefs.SetBool(foldoutSaveKey, callback.newValue));
             });
 
             if (property.propertyType == SerializedPropertyType.Boolean)
-                toggleBox.TrackPropertyValue(property, (serializedProperty) => toggleBox.value = serializedProperty.boolValue);
+                toggleBox.TrackPropertyValue(property,
+                    (serializedProperty) => toggleBox.value = serializedProperty.boolValue);
 
             return root;
         }

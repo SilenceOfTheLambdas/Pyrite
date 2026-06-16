@@ -6,15 +6,15 @@ namespace Pyrite.Grid
 {
     public class GridSandbox : MonoBehaviour
     {
-        [Header("Prefabs for Testing")]
-        [Tooltip("The visual block object that will be spawned upon clicking.")]
+        [Header("Prefabs for Testing")] [Tooltip("The visual block object that will be spawned upon clicking.")]
         public GameObject blockPrefab;
 
         [Tooltip("Optional visual hover preview object showing snap coordinate.")]
         public GameObject hoverPreviewInstance;
 
         [Header("Layer Config")]
-        [Tooltip("The physical layer representing ground/terrain. Set to 'Default' or empty for fallback mathematical grid mapping.")]
+        [Tooltip(
+            "The physical layer representing ground/terrain. Set to 'Default' or empty for fallback mathematical grid mapping.")]
         public LayerMask groundLayer;
 
         [Header("Scene Visualization")]
@@ -31,24 +31,16 @@ namespace Pyrite.Grid
             {
                 hoverPreviewInstance = Instantiate(blockPrefab);
                 hoverPreviewInstance.name = "Grid_HoverPreview";
-                
+
                 // Remove physics components from the preview instance
-                foreach (var col in hoverPreviewInstance.GetComponentsInChildren<Collider>())
-                {
-                    Destroy(col);
-                }
-                foreach (var rb in hoverPreviewInstance.GetComponentsInChildren<Rigidbody>())
-                {
-                    Destroy(rb);
-                }
+                foreach (var col in hoverPreviewInstance.GetComponentsInChildren<Collider>()) Destroy(col);
+                foreach (var rb in hoverPreviewInstance.GetComponentsInChildren<Rigidbody>()) Destroy(rb);
 
                 // Add a simple color shift or transparency indicator to the preview material if possible
                 var renderer = hoverPreviewInstance.GetComponentInChildren<Renderer>();
                 if (renderer != null && renderer.material != null)
-                {
                     // Tint slightly transparent blue
                     renderer.material.color = new Color(0f, 0.7f, 1f, 0.4f);
-                }
             }
         }
 
@@ -72,13 +64,13 @@ namespace Pyrite.Grid
                 return;
             }
 
-            Vector2 mousePosition = Mouse.current.position.ReadValue();
-            Ray ray = Camera.main.ScreenPointToRay(mousePosition);
-            Vector3 hitPoint = Vector3.zero;
-            bool hitGround = false;
+            var mousePosition = Mouse.current.position.ReadValue();
+            var ray = Camera.main.ScreenPointToRay(mousePosition);
+            var hitPoint = Vector3.zero;
+            var hitGround = false;
 
             // Try standard physical raycast
-            if (Physics.Raycast(ray, out RaycastHit hit, 150f, groundLayer))
+            if (Physics.Raycast(ray, out var hit, 150f, groundLayer))
             {
                 hitPoint = hit.point;
                 hitGround = true;
@@ -86,10 +78,10 @@ namespace Pyrite.Grid
             else
             {
                 // Fallback: Mathematical plane intersection at baseline height Y = GridManager.Instance.gridYBaseline
-                float yBaseline = GridManager.Instance.gridYBaseline;
-                Plane baselinePlane = new Plane(Vector3.up, new Vector3(0, yBaseline, 0));
-                
-                if (baselinePlane.Raycast(ray, out float rayDistance))
+                var yBaseline = GridManager.Instance.gridYBaseline;
+                var baselinePlane = new Plane(Vector3.up, new Vector3(0, yBaseline, 0));
+
+                if (baselinePlane.Raycast(ray, out var rayDistance))
                 {
                     hitPoint = ray.GetPoint(rayDistance);
                     hitGround = true;
@@ -127,13 +119,13 @@ namespace Pyrite.Grid
             {
                 if (!GridManager.Instance.IsCellOccupied(_currentHoveredCell))
                 {
-                    Vector3 spawnPos = GridManager.Instance.GridToWorld(_currentHoveredCell);
-                    
+                    var spawnPos = GridManager.Instance.GridToWorld(_currentHoveredCell);
+
                     if (blockPrefab != null)
                     {
-                        GameObject placedBlock = Instantiate(blockPrefab, spawnPos, Quaternion.identity);
+                        var placedBlock = Instantiate(blockPrefab, spawnPos, Quaternion.identity);
                         placedBlock.name = $"PlacedBlock_{_currentHoveredCell.x}_{_currentHoveredCell.y}";
-                        
+
                         // Register occupancy in GridManager
                         GridManager.Instance.SetCellOccupant(_currentHoveredCell, placedBlock, CellType.Structure);
                         Debug.Log($"[GridSandbox] Placed structure at cell {_currentHoveredCell}");
@@ -141,7 +133,7 @@ namespace Pyrite.Grid
                     else
                     {
                         // Spawn a fallback visual cube
-                        GameObject placedCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        var placedCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                         placedCube.transform.position = spawnPos;
                         placedCube.transform.localScale = Vector3.one * (GridManager.Instance.cellSize * 0.95f);
                         placedCube.name = $"PlacedCube_{_currentHoveredCell.x}_{_currentHoveredCell.y}";
@@ -158,19 +150,14 @@ namespace Pyrite.Grid
 
             // 2. REMOVE BLOCK (Right Click)
             if (Mouse.current.rightButton.wasPressedThisFrame)
-            {
                 if (GridManager.Instance.IsCellOccupied(_currentHoveredCell))
                 {
-                    GameObject occupant = GridManager.Instance.GetCellOccupant(_currentHoveredCell);
-                    if (occupant != null)
-                    {
-                        Destroy(occupant);
-                    }
-                    
+                    var occupant = GridManager.Instance.GetCellOccupant(_currentHoveredCell);
+                    if (occupant != null) Destroy(occupant);
+
                     GridManager.Instance.ClearCell(_currentHoveredCell);
                     Debug.Log($"[GridSandbox] Removed structure at cell {_currentHoveredCell}");
                 }
-            }
         }
 
         /// <summary>
@@ -180,41 +167,39 @@ namespace Pyrite.Grid
         {
             if (GridManager.Instance == null) return;
 
-            float cellSize = GridManager.Instance.cellSize;
-            float y = GridManager.Instance.gridYBaseline;
+            var cellSize = GridManager.Instance.cellSize;
+            var y = GridManager.Instance.gridYBaseline;
 
             // Draw horizontal and vertical grid bounds
             Gizmos.color = new Color(1f, 1f, 1f, 0.2f); // Light semi-transparent white lines
-            for (int i = -sandboxGridRadius; i <= sandboxGridRadius; i++)
+            for (var i = -sandboxGridRadius; i <= sandboxGridRadius; i++)
             {
                 // Parallel to Z axis
-                Vector3 startZ = new Vector3(i * cellSize, y, -sandboxGridRadius * cellSize);
-                Vector3 endZ = new Vector3(i * cellSize, y, sandboxGridRadius * cellSize);
+                var startZ = new Vector3(i * cellSize, y, -sandboxGridRadius * cellSize);
+                var endZ = new Vector3(i * cellSize, y, sandboxGridRadius * cellSize);
                 Gizmos.DrawLine(startZ, endZ);
 
                 // Parallel to X axis
-                Vector3 startX = new Vector3(-sandboxGridRadius * cellSize, y, i * cellSize);
-                Vector3 endX = new Vector3(sandboxGridRadius * cellSize, y, i * cellSize);
+                var startX = new Vector3(-sandboxGridRadius * cellSize, y, i * cellSize);
+                var endX = new Vector3(sandboxGridRadius * cellSize, y, i * cellSize);
                 Gizmos.DrawLine(startX, endX);
             }
 
             // Draw visual boxes showing active occupied cells in grid space
-            Dictionary<Vector2Int, GridCell> occupiedCells = GridManager.Instance.GetAllOccupiedCells();
+            var occupiedCells = GridManager.Instance.GetAllOccupiedCells();
             foreach (var kvp in occupiedCells)
-            {
                 if (kvp.Value.cellType != CellType.Empty)
                 {
                     // Draw a semi-transparent red cube over occupied cells
-                    Vector3 cellCenter = GridManager.Instance.GridToWorld(kvp.Key, 0.05f);
+                    var cellCenter = GridManager.Instance.GridToWorld(kvp.Key, 0.05f);
                     Gizmos.color = new Color(1f, 0f, 0f, 0.4f);
                     Gizmos.DrawCube(cellCenter, new Vector3(cellSize * 0.95f, 0.1f, cellSize * 0.95f));
                 }
-            }
 
             // Highlight the active mouse-hovered coordinate cell if valid
             if (_isHoveringValid)
             {
-                Vector3 cellCenter = GridManager.Instance.GridToWorld(_currentHoveredCell, 0.06f);
+                var cellCenter = GridManager.Instance.GridToWorld(_currentHoveredCell, 0.06f);
                 Gizmos.color = new Color(0f, 0.7f, 1f, 0.5f); // Glowing sky blue
                 Gizmos.DrawCube(cellCenter, new Vector3(cellSize * 0.98f, 0.12f, cellSize * 0.98f));
             }

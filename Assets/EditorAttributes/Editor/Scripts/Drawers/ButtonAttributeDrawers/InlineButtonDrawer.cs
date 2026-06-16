@@ -13,9 +13,10 @@ namespace EditorAttributes.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             VisualElement root = new() { style = { flexDirection = FlexDirection.Row } };
-            PropertyField propertyField = CreatePropertyField(property);
+            var propertyField = CreatePropertyField(property);
 
-            propertyField.name = "CustomPropertyField"; // This is used to identify the our property field from the one automatically created by unity for the drawer
+            propertyField.name =
+                "CustomPropertyField"; // This is used to identify the our property field from the one automatically created by unity for the drawer
             propertyField.style.flexGrow = 1f;
 
             root.Add(propertyField);
@@ -26,8 +27,9 @@ namespace EditorAttributes.Editor
                 MoveChildren(root, propertyField.name);
                 MoveChildren(propertyField, propertyField.name);
 
-                MemberInfo propertyInfo = ReflectionUtils.GetValidMemberInfo(property.name, property);
-                var inlineButtonAttributes = propertyInfo.GetCustomAttributes(typeof(InlineButtonAttribute), true) as InlineButtonAttribute[];
+                var propertyInfo = ReflectionUtils.GetValidMemberInfo(property.name, property);
+                var inlineButtonAttributes =
+                    propertyInfo.GetCustomAttributes(typeof(InlineButtonAttribute), true) as InlineButtonAttribute[];
 
                 foreach (var inlineButtonAttribute in inlineButtonAttributes)
                     root.Add(CreateInlineButton(inlineButtonAttribute, property));
@@ -36,21 +38,28 @@ namespace EditorAttributes.Editor
             return root;
         }
 
-        private VisualElement CreateInlineButton(InlineButtonAttribute inlineButtonAttribute, SerializedProperty property)
+        private VisualElement CreateInlineButton(InlineButtonAttribute inlineButtonAttribute,
+            SerializedProperty property)
         {
-            MethodInfo methodInfo = ReflectionUtils.FindFunction(inlineButtonAttribute.FunctionName, property);
+            var methodInfo = ReflectionUtils.FindFunction(inlineButtonAttribute.FunctionName, property);
 
             if (methodInfo.GetParameters().Length > 0)
                 return new HelpBox("The function cannot have parameters", HelpBoxMessageType.Error);
 
-            string buttonLabel = inlineButtonAttribute.ButtonLabel == string.Empty ? inlineButtonAttribute.FunctionName : inlineButtonAttribute.ButtonLabel;
+            var buttonLabel = inlineButtonAttribute.ButtonLabel == string.Empty
+                ? inlineButtonAttribute.FunctionName
+                : inlineButtonAttribute.ButtonLabel;
 
             if (inlineButtonAttribute.IsRepetable)
             {
-                RepeatButton repeatButton = new(() => InvokeFunctionOnAllTargets(property.serializedObject.targetObjects, methodInfo.Name, makeTargetsDirty: inlineButtonAttribute.MakeDirty), inlineButtonAttribute.PressDelay, inlineButtonAttribute.RepetitionInterval)
-                {
-                    text = buttonLabel
-                };
+                RepeatButton repeatButton =
+                    new(
+                        () => InvokeFunctionOnAllTargets(property.serializedObject.targetObjects, methodInfo.Name,
+                            makeTargetsDirty: inlineButtonAttribute.MakeDirty), inlineButtonAttribute.PressDelay,
+                        inlineButtonAttribute.RepetitionInterval)
+                    {
+                        text = buttonLabel
+                    };
 
                 repeatButton.style.width = inlineButtonAttribute.ButtonWidth;
                 repeatButton.AddToClassList(Button.ussClassName);
@@ -59,7 +68,8 @@ namespace EditorAttributes.Editor
             }
             else
             {
-                Button button = new(() => InvokeFunctionOnAllTargets(property.serializedObject.targetObjects, methodInfo.Name, makeTargetsDirty: inlineButtonAttribute.MakeDirty))
+                Button button = new(() => InvokeFunctionOnAllTargets(property.serializedObject.targetObjects,
+                    methodInfo.Name, makeTargetsDirty: inlineButtonAttribute.MakeDirty))
                 {
                     text = buttonLabel
                 };

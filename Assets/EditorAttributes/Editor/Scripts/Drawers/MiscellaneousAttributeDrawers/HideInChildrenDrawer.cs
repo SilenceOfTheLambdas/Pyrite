@@ -14,22 +14,22 @@ namespace EditorAttributes.Editor
         {
             var hideInChildrenAttribute = attribute as HideInChildrenAttribute;
 
-            PropertyField propertyField = CreatePropertyField(property);
-            propertyField.style.display = IsPropertyInherited(property, hideInChildrenAttribute) ? DisplayStyle.None : DisplayStyle.Flex;
+            var propertyField = CreatePropertyField(property);
+            propertyField.style.display = IsPropertyInherited(property, hideInChildrenAttribute)
+                ? DisplayStyle.None
+                : DisplayStyle.Flex;
 
             return propertyField;
         }
 
         private bool IsPropertyInherited(SerializedProperty property, HideInChildrenAttribute attribute)
         {
-            Type targetObjectType = property.serializedObject.targetObject.GetType();
-            FieldInfo fieldInfo = ReflectionUtils.FindField(property.name, property);
+            var targetObjectType = property.serializedObject.targetObject.GetType();
+            var fieldInfo = ReflectionUtils.FindField(property.name, property);
 
             foreach (var type in attribute.ChildTypes)
-            {
                 if (targetObjectType != type)
                     return false;
-            }
 
             return targetObjectType != fieldInfo.DeclaringType;
         }

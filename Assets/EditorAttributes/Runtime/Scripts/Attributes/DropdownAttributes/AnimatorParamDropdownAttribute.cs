@@ -13,6 +13,9 @@ namespace EditorAttributes
         /// Attribute to display a dropdown of animator parameters
         /// </summary>
         /// <param name="animatorFieldName">The animator from which to get the parameters</param>
-        public AnimatorParamDropdownAttribute(string animatorFieldName = "") => AnimatorFieldName = animatorFieldName;
+        public AnimatorParamDropdownAttribute(string animatorFieldName = "")
+        {
+            AnimatorFieldName = animatorFieldName;
+        }
     }
 }

@@ -24,11 +24,11 @@ namespace Unified.UniversalBlur.Runtime
         private BlurConfig _blurConfig;
         private RTHandle _sourceRT;
         private RTHandle _destinationRT;
-        
+
         public UniversalBlurPass()
         {
-            _profilingSampler = new(k_PassName);
-            _propertyBlock = new();
+            _profilingSampler = new ProfilingSampler(k_PassName);
+            _propertyBlock = new MaterialPropertyBlock();
 
 #if UNITY_6000_0_OR_NEWER
             requiresIntermediateTexture = true;
@@ -47,19 +47,21 @@ namespace Unified.UniversalBlur.Runtime
         {
             // Nothing to dispose
         }
-        
+
         public void DrawDefaultTexture()
         {
             // For better preview experience in editor, we just use a gray texture
             Shader.SetGlobalTexture(Constants.GlobalFullScreenBlurTextureId, Texture2D.linearGrayTexture);
         }
 
-        private RenderTextureDescriptor GetDescriptor() =>
-            new(_blurConfig.Width, _blurConfig.Height, _blurConfig.GraphicsFormat, 0)
+        private RenderTextureDescriptor GetDescriptor()
+        {
+            return new RenderTextureDescriptor(_blurConfig.Width, _blurConfig.Height, _blurConfig.GraphicsFormat, 0)
             {
                 useMipMap = _blurConfig.EnableMipMaps,
                 autoGenerateMips = _blurConfig.EnableMipMaps
             };
+        }
 
 #if !UNITY_6000_4_OR_NEWER
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -104,7 +106,7 @@ namespace Unified.UniversalBlur.Runtime
             CommandBufferPool.Release(cmd);
         }
 #endif
-        
+
 #if UNITY_6000_0_OR_NEWER
         public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
         {
@@ -122,28 +124,29 @@ namespace Unified.UniversalBlur.Runtime
             var descriptor = new TextureDesc(GetDescriptor());
 
             descriptor.name = k_BlurTextureSourceName;
-            TextureHandle source = renderGraph.CreateTexture(descriptor);
+            var source = renderGraph.CreateTexture(descriptor);
             descriptor.name = k_BlurTextureDestinationName;
-            TextureHandle destination = renderGraph.CreateTexture(descriptor);
-            
-            using (var builder = renderGraph.AddUnsafePass<RenderGraphPassData>(k_PassName, out var passData, _profilingSampler))
+            var destination = renderGraph.CreateTexture(descriptor);
+
+            using (var builder =
+                   renderGraph.AddUnsafePass<RenderGraphPassData>(k_PassName, out var passData, _profilingSampler))
             {
                 passData.ColorSource = cameraColorSource;
                 passData.Source = source;
                 passData.Destination = destination;
 
                 passData.MaterialPropertyBlock = _propertyBlock;
-                
+
                 passData.BlurConfig = _blurConfig;
-                
+
                 builder.AllowPassCulling(false);
 
                 builder.UseTexture(cameraColorSource, AccessFlags.Read);
                 builder.UseTexture(source, AccessFlags.ReadWrite);
                 builder.UseTexture(destination, AccessFlags.ReadWrite);
-                
+
                 builder.SetGlobalTextureAfterPass(destination, Constants.GlobalFullScreenBlurTextureId);
-                
+
                 builder.SetRenderFunc<RenderGraphPassData>((data, ctx) =>
                 {
                     BlurPasses.KawaseExecutePass(data, new WrappedUnsafeCommandBuffer(ctx.cmd));

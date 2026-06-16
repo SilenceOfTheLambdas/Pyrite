@@ -9,14 +9,19 @@ namespace EditorAttributes.Editor.Utility
 {
     public class UnityTypeConverter : JsonConverter
     {
-        public override bool CanConvert(Type objectType) =>
-            typeof(Vector2).IsAssignableFrom(objectType) || typeof(Vector2Int).IsAssignableFrom(objectType) || typeof(Vector3).IsAssignableFrom(objectType) || typeof(Vector3Int).IsAssignableFrom(objectType) ||
-            typeof(Vector4).IsAssignableFrom(objectType) || typeof(Color).IsAssignableFrom(objectType) || typeof(Rect).IsAssignableFrom(objectType) || typeof(RectInt).IsAssignableFrom(objectType) ||
-            typeof(Bounds).IsAssignableFrom(objectType) || typeof(BoundsInt).IsAssignableFrom(objectType);
-
-        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+        public override bool CanConvert(Type objectType)
         {
-            JObject jsonObject = JObject.Load(reader);
+            return typeof(Vector2).IsAssignableFrom(objectType) || typeof(Vector2Int).IsAssignableFrom(objectType) ||
+                   typeof(Vector3).IsAssignableFrom(objectType) || typeof(Vector3Int).IsAssignableFrom(objectType) ||
+                   typeof(Vector4).IsAssignableFrom(objectType) || typeof(Color).IsAssignableFrom(objectType) ||
+                   typeof(Rect).IsAssignableFrom(objectType) || typeof(RectInt).IsAssignableFrom(objectType) ||
+                   typeof(Bounds).IsAssignableFrom(objectType) || typeof(BoundsInt).IsAssignableFrom(objectType);
+        }
+
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue,
+            JsonSerializer serializer)
+        {
+            var jsonObject = JObject.Load(reader);
 
             if (objectType == typeof(Vector2))
             {
@@ -93,7 +98,7 @@ namespace EditorAttributes.Editor.Utility
                 var sizeY = jsonObject["sizeY"]?.Value<float>() ?? 0f;
                 var sizeZ = jsonObject["sizeZ"]?.Value<float>() ?? 0f;
 
-                return new Bounds(new(centerX, centerY, centerZ), new(sizeX, sizeY, sizeZ));
+                return new Bounds(new Vector3(centerX, centerY, centerZ), new Vector3(sizeX, sizeY, sizeZ));
             }
             else if (objectType == typeof(BoundsInt))
             {
@@ -104,7 +109,7 @@ namespace EditorAttributes.Editor.Utility
                 var sizeY = jsonObject["sizeY"]?.Value<int>() ?? 0;
                 var sizeZ = jsonObject["sizeZ"]?.Value<int>() ?? 0;
 
-                return new BoundsInt(new(centerX, centerY, centerZ), new(sizeX, sizeY, sizeZ));
+                return new BoundsInt(new Vector3Int(centerX, centerY, centerZ), new Vector3Int(sizeX, sizeY, sizeZ));
             }
 
             return null;
@@ -124,7 +129,6 @@ namespace EditorAttributes.Editor.Utility
             }
             else if (value is Vector2Int vector2int)
             {
-
                 JObject jsonObject = new()
                 {
                     { "x", vector2int.x },
@@ -137,7 +141,6 @@ namespace EditorAttributes.Editor.Utility
             {
                 JObject jsonObject = new()
                 {
-
                     { "x", vector3.x },
                     { "y", vector3.y },
                     { "z", vector3.z }
@@ -147,7 +150,6 @@ namespace EditorAttributes.Editor.Utility
             }
             else if (value is Vector3Int vector3Int)
             {
-
                 JObject jsonObject = new()
                 {
                     { "x", vector3Int.x },

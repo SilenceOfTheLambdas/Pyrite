@@ -14,17 +14,17 @@ SAMPLER(sampler_BlitTexture);
 #define SAMPLE_BASEMAP(uv) half4(SAMPLE_TEXTURE2D_X_LOD(_BlitTexture, sampler_LinearClamp, UnityStereoTransformScreenSpaceTex(uv), _BlitMipLevel));
 
 // Constants
-static const half  HALF_POINT_ONE   = half(0.1);
-static const half  HALF_MINUS_ONE   = half(-1.0);
-static const half  HALF_ZERO        = half(0.0);
-static const half  HALF_HALF        = half(0.5);
-static const half  HALF_ONE         = half(1.0);
-static const half4 HALF4_ONE        = half4(1.0, 1.0, 1.0, 1.0);
-static const half  HALF_TWO         = half(2.0);
-static const half  HALF_TWO_PI      = half(6.28318530717958647693);
-static const half  HALF_FOUR        = half(4.0);
-static const half  HALF_NINE        = half(9.0);
-static const half  HALF_HUNDRED     = half(100.0);
+static const half HALF_POINT_ONE = half(0.1);
+static const half HALF_MINUS_ONE = half(-1.0);
+static const half HALF_ZERO = half(0.0);
+static const half HALF_HALF = half(0.5);
+static const half HALF_ONE = half(1.0);
+static const half4 HALF4_ONE = half4(1.0, 1.0, 1.0, 1.0);
+static const half HALF_TWO = half(2.0);
+static const half HALF_TWO_PI = half(6.28318530717958647693);
+static const half HALF_FOUR = half(4.0);
+static const half HALF_NINE = half(9.0);
+static const half HALF_HUNDRED = half(100.0);
 
 // Params
 int _Iteration;
@@ -54,17 +54,17 @@ half GaussianBlur(half2 uv, half2 pixelOffset)
     // Kernel width 7 x 7
     const int stepCount = 2;
 
-    const half gWeights[stepCount] ={
+    const half gWeights[stepCount] = {
         0.44908,
         0.05092
-     };
-    const half gOffsets[stepCount] ={
+    };
+    const half gOffsets[stepCount] = {
         0.53805,
         2.06278
-     };
+    };
 
     UNITY_UNROLL
-    for( int i = 0; i < stepCount; i++ )
+    for (int i = 0; i < stepCount; i++)
     {
         half2 texCoordOffset = gOffsets[i] * pixelOffset;
         half4 p1 = SAMPLE_BASEMAP(uv + texCoordOffset);
@@ -112,7 +112,7 @@ half4 KawaseBlurFilterCustom(sampler2D blurTexture, float2 uv, float offset, flo
 
     half4 col;
 
-    col  = tex2Dlod(blurTexture, float4(saturate(uv), 0, _BlitMipLevel));
+    col = tex2Dlod(blurTexture, float4(saturate(uv), 0, _BlitMipLevel));
     col += tex2Dlod(blurTexture, float4(saturate(uv + float2(i, i) * texelSize), 0, _BlitMipLevel));
     col += tex2Dlod(blurTexture, float4(saturate(uv + float2(i, -i) * texelSize), 0, _BlitMipLevel));
     col += tex2Dlod(blurTexture, float4(saturate(uv + float2(-i, i) * texelSize), 0, _BlitMipLevel));
@@ -149,7 +149,7 @@ half4 KawaseBlurCustom(Varyings input) : SV_Target
     UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
     float2 uv = input.texcoord.xy;
-                
+
     #ifndef UNITY_UV_STARTS_AT_TOP
     uv.y = 1.0 - uv.y;
     #endif
@@ -167,11 +167,11 @@ half4 KawaseBlurCustom(Varyings input) : SV_Target
 // Used in DOUBLE-S.T.E.A.L. (aka Wreckless)
 // From his GDC2003 Presentation: Frame Buffer Postprocessing Effects in  DOUBLE-S.T.E.A.L (Wreckless)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-half4 KawaseBlurFilter( half2 texCoord, half2 pixelSize, half iteration )
+half4 KawaseBlurFilter(half2 texCoord, half2 pixelSize, half iteration)
 {
     half2 texCoordSample;
     half2 halfPixelSize = pixelSize * HALF_HALF;
-    half2 dUV = ( pixelSize.xy * half2( iteration, iteration ) ) + halfPixelSize.xy;
+    half2 dUV = (pixelSize.xy * half2(iteration, iteration)) + halfPixelSize.xy;
 
     half4 cOut;
 
@@ -212,6 +212,6 @@ half4 KawaseBlur(Varyings input) : SV_Target
     half2 texelSize = TEXEL_SIZE.xy * rcp(DOWNSAMPLE);
 
     half4 col = KawaseBlurFilter(uv, texelSize * INTENSITY, ITERATION * OFFSET);
-    
+
     return col;
 }

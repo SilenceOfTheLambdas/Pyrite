@@ -4,6 +4,6 @@ namespace Unified.UniversalBlur.Runtime
     {
         Disabled,
         ScreenHeight,
-        ScreenWidth,
+        ScreenWidth
     }
 }

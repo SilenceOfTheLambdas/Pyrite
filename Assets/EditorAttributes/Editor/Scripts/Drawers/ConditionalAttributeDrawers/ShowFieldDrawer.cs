@@ -12,14 +12,16 @@ namespace EditorAttributes.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             var showAttribute = attribute as ShowFieldAttribute;
-            MemberInfo conditionalProperty = ReflectionUtils.GetValidMemberInfo(showAttribute.ConditionName, property);
+            var conditionalProperty = ReflectionUtils.GetValidMemberInfo(showAttribute.ConditionName, property);
 
             HelpBox errorBox = new();
-            PropertyField propertyField = CreatePropertyField(property);
+            var propertyField = CreatePropertyField(property);
 
             UpdateVisualElement(propertyField, () =>
             {
-                propertyField.style.display = GetConditionValue(conditionalProperty, showAttribute, property, errorBox) ? DisplayStyle.Flex : DisplayStyle.None;
+                propertyField.style.display = GetConditionValue(conditionalProperty, showAttribute, property, errorBox)
+                    ? DisplayStyle.Flex
+                    : DisplayStyle.None;
                 DisplayErrorBox(propertyField, errorBox);
             });
 

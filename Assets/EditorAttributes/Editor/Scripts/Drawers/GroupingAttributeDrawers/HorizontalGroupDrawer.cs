@@ -22,12 +22,13 @@ namespace EditorAttributes.Editor
             root.style.flexDirection = FlexDirection.Row;
             root.style.alignItems = Align.FlexStart;
 
-            foreach (string variableName in horizontalGroup.FieldsToGroup)
+            foreach (var variableName in horizontalGroup.FieldsToGroup)
             {
                 HelpBox errorBox = new();
                 VisualElement groupBox = new()
                 {
-                    style = {
+                    style =
+                    {
                         flexDirection = FlexDirection.Row,
                         flexGrow = 1f,
                         flexBasis = 0.1f,
@@ -36,13 +37,14 @@ namespace EditorAttributes.Editor
                 };
 
                 // Add space between properties excluding the last property
-                if (ArrayUtility.LastIndexOf(horizontalGroup.FieldsToGroup, variableName) != horizontalGroup.FieldsToGroup.Length - 1)
+                if (ArrayUtility.LastIndexOf(horizontalGroup.FieldsToGroup, variableName) !=
+                    horizontalGroup.FieldsToGroup.Length - 1)
                     groupBox.style.marginRight = horizontalGroup.PropertySpace;
 
-                MemberInfo memberInfo = ReflectionUtils.GetValidMemberInfo(variableName, property);
-                VisualElement groupElement = CreateGroupProperty(variableName, property);
+                var memberInfo = ReflectionUtils.GetValidMemberInfo(variableName, property);
+                var groupElement = CreateGroupProperty(variableName, property);
 
-                SerializedProperty variableProperty = FindNestedProperty(property, GetSerializedPropertyName(variableName, property));
+                var variableProperty = FindNestedProperty(property, GetSerializedPropertyName(variableName, property));
 
                 if (variableProperty == null)
                 {
@@ -58,7 +60,8 @@ namespace EditorAttributes.Editor
                 groupElement.style.flexBasis = 0.1f;
 
                 // Don't add margins to the last property in the group
-                if (Array.IndexOf(horizontalGroup.FieldsToGroup, variableName) != horizontalGroup.FieldsToGroup.Length - 1)
+                if (Array.IndexOf(horizontalGroup.FieldsToGroup, variableName) !=
+                    horizontalGroup.FieldsToGroup.Length - 1)
                     groupBox.style.marginRight = 10f;
 
                 if (hideLabelAttribute == null)
@@ -66,12 +69,15 @@ namespace EditorAttributes.Editor
                     var renameAttribute = memberInfo?.GetCustomAttribute<RenameAttribute>();
                     var tooltipAttribute = memberInfo?.GetCustomAttribute<TooltipAttribute>();
 
-                    string labelText = renameAttribute == null ? ObjectNames.NicifyVariableName(variableName) : RenameDrawer.GetNewName(renameAttribute, property, errorBox);
+                    var labelText = renameAttribute == null
+                        ? ObjectNames.NicifyVariableName(variableName)
+                        : RenameDrawer.GetNewName(renameAttribute, property, errorBox);
 
                     Label label = new(labelText)
                     {
                         tooltip = tooltipAttribute?.tooltip,
-                        style = {
+                        style =
+                        {
                             flexGrow = 1f,
                             flexBasis = 0.1f,
                             marginRight = horizontalGroup.WidthOffset
@@ -79,17 +85,16 @@ namespace EditorAttributes.Editor
                     };
 
                     // Serialized objects and Vector 4 are displayed with foldouts and don't need the custom label
-                    if (variableProperty.propertyType is not SerializedPropertyType.Generic and not SerializedPropertyType.Vector4)
+                    if (variableProperty.propertyType is not SerializedPropertyType.Generic
+                        and not SerializedPropertyType.Vector4)
                         groupBox.Add(label);
 
                     if (renameAttribute != null)
-                    {
                         UpdateVisualElement(label, () =>
                         {
                             label.text = RenameDrawer.GetNewName(renameAttribute, property, errorBox);
                             DisplayErrorBox(groupElement, errorBox);
                         });
-                    }
                 }
 
                 groupBox.Add(groupElement);
@@ -101,12 +106,12 @@ namespace EditorAttributes.Editor
 
         protected override VisualElement CreateGroupProperty(string memberName, SerializedProperty property)
         {
-            SerializedProperty variableProperty = FindNestedProperty(property, GetSerializedPropertyName(memberName, property));
+            var variableProperty = FindNestedProperty(property, GetSerializedPropertyName(memberName, property));
 
             if (variableProperty == null)
                 return new HelpBox($"<b>{memberName}</b> is not a valid field or property", HelpBoxMessageType.Error);
 
-            PropertyField propertyField = CreatePropertyField(variableProperty);
+            var propertyField = CreatePropertyField(variableProperty);
 
             propertyField.RegisterCallbackOnce<GeometryChangedEvent>((callback) =>
             {
@@ -121,19 +126,20 @@ namespace EditorAttributes.Editor
                         hiddenField.style.display = DisplayStyle.Flex;
                     }
 
-                    if (variableProperty.propertyType is not SerializedPropertyType.Generic and not SerializedPropertyType.Vector4)
+                    if (variableProperty.propertyType is not SerializedPropertyType.Generic
+                        and not SerializedPropertyType.Vector4)
                     {
                         var propertyLabel = propertyField.Q<Label>();
 
                         if (propertyLabel != null)
-                        {
-                            if (!propertyLabel.parent.ClassListContains(BaseCompositeField<Void, IntegerField, int>.fieldUssClassName)) // Do not remove the label from composite fields
+                            if (!propertyLabel.parent.ClassListContains(BaseCompositeField<Void, IntegerField, int>
+                                    .fieldUssClassName)) // Do not remove the label from composite fields
                                 propertyLabel.RemoveFromHierarchy();
-                        }
                     }
                     else
                     {
-                        var alignedFields = propertyField.Query<VisualElement>(className: BaseField<Void>.alignedFieldUssClassName).ToList();
+                        var alignedFields = propertyField
+                            .Query<VisualElement>(className: BaseField<Void>.alignedFieldUssClassName).ToList();
 
                         // Fix alignment issues with fields inside foldouts
                         foreach (var alignedField in alignedFields)

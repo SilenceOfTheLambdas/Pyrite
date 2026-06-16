@@ -10,7 +10,7 @@ namespace EditorAttributes.Editor
 
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
-            VisualElement propertyField = base.CreatePropertyGUI(property);
+            var propertyField = base.CreatePropertyGUI(property);
 
             propertyField.name = HIDDEN_PROPERTY_ID; // This is an identifier so that groups can make the field visible
             propertyField.style.display = DisplayStyle.None;

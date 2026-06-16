@@ -12,30 +12,31 @@ namespace Unified.UniversalBlur.Editor
     {
         private Type _targetType;
         private FieldInfo _targetField;
-        
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
-            
-            ShowAsPass passAttribute = (ShowAsPass) attribute;
+
+            var passAttribute = (ShowAsPass)attribute;
 
             var target = property.serializedObject.targetObject;
             var targetMaterialField = passAttribute.TargetMaterialField;
-            
+
             _targetType ??= target.GetType();
-            _targetField ??= _targetType.GetField(targetMaterialField, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            _targetField ??= _targetType.GetField(targetMaterialField,
+                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
             if (_targetField != null)
             {
                 var fieldValue = _targetField.GetValue(target);
-            
-                Material material = fieldValue as Material;
+
+                var material = fieldValue as Material;
 
                 if (material != null)
                 {
                     var selectablePasses = GetPassIndexStringEntries(material);
                     var choiceIndex = EditorGUI.Popup(position, label, property.intValue, selectablePasses.ToArray());
-                    
+
                     property.intValue = choiceIndex;
                 }
                 else
@@ -45,18 +46,19 @@ namespace Unified.UniversalBlur.Editor
             }
             else
             {
-                EditorGUI.HelpBox(position, $"Field {targetMaterialField} not found on {_targetType.Name}.", MessageType.Error);
+                EditorGUI.HelpBox(position, $"Field {targetMaterialField} not found on {_targetType.Name}.",
+                    MessageType.Error);
             }
-            
+
             EditorGUI.EndProperty();
         }
-        
+
         private List<GUIContent> GetPassIndexStringEntries(Material material)
         {
             var passIndexEntries = new List<GUIContent>();
-            for (int i = 0; i < material.passCount; ++i)
+            for (var i = 0; i < material.passCount; ++i)
             {
-                string entry = $"{material.GetPassName(i)} ({i})";
+                var entry = $"{material.GetPassName(i)} ({i})";
                 passIndexEntries.Add(new GUIContent(entry));
             }
 

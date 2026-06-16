@@ -13,14 +13,15 @@ namespace EditorAttributes.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             if (!IsSupportedPropertyType(property))
-                return new HelpBox("The LayerDropdown Attribute can only be attached to a string", HelpBoxMessageType.Error);
+                return new HelpBox("The LayerDropdown Attribute can only be attached to a string",
+                    HelpBoxMessageType.Error);
 
-            List<string> layerNames = InternalEditorUtility.layers.ToList();
-            DropdownField dropdownField = CreateDropdownField(layerNames, property);
+            var layerNames = InternalEditorUtility.layers.ToList();
+            var dropdownField = CreateDropdownField(layerNames, property);
 
             UpdateVisualElement(dropdownField, () =>
             {
-                List<string> sceneNames = InternalEditorUtility.layers.ToList();
+                var sceneNames = InternalEditorUtility.layers.ToList();
 
                 if (IsCollectionValid(sceneNames))
                     dropdownField.choices = sceneNames;
@@ -40,10 +41,14 @@ namespace EditorAttributes.Editor
             }
             else
             {
-                Debug.LogWarning($"Could not paste value <b>{clipboardValue}</b> since is not availiable as an option in the dropdown");
+                Debug.LogWarning(
+                    $"Could not paste value <b>{clipboardValue}</b> since is not availiable as an option in the dropdown");
             }
         }
 
-        protected override bool IsSupportedPropertyType(SerializedProperty property) => property.propertyType == SerializedPropertyType.String;
+        protected override bool IsSupportedPropertyType(SerializedProperty property)
+        {
+            return property.propertyType == SerializedPropertyType.String;
+        }
     }
 }

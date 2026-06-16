@@ -10,7 +10,7 @@ namespace RPGSystem.Equipment
     public class EquipmentManager : MonoBehaviour
     {
         public WeaponStats equippedWeapon;
-        public bool HasWeaponEquipped { private set; get; }
+        public bool HasWeaponEquipped { get; private set; }
         public ArmourStats equippedHeadArmour;
         public ArmourStats equippedChestArmour;
         public ArmourStats equippedLegArmour;
@@ -23,10 +23,10 @@ namespace RPGSystem.Equipment
         private Transform rightHandAttachmentPoint;
 
         public static EquipmentManager Instance { get; private set; }
-        
+
         public event Action<WeaponStats> OnWeaponEquipped;
         public event Action<WeaponStats> OnWeaponUnequipped;
-        
+
         public event Action<ArmourStats> OnArmourEquipped;
         public event Action<ArmourStats> OnArmourUnequipped;
 
@@ -54,7 +54,7 @@ namespace RPGSystem.Equipment
                 EquipArmour(itemToEquip as ArmourStats);
                 OnArmourEquipped?.Invoke(itemToEquip as ArmourStats);
             }
-            
+
             itemToEquip.isEquipped = true;
         }
 
@@ -120,8 +120,9 @@ namespace RPGSystem.Equipment
                 Debug.LogError($"Unable to find weapon template with given name: {weaponToEquip.equipmentName}!");
                 return;
             }
+
             // Spawn the weapon model
-           Instantiate(weaponTemplate.equippedWeaponModelPrefab, rightHandAttachmentPoint);
+            Instantiate(weaponTemplate.equippedWeaponModelPrefab, rightHandAttachmentPoint);
         }
 
         private void EquipArmour(ArmourStats armourToEquip)

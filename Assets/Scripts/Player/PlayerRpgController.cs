@@ -12,22 +12,41 @@ namespace Player
     {
         #region Properties
 
-        [TabGroup(nameof(healthXpLevel), nameof(damage), nameof(armour), nameof(attributes))]
-        [SerializeField] private Void groupHolder;
+        [TabGroup(nameof(healthXpLevel), nameof(damage), nameof(armour), nameof(attributes))] [SerializeField]
+        private Void groupHolder;
 
-        [VerticalGroup(nameof(CurrentPlayerLevel), nameof(CurrentPlayerExp), nameof(CurrentPlayerHealth), nameof(PlayerMaxHealth))]
-        [SerializeField, HideInInspector] private Void healthXpLevel;
-        [field: SerializeField, HideProperty] public int CurrentPlayerLevel { get; private set; }
-        [field: SerializeField, HideProperty] public int CurrentPlayerExp { get; private set; }
-        [field: SerializeField, HideProperty] public int CurrentPlayerHealth { get; private set; }
-        [field: SerializeField, HideProperty] public int PlayerMaxHealth { get; private set; }
+        [VerticalGroup(nameof(CurrentPlayerLevel), nameof(CurrentPlayerExp), nameof(CurrentPlayerHealth),
+            nameof(PlayerMaxHealth))]
+        [SerializeField]
+        [HideInInspector]
+        private Void healthXpLevel;
+
+        [field: SerializeField]
+        [field: HideProperty]
+        public int CurrentPlayerLevel { get; private set; }
+
+        [field: SerializeField]
+        [field: HideProperty]
+        public int CurrentPlayerExp { get; private set; }
+
+        [field: SerializeField]
+        [field: HideProperty]
+        public int CurrentPlayerHealth { get; private set; }
+
+        [field: SerializeField]
+        [field: HideProperty]
+        public int PlayerMaxHealth { get; private set; }
 
         // Player Damage Properties
         [VerticalGroup(nameof(currentPhysicalDamage), nameof(currentElementalDamage), nameof(currentAttackSpeed),
             nameof(currentAttackRange), nameof(currentCriticalChance), nameof(currentCriticalDamageMultiplier))]
-        [SerializeField, HideInInspector] private Void damage;
-        [Title("Player Damage Stats")]
-        [HideProperty] public float currentPhysicalDamage;
+        [SerializeField]
+        [HideInInspector]
+        private Void damage;
+
+        [Title("Player Damage Stats")] [HideProperty]
+        public float currentPhysicalDamage;
+
         [HideProperty] public List<RpgManager.ElementalDamage> currentElementalDamage;
         [HideProperty] public float currentAttackSpeed;
         [HideProperty] public float currentAttackRange;
@@ -36,17 +55,24 @@ namespace Player
 
 
         [VerticalGroup(nameof(totalPlayerArmourStats), nameof(currentElementalResistances))]
-        [SerializeField, HideInInspector] private Void armour;
-        [Title("Player Armour Stats")]
-        [HideProperty] public BaselineArmourStats totalPlayerArmourStats;
-        [HideProperty, DataTable(true)] public List<BaselineArmourStats.ElementalResistance> currentElementalResistances;
+        [SerializeField]
+        [HideInInspector]
+        private Void armour;
 
-        [VerticalGroup(nameof(currentPlayerAttributes))]
-        [SerializeField, HideInInspector] private Void attributes;
-        [Title("Player Attributes")]
-        [HideProperty, DataTable(true)] public PlayerStats currentPlayerAttributes;
+        [Title("Player Armour Stats")] [HideProperty]
+        public BaselineArmourStats totalPlayerArmourStats;
+
+        [HideProperty] [DataTable(true)]
+        public List<BaselineArmourStats.ElementalResistance> currentElementalResistances;
+
+        [VerticalGroup(nameof(currentPlayerAttributes))] [SerializeField] [HideInInspector]
+        private Void attributes;
+
+        [Title("Player Attributes")] [HideProperty] [DataTable(true)]
+        public PlayerStats currentPlayerAttributes;
 
         #endregion
+
         public static PlayerRpgController Instance { get; private set; }
 
         private void Awake()
@@ -103,7 +129,6 @@ namespace Player
 
             if (weaponStats.generatedAffixes == null) return;
             foreach (var affix in weaponStats.generatedAffixes)
-            {
                 switch (affix.Type)
                 {
                     case ItemTemplate.Suffix.SuffixType.AddedStrength:
@@ -134,7 +159,6 @@ namespace Player
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-            }
         }
 
         private void IncreasePlayerStats(ArmourStats armourStats)
@@ -144,7 +168,6 @@ namespace Player
 
             if (armourStatsCopy.GeneratedAffixes == null) return;
             foreach (var affix in armourStatsCopy.GeneratedAffixes)
-            {
                 switch (affix.Type)
                 {
                     case ItemTemplate.Suffix.SuffixType.AddedStrength:
@@ -185,7 +208,6 @@ namespace Player
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-            }
         }
 
         private void DecreasePlayerStats(WeaponStats weaponStats)
@@ -196,7 +218,6 @@ namespace Player
             currentCriticalDamageMultiplier -= weaponStats.critMultiplier;
 
             foreach (var postfix in weaponStats.generatedAffixes)
-            {
                 switch (postfix.Type)
                 {
                     case ItemTemplate.Suffix.SuffixType.AddedStrength:
@@ -227,7 +248,6 @@ namespace Player
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-            }
         }
 
         private void DecreasePlayerStats(ArmourStats armourStats)
@@ -237,7 +257,6 @@ namespace Player
 
             if (armourStatsCopy.GeneratedAffixes == null) return;
             foreach (var postfix in armourStatsCopy.GeneratedAffixes)
-            {
                 switch (postfix.Type)
                 {
                     case ItemTemplate.Suffix.SuffixType.AddedStrength:
@@ -278,7 +297,6 @@ namespace Player
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-            }
         }
 
         private void IncreaseElementalResistance(RpgManager.ElementalDamageType damageType, float resistanceIncrease)

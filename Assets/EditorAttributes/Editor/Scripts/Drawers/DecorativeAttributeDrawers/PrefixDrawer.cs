@@ -13,11 +13,12 @@ namespace EditorAttributes.Editor
             var prefixAttribute = attribute as PrefixAttribute;
 
             HelpBox errorBox = new();
-            PropertyField propertyField = CreatePropertyField(property);
+            var propertyField = CreatePropertyField(property);
 
             Label prefixLabel = new()
             {
-                style = {
+                style =
+                {
                     fontSize = 12,
                     maxWidth = 200f,
                     marginRight = prefixAttribute.Offset,

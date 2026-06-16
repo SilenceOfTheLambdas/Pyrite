@@ -106,13 +106,13 @@ namespace RPGSystem.Equipment
             itemRequirements.playerLevelRequirement = equipmentLevel;
 
             itemRequirements.playerStrengthRequirement =
-                Mathf.RoundToInt(template.playerStrengthRequirement + (equipmentLevel * 0.5f * rarityMultiplier));
-            itemRequirements.playerDexterityRequirement = 
-                Mathf.RoundToInt(template.playerDexterityRequirement + (equipmentLevel * 0.5f * rarityMultiplier));
+                Mathf.RoundToInt(template.playerStrengthRequirement + equipmentLevel * 0.5f * rarityMultiplier);
+            itemRequirements.playerDexterityRequirement =
+                Mathf.RoundToInt(template.playerDexterityRequirement + equipmentLevel * 0.5f * rarityMultiplier);
             itemRequirements.playerIntelligenceRequirement =
-                Mathf.RoundToInt(template.playerIntelligenceRequirement + (equipmentLevel * 0.5f * rarityMultiplier));
+                Mathf.RoundToInt(template.playerIntelligenceRequirement + equipmentLevel * 0.5f * rarityMultiplier);
         }
-        
+
         /// <summary>
         /// Checks if the player meets the requirements to use the item.
         /// </summary>
@@ -122,7 +122,7 @@ namespace RPGSystem.Equipment
         public bool CheckItemRequirements()
         {
             var player = PlayerRpgController.Instance;
-            
+
             return player.CurrentPlayerLevel >= itemRequirements.playerLevelRequirement
                    && player.currentPlayerAttributes.strength >= itemRequirements.playerStrengthRequirement
                    && player.currentPlayerAttributes.dexterity >= itemRequirements.playerDexterityRequirement

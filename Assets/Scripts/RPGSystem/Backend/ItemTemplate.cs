@@ -7,13 +7,12 @@ namespace RPGSystem.Backend
 {
     public class ItemTemplate : ScriptableObject
     {
-        [Title("Item Information")]
-        public string itemName;
+        [Title("Item Information")] public string itemName;
         public ItemType itemType;
-        [SerializeField, Required] public GameObject inventorySlotPrefab;
-        [AssetPreview(64f, 64f), Required] public GameObject itemPickupPrefab;
-        
-        [Title("Item Requirements"), DataTable(true)]
+        [SerializeField] [Required] public GameObject inventorySlotPrefab;
+        [AssetPreview(64f, 64f)] [Required] public GameObject itemPickupPrefab;
+
+        [Title("Item Requirements")] [DataTable(true)]
         public ItemRequirements baselineItemRequirements;
 
         /// <summary>

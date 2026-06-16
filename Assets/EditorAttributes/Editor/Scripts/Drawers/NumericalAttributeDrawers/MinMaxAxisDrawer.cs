@@ -16,7 +16,7 @@ namespace EditorAttributes.Editor
             var minMaxZ = (clampAttribute.MinValueZ, clampAttribute.MaxValueZ);
             var minMaxW = (clampAttribute.MinValueW, clampAttribute.MaxValueW);
 
-            PropertyField propertyField = CreatePropertyField(property);
+            var propertyField = CreatePropertyField(property);
 
             propertyField.RegisterCallback<SerializedPropertyChangeEvent>((callback) =>
             {
@@ -46,6 +46,7 @@ namespace EditorAttributes.Editor
                                 propertyField.Q<UnsignedLongField>().SetValueWithoutNotify(property.ulongValue);
                                 break;
                         }
+
                         break;
 
                     case SerializedPropertyType.Float:
@@ -61,6 +62,7 @@ namespace EditorAttributes.Editor
                                 propertyField.Q<DoubleField>().SetValueWithoutNotify(property.doubleValue);
                                 break;
                         }
+
                         break;
 
                     case SerializedPropertyType.Vector2:
@@ -69,7 +71,8 @@ namespace EditorAttributes.Editor
                         break;
 
                     case SerializedPropertyType.Vector2Int:
-                        property.vector2IntValue = VectorUtils.Vector3IntToVector2Int(MinMaxIntVector(minMaxX, minMaxY, minMaxZ, new(property.vector2IntValue.x, property.vector2IntValue.y)));
+                        property.vector2IntValue = VectorUtils.Vector3IntToVector2Int(MinMaxIntVector(minMaxX, minMaxY,
+                            minMaxZ, new Vector3Int(property.vector2IntValue.x, property.vector2IntValue.y)));
                         propertyField.Q<Vector2IntField>().SetValueWithoutNotify(property.vector2IntValue);
                         break;
 
@@ -89,7 +92,8 @@ namespace EditorAttributes.Editor
                         break;
 
                     case SerializedPropertyType.RectInt:
-                        property.rectIntValue = MinMaxIntRect(minMaxX, minMaxY, minMaxZ, minMaxW, property.rectIntValue);
+                        property.rectIntValue =
+                            MinMaxIntRect(minMaxX, minMaxY, minMaxZ, minMaxW, property.rectIntValue);
                         propertyField.Q<RectIntField>().SetValueWithoutNotify(property.rectIntValue);
                         break;
 
@@ -98,11 +102,13 @@ namespace EditorAttributes.Editor
                         return;
 
                     case SerializedPropertyType.Quaternion:
-                        propertyField.Add(new HelpBox("Quaternions are not supported because they are weird", HelpBoxMessageType.Warning));
+                        propertyField.Add(new HelpBox("Quaternions are not supported because they are weird",
+                            HelpBoxMessageType.Warning));
                         return;
 
                     default:
-                        propertyField.Add(new HelpBox("The attached field must be numerical", HelpBoxMessageType.Warning));
+                        propertyField.Add(new HelpBox("The attached field must be numerical",
+                            HelpBoxMessageType.Warning));
                         return;
                 }
 
@@ -112,7 +118,8 @@ namespace EditorAttributes.Editor
             return propertyField;
         }
 
-        protected abstract void MinMaxAxis((float, float) minMaxX, (float, float) minMaxY, (float, float) minMaxZ, (float, float) minMaxW, ref Vector4 vector);
+        protected abstract void MinMaxAxis((float, float) minMaxX, (float, float) minMaxY, (float, float) minMaxZ,
+            (float, float) minMaxW, ref Vector4 vector);
 
         private float MinMaxValue((float, float) minMax, float value)
         {
@@ -123,13 +130,15 @@ namespace EditorAttributes.Editor
             return vector4.x;
         }
 
-        private Vector4 MinMaxVector((float, float) minMaxX, (float, float) minMaxY, (float, float) minMaxZ, (float, float) minMaxW, Vector4 vectorValue)
+        private Vector4 MinMaxVector((float, float) minMaxX, (float, float) minMaxY, (float, float) minMaxZ,
+            (float, float) minMaxW, Vector4 vectorValue)
         {
             MinMaxAxis(minMaxX, minMaxY, minMaxZ, minMaxW, ref vectorValue);
             return vectorValue;
         }
 
-        private Rect MinMaxRect((float, float) minMaxX, (float, float) minMaxY, (float, float) minMaxZ, (float, float) minMaxW, Rect rectValue)
+        private Rect MinMaxRect((float, float) minMaxX, (float, float) minMaxY, (float, float) minMaxZ,
+            (float, float) minMaxW, Rect rectValue)
         {
             Vector4 vector4 = new(rectValue.x, rectValue.y, rectValue.width, rectValue.height);
 
@@ -137,7 +146,8 @@ namespace EditorAttributes.Editor
             return new Rect(vector4.x, vector4.y, vector4.z, vector4.w);
         }
 
-        private Vector3Int MinMaxIntVector((float, float) minMaxX, (float, float) minMaxY, (float, float) minMaxZ, Vector3Int vectorValue)
+        private Vector3Int MinMaxIntVector((float, float) minMaxX, (float, float) minMaxY, (float, float) minMaxZ,
+            Vector3Int vectorValue)
         {
             Vector4 vector4 = new(vectorValue.x, vectorValue.y, vectorValue.z);
 
@@ -145,7 +155,8 @@ namespace EditorAttributes.Editor
             return new Vector3Int((int)vector4.x, (int)vector4.y, (int)vector4.z);
         }
 
-        private RectInt MinMaxIntRect((float, float) minMaxX, (float, float) minMaxY, (float, float) minMaxZ, (float, float) minMaxW, RectInt rectValue)
+        private RectInt MinMaxIntRect((float, float) minMaxX, (float, float) minMaxY, (float, float) minMaxZ,
+            (float, float) minMaxW, RectInt rectValue)
         {
             Vector4 vector4 = new(rectValue.x, rectValue.y, rectValue.width, rectValue.height);
 

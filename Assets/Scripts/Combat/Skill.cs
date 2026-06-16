@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using EditorAttributes;
 using UnityEngine;
 
-namespace Pyrite.Combat
+namespace Combat
 {
     [CreateAssetMenu(fileName = "Skill", menuName = "Skills/New Skill")]
     public class Skill : ScriptableObject
     {
-        [Header("Skill Information")]
-        public string skillName;
+        [Header("Skill Information")] public string skillName;
 
-        [Multiline, TextArea]
-        public string skillDescription;
+        [Multiline] [TextArea] public string skillDescription;
 
-        [AssetPreview(64, 64)]
-        public Sprite skillIcon;
+        [AssetPreview(64, 64)] public Sprite skillIcon;
 
-        [DataTable(true, false)]
-        public List<SkillDamage> availableSkillDamage;
+        public int apCost = 1;
+
+        [DataTable(true, false)] public List<SkillDamage> availableSkillDamage;
     }
 
     [Serializable]

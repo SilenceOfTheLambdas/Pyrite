@@ -10,6 +10,8 @@ namespace EditorAttributes
         /// <summary>
         /// Attribute to disable a field when entering play mode
         /// </summary>
-        public DisableInPlayModeAttribute() : base(true) { }
+        public DisableInPlayModeAttribute() : base(true)
+        {
+        }
     }
 }

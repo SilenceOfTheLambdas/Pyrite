@@ -22,8 +22,8 @@ namespace EditorAttributes.Editor
 
             if (titleAttribute.DrawLine)
             {
-                Color? colorWithAlpha = ColorUtils.GetPropertyColor(property, 0.5f);
-                Color? color = ColorUtils.GetPropertyColor(property);
+                var colorWithAlpha = ColorUtils.GetPropertyColor(property, 0.5f);
+                var color = ColorUtils.GetPropertyColor(property);
 
                 if (color.HasValue)
                     title.style.color = color.Value;

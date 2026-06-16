@@ -13,28 +13,31 @@ namespace EditorAttributes.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             if (!IsSupportedPropertyType(property))
-                return new HelpBox("The attached field must derive from <b>UnityEngine.Object</b>", HelpBoxMessageType.Error);
+                return new HelpBox("The attached field must derive from <b>UnityEngine.Object</b>",
+                    HelpBoxMessageType.Error);
 
             var typeFilterAttribute = attribute as TypeFilterAttribute;
 
-            PropertyField propertyField = CreatePropertyField(property);
+            var propertyField = CreatePropertyField(property);
 
             propertyField.RegisterCallbackOnce<GeometryChangedEvent>((callback) =>
             {
                 var objectField = propertyField.Q<ObjectField>();
 
-                objectField.objectType = property.objectReferenceValue != null ? property.objectReferenceValue.GetType() : typeFilterAttribute.TypesToFilter.FirstOrDefault();
+                objectField.objectType = property.objectReferenceValue != null
+                    ? property.objectReferenceValue.GetType()
+                    : typeFilterAttribute.TypesToFilter.FirstOrDefault();
 
                 objectField.RegisterCallback<DragEnterEvent>(callback =>
                 {
-                    Object draggedObject = DragAndDrop.objectReferences.FirstOrDefault();
+                    var draggedObject = DragAndDrop.objectReferences.FirstOrDefault();
 
                     if (draggedObject != null)
                     {
                         Type acceptedDraggedType = null;
 
                         // Check if the dragged object is compatible with any of the allowed types
-                        bool isValidType = typeFilterAttribute.TypesToFilter.Any(type =>
+                        var isValidType = typeFilterAttribute.TypesToFilter.Any(type =>
                         {
                             var objectType = type;
 
@@ -52,12 +55,18 @@ namespace EditorAttributes.Editor
                     }
                 });
 
-                objectField.TrackPropertyValue(property, (trackedProperty) => objectField.objectType = trackedProperty.objectReferenceValue != null ? trackedProperty.objectReferenceValue.GetType() : typeFilterAttribute.TypesToFilter.FirstOrDefault());
+                objectField.TrackPropertyValue(property,
+                    (trackedProperty) => objectField.objectType = trackedProperty.objectReferenceValue != null
+                        ? trackedProperty.objectReferenceValue.GetType()
+                        : typeFilterAttribute.TypesToFilter.FirstOrDefault());
             });
 
             return propertyField;
         }
 
-        protected override bool IsSupportedPropertyType(SerializedProperty property) => property.propertyType == SerializedPropertyType.ObjectReference;
+        protected override bool IsSupportedPropertyType(SerializedProperty property)
+        {
+            return property.propertyType == SerializedPropertyType.ObjectReference;
+        }
     }
 }

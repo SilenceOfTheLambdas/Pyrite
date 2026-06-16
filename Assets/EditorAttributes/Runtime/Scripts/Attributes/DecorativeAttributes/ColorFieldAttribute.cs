@@ -24,7 +24,10 @@ namespace EditorAttributes
         /// Attribute to color a field in the inspector
         /// </summary>
         /// <param name="fieldColor">The color of the field</param>
-        public ColorFieldAttribute(GUIColor fieldColor) : base(true) => Color = fieldColor;
+        public ColorFieldAttribute(GUIColor fieldColor) : base(true)
+        {
+            Color = fieldColor;
+        }
 
         /// <summary>
         /// Attribute to color a field in the inspector
@@ -44,6 +47,9 @@ namespace EditorAttributes
         /// Attribute to color a field in the inspector
         /// </summary>
         /// <param name="hexColor">The color in hexadecimal</param>
-        public ColorFieldAttribute(string hexColor) : base(true) => HexColor = hexColor;
+        public ColorFieldAttribute(string hexColor) : base(true)
+        {
+            HexColor = hexColor;
+        }
     }
 }

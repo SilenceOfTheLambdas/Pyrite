@@ -42,7 +42,6 @@ namespace User_Interface
 
         public void AddNewSkillToHotbar()
         {
-
         }
 
         /// <summary>
@@ -52,10 +51,8 @@ namespace User_Interface
         private SkillButton GetNextEmptySkillButton()
         {
             foreach (var skillButton in skillButtons)
-            {
                 if (skillButton.hasSkillAssigned == false)
                     return skillButton;
-            }
             return null;
         }
     }

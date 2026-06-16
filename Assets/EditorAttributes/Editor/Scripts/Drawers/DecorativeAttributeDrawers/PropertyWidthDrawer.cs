@@ -11,7 +11,7 @@ namespace EditorAttributes.Editor
         {
             var propertyWidthAttribute = attribute as PropertyWidthAttribute;
 
-            PropertyField propertyField = CreatePropertyField(property);
+            var propertyField = CreatePropertyField(property);
 
             propertyField.RegisterCallbackOnce<GeometryChangedEvent>((callback) =>
             {

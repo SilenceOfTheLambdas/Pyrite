@@ -42,7 +42,7 @@ namespace RPGSystem
 
             return armourTemplates;
         }
-        
+
         /// <summary>
         /// Attempts to find an ItemTemplate with a given name.
         /// </summary>

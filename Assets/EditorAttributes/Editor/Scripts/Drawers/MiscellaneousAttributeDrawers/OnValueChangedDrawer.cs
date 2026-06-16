@@ -13,10 +13,10 @@ namespace EditorAttributes.Editor
         {
             var onValueChangedAttribute = attribute as OnValueChangedAttribute;
 
-            ReflectionUtils.GetNestedObjectType(property, out object target);
-            PropertyField propertyField = CreatePropertyField(property);
+            ReflectionUtils.GetNestedObjectType(property, out var target);
+            var propertyField = CreatePropertyField(property);
 
-            MethodInfo function = ReflectionUtils.FindFunction(onValueChangedAttribute.FunctionName, property);
+            var function = ReflectionUtils.FindFunction(onValueChangedAttribute.FunctionName, property);
 
             if (function.GetParameters().Length != 0)
             {

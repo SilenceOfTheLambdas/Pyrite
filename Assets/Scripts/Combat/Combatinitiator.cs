@@ -7,12 +7,10 @@ public class Combatinitiator : MonoBehaviour
 {
     public static event Action OnCombatStarted;
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-        {
             // Initiate combat
             OnCombatStarted?.Invoke();
-        }
     }
 }

@@ -17,7 +17,7 @@ namespace EditorAttributes.Editor
             var filePathAttribute = attribute as FilePathAttribute;
 
             VisualElement root = new();
-            PropertyField propertyField = CreatePropertyField(property);
+            var propertyField = CreatePropertyField(property);
 
             Button button = new(SetFilePath);
             Image buttonIcon = new() { image = EditorGUIUtility.IconContent("d_Folder Icon").image };
@@ -35,11 +35,12 @@ namespace EditorAttributes.Editor
 
             void SetFilePath()
             {
-                string filePath = EditorUtility.OpenFilePanel("Select file", "Assets", filePathAttribute.Filters);
+                var filePath = EditorUtility.OpenFilePanel("Select file", "Assets", filePathAttribute.Filters);
 
-                if (filePathAttribute.GetRelativePath && !string.IsNullOrEmpty(filePath) && Path.IsPathFullyQualified(filePath))
+                if (filePathAttribute.GetRelativePath && !string.IsNullOrEmpty(filePath) &&
+                    Path.IsPathFullyQualified(filePath))
                 {
-                    string projectRoot = Application.dataPath[..^"Assets".Length];
+                    var projectRoot = Application.dataPath[..^"Assets".Length];
 
                     filePath = Path.GetRelativePath(projectRoot, filePath);
                 }
@@ -52,6 +53,9 @@ namespace EditorAttributes.Editor
             }
         }
 
-        protected override bool IsSupportedPropertyType(SerializedProperty property) => property.propertyType == SerializedPropertyType.String;
+        protected override bool IsSupportedPropertyType(SerializedProperty property)
+        {
+            return property.propertyType == SerializedPropertyType.String;
+        }
     }
 }

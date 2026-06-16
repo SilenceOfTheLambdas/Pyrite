@@ -10,16 +10,15 @@ namespace RPGSystem.Item_Definitions
     [CreateAssetMenu(fileName = "BaseWeaponTemplate", menuName = "Inventory/Items/New ArmourTemplate")]
     public class ArmourTemplate : ItemTemplate
     {
-        [Title("Armour Stats")]
-        public ArmourType armourType;
+        [Title("Armour Stats")] public ArmourType armourType;
 
         /// <summary>
         /// Baseline stats for this armour type.
         /// </summary>
-        [Space]
-        public BaselineArmourStats baselineArmourStats;
+        [Space] public BaselineArmourStats baselineArmourStats;
 
-        [Title("Possible Suffixes")] [DataTable(true, false)]
+        [Title("Possible Suffixes")]
+        [DataTable(true, false)]
         [Description("Provide a list of possible suffixes that could apply to this item.")]
         public List<Suffix> possibleSuffixes;
 

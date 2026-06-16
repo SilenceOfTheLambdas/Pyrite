@@ -9,7 +9,7 @@ namespace EditorAttributes.Editor
     {
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
-            PropertyField propertyField = CreatePropertyField(property);
+            var propertyField = CreatePropertyField(property);
 
             propertyField.RegisterCallbackOnce<GeometryChangedEvent>((callback) =>
             {

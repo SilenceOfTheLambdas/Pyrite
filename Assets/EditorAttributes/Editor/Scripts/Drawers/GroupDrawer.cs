@@ -14,15 +14,16 @@ namespace EditorAttributes.Editor
         /// <returns>A visual element contaning the property field</returns>
         protected virtual VisualElement CreateGroupProperty(string memberName, SerializedProperty property)
         {
-            SerializedProperty variableProperty = FindNestedProperty(property, GetSerializedPropertyName(memberName, property));
+            var variableProperty = FindNestedProperty(property, GetSerializedPropertyName(memberName, property));
 
             if (variableProperty == null)
                 return new HelpBox($"<b>{memberName}</b> is not a valid field or property", HelpBoxMessageType.Error);
 
-            PropertyField propertyField = CreatePropertyField(variableProperty);
+            var propertyField = CreatePropertyField(variableProperty);
 
             // Slightly move foldouts for certain types so they don't go out of bounds
-            if (variableProperty.propertyType == SerializedPropertyType.Generic && variableProperty.type != "UnityEvent" && !variableProperty.isArray)
+            if (variableProperty.propertyType == SerializedPropertyType.Generic &&
+                variableProperty.type != "UnityEvent" && !variableProperty.isArray)
                 propertyField.style.marginLeft = 10f;
 
             // Replace the hidden field ID with the grouped field ID so the EditorExtension class doesn't remove it when drawing the editor

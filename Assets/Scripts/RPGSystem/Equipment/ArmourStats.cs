@@ -14,6 +14,7 @@ namespace RPGSystem.Equipment
         /// The generated armour stats based on the baseline stats given in the item template.
         /// </summary>
         [NonSerialized] public BaselineArmourStats GeneratedArmourStats;
+
         [NonSerialized] public List<BaselineArmourStats.ElementalResistance> ElementalResistances;
 
         public ArmourStats(BaselineArmourStats baselineArmourStats)
@@ -132,8 +133,10 @@ namespace RPGSystem.Equipment
                         break;
                     case ItemTemplate.Suffix.SuffixType.AddedHealth:
                         affix.Value = Random.Range(
-                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min.strength,
-                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.max.strength);
+                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min
+                                .strength,
+                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.max
+                                .strength);
                         tempListOfPossibleAffixes.Add(affix);
                         break;
                     case ItemTemplate.Suffix.SuffixType.AddedArmour:
@@ -151,8 +154,10 @@ namespace RPGSystem.Equipment
                     case ItemTemplate.Suffix.SuffixType.IncreasedPoisonResistance:
                         // Use magic stat to scale resistance affixes
                         affix.Value = Random.Range(
-                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min.intelligence * (int)equipmentRarity,
-                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.max.intelligence * (int)equipmentRarity);
+                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.min
+                                .intelligence * (int)equipmentRarity,
+                            RpgManager.Instance.itemTiers[RpgManager.Instance.currentItemTier - 1].tierStatsRange.max
+                                .intelligence * (int)equipmentRarity);
                         tempListOfPossibleAffixes.Add(affix);
                         break;
                 }
@@ -185,9 +190,9 @@ namespace RPGSystem.Equipment
                         GeneratedArmourStats.statBonuses.intelligence += affix.Value;
                         break;
                     case ItemTemplate.Suffix.SuffixType.AddedHealth:
-                        GeneratedArmourStats.statBonuses.strength += 
+                        GeneratedArmourStats.statBonuses.strength +=
                             affix.Value + (int)(RpgManager.Instance.currentItemTier * affix.Value *
-                            RpgManager.Instance.itemLevelFactor);
+                                                RpgManager.Instance.itemLevelFactor);
                         break;
                     case ItemTemplate.Suffix.SuffixType.AddedArmour:
                         // Flat armour bonus scaled a little by item level factor and tier

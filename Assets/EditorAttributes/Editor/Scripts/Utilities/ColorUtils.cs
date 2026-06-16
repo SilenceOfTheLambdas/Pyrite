@@ -18,7 +18,7 @@ namespace EditorAttributes.Editor.Utility
             if (color.Color == GUIColor.Default && !color.UseRGB && string.IsNullOrEmpty(color.HexColor))
                 return;
 
-            Color attributeColor = GetColorFromAttribute(color, errorBox);
+            var attributeColor = GetColorFromAttribute(color, errorBox);
             ApplyColor(visualElement, attributeColor);
         }
 
@@ -42,7 +42,8 @@ namespace EditorAttributes.Editor.Utility
                 foreach (var textElement in textElements)
                     textElement.style.color = color;
 
-                var scrollviews = visualElement.Query<ScrollView>(className: "unity-collection-view__scroll-view").ToList();
+                var scrollviews = visualElement.Query<ScrollView>(className: "unity-collection-view__scroll-view")
+                    .ToList();
 
                 foreach (var scrollview in scrollviews)
                     scrollview.style.backgroundColor = color / 3f;
@@ -59,24 +60,23 @@ namespace EditorAttributes.Editor.Utility
                     checkMark.style.unityBackgroundImageTintColor = color;
                     checkMark.parent.style.backgroundColor = StyleKeyword.Initial;
                 }
-
             }).ExecuteLater(delay);
         }
 
-        internal static Color? GetPropertyColor(SerializedProperty property) => GetPropertyColor(property, EditorExtension.GLOBAL_COLOR.a);
+        internal static Color? GetPropertyColor(SerializedProperty property)
+        {
+            return GetPropertyColor(property, EditorExtension.GLOBAL_COLOR.a);
+        }
 
         internal static Color? GetPropertyColor(SerializedProperty property, float customAlpha)
         {
-            Color? propertyColor = GetColorFromProperty(property);
+            var propertyColor = GetColorFromProperty(property);
 
             if (propertyColor.HasValue)
-            {
                 return new Color(propertyColor.Value.r, propertyColor.Value.g, propertyColor.Value.b, customAlpha);
-            }
             else if (EditorExtension.GLOBAL_COLOR != EditorExtension.DEFAULT_GLOBAL_COLOR)
-            {
-                return new Color(EditorExtension.GLOBAL_COLOR.r, EditorExtension.GLOBAL_COLOR.g, EditorExtension.GLOBAL_COLOR.b, customAlpha);
-            }
+                return new Color(EditorExtension.GLOBAL_COLOR.r, EditorExtension.GLOBAL_COLOR.g,
+                    EditorExtension.GLOBAL_COLOR.b, customAlpha);
 
             return null;
         }
@@ -88,7 +88,7 @@ namespace EditorAttributes.Editor.Utility
         /// <returns>The color from the attribute, null if the attribute is not found</returns>
         public static Color? GetColorFromProperty(SerializedProperty property)
         {
-            FieldInfo field = ReflectionUtils.FindField(property.name, property);
+            var field = ReflectionUtils.FindField(property.name, property);
 
             IColorAttribute colorAttribute = field?.GetCustomAttribute<GUIColorAttribute>();
 
@@ -104,7 +104,10 @@ namespace EditorAttributes.Editor.Utility
         /// <param name="attribute">The color attribute</param>
         /// <param name="errorBox">The error box to display any errors to</param>
         /// <returns>The color from the attribute</returns>
-        public static Color GetColorFromAttribute(IColorAttribute attribute, HelpBox errorBox) => GetColorFromAttribute(attribute, 1f, errorBox);
+        public static Color GetColorFromAttribute(IColorAttribute attribute, HelpBox errorBox)
+        {
+            return GetColorFromAttribute(attribute, 1f, errorBox);
+        }
 
         /// <summary>
         /// Gets the color value from a color attribute with custom alpha
@@ -115,7 +118,7 @@ namespace EditorAttributes.Editor.Utility
         /// <returns>The color from the attribute</returns>
         public static Color GetColorFromAttribute(IColorAttribute attribute, float alpha, HelpBox errorBox)
         {
-            if (ColorUtility.TryParseHtmlString(attribute.HexColor, out Color color))
+            if (ColorUtility.TryParseHtmlString(attribute.HexColor, out var color))
             {
                 color.a = alpha;
                 return color;
@@ -133,7 +136,10 @@ namespace EditorAttributes.Editor.Utility
         /// </summary>
         /// <param name="colorAttribute">The color attribute</param>
         /// <returns>The color value</returns>
-        public static Color ColorAttributeToColor(IColorAttribute colorAttribute) => ColorAttributeToColor(colorAttribute, 1f);
+        public static Color ColorAttributeToColor(IColorAttribute colorAttribute)
+        {
+            return ColorAttributeToColor(colorAttribute, 1f);
+        }
 
         /// <summary>
         /// Converts the color attribute values from the color attribute to a color
@@ -144,7 +150,7 @@ namespace EditorAttributes.Editor.Utility
         public static Color ColorAttributeToColor(IColorAttribute colorAttribute, float alpha)
         {
             if (colorAttribute.UseRGB)
-                return new(colorAttribute.R / 255f, colorAttribute.G / 255f, colorAttribute.B / 255f, alpha);
+                return new Color(colorAttribute.R / 255f, colorAttribute.G / 255f, colorAttribute.B / 255f, alpha);
 
             return GUIColorToColor(colorAttribute.Color, alpha);
         }
@@ -154,7 +160,10 @@ namespace EditorAttributes.Editor.Utility
         /// </summary>
         /// <param name="color">The GUIColor</param>
         /// <returns>The color value</returns>
-        public static Color GUIColorToColor(GUIColor color) => GUIColorToColor(color, 1f);
+        public static Color GUIColorToColor(GUIColor color)
+        {
+            return GUIColorToColor(color, 1f);
+        }
 
         /// <summary>
         /// Converts the GUIColor value to a color
@@ -166,21 +175,22 @@ namespace EditorAttributes.Editor.Utility
         {
             return color switch
             {
-                GUIColor.White => new(Color.white.r, Color.white.g, Color.white.b, alpha),
-                GUIColor.Black => new(Color.black.r, Color.black.g, Color.black.b, alpha),
-                GUIColor.Gray => new(Color.gray.r, Color.gray.g, Color.gray.b, alpha),
-                GUIColor.Red => new(Color.red.r, Color.red.g, Color.red.b, alpha),
-                GUIColor.Green => new(Color.green.r, Color.green.g, Color.green.b, alpha),
-                GUIColor.Blue => new(Color.blue.r, Color.blue.g, Color.blue.b, alpha),
-                GUIColor.Cyan => new(Color.cyan.r, Color.cyan.g, Color.cyan.b, alpha),
-                GUIColor.Magenta => new(Color.magenta.r, Color.magenta.g, Color.magenta.b, alpha),
-                GUIColor.Yellow => new(Color.yellow.r, Color.yellow.g, Color.yellow.b, alpha),
-                GUIColor.Orange => new(1f, 149f / 255f, 0f, alpha),
-                GUIColor.Brown => new(161f / 255f, 62f / 255f, 0f, alpha),
-                GUIColor.Purple => new(158f / 255f, 5f / 255f, 247f / 255f, alpha),
-                GUIColor.Pink => new(247f / 255f, 5f / 255f, 171f / 255f, alpha),
-                GUIColor.Lime => new(145f / 255f, 1f, 0f, alpha),
-                _ => new(EditorExtension.DEFAULT_GLOBAL_COLOR.r, EditorExtension.DEFAULT_GLOBAL_COLOR.g, EditorExtension.DEFAULT_GLOBAL_COLOR.b, alpha)
+                GUIColor.White => new Color(Color.white.r, Color.white.g, Color.white.b, alpha),
+                GUIColor.Black => new Color(Color.black.r, Color.black.g, Color.black.b, alpha),
+                GUIColor.Gray => new Color(Color.gray.r, Color.gray.g, Color.gray.b, alpha),
+                GUIColor.Red => new Color(Color.red.r, Color.red.g, Color.red.b, alpha),
+                GUIColor.Green => new Color(Color.green.r, Color.green.g, Color.green.b, alpha),
+                GUIColor.Blue => new Color(Color.blue.r, Color.blue.g, Color.blue.b, alpha),
+                GUIColor.Cyan => new Color(Color.cyan.r, Color.cyan.g, Color.cyan.b, alpha),
+                GUIColor.Magenta => new Color(Color.magenta.r, Color.magenta.g, Color.magenta.b, alpha),
+                GUIColor.Yellow => new Color(Color.yellow.r, Color.yellow.g, Color.yellow.b, alpha),
+                GUIColor.Orange => new Color(1f, 149f / 255f, 0f, alpha),
+                GUIColor.Brown => new Color(161f / 255f, 62f / 255f, 0f, alpha),
+                GUIColor.Purple => new Color(158f / 255f, 5f / 255f, 247f / 255f, alpha),
+                GUIColor.Pink => new Color(247f / 255f, 5f / 255f, 171f / 255f, alpha),
+                GUIColor.Lime => new Color(145f / 255f, 1f, 0f, alpha),
+                _ => new Color(EditorExtension.DEFAULT_GLOBAL_COLOR.r, EditorExtension.DEFAULT_GLOBAL_COLOR.g,
+                    EditorExtension.DEFAULT_GLOBAL_COLOR.b, alpha)
             };
         }
     }

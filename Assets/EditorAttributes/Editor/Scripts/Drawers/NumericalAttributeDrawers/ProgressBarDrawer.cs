@@ -10,7 +10,8 @@ namespace EditorAttributes.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             if (!IsSupportedPropertyType(property))
-                return new HelpBox("The ProgressBar Attribute can only be attached to an int or float", HelpBoxMessageType.Error);
+                return new HelpBox("The ProgressBar Attribute can only be attached to an int or float",
+                    HelpBoxMessageType.Error);
 
             var progressBarAttribute = attribute as ProgressBarAttribute;
 
@@ -27,7 +28,8 @@ namespace EditorAttributes.Editor
             progressBar.RegisterCallbackOnce<GeometryChangedEvent>((callback) =>
             {
                 if (CanApplyGlobalColor)
-                    progressBar.Q(className: AbstractProgressBar.progressUssClassName).style.backgroundColor = EditorExtension.GLOBAL_COLOR / 2f;
+                    progressBar.Q(className: AbstractProgressBar.progressUssClassName).style.backgroundColor =
+                        EditorExtension.GLOBAL_COLOR / 2f;
             });
 
             progressBar.TrackPropertyValue(property, SetProgressBarValue);
@@ -36,14 +38,17 @@ namespace EditorAttributes.Editor
 
             void SetProgressBarValue(SerializedProperty property)
             {
-                float propertyValue = GetPropertyValue(property);
+                var propertyValue = GetPropertyValue(property);
 
                 progressBar.value = propertyValue;
                 progressBar.title = $"{property.displayName}: {propertyValue}/{progressBarAttribute.MaxValue}";
             }
         }
 
-        protected override bool IsSupportedPropertyType(SerializedProperty property) => property.propertyType is SerializedPropertyType.Integer or SerializedPropertyType.Float;
+        protected override bool IsSupportedPropertyType(SerializedProperty property)
+        {
+            return property.propertyType is SerializedPropertyType.Integer or SerializedPropertyType.Float;
+        }
 
         private float GetPropertyValue(SerializedProperty property)
         {

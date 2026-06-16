@@ -20,7 +20,8 @@ namespace Unified.UniversalBlur.Runtime.CommandBuffer
         public void DrawProcedural(Matrix4x4 matrix, Material material, int shaderPass, MeshTopology topology,
             int vertexCount, int instanceCount, MaterialPropertyBlock properties)
         {
-            _commandBuffer.DrawProcedural(matrix, material, shaderPass, topology, vertexCount, instanceCount, properties);
+            _commandBuffer.DrawProcedural(matrix, material, shaderPass, topology, vertexCount, instanceCount,
+                properties);
         }
     }
 }

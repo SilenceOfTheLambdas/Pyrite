@@ -76,7 +76,7 @@ namespace World
                 var spawnPosition = itemDropStartingLocation.position + new Vector3(randomCircle.x, 5f, randomCircle.y);
 
                 // Raycast down to find the floor
-                if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hit, 10f, LayerMask.GetMask("Walkable")))
+                if (Physics.Raycast(spawnPosition, Vector3.down, out var hit, 10f, LayerMask.GetMask("Walkable")))
                 {
                     // Spawn slightly above the ground
                     var finalDropLocation = hit.point + new Vector3(0, 0.5f, 0);

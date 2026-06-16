@@ -20,7 +20,7 @@ namespace RPGSystem.Inventory_System
         [SerializeField] private int maximumInventorySize = 24;
         [SerializeField] private GameObject gridItemsParent;
 
-        public int CurrentPlayerGold { private set; get; }
+        public int CurrentPlayerGold { get; private set; }
 
         private void Awake()
         {
@@ -79,12 +79,12 @@ namespace RPGSystem.Inventory_System
             };
         }
 
-       
+
         public void RemoveItemFromInventory(InventoryItem itemToRemove)
         {
             if (!InventoryItems.Contains(itemToRemove)) return;
             InventoryItems.Remove(itemToRemove);
-            
+
             var subset = InventoryItems.Where(i => i.ItemIndex > itemToRemove.ItemIndex).ToList();
             foreach (var item in subset)
             {
@@ -92,6 +92,7 @@ namespace RPGSystem.Inventory_System
                 item.ItemIndex -= 1;
                 InventoryItems.Add(item);
             }
+
             InventoryItems.Sort((a, b) => a.ItemIndex.CompareTo(b.ItemIndex));
         }
     }

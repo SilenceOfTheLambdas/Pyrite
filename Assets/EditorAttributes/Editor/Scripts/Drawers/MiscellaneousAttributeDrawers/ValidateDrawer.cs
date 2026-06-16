@@ -15,7 +15,7 @@ namespace EditorAttributes.Editor
             var validateAttribute = attribute as ValidateAttribute;
 
             VisualElement root = new();
-            PropertyField propertyField = CreatePropertyField(property);
+            var propertyField = CreatePropertyField(property);
 
             HelpBox errorBox = new();
             HelpBox helpBox = new(validateAttribute.ValidationMessage, (HelpBoxMessageType)validateAttribute.Severety);
@@ -29,20 +29,24 @@ namespace EditorAttributes.Editor
             root.Add(propertyField);
             root.Add(helpBox);
 
-            MemberInfo conditionalProperty = ReflectionUtils.GetValidMemberInfo(validateAttribute.ConditionName, property);
+            var conditionalProperty = ReflectionUtils.GetValidMemberInfo(validateAttribute.ConditionName, property);
 
             UpdateVisualElement(root, () =>
             {
-                helpBox.style.display = GetConditionValue(conditionalProperty, validateAttribute, property, helpBox, errorBox) ? DisplayStyle.Flex : DisplayStyle.None;
+                helpBox.style.display =
+                    GetConditionValue(conditionalProperty, validateAttribute, property, helpBox, errorBox)
+                        ? DisplayStyle.Flex
+                        : DisplayStyle.None;
                 DisplayErrorBox(root, errorBox);
             });
 
             return root;
         }
 
-        private bool GetConditionValue(MemberInfo memberInfo, ValidateAttribute validateAttribute, SerializedProperty serializedProperty, HelpBox helpBox, HelpBox errorBox)
+        private bool GetConditionValue(MemberInfo memberInfo, ValidateAttribute validateAttribute,
+            SerializedProperty serializedProperty, HelpBox helpBox, HelpBox errorBox)
         {
-            Type memberInfoType = ReflectionUtils.GetMemberInfoType(memberInfo);
+            var memberInfoType = ReflectionUtils.GetMemberInfoType(memberInfo);
 
             if (memberInfoType == null)
             {
@@ -50,11 +54,14 @@ namespace EditorAttributes.Editor
                 return false;
             }
 
-            object[] parameterValues = !validateAttribute.applyToCollection ? new object[] { GetCollectionElementIndex(serializedProperty) } : null;
+            var parameterValues = !validateAttribute.applyToCollection
+                ? new object[] { GetCollectionElementIndex(serializedProperty) }
+                : null;
 
             if (memberInfoType == typeof(bool))
             {
-                object memberInfoValue = ReflectionUtils.GetMemberInfoValue(memberInfo, serializedProperty, parameterValues);
+                var memberInfoValue =
+                    ReflectionUtils.GetMemberInfoValue(memberInfo, serializedProperty, parameterValues);
 
                 if (memberInfoValue == null)
                     return false;
@@ -63,12 +70,14 @@ namespace EditorAttributes.Editor
             }
             else if (memberInfoType == typeof(ValidationCheck))
             {
-                if (ReflectionUtils.GetMemberInfoValue(memberInfo, serializedProperty, parameterValues) is not ValidationCheck memberInfoValue)
+                if (ReflectionUtils.GetMemberInfoValue(memberInfo, serializedProperty, parameterValues) is not
+                    ValidationCheck memberInfoValue)
                     return false;
 
                 if (validateAttribute.ValidationMessage != null)
                 {
-                    errorBox.text = "The condition uses <b>ValidationCheck</b> but the attribute still uses the constructor with the <b>validationMessage</b> parameter which will be overriden";
+                    errorBox.text =
+                        "The condition uses <b>ValidationCheck</b> but the attribute still uses the constructor with the <b>validationMessage</b> parameter which will be overriden";
                     errorBox.messageType = HelpBoxMessageType.Info;
                 }
 
@@ -78,7 +87,8 @@ namespace EditorAttributes.Editor
                 return !memberInfoValue.PassedCheck;
             }
 
-            errorBox.text = $"The provided condition <b>{validateAttribute.ConditionName}</b> is not a valid <b>bool</b> or <b>ValidationCheck</b> type";
+            errorBox.text =
+                $"The provided condition <b>{validateAttribute.ConditionName}</b> is not a valid <b>bool</b> or <b>ValidationCheck</b> type";
 
             return false;
         }

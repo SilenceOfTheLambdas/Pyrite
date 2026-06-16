@@ -14,11 +14,12 @@ namespace EditorAttributes.Editor
 
             VisualElement root = new();
             HelpBox errorBox = new();
-            PropertyField propertyField = CreatePropertyField(property);
+            var propertyField = CreatePropertyField(property);
 
             Label suffixLabel = new()
             {
-                style = {
+                style =
+                {
                     fontSize = 12,
                     maxWidth = 200f,
                     marginLeft = suffixAttribute.Offset,
@@ -30,7 +31,8 @@ namespace EditorAttributes.Editor
 
             root.style.flexDirection = FlexDirection.Row;
             propertyField.style.flexGrow = 1f;
-            suffixLabel.style.color = suffixLabel.style.color = CanApplyGlobalColor ? EditorExtension.GLOBAL_COLOR : Color.gray;
+            suffixLabel.style.color =
+                suffixLabel.style.color = CanApplyGlobalColor ? EditorExtension.GLOBAL_COLOR : Color.gray;
 
             root.Add(propertyField);
             root.Add(suffixLabel);

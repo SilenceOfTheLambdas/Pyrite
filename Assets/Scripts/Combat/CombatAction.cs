@@ -2,17 +2,22 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Pyrite.Combat
+namespace Combat
 {
-    public interface ICombatAction
+    [Serializable]
+    public abstract class CombatAction
     {
-        string DisplayName { get; }
-        int ApCost { get; }
+        public Skill Skill { get; private set; }
+
+        protected CombatAction(Skill skill)
+        {
+            Skill = skill;
+        }
 
         /// <summary>
         /// Check if the action can be legally performed.
         /// </summary>
-        public bool CanPerform(GameObject actor, Vector2Int targetGridPos);
+        public abstract bool CanPerform(GameObject actor, Vector2Int targetGridPos);
 
         /// <summary>
         /// Asynchronously executes the action, invoking onComplete when all visual animations,
@@ -22,6 +27,6 @@ namespace Pyrite.Combat
         /// <param name="targetGridPos"></param>
         /// <param name="onComplete">Action to perform onComplete</param>
         /// <returns></returns>
-        public IEnumerator Execute(GameObject actor, Vector2Int targetGridPos, Action onComplete);
+        public abstract IEnumerator Execute(GameObject actor, Vector2Int targetGridPos, Action onComplete);
     }
 }

@@ -28,19 +28,13 @@ namespace Player
             _itemTemplate = template;
             itemRarity = rarity;
 
-            if (itemLabel == null)
-            {
-                itemLabel = GetComponentInChildren<ItemLabel>();
-            }
+            if (itemLabel == null) itemLabel = GetComponentInChildren<ItemLabel>();
 
             if (itemLabel != null)
-            {
-                itemLabel.SetLabelTextAndRarity(_itemTemplate.itemName, ItemLabel.LabelRarityColour.GetColourForRarity(itemRarity));
-            }
+                itemLabel.SetLabelTextAndRarity(_itemTemplate.itemName,
+                    ItemLabel.LabelRarityColour.GetColourForRarity(itemRarity));
             else
-            {
                 Debug.LogWarning($"ItemLabel not found on {gameObject.name}. Item name: {_itemTemplate.itemName}");
-            }
         }
 
         public void PickupDroppedItemFromLootContainer()

@@ -9,8 +9,10 @@ namespace EditorAttributes.Editor
     {
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
-            PropertyField propertyField = CreatePropertyField(property);
-            propertyField.style.display = !EditorApplication.isPlayingOrWillChangePlaymode ? DisplayStyle.Flex : DisplayStyle.None;
+            var propertyField = CreatePropertyField(property);
+            propertyField.style.display = !EditorApplication.isPlayingOrWillChangePlaymode
+                ? DisplayStyle.Flex
+                : DisplayStyle.None;
 
             return propertyField;
         }

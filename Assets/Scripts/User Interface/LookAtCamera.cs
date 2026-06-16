@@ -14,10 +14,8 @@ namespace User_Interface
         {
             _cameraTransform = Camera.main?.transform;
             if (_cameraTransform == null)
-            {
                 Debug.LogError(
                     "LookAtCamera: No main camera found. Please ensure there is a camera in the scene tagged as 'MainCamera'.");
-            }
         }
 
         private void LateUpdate()

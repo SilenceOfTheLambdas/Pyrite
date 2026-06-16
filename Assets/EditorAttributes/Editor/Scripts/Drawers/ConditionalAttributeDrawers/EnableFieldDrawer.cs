@@ -12,10 +12,10 @@ namespace EditorAttributes.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             var enableAttribute = attribute as EnableFieldAttribute;
-            MemberInfo conditionalProperty = ReflectionUtils.GetValidMemberInfo(enableAttribute.ConditionName, property);
+            var conditionalProperty = ReflectionUtils.GetValidMemberInfo(enableAttribute.ConditionName, property);
 
             HelpBox errorBox = new();
-            PropertyField propertyField = CreatePropertyField(property);
+            var propertyField = CreatePropertyField(property);
 
             UpdateVisualElement(propertyField, () =>
             {

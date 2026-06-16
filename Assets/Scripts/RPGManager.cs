@@ -57,8 +57,7 @@ public class RpgManager : MonoBehaviour
     [Serializable]
     public struct ItemTier
     {
-        [Header("Tier Settings")]
-        [Tooltip("Assign a given tier to a range of levels.")]
+        [Header("Tier Settings")] [Tooltip("Assign a given tier to a range of levels.")]
         public int itemTier;
 
         public StatRange<int> tierLevelRange;

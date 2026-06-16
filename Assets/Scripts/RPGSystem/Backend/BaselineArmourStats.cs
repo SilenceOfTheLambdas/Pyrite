@@ -12,16 +12,16 @@ namespace RPGSystem.Backend
     [Serializable]
     public class BaselineArmourStats
     {
-        [SerializeField, HorizontalGroup(drawInBox: true,nameof(physicalArmour), nameof(magicalArmour))]
+        [SerializeField] [HorizontalGroup(true, nameof(physicalArmour), nameof(magicalArmour))]
         private Void armourGroupHolder;
-        [HideProperty, HideInInspector] public int physicalArmour;
-        [HideProperty, HideInInspector] public int magicalArmour;
 
-        [SerializeField] [DataTable(true)]
-        public RpgManager.CorePlayerStats statBonuses;
+        [HideProperty] [HideInInspector] public int physicalArmour;
+        [HideProperty] [HideInInspector] public int magicalArmour;
+
+        [SerializeField] [DataTable(true)] public RpgManager.CorePlayerStats statBonuses;
 
         [NonSerialized] public List<ItemTemplate.Suffix> GeneratedAffixes;
-        
+
         public static BaselineArmourStats operator +(BaselineArmourStats a, BaselineArmourStats b)
         {
             var combined = new BaselineArmourStats
@@ -33,7 +33,7 @@ namespace RPGSystem.Backend
 
             return combined;
         }
-        
+
         public static BaselineArmourStats operator -(BaselineArmourStats a, BaselineArmourStats b)
         {
             var combined = new BaselineArmourStats
@@ -60,7 +60,7 @@ namespace RPGSystem.Backend
 
             return copy;
         }
-        
+
         [Serializable]
         public struct ElementalResistance : IEquatable<ElementalResistance>
         {
@@ -70,7 +70,7 @@ namespace RPGSystem.Backend
             [SerializeField] public RpgManager.ElementalDamageType damageType;
 
             [Range(0, 100)] [SerializeField] public float resistancePercentage;
-            
+
             public static ElementalResistance operator +(ElementalResistance a, ElementalResistance b)
             {
                 if (a.damageType == b.damageType)

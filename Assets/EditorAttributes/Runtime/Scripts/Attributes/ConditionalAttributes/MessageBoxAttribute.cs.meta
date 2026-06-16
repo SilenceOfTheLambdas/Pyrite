@@ -13,6 +13,6 @@ AssetOrigin:
   serializedVersion: 1
   productId: 269285
   packageName: EditorAttributes
-  packageVersion: 3.0.3
+  packageVersion: 3.0.4
   assetPath: Assets/EditorAttributes/Runtime/Scripts/Attributes/ConditionalAttributes/MessageBoxAttribute.cs
-  uploadId: 903126
+  uploadId: 933238

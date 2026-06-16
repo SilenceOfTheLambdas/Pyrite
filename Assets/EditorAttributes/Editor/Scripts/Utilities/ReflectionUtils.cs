@@ -10,7 +10,8 @@ namespace EditorAttributes.Editor.Utility
 {
     public static class ReflectionUtils
     {
-        public const BindingFlags BINDING_FLAGS = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy;
+        public const BindingFlags BINDING_FLAGS = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic |
+                                                  BindingFlags.Static | BindingFlags.FlattenHierarchy;
 
         /// <summary>
         /// Finds a field inside a serialized object
@@ -23,13 +24,18 @@ namespace EditorAttributes.Editor.Utility
             if (fieldName.Contains('.'))
                 return GetStaticMemberInfoFromPath(fieldName, MemberTypes.Field) as FieldInfo;
 
-            Type serializedObjectType = GetNestedObjectType(property, out _);
-            FieldInfo fieldInfo = serializedObjectType != null ? serializedObjectType.GetField(fieldName, BINDING_FLAGS) : FindField(fieldName, property.serializedObject.targetObject);
+            var serializedObjectType = GetNestedObjectType(property, out _);
+            var fieldInfo = serializedObjectType != null
+                ? serializedObjectType.GetField(fieldName, BINDING_FLAGS)
+                : FindField(fieldName, property.serializedObject.targetObject);
 
             return fieldInfo;
         }
 
-        internal static FieldInfo FindField(string fieldName, object targetObject) => FindMember(fieldName, targetObject?.GetType(), BINDING_FLAGS, MemberTypes.Field) as FieldInfo;
+        internal static FieldInfo FindField(string fieldName, object targetObject)
+        {
+            return FindMember(fieldName, targetObject?.GetType(), BINDING_FLAGS, MemberTypes.Field) as FieldInfo;
+        }
 
         /// <summary>
         /// Finds a property inside a serialized object
@@ -42,13 +48,19 @@ namespace EditorAttributes.Editor.Utility
             if (propertyName.Contains('.'))
                 return GetStaticMemberInfoFromPath(propertyName, MemberTypes.Property) as PropertyInfo;
 
-            Type serializedObjectType = GetNestedObjectType(property, out _);
-            PropertyInfo propertyInfo = serializedObjectType != null ? serializedObjectType.GetProperty(propertyName, BINDING_FLAGS) : FindProperty(propertyName, property.serializedObject.targetObject);
+            var serializedObjectType = GetNestedObjectType(property, out _);
+            var propertyInfo = serializedObjectType != null
+                ? serializedObjectType.GetProperty(propertyName, BINDING_FLAGS)
+                : FindProperty(propertyName, property.serializedObject.targetObject);
 
             return propertyInfo;
         }
 
-        internal static PropertyInfo FindProperty(string propertyName, object targetObject) => FindMember(propertyName, targetObject?.GetType(), BINDING_FLAGS, MemberTypes.Property) as PropertyInfo;
+        internal static PropertyInfo FindProperty(string propertyName, object targetObject)
+        {
+            return FindMember(propertyName, targetObject?.GetType(), BINDING_FLAGS, MemberTypes.Property) as
+                PropertyInfo;
+        }
 
         /// <summary>
         /// Finds a funciton inside a serialized object
@@ -62,29 +74,23 @@ namespace EditorAttributes.Editor.Utility
                 return GetStaticMemberInfoFromPath(functionName, MemberTypes.Method) as MethodInfo;
 
             MethodInfo methodInfo = null;
-            Type serializedObjectType = GetNestedObjectType(property, out _);
+            var serializedObjectType = GetNestedObjectType(property, out _);
 
             if (serializedObjectType != null)
-            {
                 try
                 {
                     methodInfo = serializedObjectType.GetMethod(functionName, BINDING_FLAGS);
                 }
                 catch (AmbiguousMatchException)
                 {
-                    MethodInfo[] functions = serializedObjectType.GetMethods();
+                    var functions = serializedObjectType.GetMethods();
 
                     foreach (var function in functions)
-                    {
                         if (function.Name == functionName)
                             methodInfo = function;
-                    }
                 }
-            }
             else
-            {
                 methodInfo = FindFunction(functionName, property.serializedObject.targetObject);
-            }
 
             return methodInfo;
         }
@@ -93,17 +99,16 @@ namespace EditorAttributes.Editor.Utility
         {
             try
             {
-                return FindMember(functionName, targetObject?.GetType(), BINDING_FLAGS, MemberTypes.Method) as MethodInfo;
+                return FindMember(functionName, targetObject?.GetType(), BINDING_FLAGS, MemberTypes.Method) as
+                    MethodInfo;
             }
             catch (AmbiguousMatchException)
             {
-                MethodInfo[] functions = targetObject?.GetType().GetMethods();
+                var functions = targetObject?.GetType().GetMethods();
 
                 foreach (var function in functions)
-                {
                     if (function.Name == functionName)
                         return function;
-                }
 
                 return null;
             }
@@ -117,7 +122,8 @@ namespace EditorAttributes.Editor.Utility
         /// <param name="bindingFlags">The binding flags</param>
         /// <param name="memberType">The type of the member to look for. Only Field, Property and Method types are supported</param>
         /// <returns>The member info of the specified member type</returns>
-        public static MemberInfo FindMember(string memberName, Type targetType, BindingFlags bindingFlags, MemberTypes memberType)
+        public static MemberInfo FindMember(string memberName, Type targetType, BindingFlags bindingFlags,
+            MemberTypes memberType)
         {
             MemberInfo memberInfo = null;
 
@@ -157,26 +163,23 @@ namespace EditorAttributes.Editor.Utility
         {
             MemberInfo memberInfo = null;
 
-            string[] splitPath = memberPath.Split('.');
+            var splitPath = memberPath.Split('.');
 
-            string typeNamespace = GetNamespaceString(splitPath);
-            string typeName = splitPath[^2];
-            string actualFieldName = splitPath[^1];
+            var typeNamespace = GetNamespaceString(splitPath);
+            var typeName = splitPath[^2];
+            var actualFieldName = splitPath[^1];
 
-            var matchingTypes = TypeCache.GetTypesDerivedFrom<object>().Where((type) => type.Name == typeName && type.Namespace == typeNamespace);
+            var matchingTypes = TypeCache.GetTypesDerivedFrom<object>()
+                .Where((type) => type.Name == typeName && type.Namespace == typeNamespace);
 
             foreach (var type in matchingTypes)
             {
                 memberInfo = FindMember(actualFieldName, type, BINDING_FLAGS ^ BindingFlags.Instance, memberTypes);
 
                 if (memberInfo == null)
-                {
                     continue;
-                }
                 else
-                {
                     break;
-                }
             }
 
             return memberInfo;
@@ -186,9 +189,9 @@ namespace EditorAttributes.Editor.Utility
         {
             StringBuilder stringBuilder = new();
 
-            string[] namespacePath = splitMemberPath[..^2];
+            var namespacePath = splitMemberPath[..^2];
 
-            for (int i = 0; i < namespacePath.Length; i++)
+            for (var i = 0; i < namespacePath.Length; i++)
             {
                 stringBuilder.Append(namespacePath[i]);
 
@@ -222,7 +225,8 @@ namespace EditorAttributes.Editor.Utility
         /// <param name="bindingFlags">The binding flags</param>
         /// <param name="propertyInfo">The property info of the desired property</param>
         /// <returns>True if the property was succesfully found, false otherwise</returns>
-        public static bool TryGetProperty(string name, Type targetType, BindingFlags bindingFlags, out PropertyInfo propertyInfo)
+        public static bool TryGetProperty(string name, Type targetType, BindingFlags bindingFlags,
+            out PropertyInfo propertyInfo)
         {
             propertyInfo = targetType.GetProperty(name, bindingFlags);
 
@@ -237,7 +241,8 @@ namespace EditorAttributes.Editor.Utility
         /// <param name="bindingFlags">The binding flags</param>
         /// <param name="methodInfo">The method info of the desired function</param>
         /// <returns>True if the function was succesfully found, false otherwise</returns>
-        public static bool TryGetMethod(string name, Type targetType, BindingFlags bindingFlags, out MethodInfo methodInfo)
+        public static bool TryGetMethod(string name, Type targetType, BindingFlags bindingFlags,
+            out MethodInfo methodInfo)
         {
             methodInfo = targetType.GetMethod(name, bindingFlags);
 
@@ -249,7 +254,10 @@ namespace EditorAttributes.Editor.Utility
         /// </summary>
         /// <param name="type">The type to check</param>
         /// <returns>True if the type is a list or array</returns>
-        public static bool IsTypeCollection(Type type) => type.IsArray || type.GetInterfaces().Contains(typeof(IList));
+        public static bool IsTypeCollection(Type type)
+        {
+            return type.IsArray || type.GetInterfaces().Contains(typeof(IList));
+        }
 
         /// <summary>
         /// Checks to see if a member has one of the specified attributes
@@ -263,10 +271,8 @@ namespace EditorAttributes.Editor.Utility
                 return false;
 
             foreach (var attribute in attributeTypes)
-            {
                 if (memberInfo.GetCustomAttribute(attribute) != null)
                     return true;
-            }
 
             return false;
         }
@@ -312,16 +318,16 @@ namespace EditorAttributes.Editor.Utility
             try
             {
                 nestedObject = property.serializedObject.targetObject;
-                int cutPathIndex = property.propertyPath.LastIndexOf('.');
+                var cutPathIndex = property.propertyPath.LastIndexOf('.');
 
-                if (cutPathIndex == -1) // If the cutPathIndex is -1 it means that the member is not nested and we return null
+                if (cutPathIndex ==
+                    -1) // If the cutPathIndex is -1 it means that the member is not nested and we return null
                     return null;
 
-                string path = property.propertyPath[..cutPathIndex].Replace(".Array.data[", "[");
-                string[] elements = path.Split('.');
+                var path = property.propertyPath[..cutPathIndex].Replace(".Array.data[", "[");
+                var elements = path.Split('.');
 
                 foreach (var element in elements)
-                {
                     if (element.Contains("["))
                     {
                         var elementName = element[..element.IndexOf("[")];
@@ -333,7 +339,6 @@ namespace EditorAttributes.Editor.Utility
                     {
                         nestedObject = GetValue(nestedObject, element);
                     }
-                }
 
                 return nestedObject?.GetType();
             }
@@ -349,13 +354,11 @@ namespace EditorAttributes.Editor.Utility
             if (GetValue(source, name) is not IEnumerable enumerable)
                 return null;
 
-            IEnumerator enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetEnumerator();
 
-            for (int i = 0; i <= index; i++)
-            {
+            for (var i = 0; i <= index; i++)
                 if (!enumerator.MoveNext())
                     return null;
-            }
 
             return enumerator.Current;
         }
@@ -365,7 +368,7 @@ namespace EditorAttributes.Editor.Utility
             if (source == null)
                 return null;
 
-            Type type = source.GetType();
+            var type = source.GetType();
 
             while (type != null)
             {
@@ -388,17 +391,10 @@ namespace EditorAttributes.Editor.Utility
         public static Type GetMemberInfoType(MemberInfo memberInfo)
         {
             if (memberInfo is FieldInfo fieldInfo)
-            {
                 return fieldInfo.FieldType;
-            }
             else if (memberInfo is PropertyInfo propertyInfo)
-            {
                 return propertyInfo.PropertyType;
-            }
-            else if (memberInfo is MethodInfo methodInfo)
-            {
-                return methodInfo.ReturnType;
-            }
+            else if (memberInfo is MethodInfo methodInfo) return methodInfo.ReturnType;
 
             return null;
         }
@@ -410,9 +406,10 @@ namespace EditorAttributes.Editor.Utility
         /// <param name="property">The serialized property</param>
         /// <param name="methodParameters">Optional parameter data to pass through if the member is a method</param>
         /// <returns>The value of the member</returns>
-        public static object GetMemberInfoValue(MemberInfo memberInfo, SerializedProperty property, params object[] methodParameters)
+        public static object GetMemberInfoValue(MemberInfo memberInfo, SerializedProperty property,
+            params object[] methodParameters)
         {
-            Object targetObject = property.serializedObject.targetObject;
+            var targetObject = property.serializedObject.targetObject;
 
             if (targetObject == null)
                 return null;
@@ -420,38 +417,26 @@ namespace EditorAttributes.Editor.Utility
             try
             {
                 if (memberInfo is FieldInfo fieldInfo)
-                {
                     return fieldInfo.GetValue(targetObject);
-                }
                 else if (memberInfo is PropertyInfo propertyInfo)
-                {
                     return propertyInfo.GetValue(targetObject);
-                }
-                else if (memberInfo is MethodInfo methodInfo)
-                {
-                    return methodInfo.Invoke(targetObject, methodParameters);
-                }
+                else if (memberInfo is MethodInfo methodInfo) return methodInfo.Invoke(targetObject, methodParameters);
             }
             catch (Exception exception)
             {
-                if (exception is ArgumentException or TargetException or TargetInvocationException) // If these expections are thrown it means that the member we try to get the value from is inside a different target
+                if (exception is ArgumentException or TargetException
+                    or TargetInvocationException) // If these expections are thrown it means that the member we try to get the value from is inside a different target
                 {
-                    GetNestedObjectType(property, out object serializedObjectTarget);
+                    GetNestedObjectType(property, out var serializedObjectTarget);
 
                     if (serializedObjectTarget != null)
                     {
                         if (memberInfo is FieldInfo fieldInfo)
-                        {
                             return fieldInfo.GetValue(serializedObjectTarget);
-                        }
                         else if (memberInfo is PropertyInfo propertyInfo)
-                        {
                             return propertyInfo.GetValue(serializedObjectTarget);
-                        }
                         else if (memberInfo is MethodInfo methodInfo)
-                        {
                             return methodInfo.Invoke(serializedObjectTarget, methodParameters);
-                        }
                     }
                 }
                 else
@@ -469,17 +454,10 @@ namespace EditorAttributes.Editor.Utility
                 return null;
 
             if (memberInfo is FieldInfo fieldInfo)
-            {
                 return fieldInfo.GetValue(targetObject);
-            }
             else if (memberInfo is PropertyInfo propertyInfo)
-            {
                 return propertyInfo.GetValue(targetObject);
-            }
-            else if (memberInfo is MethodInfo methodInfo)
-            {
-                return methodInfo.Invoke(targetObject, null);
-            }
+            else if (memberInfo is MethodInfo methodInfo) return methodInfo.Invoke(targetObject, null);
 
             return null;
         }

@@ -18,7 +18,7 @@ namespace User_Interface
         {
             _canvasGroup.blocksRaycasts = true;
         }
-        
+
         public void OnBeginDrag(PointerEventData eventData)
         {
             _originalItemPosition = transform.position;
@@ -48,9 +48,7 @@ namespace User_Interface
             // If our parent is the same, we weren't dropped into a slot.
             // Or check if we were dropped over nothing
             if (transform.parent == _originalParent || eventData.pointerDrag == null)
-            {
                 transform.position = _originalItemPosition;
-            }
         }
     }
 }

@@ -1,12 +1,13 @@
-namespace Pyrite.Combat
+namespace Combat
 {
     public enum CombatState
     {
+        NiC, // Not in Combat
         Setup,
         UnitTurnStart,
         PlayerInputWait,
         EnemyAIPlanning,
-        ActionExecuction,
+        ActionExecution,
         RoundEvaluation,
         Victory,
         Defeat

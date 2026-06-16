@@ -60,7 +60,7 @@ namespace User_Interface
             public static Color RareColour = new Color32(255, 238, 30, 255);
             public static Color EpicColour = new Color32(220, 0, 255, 255);
             public static Color UniqueColour = new Color32(203, 77, 0, 255);
-            
+
             public static Color GetColourForRarity(RpgManager.ItemRarity rarity)
             {
                 return rarity switch

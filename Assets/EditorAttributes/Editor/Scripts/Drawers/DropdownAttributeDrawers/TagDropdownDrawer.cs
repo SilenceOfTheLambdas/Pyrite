@@ -12,9 +12,11 @@ namespace EditorAttributes.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             if (!IsSupportedPropertyType(property))
-                return new HelpBox("The TagDropdown Attribute can only be attached to string fields", HelpBoxMessageType.Error);
+                return new HelpBox("The TagDropdown Attribute can only be attached to string fields",
+                    HelpBoxMessageType.Error);
 
-            TagField tagField = new(property.displayName, DoesStringValueContainTag(property.stringValue) ? property.stringValue : "Untagged")
+            TagField tagField = new(property.displayName,
+                DoesStringValueContainTag(property.stringValue) ? property.stringValue : "Untagged")
             {
                 showMixedValue = property.hasMultipleDifferentValues,
                 tooltip = property.tooltip
@@ -32,16 +34,16 @@ namespace EditorAttributes.Editor
             tagField.TrackPropertyValue(property, (trackedProperty) =>
             {
                 if (DoesStringValueContainTag(trackedProperty.stringValue))
-                {
                     tagField.SetValueWithoutNotify(trackedProperty.stringValue);
-                }
                 else
-                {
-                    Debug.LogWarning($"The value <b>{trackedProperty.stringValue}</b> set to the <b>{trackedProperty.name}</b> variable is not a valid tag.", trackedProperty.serializedObject.targetObject);
-                }
+                    Debug.LogWarning(
+                        $"The value <b>{trackedProperty.stringValue}</b> set to the <b>{trackedProperty.name}</b> variable is not a valid tag.",
+                        trackedProperty.serializedObject.targetObject);
             });
 
-            tagField.RegisterCallbackOnce<GeometryChangedEvent>((callback) => tagField.Q(className: TagField.inputUssClassName).style.backgroundColor = EditorExtension.GLOBAL_COLOR / 2f);
+            tagField.RegisterCallbackOnce<GeometryChangedEvent>((callback) =>
+                tagField.Q(className: TagField.inputUssClassName).style.backgroundColor =
+                    EditorExtension.GLOBAL_COLOR / 2f);
 
             return tagField;
         }
@@ -57,19 +59,21 @@ namespace EditorAttributes.Editor
             }
             else
             {
-                Debug.LogWarning($"Could not paste value <b>{clipboardValue}</b> since is not availiable as an option in the dropdown");
+                Debug.LogWarning(
+                    $"Could not paste value <b>{clipboardValue}</b> since is not availiable as an option in the dropdown");
             }
         }
 
-        protected override bool IsSupportedPropertyType(SerializedProperty property) => property.propertyType == SerializedPropertyType.String;
+        protected override bool IsSupportedPropertyType(SerializedProperty property)
+        {
+            return property.propertyType == SerializedPropertyType.String;
+        }
 
         private bool DoesStringValueContainTag(string stringValue)
         {
             foreach (var tag in InternalEditorUtility.tags)
-            {
                 if (stringValue == tag)
                     return true;
-            }
 
             return false;
         }

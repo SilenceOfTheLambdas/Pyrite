@@ -13,13 +13,13 @@ namespace EditorAttributes.Editor
         {
             var messageBoxAttribute = attribute as MessageBoxAttribute;
 
-            MemberInfo conditionalProperty = ReflectionUtils.GetValidMemberInfo(messageBoxAttribute.ConditionName, property);
+            var conditionalProperty = ReflectionUtils.GetValidMemberInfo(messageBoxAttribute.ConditionName, property);
 
             VisualElement root = new();
             HelpBox errorBox = new();
             HelpBox messageBox = new(string.Empty, (HelpBoxMessageType)messageBoxAttribute.MessageType);
 
-            PropertyField propertyField = CreatePropertyField(property);
+            var propertyField = CreatePropertyField(property);
 
             if (CanApplyGlobalColor)
             {
@@ -37,7 +37,8 @@ namespace EditorAttributes.Editor
             {
                 if (GetConditionValue(conditionalProperty, messageBoxAttribute, property, errorBox))
                 {
-                    messageBox.text = GetDynamicString(messageBoxAttribute.Message, property, messageBoxAttribute, errorBox);
+                    messageBox.text = GetDynamicString(messageBoxAttribute.Message, property, messageBoxAttribute,
+                        errorBox);
                     messageBox.style.display = DisplayStyle.Flex;
                 }
                 else

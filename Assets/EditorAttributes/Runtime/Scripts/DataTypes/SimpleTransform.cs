@@ -34,17 +34,29 @@ namespace EditorAttributes
         /// <param name="position">Input position</param>
         /// <param name="rotation">Input rotation</param>
         /// <param name="scale">Input scale</param>
-        public SimpleTransform(Vector3 position, Quaternion rotation, Vector3 scale) : this(position, rotation.eulerAngles, scale) { }
+        public SimpleTransform(Vector3 position, Quaternion rotation, Vector3 scale) : this(position,
+            rotation.eulerAngles, scale)
+        {
+        }
 
         /// <summary>
         /// A simple serializable transform struct that can be used with the DrawHandle Attribute
         /// </summary>
         /// <param name="transform">Input transform</param>
-        public SimpleTransform(Transform transform) : this(transform.position, transform.eulerAngles, transform.localScale) { }
+        public SimpleTransform(Transform transform) : this(transform.position, transform.eulerAngles,
+            transform.localScale)
+        {
+        }
 
-        public static implicit operator SimpleTransform(Transform transform) => new(transform);
+        public static implicit operator SimpleTransform(Transform transform)
+        {
+            return new SimpleTransform(transform);
+        }
 
-        public override readonly string ToString() => $"Position: {position}, Rotation: {rotation}, Scale: {scale}";
+        public readonly override string ToString()
+        {
+            return $"Position: {position}, Rotation: {rotation}, Scale: {scale}";
+        }
 
         /// <summary>
         /// Puts the SimpleTransform values to into a Transform in world space

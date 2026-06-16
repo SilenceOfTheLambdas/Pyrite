@@ -11,7 +11,9 @@ namespace EditorAttributes.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             if (!IsSupportedPropertyType(property))
-                return new HelpBox("MinMaxSlider Attribute can only be attached to a <b>Vector2</b> or <b>Vector2Int</b>", HelpBoxMessageType.Warning);
+                return new HelpBox(
+                    "MinMaxSlider Attribute can only be attached to a <b>Vector2</b> or <b>Vector2Int</b>",
+                    HelpBoxMessageType.Warning);
 
             var minMaxSliderAttribute = attribute as MinMaxSliderAttribute;
 
@@ -20,16 +22,17 @@ namespace EditorAttributes.Editor
 
             AddPropertyContextMenu(root, property);
 
-            bool isIntVector = property.propertyType == SerializedPropertyType.Vector2Int;
-            float minValue = isIntVector ? property.vector2IntValue.x : property.vector2Value.x;
-            float maxValue = isIntVector ? property.vector2IntValue.y : property.vector2Value.y;
+            var isIntVector = property.propertyType == SerializedPropertyType.Vector2Int;
+            var minValue = isIntVector ? property.vector2IntValue.x : property.vector2Value.x;
+            var maxValue = isIntVector ? property.vector2IntValue.y : property.vector2Value.y;
 
             VisualElement sliderHolder = new() { style = { flexDirection = FlexDirection.Row, flexGrow = 1f } };
 
             Label label = new(property.displayName)
             {
                 tooltip = property.tooltip,
-                style = {
+                style =
+                {
                     overflow = Overflow.Hidden,
                     alignSelf = Align.Center,
                     paddingLeft = 3f,
@@ -39,21 +42,31 @@ namespace EditorAttributes.Editor
                 }
             };
 
-            MinMaxSlider minMaxSlider = new(minValue, maxValue, minMaxSliderAttribute.MinRange, minMaxSliderAttribute.MaxRange)
-            {
-                style = {
-                    flexGrow = 1f,
-                    paddingLeft = 5f,
-                    paddingRight = 5f
-                }
-            };
+            MinMaxSlider minMaxSlider =
+                new(minValue, maxValue, minMaxSliderAttribute.MinRange, minMaxSliderAttribute.MaxRange)
+                {
+                    style =
+                    {
+                        flexGrow = 1f,
+                        paddingLeft = 5f,
+                        paddingRight = 5f
+                    }
+                };
 
-            minMaxSlider.TrackPropertyValue(property, (trackedProperty) => minMaxSlider.value = isIntVector ? trackedProperty.vector2IntValue : trackedProperty.vector2Value);
+            minMaxSlider.TrackPropertyValue(property,
+                (trackedProperty) => minMaxSlider.value =
+                    isIntVector ? trackedProperty.vector2IntValue : trackedProperty.vector2Value);
 
             if (minMaxSliderAttribute.ShowValues)
             {
-                FloatField minField = new(5) { showMixedValue = property.hasMultipleDifferentValues, style = { maxWidth = 50f, minWidth = 50f } };
-                FloatField maxField = new(5) { showMixedValue = property.hasMultipleDifferentValues, style = { maxWidth = 50f, minWidth = 50f } };
+                FloatField minField = new(5)
+                {
+                    showMixedValue = property.hasMultipleDifferentValues, style = { maxWidth = 50f, minWidth = 50f }
+                };
+                FloatField maxField = new(5)
+                {
+                    showMixedValue = property.hasMultipleDifferentValues, style = { maxWidth = 50f, minWidth = 50f }
+                };
 
                 // Initialize the fields
                 minField.SetValueWithoutNotify(minValue);
@@ -61,8 +74,12 @@ namespace EditorAttributes.Editor
 
                 minMaxSlider.RegisterValueChangedCallback((callback) =>
                 {
-                    minField.SetValueWithoutNotify(isIntVector ? Mathf.RoundToInt(callback.newValue.x) : callback.newValue.x);
-                    maxField.SetValueWithoutNotify(isIntVector ? Mathf.RoundToInt(callback.newValue.y) : callback.newValue.y);
+                    minField.SetValueWithoutNotify(isIntVector
+                        ? Mathf.RoundToInt(callback.newValue.x)
+                        : callback.newValue.x);
+                    maxField.SetValueWithoutNotify(isIntVector
+                        ? Mathf.RoundToInt(callback.newValue.y)
+                        : callback.newValue.y);
 
                     if (isIntVector) // This will snap the handles when changing the values
                     {
@@ -78,7 +95,9 @@ namespace EditorAttributes.Editor
                     if (isIntVector)
                         minField.value = (int)callback.newValue;
 
-                    minMaxSlider.value = isIntVector ? new Vector2Int(Mathf.RoundToInt(callback.newValue), Mathf.RoundToInt(minMaxSlider.value.y)) : new Vector2(callback.newValue, minMaxSlider.value.y);
+                    minMaxSlider.value = isIntVector
+                        ? new Vector2Int(Mathf.RoundToInt(callback.newValue), Mathf.RoundToInt(minMaxSlider.value.y))
+                        : new Vector2(callback.newValue, minMaxSlider.value.y);
 
                     ApplyPropertyValues(property, isIntVector, minMaxSlider.minValue, minMaxSlider.maxValue);
                 });
@@ -88,7 +107,9 @@ namespace EditorAttributes.Editor
                     if (isIntVector)
                         maxField.value = (int)callback.newValue;
 
-                    minMaxSlider.value = isIntVector ? new Vector2Int(Mathf.RoundToInt(minMaxSlider.value.x), Mathf.RoundToInt(callback.newValue)) : new Vector2(minMaxSlider.value.x, callback.newValue);
+                    minMaxSlider.value = isIntVector
+                        ? new Vector2Int(Mathf.RoundToInt(minMaxSlider.value.x), Mathf.RoundToInt(callback.newValue))
+                        : new Vector2(minMaxSlider.value.x, callback.newValue);
 
                     ApplyPropertyValues(property, isIntVector, minMaxSlider.minValue, minMaxSlider.maxValue);
                 });
@@ -101,13 +122,11 @@ namespace EditorAttributes.Editor
                 root.Add(sliderHolder);
 
                 if (CanApplyGlobalColor)
-                {
                     root.RegisterCallbackOnce<GeometryChangedEvent>((callback) =>
                     {
                         minField.Q("unity-text-input").style.backgroundColor = EditorExtension.GLOBAL_COLOR / 2f;
                         maxField.Q("unity-text-input").style.backgroundColor = EditorExtension.GLOBAL_COLOR / 2f;
                     });
-                }
             }
             else
             {
@@ -129,13 +148,11 @@ namespace EditorAttributes.Editor
             }
 
             if (CanApplyGlobalColor)
-            {
                 root.RegisterCallbackOnce<GeometryChangedEvent>((callback) =>
                 {
                     minMaxSlider.Q("unity-dragger").style.unityBackgroundImageTintColor = EditorExtension.GLOBAL_COLOR;
                     minMaxSlider.Q("unity-tracker").style.backgroundColor = EditorExtension.GLOBAL_COLOR / 2f;
                 });
-            }
 
             return root;
         }
@@ -145,21 +162,22 @@ namespace EditorAttributes.Editor
             var minMaxSlider = element.Q<MinMaxSlider>();
 
             base.PasteValue(element, property, clipboardValue);
-            minMaxSlider.value = property.propertyType == SerializedPropertyType.Vector2 ? property.vector2Value : property.vector2IntValue;
+            minMaxSlider.value = property.propertyType == SerializedPropertyType.Vector2
+                ? property.vector2Value
+                : property.vector2IntValue;
         }
 
-        protected override bool IsSupportedPropertyType(SerializedProperty property) => property.propertyType is SerializedPropertyType.Vector2 or SerializedPropertyType.Vector2Int;
+        protected override bool IsSupportedPropertyType(SerializedProperty property)
+        {
+            return property.propertyType is SerializedPropertyType.Vector2 or SerializedPropertyType.Vector2Int;
+        }
 
         private void ApplyPropertyValues(SerializedProperty property, bool isIntVector, float minValue, float maxValue)
         {
             if (isIntVector)
-            {
                 property.vector2IntValue = new Vector2Int(Mathf.RoundToInt(minValue), Mathf.RoundToInt(maxValue));
-            }
             else
-            {
                 property.vector2Value = new Vector2(minValue, maxValue);
-            }
 
             property.serializedObject.ApplyModifiedProperties();
         }

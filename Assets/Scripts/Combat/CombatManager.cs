@@ -1,20 +1,20 @@
 using System;
 using System.Collections.Generic;
+using Combat;
 using Pyrite.Combat;
 using UnityEngine;
-using User_Interface;
 
 public class Turn
 {
-    public Queue<ICombatAction> queuedCombatActions;
-    public List<ICombatAction> completedCombatActions;
+    public Queue<CombatAction> queuedCombatActions;
+    public List<CombatAction> completedCombatActions;
 }
 
 public class CombatManager : MonoBehaviour
 {
     public static CombatManager Instance;
 
-    private CombatState _currentCombatState;
+    public CombatState CurrentCombatState { get; private set; }
 
     private void Awake()
     {
@@ -37,10 +37,9 @@ public class CombatManager : MonoBehaviour
     private void BeginCombat()
     {
         // Begin combat
-        _currentCombatState = CombatState.Setup;
+        CurrentCombatState = CombatState.Setup;
         // TODO: Move Camera
-        // Switch/Display Combat HUD
-        
+
         // Planning stage
         // Carry-out queued actions
     }
@@ -49,7 +48,7 @@ public class CombatManager : MonoBehaviour
     /// Called by the OnClick() event.
     /// </summary>
     /// <param name="actionName"></param>
-    public void ActionPressed(String actionName)
+    public void ActionPressed(string actionName)
     {
         Debug.Log($"Pressed Action: {actionName}");
     }

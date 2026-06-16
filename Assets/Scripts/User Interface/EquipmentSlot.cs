@@ -26,14 +26,11 @@ namespace User_Interface
             if (isSlotEmpty)
             {
                 // Check if the player meets the requirements to equip this item
-                if (!slotInfo.Item.Stats.CheckItemRequirements())
-                {
-                    return;
-                }
-                
+                if (!slotInfo.Item.Stats.CheckItemRequirements()) return;
+
                 eventData.pointerDrag.GetComponent<CanvasGroup>().blocksRaycasts = false;
                 if (slotInfo.Item.Stats.equipmentSlot != equipmentSlot) return;
-                
+
                 if (EquipItem(slotInfo.Item))
                 {
                     slotInfo.EquipmentSlot = this;
@@ -47,22 +44,19 @@ namespace User_Interface
             else
             {
                 // Check if the player meets the requirements to equip this item
-                if (!slotInfo.Item.Stats.CheckItemRequirements())
-                {
-                    return;
-                }
+                if (!slotInfo.Item.Stats.CheckItemRequirements()) return;
                 if (slotInfo.Item.Stats.equipmentSlot != equipmentSlot) return;
-                
+
                 // Get rid of the equipped item in the Equipment Slot
                 EquipmentManager.Instance.UnequipItemBySlot(_equippedItem.Stats.equipmentSlot);
-                
+
                 if (EquipItem(slotInfo.Item))
                 {
                     slotInfo.EquipmentSlot = this;
                     eventData.pointerDrag.transform.localPosition = Vector3.zero;
                     PlayerInventoryManager.Instance.RemoveItemFromInventory(slotInfo.Item);
                 }
-                
+
                 // Then add the item back to the inventory
                 PlayerInventoryManager.Instance.AddItem(_equippedItem);
                 eventData.pointerDrag.GetComponent<CanvasGroup>().blocksRaycasts = true;

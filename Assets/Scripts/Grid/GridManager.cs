@@ -33,14 +33,13 @@ namespace Pyrite.Grid
     {
         public static GridManager Instance { get; private set; }
 
-        [Header("Grid Scale Settings")]
-        [Tooltip("Width and length of each grid cell in world units.")]
+        [Header("Grid Scale Settings")] [Tooltip("Width and length of each grid cell in world units.")]
         public float cellSize = 2.0f;
 
         [Tooltip("The default vertical baseline height for placing objects on the grid.")]
         public float gridYBaseline = 0.0f;
 
-        private Dictionary<Vector2Int, GridCell> _gridCells = new Dictionary<Vector2Int, GridCell>();
+        private Dictionary<Vector2Int, GridCell> _gridCells = new();
 
         private void Awake()
         {
@@ -49,6 +48,7 @@ namespace Pyrite.Grid
                 Destroy(gameObject);
                 return;
             }
+
             Instance = this;
         }
 
@@ -57,8 +57,8 @@ namespace Pyrite.Grid
         /// </summary>
         public Vector2Int WorldToGrid(Vector3 worldPos)
         {
-            int x = Mathf.RoundToInt(worldPos.x / cellSize);
-            int z = Mathf.RoundToInt(worldPos.z / cellSize);
+            var x = Mathf.RoundToInt(worldPos.x / cellSize);
+            var z = Mathf.RoundToInt(worldPos.z / cellSize);
             return new Vector2Int(x, z);
         }
 
@@ -75,10 +75,7 @@ namespace Pyrite.Grid
         /// </summary>
         public bool IsCellOccupied(Vector2Int gridPos)
         {
-            if (_gridCells.TryGetValue(gridPos, out var cell))
-            {
-                return cell.cellType != CellType.Empty;
-            }
+            if (_gridCells.TryGetValue(gridPos, out var cell)) return cell.cellType != CellType.Empty;
             return false;
         }
 
@@ -87,10 +84,7 @@ namespace Pyrite.Grid
         /// </summary>
         public CellType GetCellType(Vector2Int gridPos)
         {
-            if (_gridCells.TryGetValue(gridPos, out var cell))
-            {
-                return cell.cellType;
-            }
+            if (_gridCells.TryGetValue(gridPos, out var cell)) return cell.cellType;
             return CellType.Empty;
         }
 
@@ -99,10 +93,7 @@ namespace Pyrite.Grid
         /// </summary>
         public GameObject GetCellOccupant(Vector2Int gridPos)
         {
-            if (_gridCells.TryGetValue(gridPos, out var cell))
-            {
-                return cell.occupant;
-            }
+            if (_gridCells.TryGetValue(gridPos, out var cell)) return cell.occupant;
             return null;
         }
 
@@ -113,18 +104,15 @@ namespace Pyrite.Grid
         {
             if (type != CellType.Empty && IsCellOccupied(gridPos))
             {
-                Debug.LogWarning($"[GridManager] Coordinate {gridPos} is already occupied by {_gridCells[gridPos].occupant?.name}!");
+                Debug.LogWarning(
+                    $"[GridManager] Coordinate {gridPos} is already occupied by {_gridCells[gridPos].occupant?.name}!");
                 return false;
             }
 
             if (type == CellType.Empty)
-            {
                 _gridCells.Remove(gridPos);
-            }
             else
-            {
                 _gridCells[gridPos] = new GridCell(gridPos, type, occupant);
-            }
             return true;
         }
 
@@ -133,10 +121,7 @@ namespace Pyrite.Grid
         /// </summary>
         public void ClearCell(Vector2Int gridPos)
         {
-            if (_gridCells.ContainsKey(gridPos))
-            {
-                _gridCells.Remove(gridPos);
-            }
+            if (_gridCells.ContainsKey(gridPos)) _gridCells.Remove(gridPos);
         }
 
         /// <summary>

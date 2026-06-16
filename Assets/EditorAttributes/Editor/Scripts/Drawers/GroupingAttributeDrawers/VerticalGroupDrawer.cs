@@ -15,9 +15,9 @@ namespace EditorAttributes.Editor
             if (verticalGroup.DrawInBox)
                 ApplyBoxStyle(groupBox);
 
-            foreach (string variableName in verticalGroup.FieldsToGroup)
+            foreach (var variableName in verticalGroup.FieldsToGroup)
             {
-                VisualElement groupProperty = CreateGroupProperty(variableName, property);
+                var groupProperty = CreateGroupProperty(variableName, property);
                 groupBox.Add(groupProperty);
             }
 
