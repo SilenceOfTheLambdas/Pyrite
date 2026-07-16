@@ -42,14 +42,9 @@ namespace Player
         private void Update()
         {
             #region Player Movement
-
-            // Make sure player is not in combat and that the move input action is set
-            if (_moveAction != null && CombatManager.Instance.CurrentCombatState == CombatState.NiC)
-            {
-                var input = _moveAction.ReadValue<Vector2>();
-                MovePlayer(input);
-            }
-
+            
+            MovePlayer(_moveAction.ReadValue<Vector2>());
+            
             // Update Animation based on current movement velocity
             var speed = (transform.position - _lastPosition).magnitude / Time.deltaTime;
             _animator.SetFloat(MovementSpeed, speed, 0.1f, Time.deltaTime);

@@ -5,21 +5,20 @@ using UnityEngine;
 namespace Combat
 {
     /// <summary>
-    /// A databse containing instances of Scriptable Objects pertaining to the various skills available in the game.
+    /// A database containing instances of Scriptable Objects pertaining to the various skills available in the game.
     /// </summary>
     public class SkillsDatabase : MonoBehaviour
     {
-        public static SkillsDatabase Instance;
+        public static SkillsDatabase Instance { get; private set; }
         public List<Skill> skills;
 
         public void Awake()
         {
-            if (Instance != null)
+            if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
-            }
-
-            Instance = this;
+            } else
+                Instance = this;
         }
 
         /// <summary>

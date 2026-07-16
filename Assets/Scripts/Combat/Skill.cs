@@ -14,7 +14,19 @@ namespace Combat
 
         [AssetPreview(64, 64)] public Sprite skillIcon;
 
-        public int apCost = 1;
+        public int manaCost = 1;
+
+        /// <summary>
+        /// Cooldown of the skill in seconds.
+        /// </summary>
+        public float cooldown = 2;
+
+        public bool isInCooldown = false;
+
+        /// <summary>
+        /// The range the actor needs to be within to use this skill.
+        /// </summary>
+        public float range = 3;
 
         [DataTable(true, false)] public List<SkillDamage> availableSkillDamage;
     }

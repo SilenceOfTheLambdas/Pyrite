@@ -16,7 +16,7 @@ namespace Player
         private Void groupHolder;
 
         [VerticalGroup(nameof(CurrentPlayerLevel), nameof(CurrentPlayerExp), nameof(CurrentPlayerHealth),
-            nameof(PlayerMaxHealth))]
+            nameof(PlayerMaxHealth), nameof(PlayerMaxMana), nameof(PlayerCurrentMana))]
         [SerializeField]
         [HideInInspector]
         private Void healthXpLevel;
@@ -36,6 +36,14 @@ namespace Player
         [field: SerializeField]
         [field: HideProperty]
         public int PlayerMaxHealth { get; private set; }
+        
+        [field: SerializeField]
+        [field: HideProperty]
+        public int PlayerMaxMana { get; private set; }
+        
+        [field: SerializeField]
+        [field: HideProperty]
+        public int PlayerCurrentMana { get; private set; }
 
         // Player Damage Properties
         [VerticalGroup(nameof(currentPhysicalDamage), nameof(currentElementalDamage), nameof(currentAttackSpeed),
@@ -84,6 +92,8 @@ namespace Player
             CurrentPlayerExp = 0;
             CurrentPlayerHealth = 100;
             PlayerMaxHealth = 100;
+            PlayerMaxMana = 10;
+            PlayerCurrentMana = PlayerMaxMana;
 
             // Initialise the player's total armour stats with 0 values for all stats and 0% resistance for all elemental damage types.
             currentElementalResistances = new List<BaselineArmourStats.ElementalResistance>

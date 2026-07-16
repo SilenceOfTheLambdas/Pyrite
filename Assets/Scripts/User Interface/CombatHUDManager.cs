@@ -25,7 +25,7 @@ namespace User_Interface
 
         private void Start()
         {
-            Combatinitiator.OnCombatStarted += EnableCombatHUD;
+            CombatInitiator.OnCombatStarted += EnableCombatHUD;
             ActionsManager.OnCombatActionAdded += AddNewSkillToHotbar;
             // TODO: On Combat Ended
         }
@@ -33,19 +33,16 @@ namespace User_Interface
         public void EnableCombatHUD()
         {
             actionBar.SetActive(true);
-            turnPanel.SetActive(true);
         }
 
         public void DisableCombatHUD()
         {
             actionBar.SetActive(false);
-            turnPanel.SetActive(false);
         }
 
-        private void AddNewSkillToHotbar(CombatAction combatAction)
+        private void AddNewSkillToHotbar(SkillAction skillAction)
         {
-            Debug.Log($"Adding skill {combatAction.Skill} to the hotbar");
-            GetNextEmptySkillButton()?.SetSkill(combatAction);
+            GetNextEmptySkillButton()?.SetSkill(skillAction);
         }
 
         /// <summary>

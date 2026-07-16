@@ -1,4 +1,5 @@
 using System;
+using Combat;
 using Player;
 using RPGSystem.Backend;
 using RPGSystem.Equipment;
@@ -53,7 +54,7 @@ namespace User_Interface
                 "Player needs to have a PlayerInventoryManager component attached.");
 
             // Display combat HUD when OnCombatStarted event is fired
-            Combatinitiator.OnCombatStarted += DisplayCombatHUD;
+            CombatInitiator.OnCombatStarted += DisplayCombatHUD;
         }
 
         private void Update()

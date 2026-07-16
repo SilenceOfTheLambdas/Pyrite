@@ -9,27 +9,32 @@ namespace User_Interface
     public class SkillButton : MonoBehaviour
     {
         public bool hasSkillAssigned = false;
-        public CombatAction AssociatedAction;
+        private SkillAction _associatedAction;
         private Sprite _skillIcon;
         [SerializeField] private Image slotIcon;
 
         private void Awake()
         {
-            Assert.IsNotNull(slotIcon, "Slot Icon child component has not been assgigned!");
+            Assert.IsNotNull(slotIcon, "Slot Icon child component has not been assigned!");
         }
 
-        public void SetSkill(CombatAction combatAction)
+        public void ActivateSkill()
         {
-            AssociatedAction = combatAction;
+            CombatManager.Instance.ActionPressed(_associatedAction);
+        }
+        
+        public void SetSkill(SkillAction skillAction)
+        {
+            _associatedAction = skillAction;
             hasSkillAssigned = true;
-            _skillIcon = combatAction.Skill.skillIcon;
+            _skillIcon = skillAction.Skill.skillIcon;
             slotIcon.sprite = _skillIcon;
             slotIcon.color = Color.white;
         }
 
         public void ClearSkill()
         {
-            AssociatedAction = null;
+            _associatedAction = null;
             hasSkillAssigned = false;
             _skillIcon = null;
             slotIcon.sprite = null;

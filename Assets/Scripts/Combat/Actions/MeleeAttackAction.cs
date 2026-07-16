@@ -1,13 +1,11 @@
 using System;
 using System.Collections;
-using Combat;
 using Player;
-using Pyrite.Grid;
 using UnityEngine;
 
-namespace Pyrite.Combat.Actions
+namespace Combat.Actions
 {
-    public class MeleeAttackAction : CombatAction
+    public class MeleeAttackAction : SkillAction
     {
         private static WaitForSeconds _waitForSeconds0_3 = new(0.3f);
         private static WaitForSeconds _waitForSeconds0_5 = new(0.5f);
@@ -16,39 +14,38 @@ namespace Pyrite.Combat.Actions
         {
         }
 
-        public override bool CanPerform(GameObject actor, Vector2Int targetGridPos)
+        public override bool CanPerform(GameObject actor, GameObject targetActor)
         {
-            // Check if there is an occupant to attack
-            if (!GridManager.Instance.IsCellOccupied(targetGridPos)) return false;
+            // Check if skill is still in cooldown
+            if (Skill.isInCooldown) return false;
+            
+            if (targetActor == null) return false;
+            
+            var playerRpgController = actor.GetComponent<PlayerRpgController>();
+            if (playerRpgController == null) return false;
 
-            // We can only perform a melee attack if both target and actor are in adjacent cells
-            var actorGridPos = GridManager.Instance.WorldToGrid(actor.transform.position);
+            if (Skill.manaCost > playerRpgController.PlayerCurrentMana) return false;
 
-            return Vector2Int.Distance(targetGridPos, actorGridPos) <= 1;
+            if (Vector3.Distance(actor.transform.position, targetActor.transform.position) <= Skill.range)
+            {
+                return true;
+            }
+            return false;
         }
 
-        public override IEnumerator Execute(GameObject actor, Vector2Int targetGridPos, Action onComplete)
+        public override void Execute(GameObject actor, GameObject targetActor, Action onComplete)
         {
-            // Rotate to face target
-            var targetWorldPos = GridManager.Instance.GridToWorld(targetGridPos);
-            var direction = (targetWorldPos - actor.transform.position).normalized;
-            direction.y = 0;
-            actor.transform.rotation = Quaternion.LookRotation(direction);
-
+            // Initiate skill cooldown
+            Skill.isInCooldown = true;
+            CurrentCooldown = Skill.cooldown;
+            CurrentCooldown -= Time.deltaTime;
+            if (CurrentCooldown <= 0) Skill.isInCooldown = false;
+            
             // Trigger Animation
-            if (actor.TryGetComponent<Animator>(out var animator)) animator.SetTrigger("SwordSlash");
-
-            // Wait for visual strike moment (or yield for animation length)
-            yield return _waitForSeconds0_5;
-
-            // Apply damage logic
-            var target = GridManager.Instance.GetCellOccupant(targetGridPos);
-            if (target != null)
-            {
-                // TODO: Calculate damage to target
-            }
-
-            yield return _waitForSeconds0_3; // buffer to let swing animation finish
+            // if (actor.TryGetComponent<Animator>(out var animator)) animator.SetTrigger("SwordSlash");
+            
+            
+            Debug.Log("Attacking " + targetActor.name);
 
             onComplete?.Invoke();
         }

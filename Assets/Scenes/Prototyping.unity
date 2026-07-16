@@ -7172,6 +7172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90fa743d9a8e2774eae603feadf8cdee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatManager
+  currentTarget: {fileID: 1453149112}
 --- !u!1 &1192418486
 GameObject:
   m_ObjectHideFlags: 0
@@ -7674,10 +7675,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1183919944}
-        m_TargetAssemblyTypeName: CombatManager, Assembly-CSharp
-        m_MethodName: ActionPressed
-        m_Mode: 5
+      - m_Target: {fileID: 1250387920}
+        m_TargetAssemblyTypeName: User_Interface.SkillButton, Assembly-CSharp
+        m_MethodName: ActivateSkill
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8810,6 +8811,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ccf9aaf202c761b40a8113ddd8d1734f, type: 3}
   m_PrefabInstance: {fileID: 1422741223}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1453149112 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6833246451756085745, guid: b49b75ae8077df3488f82e96fea4a5f0, type: 3}
+  m_PrefabInstance: {fileID: 1038900457449770308}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1463304567
 GameObject:
@@ -15849,6 +15855,8 @@ MonoBehaviour:
   <CurrentPlayerExp>k__BackingField: 0
   <CurrentPlayerHealth>k__BackingField: 0
   <PlayerMaxHealth>k__BackingField: 0
+  <PlayerMaxMana>k__BackingField: 0
+  <PlayerCurrentMana>k__BackingField: 0
   currentPhysicalDamage: 0
   currentElementalDamage: []
   currentAttackSpeed: 0
