@@ -16,8 +16,6 @@ namespace User_Interface
 
         private void Awake()
         {
-            // _skillsGridRootObject = gameObject.GetComponentInChildren<HorizontalLayoutGroup>();
-            // Assert.IsNotNull(_skillsGridRootObject, "Could not find HorizontalLayoutGroup child game object.");
             Assert.IsNotEmpty(skillButtons, "There are no skill buttons assigned to the combat HUD manager!");
             Assert.IsNotNull(actionBar, "Action bar panel needs to be assigned to the combat HUD manager!");
             Assert.IsNotNull(turnPanel, "Turns panel needs to be assigned to the combat hud manager!");
@@ -42,7 +40,17 @@ namespace User_Interface
 
         private void AddNewSkillToHotbar(SkillAction skillAction)
         {
-            GetNextEmptySkillButton()?.SetSkill(skillAction);
+            Debug.Log($"CombatHUDManager received skill action: {skillAction?.Skill?.skillName}");
+
+            var skillButton = GetNextEmptySkillButton();
+
+            if (skillButton == null)
+            {
+                Debug.LogWarning("Could not add skill to hotbar because there are no empty skill buttons.");
+                return;
+            }
+
+            skillButton.SetSkill(skillAction);
         }
 
         /// <summary>
@@ -52,7 +60,7 @@ namespace User_Interface
         private SkillButton GetNextEmptySkillButton()
         {
             foreach (var skillButton in skillButtons)
-                if (!skillButton.hasSkillAssigned)
+                if (!skillButton.HasSkillAssigned)
                     return skillButton;
             return null;
         }

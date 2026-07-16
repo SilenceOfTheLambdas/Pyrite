@@ -31,6 +31,13 @@ namespace Combat
             yield return new WaitForSeconds(0.6f);
             
             if (!gameObject.CompareTag("Player")) yield break;
+            var meleeStrike = SkillsDatabase.Instance.GetSkillByName("Melee Strike");
+
+            if (meleeStrike == null)
+            {
+                Debug.LogError("Could not assign default action because skill 'Melee Strike' was not found.");
+                yield break;
+            }
             
             // if this is the player, assign a default attack action
             var attackAction = new MeleeAttackAction(SkillsDatabase.Instance.GetSkillByName("Melee Strike"));
@@ -39,6 +46,11 @@ namespace Combat
 
         private void AddCombatAction(SkillAction skillAction)
         {
+            if (skillAction == null)
+            {
+                Debug.LogError("Tried to add a null SkillAction.");
+                return;
+            }
             CombatActions.Add(skillAction);
             OnCombatActionAdded?.Invoke(skillAction);
         }
