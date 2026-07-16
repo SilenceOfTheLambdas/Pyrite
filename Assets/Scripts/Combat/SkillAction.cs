@@ -14,11 +14,20 @@ namespace Combat
     {
         public Skill Skill { get; private set; }
 
-        public float CurrentCooldown = 0;
+        private float _cooldownEndTime;
+
+        public float CurrentCooldown => Mathf.Max(0f, _cooldownEndTime - Time.time);
+        
+        public bool IsOnCooldown => CurrentCooldown > 0f;
 
         protected SkillAction(Skill skill)
         {
             Skill = skill;
+        }
+
+        protected void StartCooldown()
+        {
+            _cooldownEndTime = Time.time + Skill.cooldown;
         }
 
         /// <summary>

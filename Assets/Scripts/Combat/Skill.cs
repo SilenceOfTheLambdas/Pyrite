@@ -21,8 +21,6 @@ namespace Combat
         /// </summary>
         public float cooldown = 2;
 
-        public bool isInCooldown = false;
-
         /// <summary>
         /// The range the actor needs to be within to use this skill.
         /// </summary>
