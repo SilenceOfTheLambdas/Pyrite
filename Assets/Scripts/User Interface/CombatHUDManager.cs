@@ -2,21 +2,18 @@ using System.Collections.Generic;
 using Combat;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace User_Interface
 {
     public class CombatHUDManager : MonoBehaviour
     {
-        [SerializeField] private List<SkillButton> skillButtons;
-        private HorizontalLayoutGroup _skillsGridRootObject;
-
+        [SerializeField] private List<SkillBar> skillBars;
         [SerializeField] private GameObject actionBar;
         [SerializeField] private GameObject turnPanel;
 
         private void Awake()
         {
-            Assert.IsNotEmpty(skillButtons, "There are no skill buttons assigned to the combat HUD manager!");
+            Assert.IsNotEmpty(skillBars, "There are no skill bars assigned to the combat HUD manager!");
             Assert.IsNotNull(actionBar, "Action bar panel needs to be assigned to the combat HUD manager!");
             Assert.IsNotNull(turnPanel, "Turns panel needs to be assigned to the combat hud manager!");
         }
@@ -40,29 +37,10 @@ namespace User_Interface
 
         private void AddNewSkillToHotbar(SkillAction skillAction)
         {
-            Debug.Log($"CombatHUDManager received skill action: {skillAction?.Skill?.skillName}");
-
-            var skillButton = GetNextEmptySkillButton();
-
-            if (skillButton == null)
+            foreach (var skillBar in skillBars)
             {
-                Debug.LogWarning("Could not add skill to hotbar because there are no empty skill buttons.");
-                return;
+                if (skillBar != null && skillBar.TryAddSkill(skillAction)) return;
             }
-
-            skillButton.SetSkill(skillAction);
-        }
-
-        /// <summary>
-        /// Attempts to return the next available empty skill button.
-        /// </summary>
-        /// <returns>A SkillButton if an unassigned one if found, null otherwise</returns>
-        private SkillButton GetNextEmptySkillButton()
-        {
-            foreach (var skillButton in skillButtons)
-                if (!skillButton.HasSkillAssigned)
-                    return skillButton;
-            return null;
         }
     }
 }

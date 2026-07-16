@@ -13,6 +13,7 @@ namespace User_Interface
         [SerializeField] private Image slotIcon;
         [SerializeField] private Image skillCooldownTimerIcon;
         [SerializeField] private TextMeshProUGUI skillCooldownTimerText;
+        [SerializeField] private TextMeshProUGUI shortcutKeyText;
         
         private SkillAction _associatedAction;
         private Sprite _skillIcon;
@@ -20,10 +21,16 @@ namespace User_Interface
         private void Awake()
         {
             Assert.IsNotNull(skillCooldownTimerText, "Skill Cooldown Timer Text child component has not been assigned!");
+            Assert.IsNotNull(shortcutKeyText, "Shortcut Key Text child component has not been assigned!");
             Assert.IsNotNull(slotIcon, "Slot Icon child component has not been assigned!");
             Assert.IsNotNull(skillCooldownTimerIcon, "Skill Cooldown Timer Icon child component has not been assigned!");
         }
 
+        public void SetShortcutKeyText(string shortcutText)
+        {
+            shortcutKeyText.SetText(shortcutText);
+        }
+        
         public void ActivateSkill()
         {
             if (!HasSkillAssigned) return;

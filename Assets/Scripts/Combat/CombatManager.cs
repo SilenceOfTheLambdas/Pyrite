@@ -37,7 +37,7 @@ namespace Combat
         public void ActionPressed(SkillAction actionToPerform)
         {
             if (!actionToPerform.CanPerform(GameObject.FindGameObjectWithTag("Player"), currentTarget)) return;
-            actionToPerform.Execute(GameObject.FindGameObjectWithTag("Player"), currentTarget, () => { Debug.Log("Action complete");});
+            actionToPerform.Execute(GameObject.FindGameObjectWithTag("Player"), currentTarget, () => { });
         }
     }
 }
