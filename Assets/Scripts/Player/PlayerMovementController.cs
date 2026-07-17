@@ -2,16 +2,29 @@ using Combat;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using Utils;
 
 namespace Player
 {
     public class PlayerMovementController : MonoBehaviour
     {
+        [SerializeField] private MouseLookController mouseLookController;
+        [SerializeField] private Transform movementCamera;
+        [SerializeField] private float moveSpeed = 5f;
+        [SerializeField] private float rotationLerpSpeed = 12f;
+
+        private Vector3 _movementBasisForward;
+        private Vector3 _movementBasisRight;
+        private bool _hasMovementBasis;
+        
         private void Awake()
         {
             _camera = Camera.main;
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
+            
+            if (movementCamera == null && _camera != null)
+                movementCamera = _camera.transform;
         }
 
         private void Start()
@@ -41,56 +54,79 @@ namespace Player
 
         private void Update()
         {
-            #region Player Movement
+            Vector2 moveInput = _moveAction.ReadValue<Vector2>();
             
-            MovePlayer(_moveAction.ReadValue<Vector2>());
+            bool isMouseLooking = mouseLookController != null && mouseLookController.IsCameraLooking;
             
-            // Update Animation based on current movement velocity
-            var speed = (transform.position - _lastPosition).magnitude / Time.deltaTime;
-            _animator.SetFloat(MovementSpeed, speed, 0.1f, Time.deltaTime);
-            _lastPosition = transform.position;
-
-            #endregion
+            HandleMovement(moveInput, isMouseLooking);
         }
-
-        private void MovePlayer(Vector2 input)
+        
+        private void HandleMovement(Vector2 moveInput, bool isMouseLooking)
         {
-            // Convert input (WASD) to a world-space direction relative to the camera
-            var camForward = Vector3.forward;
-            var camRight = Vector3.right;
-            if (_camera != null)
-            {
-                camForward = _camera.transform.forward;
-                camForward.y = 0f;
-                camForward.Normalize();
-                camRight = _camera.transform.right;
-                camRight.y = 0f;
-                camRight.Normalize();
-            }
+            if (moveInput.sqrMagnitude < 0.001f)
+                return;
 
-            var moveDir = camForward * input.y + camRight * input.x;
 
-            // Apply movement
-            if (moveDir.sqrMagnitude > 0.0001f)
-            {
-                var displacement = moveDir.normalized * (moveSpeed * Time.deltaTime);
-                _navMeshAgent.Move(displacement);
+            Vector3 moveDirection = isMouseLooking
+                ? GetPlayerRelativeMoveDirection(moveInput)
+                : GetCameraRelativeMoveDirection(moveInput);
 
-                // Smoothly rotate to face movement direction
-                var targetRot = Quaternion.LookRotation(moveDir, Vector3.up);
-                transform.rotation =
-                    Quaternion.Slerp(transform.rotation, targetRot, rotationLerpSpeed * Time.deltaTime);
-            }
+            if (moveDirection.sqrMagnitude < 0.001f)
+                return;
+            
+            if (moveDirection.sqrMagnitude > 1f)
+                moveDirection.Normalize();
+            
+            transform.position += moveDirection * moveSpeed * Time.deltaTime;
+            
+            if (!isMouseLooking)
+                FaceMovementDirection(moveDirection);
         }
 
+        private Vector3 GetPlayerRelativeMoveDirection(Vector2 moveInput)
+        {
+            Vector3 forward = transform.forward;
+            Vector3 right = transform.right;
+            forward.y = 0;
+            right.y = 0;
+            forward.Normalize();
+            right.Normalize();
+            
+            return forward * moveInput.y + right * moveInput.x;
+        }
+
+        private Vector3 GetCameraRelativeMoveDirection(Vector2 moveInput)
+        {
+            if (movementCamera == null)
+                return new Vector3(moveInput.x, 0f, moveInput.y);
+            
+            Vector3 forward = movementCamera.forward;
+            Vector3 right = movementCamera.right;
+            forward.y = 0;
+            right.y = 0;
+            forward.Normalize();
+            right.Normalize();
+            
+            return forward * moveInput.y + right * moveInput.x;
+        }
+
+        private void FaceMovementDirection(Vector3 moveDirection)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+            
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation, 
+                targetRotation, 
+                rotationLerpSpeed * Time.deltaTime
+                );
+        }
+        
         private NavMeshAgent _navMeshAgent;
         private Camera _camera;
         private Animator _animator;
         private InputAction _moveAction;
         private Vector3 _lastPosition;
         public InputActionReference moveInputAction;
-        [SerializeField] private float moveSpeed = 5f;
-        [SerializeField] private float rotationLerpSpeed = 12f;
 
         private static readonly int MovementSpeed = Animator.StringToHash("MovementSpeed");
     }

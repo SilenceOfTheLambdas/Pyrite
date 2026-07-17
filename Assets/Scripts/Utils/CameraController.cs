@@ -19,11 +19,7 @@ namespace Utils
         [Header("Camera")]
         [SerializeField] private float minCameraDistance = 3f;
         [SerializeField] private float maxCameraDistance = 15f;
-        [SerializeField] private float offsetX = 0f;
-        [SerializeField] private float offsetY = 5f;
-        [SerializeField] private float offsetZ = -10f;
         [SerializeField] private float lookSensitivity = 0.15f;
-        [SerializeField] private float cameraFollowSpeed = 5f;
         [SerializeField] private float cameraZoomSpeed = 2f;
 
         [Header("Pitch")]
@@ -110,10 +106,8 @@ namespace Utils
             Quaternion cameraRotation = Quaternion.Euler(_cameraPitch, _cameraYaw, 0f);
             Vector3 desiredPosition = cameraTarget.position + cameraRotation * new Vector3(0f, 0f, -_currentDistance);
 
-            playerCamera.transform.position = Vector3.Lerp(
-                playerCamera.transform.position,
-                desiredPosition,
-                cameraFollowSpeed * Time.deltaTime);
+            playerCamera.transform.position =
+                desiredPosition;
             
             playerCamera.transform.LookAt(cameraTarget.position);
         }
