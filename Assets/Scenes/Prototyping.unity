@@ -7924,6 +7924,7 @@ GameObject:
   - component: {fileID: 961739751}
   - component: {fileID: 961739750}
   - component: {fileID: 961739755}
+  - component: {fileID: 961739756}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -8061,47 +8062,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953874ae39bc2ea4fb1134b70811ddce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
+  playerTransform: {fileID: 389151619586567419}
   cameraTarget: {fileID: 4275829020899116977}
-  zoomInputAction:
-    m_Name: Zoom Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: c4a77d93-f079-4cce-8373-c632163be8de
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 1D Axis
-      m_Id: dda6267a-27ce-4eb8-b5db-a97d210f9709
-      m_Path: 1DAxis
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Zoom Input
-      m_Flags: 4
-    - m_Name: negative
-      m_Id: 7c9d08d9-cd97-46ec-8148-dcfcee4e9c3c
-      m_Path: <Mouse>/scroll/up
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Zoom Input
-      m_Flags: 8
-    - m_Name: positive
-      m_Id: e6860d38-0d66-4d37-af15-bce794844d48
-      m_Path: <Mouse>/scroll/down
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Zoom Input
-      m_Flags: 8
-    m_Flags: 0
+  playerCamera: {fileID: 961739752}
+  mouseLookController: {fileID: 961739756}
+  lookDeltaAction: {fileID: -99722758780308423, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  zoomInputAction: {fileID: -456613047207431042, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  minCameraDistance: 2
+  maxCameraDistance: 10
   offsetX: -0.2
   offsetY: 0.35
   offsetZ: -0.2
-  maxCameraDistance: 10
-  minCameraDistance: 4
+  lookSensitivity: 0.15
   cameraFollowSpeed: 6
-  cameraZoomSpeed: 10
+  cameraZoomSpeed: 1
+  minPitch: 10
+  maxPitch: 90
+  playerTurnSpeed: 15
+--- !u!114 &961739756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961739749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231a0ae4d062402d966506dfbb356290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Utils.MouseLookController
+  mouseLookAction: {fileID: -1674175924951065737, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  cameraLookAction: {fileID: 3677774253488661470, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &965597937
 GameObject:
   m_ObjectHideFlags: 0

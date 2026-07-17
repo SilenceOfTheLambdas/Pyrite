@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,54 +6,116 @@ namespace Utils
 {
     public class CameraController : MonoBehaviour
     {
+        [Header("References")]
+        [SerializeField] private Transform playerTransform;
         [SerializeField] private Transform cameraTarget;
-        [SerializeField] private InputAction zoomInputAction;
+        [SerializeField] private Camera playerCamera;
+        [SerializeField] private MouseLookController mouseLookController;
+        
+        [Header("Input")]
+        [SerializeField] private InputActionReference lookDeltaAction;
+        [SerializeField] private InputActionReference zoomInputAction;
+        
+        [Header("Camera")]
+        [SerializeField] private float minCameraDistance = 3f;
+        [SerializeField] private float maxCameraDistance = 15f;
         [SerializeField] private float offsetX = 0f;
         [SerializeField] private float offsetY = 5f;
         [SerializeField] private float offsetZ = -10f;
-        [SerializeField] private float maxCameraDistance = 15f;
-        [SerializeField] private float minCameraDistance = 3f;
+        [SerializeField] private float lookSensitivity = 0.15f;
         [SerializeField] private float cameraFollowSpeed = 5f;
         [SerializeField] private float cameraZoomSpeed = 2f;
 
-        private Camera _camera;
+        [Header("Pitch")]
+        [SerializeField] private float minPitch = -30f;
+        [SerializeField] private float maxPitch = 70f;
+
+        [Header("Player Rotation")]
+        [SerializeField] private float playerTurnSpeed = 20f;
+        
+        /// <summary>
+        /// Rotates around the player horizontally
+        /// </summary>
+        private float _cameraYaw;
+        /// <summary>
+        /// Rotates around the player vertically (up/down)
+        /// </summary>
+        private float _cameraPitch;
+        
         private float _currentDistance = 8f;
 
         private void OnEnable()
         {
-            zoomInputAction.Enable();
+            lookDeltaAction.action.Enable();
+            zoomInputAction.action.Enable();
         }
 
         private void OnDisable()
         {
-            zoomInputAction.Disable();
+            lookDeltaAction.action.Disable();
+            zoomInputAction.action.Disable();
         }
 
         private void Start()
         {
-            _camera = Camera.main;
-            // Initialize the current distance based on the initial offset
-            _currentDistance = Mathf.Sqrt(offsetX * offsetX + offsetY * offsetY + offsetZ * offsetZ);
-            _currentDistance = Mathf.Clamp(_currentDistance, minCameraDistance, maxCameraDistance);
-            _currentDistance = maxCameraDistance;
+            if (playerCamera == null) playerCamera = Camera.main;
+            if (playerTransform != null) _cameraYaw = playerTransform.eulerAngles.y;
         }
 
-        private void Update()
+        private void LateUpdate()
         {
-            if (cameraTarget == null) return;
+            if (playerTransform == null || cameraTarget == null || playerCamera == null)
+                return;
 
-            // Handle zoom input
-            var zoomInput = zoomInputAction.ReadValue<float>();
-            _currentDistance += zoomInput * cameraZoomSpeed * Time.deltaTime;
+            HandleLookInput();
+            HandleZoom();
+            HandlePlayerRotation();
+            UpdateCameraPosition();
+        }
+
+        private void HandleLookInput()
+        {
+            if (mouseLookController == null || !mouseLookController.IsLooking) return;
+            
+            Vector2 lookDelta = lookDeltaAction.action.ReadValue<Vector2>();
+            _cameraYaw += lookDelta.x * lookSensitivity;
+            _cameraPitch -= lookDelta.y * lookSensitivity;
+            _cameraPitch = Mathf.Clamp(_cameraPitch, minPitch, maxPitch);
+        }
+
+        private void HandleZoom()
+        {
+            float zoomInput = zoomInputAction.action.ReadValue<float>();
+            
+            if (Mathf.Approximately(zoomInput, 0f)) return;
+            
+            _currentDistance -= zoomInput * cameraZoomSpeed;
             _currentDistance = Mathf.Clamp(_currentDistance, minCameraDistance, maxCameraDistance);
+        }
 
-            // Calculate the desired position with the offset, maintaining the camera's own rotation
-            var offset = new Vector3(offsetX, offsetY, offsetZ).normalized * _currentDistance;
-            var desiredPosition = cameraTarget.position + offset;
+        private void HandlePlayerRotation()
+        {
+            if (mouseLookController == null || !mouseLookController.IsMouseLooking) return;
+            if (playerTransform == null) return;
+            
+            Quaternion targetRotation = Quaternion.Euler(0f, _cameraYaw, 0f);
+            playerTransform.rotation = Quaternion.Slerp(
+                playerTransform.rotation,
+                targetRotation,
+                playerTurnSpeed * Time.deltaTime);
+        }
 
-            // Smoothly move the camera to the desired position
-            _camera.transform.position = Vector3.Lerp(_camera.transform.position,
-                desiredPosition, cameraFollowSpeed * Time.deltaTime);
+        private void UpdateCameraPosition()
+        {
+            Quaternion cameraRotation = Quaternion.Euler(_cameraPitch, _cameraYaw, 0f);
+            Vector3 desiredPosition = cameraTarget.position + cameraRotation * new Vector3(0f, 0f, -_currentDistance);
+
+            playerCamera.transform.position = Vector3.Lerp(
+                playerCamera.transform.position,
+                desiredPosition,
+                cameraFollowSpeed * Time.deltaTime);
+            
+            playerCamera.transform.LookAt(cameraTarget.position);
         }
 
         public static bool TryGetClickedObject(
