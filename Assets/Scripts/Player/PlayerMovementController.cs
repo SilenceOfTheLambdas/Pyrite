@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using Utils;
 
@@ -16,23 +15,16 @@ namespace Player
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float rotationLerpSpeed = 12f;
         [SerializeField] private float jumpHeight = 2f;
-        [SerializeField] private float jumpForce = 10f;
         [SerializeField] private float gravity = -9.81f;
-
-        private Vector3 _movementBasisForward;
-        private Vector3 _movementBasisRight;
-        private bool _hasMovementBasis;
-        private float _verticalVelocity = 0f;
+        
+        private float _verticalVelocity;
         private Vector3 _airHorizontalVelocity = Vector3.zero;
         
         private CharacterController _characterController;
         private Camera _camera;
         private Animator _animator;
         private InputAction _moveAction;
-        private Vector3 _lastPosition;
         public InputActionReference moveInputAction;
-
-        private static readonly int MovementSpeed = Animator.StringToHash("MovementSpeed");
         
         private void Awake()
         {
@@ -171,11 +163,6 @@ namespace Player
                 targetRotation, 
                 rotationLerpSpeed * Time.deltaTime
                 );
-        }
-
-        private bool IsGrounded()
-        {
-            return Physics.Raycast(transform.position, Vector3.down, 0.01f);
         }
     }
 }

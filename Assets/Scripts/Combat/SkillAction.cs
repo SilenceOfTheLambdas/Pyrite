@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Combat
@@ -20,9 +21,20 @@ namespace Combat
         
         public bool IsOnCooldown => CurrentCooldown > 0f;
 
+        protected DamageInfo DamageInfo;
+
         protected SkillAction(Skill skill)
         {
             Skill = skill;
+
+            DamageInfo = new DamageInfo
+            {
+                CanCrit = skill.availableSkillDamage.canCrit,
+                CritChance = skill.availableSkillDamage.criticalChance,
+                CritMultiplier = skill.availableSkillDamage.criticalDamageMultiplier,
+                ElementalDamage = skill.availableSkillDamage.ElementalDamage,
+                PhysicalDamage = skill.availableSkillDamage.PhysicalDamage
+            };
         }
 
         protected void StartCooldown()

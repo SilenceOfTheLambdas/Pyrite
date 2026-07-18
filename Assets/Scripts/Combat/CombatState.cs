@@ -2,8 +2,10 @@ namespace Combat
 {
     public enum CombatState
     {
-        NiC, // Not in Combat
+        Idle,
         Chasing,
-        Attacking
+        Attacking,
+        Returning,
+        Dead
     }
 }

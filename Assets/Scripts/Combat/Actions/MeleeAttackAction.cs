@@ -37,8 +37,11 @@ namespace Combat.Actions
             // Trigger Animation
             // if (actor.TryGetComponent<Animator>(out var animator)) animator.SetTrigger("SwordSlash");
             
+            DamageInfo.Source = actor;
+            DamageInfo.Target = targetActor;
             
-            Debug.Log("Attacking " + targetActor.name);
+            targetActor.GetComponent<Combatant>().TakeDamage(DamageInfo);
+            Debug.Log("Attacking enemy for: " + DamageInfo.PhysicalDamage + "");
 
             onComplete?.Invoke();
         }

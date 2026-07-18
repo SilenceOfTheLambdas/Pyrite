@@ -26,22 +26,16 @@ namespace Combat
         /// </summary>
         public float range = 3;
 
-        [DataTable(true, false)] public List<SkillDamage> availableSkillDamage;
+        public SkillDamage availableSkillDamage;
     }
 
     [Serializable]
     public struct SkillDamage
     {
-        public DamageType damageType;
-        public RpgManager.StatRange<int> amount;
-    }
-
-    public enum DamageType
-    {
-        PHYSICAL,
-        FIRE,
-        COLD,
-        LIGHTNING,
-        POISON
+        public float PhysicalDamage;
+        public RpgManager.ElementalDamage ElementalDamage;
+        public bool canCrit;
+        public float criticalChance;
+        public float criticalDamageMultiplier;
     }
 }
