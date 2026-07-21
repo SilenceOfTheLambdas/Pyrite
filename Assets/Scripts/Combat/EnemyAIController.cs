@@ -8,8 +8,14 @@ namespace Combat
     [RequireComponent(typeof(EnemyStats))]
     public class EnemyAIController : MonoBehaviour
     {
+        [Header("Debug")]
+        [SerializeField] private bool drawDebugRanges = true;
+        
         [Header("References")] [SerializeField]
         private Transform target;
+
+        private const float ReturnStoppingDistance = 0.1f;
+        private const float ReturnCompleteStoppingDistance = 0.9f;
         
         private Combatant _combatant;
         private EnemyStats _stats;
@@ -36,7 +42,6 @@ namespace Combat
             if (_agent != null)
             {
                 _agent.speed = _stats.moveSpeed;
-                _agent.stoppingDistance = _stats.attackRange * 0.9f;
             }
 
             _combatant.OnDeath += HandleDeath;
@@ -96,6 +101,11 @@ namespace Combat
                 return;
             }
 
+            if (_agent != null)
+            {
+                _agent.stoppingDistance = _stats.attackRange * ReturnCompleteStoppingDistance;
+            }
+
             float distanceToTarget = Vector3.Distance(transform.position, target.position);
             if (distanceToTarget <= _stats.attackRange)
             {
@@ -143,9 +153,13 @@ namespace Combat
         private void UpdateReturning()
         {
             target = null;
+            
+            if (_agent != null)
+                _agent.stoppingDistance = ReturnStoppingDistance; // Fix infinite Returning state
+            
             float distanceToSpawn = Vector3.Distance(transform.position, _spawnPosition);
 
-            if (distanceToSpawn <= 0.5f)
+            if (distanceToSpawn <= ReturnCompleteStoppingDistance)
             {
                 StopMoving();
                 SetState(CombatState.Idle);
@@ -256,6 +270,26 @@ namespace Combat
             
             if (_agent != null)
                 _agent.enabled = false;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (!drawDebugRanges) return;
+            EnemyStats stats = _stats != null ? _stats : GetComponent<EnemyStats>();
+
+            if (stats == null) return;
+            
+            Vector3 origin = transform.position;
+            Vector3 leashOrigin = Application.isPlaying ? _spawnPosition : transform.position;
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(origin, stats.attackRange);
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(leashOrigin, stats.aggroRadius);
+            
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(leashOrigin, stats.leashRadius);
         }
     }
 }

@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 1162025726173441087}
   - component: {fileID: 7726160291080882685}
   - component: {fileID: 2719961182362835163}
+  - component: {fileID: 112317187087070681}
+  - component: {fileID: 5715666606932827587}
+  - component: {fileID: 8719736541596047595}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: NPC
@@ -76,7 +79,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 6
+  m_Radius: 2.62
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7726160291080882685
 MonoBehaviour:
@@ -117,3 +120,56 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &112317187087070681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6833246451756085745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc62b20907ed4ee1a1dc28ea7dc7bd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Combat.Combatant
+  faction: 1
+  maxHealth: 100
+  currentHealth: 100
+--- !u!114 &5715666606932827587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6833246451756085745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e94b125c38d64626bf41d128753cb3ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Combat.EnemyStats
+  maxHealth: 60
+  moveSpeed: 3.5
+  rotationSpeed: 12
+  aggroRadius: 2
+  attackRange: 1
+  leashRadius: 3
+  physicalDamage: 8
+  elementalDamage:
+    type: 0
+    amount: 0
+  attackCooldown: 1.5
+  criticalChance: 0.05
+  criticalDamageMultiplier: 1.5
+--- !u!114 &8719736541596047595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6833246451756085745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbf0219b7e64ecba8da8c3bae083640, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Combat.EnemyAIController
+  target: {fileID: 0}
