@@ -15,15 +15,13 @@
     * [Looking at the camera](#looking-at-the-camera)
     * [Setting the label text](#setting-the-label-text)
     * [Positioning the Labels](#positioning-the-labels)
-    * [Player Movement & Animations](#player-movement--animations)
 * [Links](#links)
 * [References](#references)
 <!-- TOC -->
 
 ## Overview
 
-A 3D top-down action role-playing game in Unity that features an RPG and Inventory system. The aim of this project 
-was to create a complete game that I could show to potential employers and release on a platform like Itch.io.
+A 3D third-person role-playing game prototype in Unity that features an RPG and Inventory system. The aim of this prototype is to showcase various systems that I've designed and implemented.
 This project log details some stages of development and the challenges that I faced along the way. I also 
 discuss some reasoning behind some of the decisions that I made.
 
@@ -39,6 +37,7 @@ discuss some reasoning behind some of the decisions that I made.
 - Unity 6.3 LTS
 - C# 9.0
 - Git
+- JetBrains Rider
 
 # Challenges and Solutions
 
@@ -61,24 +60,28 @@ depth but still maintained flexibility and simplicity.
     [CreateAssetMenu(fileName = "BaseWeaponTemplate", menuName = "Inventory/Items/New ArmourTemplate")]
     public class ArmourTemplate : ItemTemplate
     {
-        public ArmourType armourType;
-        
+        [Title("Armour Stats")] public ArmourType armourType;
+
         /// <summary>
         /// Baseline stats for this armour type.
         /// </summary>
-        public BaselineArmourStats baselineArmourStats;
-        
+        [Space] public BaselineArmourStats baselineArmourStats;
+
+        [Title("Possible Suffixes")]
+        [DataTable(true, false)]
+        [Description("Provide a list of possible suffixes that could apply to this item.")]
+        public List<Suffix> possibleSuffixes;
+
         [Serializable]
         public enum ArmourType
         {
             Head,
             Chest,
+            Gauntlets,
             Legs,
-            Boots
+            Boots,
+            Ring
         }
-        
-        [Header("Postfixes")] [Description("Provide a list of possible affixes that could apply to this item.")]
-        public List<Postfix> possiblePostfixes;
     }
 ```
 
@@ -249,7 +252,7 @@ graph TD
         IT --> AT[ArmourTemplate]
     end
 
-    subgraph Phase 1: Selection & Spawn
+    subgraph Phase 1: Selection and Spawn
         LC[LootContainer] -->|1. GetRandomItemTemplate| IDB
         LC -->|2. Determine Rarity| LC_RAR[Assign ContainerRarity]
         LC -->|3. Instantiate| PO[PickupObject Prefab]
@@ -292,7 +295,7 @@ graph TD
 
 As I started developing my project further, I was finding the architecture of the code to be more and more cumbersome.
 The inspector also started to look cluttered, and I wasn't happy with the steps needed to create a new item. I always like
-to imagine as if another person who isn't experienced with my code is trying to use whatever system I make. Re-creating that
+to imagine as if another person not experienced with my code is trying to use whatever system I make. Re-creating that
 journey left me feeling a bit confused, so I knew I needed to make some changes.
 
 One of the biggest changes I made was adopting an open-source tool called EditorAttributes[3](#references) which implemented
@@ -328,7 +331,7 @@ name of the item. Both of these objects were then added as a child to the ItemPi
 
 ### Looking at the camera
 To make the label nice and legible, the label needed to face the camera similar to a billboard effect. Making this
-happen was very easy, the script `LookAtCamera` gets a reference to `Camera.main` and then uses the `transform.LookAt()`
+happen was straightforward, the script `LookAtCamera` gets a reference to `Camera.main` and then uses the `transform.LookAt()`
 function to rotate the pickup object so that it faces the camera:
 
 ```csharp
@@ -387,15 +390,15 @@ public struct LabelRarityColour
 }
 ```
 
-UPDATE (20/02/2026) - There were issues when using the default `Color()` object as this clamps the values between 0 and 1.
+UPDATE (20/02/2026) – There were issues when using the default `Color()` object as this clamps the values between 0 and 1.
 When using colours that went up to 255, Unity attempted to clamp the values between 0 & 1 and this led to improper behaviour
-where the TextMeshProUGUI colours were not being updated. Rather oddly, the Epic colour did apply but I found-out that 
+where the TextMeshProUGUI colours were not being updated. Rather oddly, the Epic colour did apply, but I found out that 
 this was due to the clamping being able to produce a magenta colour which matched the proper colour closely.
 The fix for this was simple; I instead used `Color32()` which accepts values up to 255. Now the colours are displayed 
 correctly after they are instantiated in the world.
 
 ### Positioning the Labels
-During testing of the game I found that when multiple items where dropped in the world, the labels would overlap. This
+During testing of the game, I found that when multiple items were dropped in the world, the labels would overlap. This
 made clicking on them to pick them up and seeing the label text hard. I needed to create a system that adjusted the position
 of the labels when another label intersects it.
 
@@ -454,29 +457,6 @@ issues with the labels showing right in-front of the camera and way too high-up 
 makes use of the `WorldToScreenPoint()` function and correctly account for the depth of the camera.
 Then, the y-position of the second rectangle is pushed upwards based on the size of the label. This new position is then
 applied directly to the item label in the list.
-
-### Player Movement & Animations
-
-My original plan for movement in the game was to have movement controlled by the mouse cursor. But, after testing I
-decided to change to a WASD movement system. This was easy to implement but did mean that I had to make some important 
-design decisions regarding how animations are handled. Most notably, I wanted the player movement to feel responsive whilst
-giving 'weight' to attacks.
-
-My basis for how attacks should look is the video game: Path of Exile 2, as this game made use of WASD movement and featured
-attack animations. I learnt from playing PoE that the player stops moving when they attack and the animation has 2 'stages'.
-The first being an outward slash, and then if the player presses the attack key again (or is still pressing it) an 
-inward attack animation is played.
-
-<img alt="PoE2-AttackAnimation.gif" height="480" src="docs/Images/PoE2-AttackAnimation.gif" title="Attack Animation for Club in Path of Exile 2" width="480"/>
-
-So I implemented a similar animation system to my game; using animations obtained from Mixamo. I developed a system that
-first checks to see if a player has a weapon equipped, and then instantiates a weapon model attached to the players' right
-hand rig. It will then play the first attack animation: `OutwardSlash`, and if the player then activates the attack button
-within a set time, the `InwardSlash` animation is played.
-
-To set up the timing for the animation stages I used animation events. The first starting a timer that acts as a "timer" 
-for a follow-up attack. Another event in the `OutwardSlash` animation then stops this "timer".
-Finally, at the end of the animation an event is triggered that sets the players' state to idle.
 
 ![Attack-AnimationEvent.png](docs/Images/Attack-AnimationEvent.png)
 
