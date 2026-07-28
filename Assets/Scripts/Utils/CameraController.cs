@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using User_Interface;
 
 namespace Utils
 {
@@ -121,7 +122,7 @@ namespace Utils
             clickedObject = null;
             if (camera is null) return false;
 
-            var mousePosition = Mouse.current.position.ReadValue();
+            var mousePosition = CursorManager.Instance.VirtualPosition;
             var ray = camera.ScreenPointToRay(mousePosition);
 
             if (Physics.Raycast(ray, out var hit, 20f, LayerMask.GetMask("Interactable"),
@@ -130,16 +131,6 @@ namespace Utils
                 clickedObject = hit.collider.gameObject;
                 return true;
             }
-
-            return false;
-        }
-
-        public static bool IsMouseOverInteractable(Camera camera)
-        {
-            var mousePosition = Mouse.current.position.ReadValue();
-            var ray = camera.ScreenPointToRay(mousePosition);
-
-            if (Physics.Raycast(ray, out _, 1000f, LayerMask.GetMask("Interactable"))) return true;
 
             return false;
         }

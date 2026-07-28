@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using User_Interface;
 
 namespace Utils
 {
@@ -75,13 +76,21 @@ namespace Utils
 
         private static bool IsPointerOverUi()
         {
-            return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
+            return VirtualCursorUiInput.Instance.IsPointerOverUI();
         }
 
         private static void SetCursorLookMode(bool isLooking)
         {
-            Cursor.visible = !isLooking;
-            Cursor.lockState = isLooking ? CursorLockMode.Locked : CursorLockMode.None;
+            if (isLooking)
+            {
+                CursorManager.Instance.FreezeCursor();
+                CursorManager.Instance.HideCursor();
+            }
+            else
+            {
+                CursorManager.Instance.UnfreezeCursor();
+                CursorManager.Instance.ShowCursor();
+            }
         }
     }
 }

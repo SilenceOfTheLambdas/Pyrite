@@ -172,7 +172,7 @@ namespace User_Interface
 
         private void UpdateTooltipPosition()
         {
-            var mousePosition = Mouse.current.position.ReadValue();
+            var mousePosition = CursorManager.Instance.VirtualPosition;
 
             // Start with default positioning (bottom-right of cursor)
             const float pivotX = -0.02f;
