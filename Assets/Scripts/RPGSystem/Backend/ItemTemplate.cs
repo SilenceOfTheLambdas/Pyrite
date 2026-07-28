@@ -10,7 +10,6 @@ namespace RPGSystem.Backend
         [Title("Item Information")] public string itemName;
         public ItemType itemType;
         [SerializeField] [Required] public GameObject inventorySlotPrefab;
-        [AssetPreview(64f, 64f)] [Required] public GameObject itemPickupPrefab;
 
         [Title("Item Requirements")] [DataTable(true)]
         public ItemRequirements baselineItemRequirements;
@@ -29,7 +28,7 @@ namespace RPGSystem.Backend
         private void Awake()
         {
             // Check to make sure required properties are set
-            if (itemName == null || inventorySlotPrefab == null || itemPickupPrefab == null)
+            if (itemName == null || inventorySlotPrefab == null)
                 Debug.LogError("Item template missing required properties!");
         }
 

@@ -29,22 +29,8 @@ namespace Player
                 if (interactableObject.CompareTag("LootContainer"))
                 {
                     var lootContainer = interactableObject.GetComponent<LootContainer>();
-                    lootContainer.DropLootAroundContainer();
+                    lootContainer.GiveLootToPlayer(PlayerInventoryManager.Instance);
                 }
-
-                if (interactableObject.CompareTag("ItemPickup"))
-                    if (!PlayerInventoryManager.Instance.IsPlayerInventoryFull())
-                    {
-                        var pickupObject = interactableObject.GetComponent<PickupObject>();
-                        pickupObject.PickupDroppedItemFromLootContainer();
-                    }
-
-                if (interactableObject.CompareTag("ItemLabel"))
-                    if (!PlayerInventoryManager.Instance.IsPlayerInventoryFull())
-                    {
-                        var pickupObject = interactableObject.GetComponentInParent<PickupObject>();
-                        pickupObject.PickupDroppedItemFromLootContainer();
-                    }
             }
         }
     }

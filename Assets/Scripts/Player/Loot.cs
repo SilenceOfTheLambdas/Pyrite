@@ -4,65 +4,59 @@ using RPGSystem.Equipment;
 using RPGSystem.Inventory_System;
 using RPGSystem.Item_Definitions;
 using UnityEngine;
-using UnityEngine.Assertions;
-using User_Interface;
 
 namespace Player
 {
-    public class PickupObject : MonoBehaviour
+    public class Loot
     {
         private PlayerInventoryManager _playerInventoryManager;
-        public RpgManager.ItemRarity itemRarity;
-        private ItemTemplate _itemTemplate;
-        [SerializeField] private ItemLabel itemLabel;
+        private readonly RpgManager.ItemRarity _itemRarity;
+        private readonly ItemTemplate _itemTemplate;
 
-        private void Start()
+        public Loot(ItemTemplate itemTemplate, RpgManager.ItemRarity itemRarity)
         {
-            _playerInventoryManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventoryManager>();
-            Assert.IsNotNull(_playerInventoryManager,
-                "Player needs to have a PlayerInventoryManager component attached.");
+            _itemTemplate = itemTemplate;
+            _itemRarity = itemRarity;
         }
 
-        public void SetItemRarityAndTemplate(ItemTemplate template, RpgManager.ItemRarity rarity)
+        /// <summary>
+        /// Generates the stats for a loot item based on its loot type.
+        /// Determines the item type (e.g. weapon, armour) of the loot
+        /// and creates the corresponding stats object, initialising its properties.
+        /// </summary>
+        /// <returns>
+        /// An instance of <c>ItemStats</c> corresponding to the generated loot stats based on the loot type.
+        /// Returns <c>null</c> if the item type is unsupported or if there is an error during generation.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown if the loot item type does not match any of the known types.
+        /// </exception>
+        public ItemStats GenerateLootStatsBasedOnLootType()
         {
-            _itemTemplate = template;
-            itemRarity = rarity;
-
-            if (itemLabel == null) itemLabel = GetComponentInChildren<ItemLabel>();
-
-            if (itemLabel != null)
-                itemLabel.SetLabelTextAndRarity(_itemTemplate.itemName,
-                    ItemLabel.LabelRarityColour.GetColourForRarity(itemRarity));
-            else
-                Debug.LogWarning($"ItemLabel not found on {gameObject.name}. Item name: {_itemTemplate.itemName}");
-        }
-
-        public void PickupDroppedItemFromLootContainer()
-        {
+            ItemStats itemStats = null;
             switch (_itemTemplate.itemType)
             {
                 case ItemTemplate.ItemType.Weapon:
                     if (_itemTemplate is not WeaponTemplate weaponTemplate)
                     {
                         Debug.LogError("Unable to get random weapon template!");
-                        return;
+                        break;
                     }
 
                     var weaponStats = new WeaponStats
                     {
                         inventorySlotPrefab = weaponTemplate.inventorySlotPrefab
                     };
-                    weaponStats.GenerateItemNameTypeAndLevel(weaponTemplate, itemRarity);
+                    weaponStats.GenerateItemNameTypeAndLevel(weaponTemplate, _itemRarity);
                     weaponStats.GenerateWeaponStats(weaponTemplate);
 
-                    _playerInventoryManager.AddItemFromGround(new InventoryItem(weaponStats));
-                    Destroy(gameObject); // Destroy pickup object
+                    itemStats = weaponStats;
                     break;
                 case ItemTemplate.ItemType.Armour:
                     if (_itemTemplate is not ArmourTemplate armourTemplate)
                     {
                         Debug.LogError("Unable to get an armour template!");
-                        return;
+                        break;
                     }
 
                     var armourStats = new ArmourStats(armourTemplate.baselineArmourStats)
@@ -70,11 +64,10 @@ namespace Player
                         GeneratedArmourStats = armourTemplate.baselineArmourStats.DeepCopy(),
                         inventorySlotPrefab = armourTemplate.inventorySlotPrefab
                     };
-                    armourStats.GenerateItemNameTypeAndLevel(armourTemplate, itemRarity);
+                    armourStats.GenerateItemNameTypeAndLevel(armourTemplate, _itemRarity);
                     armourStats.GenerateArmourStats(armourTemplate!.armourType, armourTemplate);
 
-                    _playerInventoryManager.AddItemFromGround(new InventoryItem(armourStats));
-                    Destroy(gameObject);
+                    itemStats = armourStats;
                     break;
                 case ItemTemplate.ItemType.Accessory:
                 case ItemTemplate.ItemType.Potion:
@@ -82,6 +75,8 @@ namespace Player
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            return itemStats;
         }
     }
 }

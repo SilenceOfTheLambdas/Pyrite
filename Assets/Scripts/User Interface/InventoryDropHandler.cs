@@ -27,7 +27,7 @@ namespace User_Interface
 
                 // Un-equip item
                 EquipmentManager.Instance.UnequipItemBySlot(slotInfo.Item.Stats.equipmentSlot);
-                PlayerInventoryManager.Instance.AddItem(slotInfo.Item);
+                PlayerInventoryManager.Instance.ReturnItemToInventory(slotInfo.Item);
             }
         }
     }

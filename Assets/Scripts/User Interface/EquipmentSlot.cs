@@ -58,7 +58,7 @@ namespace User_Interface
                 }
 
                 // Then add the item back to the inventory
-                PlayerInventoryManager.Instance.AddItem(_equippedItem);
+                PlayerInventoryManager.Instance.ReturnItemToInventory(_equippedItem);
                 eventData.pointerDrag.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 _equippedItem = slotInfo.Item;
             }

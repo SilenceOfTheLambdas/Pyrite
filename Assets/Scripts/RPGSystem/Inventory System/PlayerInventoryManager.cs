@@ -29,7 +29,7 @@ namespace RPGSystem.Inventory_System
             Instance = this;
         }
 
-        public void AddItem(InventoryItem item)
+        public void ReturnItemToInventory(InventoryItem item)
         {
             // Find the next empty slot and then add the item to the player's inventory
             var itemPosition = FindNextEmptySlot();
@@ -38,7 +38,7 @@ namespace RPGSystem.Inventory_System
             item.ItemIndex = itemPosition;
         }
 
-        public void AddItemFromGround(InventoryItem item)
+        public void AddNewItemToInventory(InventoryItem item)
         {
             // Find the next empty slot and then add the item to the player's inventory
             var itemPosition = FindNextEmptySlot();
