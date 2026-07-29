@@ -68,8 +68,17 @@ namespace User_Interface
             _ignoreNextDelta = true;
         }
 
-        public void ShowCursor() => cursorImage.enabled = true;
-        public void HideCursor() => cursorImage.enabled = false;
+        public void ShowCursor()
+        {
+            if (cursorImage == null) return;
+            cursorImage.enabled = true;
+        }
+
+        public void HideCursor()
+        {
+            if (cursorImage == null) return;
+            cursorImage.enabled = false;
+        }
 
         private static Vector2 ClampToScreen(Vector2 position)
         {

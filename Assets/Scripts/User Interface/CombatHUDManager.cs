@@ -9,13 +9,11 @@ namespace User_Interface
     {
         [SerializeField] private List<SkillBar> skillBars;
         [SerializeField] private GameObject actionBar;
-        [SerializeField] private GameObject turnPanel;
 
         private void Awake()
         {
             Assert.IsNotEmpty(skillBars, "There are no skill bars assigned to the combat HUD manager!");
             Assert.IsNotNull(actionBar, "Action bar panel needs to be assigned to the combat HUD manager!");
-            Assert.IsNotNull(turnPanel, "Turns panel needs to be assigned to the combat hud manager!");
         }
 
         private void Start()
@@ -25,14 +23,9 @@ namespace User_Interface
             // TODO: On Combat Ended
         }
 
-        public void EnableCombatHUD()
+        private void EnableCombatHUD()
         {
             actionBar.SetActive(true);
-        }
-
-        public void DisableCombatHUD()
-        {
-            actionBar.SetActive(false);
         }
 
         private void AddNewSkillToHotbar(SkillAction skillAction)
